@@ -1,0 +1,24 @@
+package net.virtualinfinity.atrobots;
+
+/**
+ * @author Daniel Pitts
+ */
+public class GetRobotInfoInterrupt extends InterruptHandler {
+    private final Robot robot;
+    private final MemoryCell speed;
+    private final MemoryCell lastDamageTaken;
+    private final MemoryCell lastDamageGiven;
+
+    public GetRobotInfoInterrupt(Robot robot, MemoryCell speed, MemoryCell lastDamageTaken, MemoryCell lastDamageGiven) {
+        this.robot = robot;
+        this.speed = speed;
+        this.lastDamageTaken = lastDamageTaken;
+        this.lastDamageGiven = lastDamageGiven;
+    }
+
+    public void handleInterrupt() {
+        speed.set((short) Math.round(robot.getSpeed().times(Duration.fromCycles(1)).getCentimeters()));
+        lastDamageGiven.set((short) robot.getLastDamageGiven().getCycles());
+        lastDamageTaken.set((short) robot.getLastDamageTaken().getCycles());
+    }
+}

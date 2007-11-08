@@ -1,0 +1,19 @@
+package net.virtualinfinity.atrobots;
+
+/**
+ * @author Daniel Pitts
+ */
+public class TransmitInterrupt extends InterruptHandler {
+    private final Transceiver transceiver;
+    private final MemoryCell source;
+
+    public TransmitInterrupt(Transceiver transceiver, MemoryCell source) {
+        this.transceiver = transceiver;
+        this.source = source;
+    }
+
+    public void handleInterrupt() {
+        transceiver.send(source.signed());
+
+    }
+}
