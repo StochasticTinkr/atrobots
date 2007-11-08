@@ -11,6 +11,7 @@ import java.util.ArrayList;
 public class AtRobotLineLexer {
     private final LineNumberReader reader;
     private final LineVisitor lineVisitor;
+    private boolean stopProcessing;
 
     public AtRobotLineLexer(LineNumberReader reader, LineVisitor lineVisitor) {
         this.reader = reader;
@@ -18,8 +19,9 @@ public class AtRobotLineLexer {
     }
 
     public void visitAllLines() throws IOException {
+        stopProcessing = false;
         String line;
-        while ((line = reader.readLine()) != null) {
+        while (!(stopProcessing || (line = reader.readLine()) == null)) {
             final int commentStart = line.indexOf(';');
             if (commentStart >= 0) {
                 line = line.substring(0, commentStart);
@@ -52,7 +54,15 @@ public class AtRobotLineLexer {
     }
 
     private void visitLabel(String line) {
-        lineVisitor.label(line);
+        int i = 0;
+        while (i < line.length()) {
+            if (isSeperator(line.charAt(i))){
+                line = line.substring(0, i);
+                break;
+            }
+            ++i;
+        }
+        lineVisitor.label(line.toLowerCase());
     }
 
     private void visitNormalLine(String line) {
@@ -74,7 +84,7 @@ public class AtRobotLineLexer {
     }
 
     private static boolean isSeperator(char c) {
-        return "0123456789ABCDEFGHJIKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz#![]:@*_$".indexOf(c) < 0;
+        return "0123456789ABCDEFGHJIKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz#![]:@*_-$".indexOf(c) < 0;
     }
 
     private void visitMachineCode(String line) {
@@ -86,7 +96,7 @@ public class AtRobotLineLexer {
         int[] values = new int[4];
         for (int i = 0; i < 4; ++i) {
             values[i] = parseNumber(tokens[i]);
-            if (values[i] < -1) {
+            if (values[i] == Integer.MIN_VALUE) {
                 lineVisitor.invalidNumber();
                 return;
             }
@@ -105,14 +115,15 @@ public class AtRobotLineLexer {
             end = token.length();
             radix = 10;
         }
-        for (int i = 0; i < end; ++i) {
+        final boolean negative = token.charAt(0) == '-';
+        for (int i = negative ? 1 : 0; i < end; ++i) {
             final int digit = Character.digit(token.charAt(i), radix);
             if (digit < 0) {
-                return -1;
+                return Integer.MIN_VALUE;
             }
             value = value * radix + digit;
         }
-        return value;
+        return negative ? -value : value;
     }
 
     private void visitNumberLabel(String line) {
@@ -131,72 +142,89 @@ public class AtRobotLineLexer {
         lineVisitor.numberedLabel(value);
     }
 
-    private void visitDirective(String line) {
+    private void visitDirective(String line) throws IOException {
         for (int i = 1; i < line.length(); ++i) {
             if (!Character.isLetter(line.charAt(i))) {
-                String directive = line.substring(1, i).toLowerCase();
-                if (directive.length() == 0) {
-                    lineVisitor.expectedDirectiveName(i);
-                    return;
-                }
-                if (!isSeperator(line.charAt(i))) {
-                    lineVisitor.unexpectedCharacter(i);
-                }
-                while (i < line.length() && isSeperator(line.charAt(i))){
-                    ++i;
-                }
-                final int start = i;
-                if (directive.equals("def")) {
+                handleDirective(line, i);
+                return;
+            }
+        }
+        handleDirective(line, line.length());
 
-                    while (i < line.length()) {
-                        if (!isValidVariableNameChar(line.charAt(i))) {
-                            lineVisitor.invalidVariableNameChar(i);
-                            return;
-                        }
-                        i++;
-                    }
-                    lineVisitor.defineVariable(line.substring(start).toLowerCase());
+    }
+
+    private void handleDirective(String line, int i) throws IOException {
+        String directive = line.substring(1, i).toLowerCase();
+        if (directive.length() == 0) {
+            lineVisitor.expectedDirectiveName(i);
+            return;
+        }
+        if (i < line.length() && !isSeperator(line.charAt(i))) {
+            lineVisitor.unexpectedCharacter(i);
+        }
+        while (i < line.length() && isSeperator(line.charAt(i))){
+            ++i;
+        }
+        final int start = i;
+        if (directive.equals("def")) {
+
+            while (i < line.length()) {
+                if (!isValidVariableNameChar(line.charAt(i))) {
+                    lineVisitor.invalidVariableNameChar(i);
                     return;
                 }
-                if (directive.equals("time")) {
-                    while (i < line.length()) {
+                i++;
+            }
+            lineVisitor.defineVariable(line.substring(start).toLowerCase());
+            return;
+        }
+        if (directive.equals("time")) {
+            while (i < line.length()) {
+                if (!Character.isDigit(line.charAt(i))){
+                    lineVisitor.expectedDigit(i);
+                    return;
+                }
+                ++i;
+            }
+            lineVisitor.maxProcessorSpeed(Integer.parseInt(line.substring(start)));
+            return;
+        }
+        if (directive.equals("msg")) {
+            lineVisitor.setMessage(line.substring(i));
+            return;
+        }
+        if (directive.equals("config")) {
+            while (i < line.length()) {
+                if (line.charAt(i) == '=') {
+                    String name = line.substring(start, i);
+                    int valueStart = ++i;
+                    while (i < line.length() && !isSeperator(line.charAt(i))) {
                         if (!Character.isDigit(line.charAt(i))){
                             lineVisitor.expectedDigit(i);
                             return;
                         }
                         ++i;
                     }
-                    lineVisitor.maxProcessorSpeed(Integer.parseInt(line.substring(start)));
+                    lineVisitor.setConfig(name, Integer.parseInt(line.substring(valueStart, i)));
                     return;
                 }
-                if (directive.equals("msg")) {
-                    lineVisitor.setMessage(line.substring(i));
+                if (!Character.isLetter(line.charAt(i))) {
+                    lineVisitor.expectedDeviceName(i);
                     return;
                 }
-                if (directive.equals("config")) {
-                    while (i < line.length()) {
-                        if (line.charAt(i) == '=') {
-                            String name = line.substring(start, i);
-                            int valueStart = ++i;
-                            while (i < line.length() && !isSeperator(line.charAt(i))) {
-                                if (!Character.isDigit(line.charAt(i))){
-                                    lineVisitor.expectedDigit(i);
-                                    return;
-                                }
-                                ++i;
-                            }
-                            lineVisitor.setConfig(name, Integer.parseInt(line.substring(valueStart, i)));
-                            return;
-                        }
-                        if (!Character.isLetter(line.charAt(i))) {
-                            lineVisitor.expectedDeviceName(i);
-                            return;
-                        }
-                        ++i;
-                    }
-                }
+                ++i;
             }
+            return;
         }
+        if (directive.equals("end")) {
+            stopProcessing();
+            return;
+        }
+        lineVisitor.unknownDirective(directive);
+    }
+
+    private void stopProcessing() {
+        stopProcessing = true;
     }
 
     private boolean isValidVariableNameChar(char c) {

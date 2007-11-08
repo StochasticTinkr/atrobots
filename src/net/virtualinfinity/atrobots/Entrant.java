@@ -92,4 +92,8 @@ public class Entrant {
     public void setTotalDeaths(int totalDeaths) {
         this.totalDeaths = totalDeaths;
     }
+
+    public Program getProgram() {
+        return program;
+    }
 }

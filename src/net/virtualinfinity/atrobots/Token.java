@@ -19,10 +19,11 @@ public abstract class Token {
             return new Indirect(parse(lineNumber, token.substring(1, token.length()-2)));
         }
         if (token.startsWith("@")) {
-            return new Indirect(new Constant(token.substring(1)));
+            return new Indirect(new Constant(AtRobotLineLexer.parseNumber(token.substring(1))));
         }
-        if (Character.isDigit(token.charAt(0))) {
-            return new Constant(token);
+        if (Character.isDigit(token.charAt(0)) ||
+                (token.charAt(0) == '-' && token.length() > 1 &&  Character.isDigit(token.charAt(1)))) {
+            return new Constant(AtRobotLineLexer.parseNumber(token));
         }
         if (token.charAt(0) == '!') {
             return new Label(token);
@@ -64,8 +65,8 @@ public abstract class Token {
     private static class Constant extends Token {
         private int value;
 
-        public Constant(String token) {
-            value = AtRobotLineLexer.parseNumber(token);
+        public Constant(int value) {
+            this.value = value;
         }
 
         public short getValue(Map<String, EntrantLineVisitor.Symbol> symbols) {

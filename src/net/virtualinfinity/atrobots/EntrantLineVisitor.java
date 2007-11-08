@@ -156,6 +156,10 @@ public class EntrantLineVisitor implements LineVisitor {
         addMicrocodeToProgram(tokens);
     }
 
+    public void unknownDirective(String directive) {
+        errors.add("Unknown directive: #" + directive, lexer.getLineNumber());
+    }
+
     private void addMicrocodeToProgram(List<Token> tokens) {
         programCode.set(programCode.size()-1, getMicrocodeFor(tokens));
     }

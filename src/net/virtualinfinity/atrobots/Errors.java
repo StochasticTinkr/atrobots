@@ -45,4 +45,12 @@ public class Errors {
     public void addAll(Errors result) {
         messages.addAll(result.messages);
     }
+
+    public void dumpErrors() {
+        if (hasErrors()) {
+            for (String m: messages) {
+                System.out.println(m);
+            }
+        }
+    }
 }

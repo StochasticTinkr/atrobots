@@ -21,4 +21,5 @@ public interface LineVisitor {
     void machineCode(int[] values);
     void label(String line);
     void tokenizedLine(List<Token> tokens);
+    void unknownDirective(String directive);
 }

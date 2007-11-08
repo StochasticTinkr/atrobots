@@ -9,9 +9,15 @@ public class EntrantFactory {
     private File sourceFile;
     private HardwareSpecification hardwareSpecification;
     private Program program;
+    private String name;
 
     public EntrantFactory(File sourceFile) {
         this.sourceFile = sourceFile;
+        name = sourceFile.getName();
+    }
+
+    public EntrantFactory(String name) {
+        this.name = name;
     }
 
     public Errors compile() throws IOException {
@@ -23,7 +29,7 @@ public class EntrantFactory {
         }
     }
 
-    private Errors compile(InputStream in) throws IOException {
+    public Errors compile(InputStream in) throws IOException {
         final LineNumberReader reader = new LineNumberReader(new InputStreamReader(in));
         try {
             return compile(reader);
@@ -52,7 +58,7 @@ public class EntrantFactory {
     }
 
     public String getName() {
-        return sourceFile.getName();
+        return name;
     }
 
     private Program getProgram() {
