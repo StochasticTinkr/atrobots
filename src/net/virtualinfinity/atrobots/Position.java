@@ -33,4 +33,8 @@ public class Position {
     public Vector getVectorTo(Position position) {
         return Vector.createCartesian(getX().minus(position.getX()), getY().minus(position.getY()));
     }
- }
+
+    Vector getVector() {
+        return vector;
+    }
+}

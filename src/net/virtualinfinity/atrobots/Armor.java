@@ -5,6 +5,7 @@ package net.virtualinfinity.atrobots;
  */
 public class Armor {
     private double percentRemaining;
+    private double remaining;
 
     public Armor() {
     }
@@ -23,5 +24,9 @@ public class Armor {
 
     public void setRemaining(double remaining) {
         percentRemaining = 0;
+    }
+
+    public double getRemaining() {
+        return remaining;
     }
 }

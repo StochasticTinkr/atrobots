@@ -37,4 +37,16 @@ public class Heading {
     public void setAngle(Angle angle) {
         this.angle = angle;
     }
+
+    public void moveToward(Heading desiredHeading, Angle maxDelta) {
+        if (AngleBracket.around(angle, maxDelta).contains(desiredHeading.getAngle())) {
+            angle = desiredHeading.getAngle();
+        } else if (angle.clockwiseIsCloserTo(desiredHeading.getAngle())) {
+            angle = angle.clockwise(maxDelta);
+        } else {
+            angle = angle.counterClockwise(maxDelta);
+        }
+
+    }
+
 }

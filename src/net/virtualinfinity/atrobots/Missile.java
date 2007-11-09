@@ -11,4 +11,11 @@ public class Missile extends ArenaObject {
         this.position.copyFrom(position);
         this.heading.setAngle(angle);
     }
+
+    protected ArenaObjectSnapshot createSpecificSnapshot() {
+        return new MissileSnapshot();
+    }
+
+    private static class MissileSnapshot extends ArenaObjectSnapshot {
+    }
 }

@@ -20,6 +20,7 @@ public class Computer implements ComputerErrorHandler {
     private HardwareBus hardwareBus;
     private Map<Integer, Integer> jumpTable;
     private CommunicationsQueue commQueue;
+    private int cyclesPerSimCycle = 5;
 
     public Computer(Memory memory, int stackSize) {
         this.memory = memory;
@@ -235,6 +236,14 @@ public class Computer implements ComputerErrorHandler {
 
     public ComputerErrorHandler getErrorHandler() {
         return this;
+    }
+
+    public void update(Duration duration) {
+        cycles += duration.getCycles() * getCyclesPerSimCycle();
+    }
+
+    public int getCyclesPerSimCycle() {
+        return cyclesPerSimCycle;
     }
 
     enum Microcode {

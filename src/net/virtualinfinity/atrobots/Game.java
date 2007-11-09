@@ -5,7 +5,9 @@ package net.virtualinfinity.atrobots;
  */
 public class Game {
     private Round round;
+    private int roundNumber = 0;
     private int totalRounds;
+    private SimulationFrameBuffer frameBuffer = new SimulationFrameBuffer();
 
     public Game(int totalRounds) {
         this.totalRounds = totalRounds;
@@ -23,6 +25,11 @@ public class Game {
     }
 
     public void nextRound() {
-        round = new Round(1);
+        round = new Round(++roundNumber);
+        round.getArena().setSimulationFrameBuffer(frameBuffer);
+    }
+
+    public void addSimulationObserver(SimulationObserver observer) {
+        frameBuffer.addSimulationObserver(observer);
     }
 }

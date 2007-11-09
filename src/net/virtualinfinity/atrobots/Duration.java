@@ -5,6 +5,7 @@ package net.virtualinfinity.atrobots;
  */
 public final class Duration {
     private final int cycles;
+    public static final Duration ONE_CYCLE = Duration.fromCycles(1);
 
     private Duration(int cycles) {
         this.cycles = cycles;
@@ -20,5 +21,9 @@ public final class Duration {
 
     public static Duration fromCycles(int cycles) {
         return new Duration(cycles);
+    }
+
+    public Duration minus(Duration duration) {
+        return new Duration(getCycles() - duration.getCycles());
     }
 }

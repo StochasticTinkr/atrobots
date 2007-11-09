@@ -23,6 +23,7 @@ public class Robot extends ArenaObject implements Resetable {
     private boolean overburn;
     private HardwareBus hardwareBus;
     private final LastScanResult lastScanResult = new LastScanResult();
+    private static final Angle STEERING_SPEED = Angle.fromBygrees(4);
 
     {
         position.setOdometer(odometer);
@@ -231,5 +232,44 @@ public class Robot extends ArenaObject implements Resetable {
             getComputer().getRegisters().getTargetId().set((short) scanResult.getMatch().getTransponder().getId());
         }
         return scanResult;
+    }
+
+    protected ArenaObjectSnapshot createSpecificSnapshot() {
+        final RobotSnapshot robotSnapshot = new RobotSnapshot();
+        robotSnapshot.setTemperature(heat.getTemperature());
+        robotSnapshot.setArmor(armor.getRemaining());
+        robotSnapshot.setOverburn(overburn);
+        robotSnapshot.setActiveShield(shield.isActive());
+        return robotSnapshot;
+    }
+
+    private static class RobotSnapshot extends ArenaObjectSnapshot {
+        private Temperature temperature;
+        private double armor;
+        private boolean overburn;
+        private boolean activeShield;
+
+        public void setTemperature(Temperature temperature) {
+            this.temperature = temperature;
+        }
+
+        public void setArmor(double armor) {
+            this.armor = armor;
+        }
+
+        public void setOverburn(boolean overburn) {
+            this.overburn = overburn;
+        }
+
+        public void setActiveShield(boolean activeShield) {
+            this.activeShield = activeShield;
+        }
+    }
+
+    public void update(Duration duration) {
+        super.update(duration);
+        getHeading().moveToward(getDesiredHeading(), STEERING_SPEED);
+        // TODO: Handle throttle.
+        getComputer().update(duration);
     }
 }

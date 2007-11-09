@@ -64,4 +64,8 @@ public final class Angle {
         final double difference = getNormalizedRadians() - clockwiseBound.getNormalizedRadians();
         return difference < 0 ? difference + Math.PI * 2.0 : difference;
     }
+
+    boolean clockwiseIsCloserTo(Angle angle) {
+        return getNormalizedRadiansClockwiseTo(angle) < Math.PI;
+    }
 }

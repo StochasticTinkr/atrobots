@@ -13,4 +13,8 @@ public class Heat {
             }
         };
     }
+
+    public Temperature getTemperature() {
+        return temperature;
+    }
 }
