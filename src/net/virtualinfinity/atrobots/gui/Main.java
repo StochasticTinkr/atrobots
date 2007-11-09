@@ -29,9 +29,6 @@ public class Main implements Runnable {
         initializeSystemLookAndFeel();
         mainFrame = new JFrame("AT-Robots 2 Clone 0.0.01");
         mainFrame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-        mainFrame.setLocationByPlatform(true);
-        mainFrame.setLocationRelativeTo(null);
-
         menubar = new JMenuBar();
         mainFrame.setJMenuBar(menubar);
         menubar.add(createFileMenu());
@@ -53,10 +50,12 @@ public class Main implements Runnable {
         arenaPane.setOpaque(true);
         arenaPane.setBorder(BorderFactory.createBevelBorder(BevelBorder.LOWERED, Color.gray, Color.darkGray));
         arenaPane.setPreferredSize(new Dimension(500, 500));
-        mainFrame.pack();
-        mainFrame.setVisible(true);
         game = new Game(1000);
         game.addSimulationObserver(arenaPane);
+        mainFrame.setLocationRelativeTo(null);
+        mainFrame.setLocationByPlatform(true);
+        mainFrame.pack();
+        mainFrame.setVisible(true);
     }
 
     private JMenu createFileMenu() {
