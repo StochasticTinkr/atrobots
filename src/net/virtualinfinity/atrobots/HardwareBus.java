@@ -9,14 +9,24 @@ import java.util.ArrayList;
  */
 public class HardwareBus {
 
-    private final Map<Integer, PortHandler> ports;
-    private final Map<Integer, InterruptHandler> interrupts;
+    private Map<Integer, PortHandler> ports;
+    private Map<Integer, InterruptHandler> interrupts;
     private final Collection<Resetable> resetables = new ArrayList<Resetable>();
     private final Heading desiredHeading = new Heading();
 
-    public HardwareBus(Map<Integer, PortHandler> ports,
-                       Map<Integer, InterruptHandler> interrupts) {
+    public Map<Integer, PortHandler> getPorts() {
+        return ports;
+    }
+
+    public void setPorts(Map<Integer, PortHandler> ports) {
         this.ports = ports;
+    }
+
+    public Map<Integer, InterruptHandler> getInterrupts() {
+        return interrupts;
+    }
+
+    public void setInterrupts(Map<Integer, InterruptHandler> interrupts) {
         this.interrupts = interrupts;
     }
 

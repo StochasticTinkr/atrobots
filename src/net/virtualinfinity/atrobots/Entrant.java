@@ -18,20 +18,17 @@ public class Entrant {
     public Robot createRobot() {
         final Robot robot = new Robot();
         robot.setEntrant(this);
-        hardwareSpecification.configureRobot(robot);
         robot.setComputer(createComputer());
-        robot.setHardwareBus(createHardwareBus(robot));
+        hardwareSpecification.configureRobot(robot);
+        robot.setHardwareBus(new HardwareBus());
+        robot.getHardwareBus().setPorts(createPortHandlers(robot));
+        robot.getHardwareBus().setInterrupts(createInterruptHandlers(robot));
         robot.getHardwareBus().addResetable(robot.getTurret().getScanner());
         robot.getHardwareBus().addResetable(robot.getTurret());
         robot.getHardwareBus().addResetable(robot.getOdometer());
         robot.getHardwareBus().addResetable(robot);
         robot.getHardwareBus().addResetable(robot.getShield());
         return robot;
-    }
-
-    private HardwareBus createHardwareBus(Robot robot) {
-        return new HardwareBus(createPortHandlers(robot),
-                createInterruptHandlers(robot));
     }
 
     private Map<Integer, PortHandler> createPortHandlers(Robot robot) {

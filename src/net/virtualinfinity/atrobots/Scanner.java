@@ -82,4 +82,8 @@ public class Scanner implements Resetable {
     private void setAccuracy(int accuracy) {
         this.accuracy = accuracy;
     }
+
+    public void setRobot(Robot robot) {
+        this.robot = robot;
+    }
 }

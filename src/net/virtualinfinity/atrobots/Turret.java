@@ -33,4 +33,8 @@ public class Turret implements Resetable {
         setKeepshift(false);
 
     }
+
+    public void setScanner(Scanner scanner) {
+        this.scanner = scanner;
+    }
 }

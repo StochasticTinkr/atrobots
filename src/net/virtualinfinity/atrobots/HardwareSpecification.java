@@ -55,6 +55,8 @@ public class HardwareSpecification {
         robot.getTransceiver().setCommQueue(robot.getComputer().getCommQueue());
         robot.getComputer().getCommQueue().setComputerErrorHandler(robot.getComputer().getErrorHandler());
         robot.getComputer().getMemory().setErrorHandler(robot.getComputer().getErrorHandler());
+        robot.getTurret().setScanner(new Scanner());
+        robot.getTurret().getScanner().setRobot(robot);
 
     }
 

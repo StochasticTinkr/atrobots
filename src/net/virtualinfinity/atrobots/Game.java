@@ -21,4 +21,8 @@ public class Game {
 
     public void dispose() {
     }
+
+    public void nextRound() {
+        round = new Round(1);
+    }
 }
