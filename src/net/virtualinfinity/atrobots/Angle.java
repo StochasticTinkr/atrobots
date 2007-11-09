@@ -1,7 +1,5 @@
 package net.virtualinfinity.atrobots;
 
-import javax.management.Query;
-
 /**
  * @author Daniel Pitts
  */
@@ -45,7 +43,7 @@ public final class Angle {
     }
 
     public int getBygrees() {
-        return (int)Math.round(64 - (radians * 128 / Math.PI)) & 255;
+        return (int) Math.round(64 - (radians * 128 / Math.PI)) & 255;
     }
 
     public Angle clockwise(Angle angle) {
@@ -57,7 +55,7 @@ public final class Angle {
     }
 
     public byte getSignedBygrees() {
-        return (byte)getBygrees();
+        return (byte) getBygrees();
     }
 
     public double getNormalizedRadiansClockwiseTo(Angle clockwiseBound) {
@@ -67,5 +65,9 @@ public final class Angle {
 
     boolean clockwiseIsCloserTo(Angle angle) {
         return getNormalizedRadiansClockwiseTo(angle) < Math.PI;
+    }
+
+    public static Angle fromRelativeBygrees(int bygrees) {
+        return Angle.fromRadians(bygrees * Math.PI / 128);
     }
 }

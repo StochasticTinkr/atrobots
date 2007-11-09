@@ -1,7 +1,8 @@
 package net.virtualinfinity.atrobots;
 
 import java.awt.*;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Collection;
 
 /**
  * @author Daniel Pitts
@@ -23,8 +24,8 @@ public class SimulationFrameBuffer {
         currentFrame = frameToBuild;
         EventQueue.invokeLater(new Runnable() {
             public void run() {
-                for (SimulationObserver observer: observers) {
-                    observer.frameAvailable(this);
+                for (SimulationObserver observer : observers) {
+                    observer.frameAvailable(SimulationFrameBuffer.this);
                 }
             }
         });
@@ -44,5 +45,9 @@ public class SimulationFrameBuffer {
                 }
             });
         }
+    }
+
+    public void removeSimulationObserver(SimulationObserver observer) {
+        observers.remove(observer);
     }
 }

@@ -1,7 +1,5 @@
 package net.virtualinfinity.atrobots;
 
-import java.util.List;
-
 /**
  * @author Daniel Pitts
  */
@@ -62,7 +60,7 @@ public class Scanner implements Resetable {
             }
 
             public void write(short value) {
-                setScanArc(Angle.fromBygrees(Math.max(0, Math.min(64, value))));
+                setScanArc(Angle.fromRelativeBygrees(Math.max(0, Math.min(64, value))));
             }
         };
     }

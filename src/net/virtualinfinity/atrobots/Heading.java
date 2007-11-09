@@ -4,7 +4,7 @@ package net.virtualinfinity.atrobots;
  * @author Daniel Pitts
  */
 public class Heading {
-    private Angle angle;
+    private Angle angle = Angle.fromBygrees((int) (Math.random() * 256));
 
     public Vector times(Distance distance) {
         return getAngle().toVector(distance);
@@ -25,7 +25,7 @@ public class Heading {
     public PortHandler getRotationPort() {
         return new PortHandler() {
             public void write(short value) {
-                rotate(Angle.fromBygrees(value));
+                rotate(Angle.fromRelativeBygrees(value));
             }
         };
     }

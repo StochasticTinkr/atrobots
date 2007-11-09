@@ -4,7 +4,7 @@ package net.virtualinfinity.atrobots;
  * @author Daniel Pitts
  */
 public class Speed {
-    private DistanceOverTime distanceOverTime;
+    private DistanceOverTime distanceOverTime = new DistanceOverTime(Distance.fromMeters(0), Duration.ONE_CYCLE);
 
     public Distance times(Duration duration) {
         return distanceOverTime.times(duration);

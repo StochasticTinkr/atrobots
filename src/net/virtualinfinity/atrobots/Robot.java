@@ -1,5 +1,8 @@
 package net.virtualinfinity.atrobots;
 
+import java.awt.*;
+import java.awt.geom.GeneralPath;
+
 /**
  * @author Daniel Pitts
  */
@@ -23,7 +26,7 @@ public class Robot extends ArenaObject implements Resetable {
     private boolean overburn;
     private HardwareBus hardwareBus;
     private final LastScanResult lastScanResult = new LastScanResult();
-    private static final Angle STEERING_SPEED = Angle.fromBygrees(4);
+    private static final Angle STEERING_SPEED = Angle.fromRelativeBygrees(4);
 
     {
         position.setOdometer(odometer);
@@ -240,6 +243,7 @@ public class Robot extends ArenaObject implements Resetable {
         robotSnapshot.setArmor(armor.getRemaining());
         robotSnapshot.setOverburn(overburn);
         robotSnapshot.setActiveShield(shield.isActive());
+        robotSnapshot.setHeading(heading.getAngle());
         return robotSnapshot;
     }
 
@@ -248,6 +252,7 @@ public class Robot extends ArenaObject implements Resetable {
         private double armor;
         private boolean overburn;
         private boolean activeShield;
+        private Angle heading;
 
         public void setTemperature(Temperature temperature) {
             this.temperature = temperature;
@@ -263,6 +268,24 @@ public class Robot extends ArenaObject implements Resetable {
 
         public void setActiveShield(boolean activeShield) {
             this.activeShield = activeShield;
+        }
+
+        public void paint(Graphics2D g2d) {
+            g2d.setPaint(Color.red);
+//            g2d.draw(new Line2D.Double(getX()-10, getY() - 10, getX() + 10, getY() + 10));
+            final GeneralPath path = new GeneralPath();
+            path.moveTo(getX() + heading.cosine() * 25, getY() + heading.sine() * 25);
+            Angle cc = heading.counterClockwise(Angle.fromRelativeBygrees(32));
+            Angle c = heading.clockwise(Angle.fromRelativeBygrees(32));
+            path.lineTo(getX() + cc.cosine() * 12, getY() + cc.sine() * 12);
+            path.lineTo(getX() + c.cosine() * 12, getY() + c.sine() * 12);
+            path.closePath();
+            g2d.fill(path);
+            // TODO:
+        }
+
+        public void setHeading(Angle heading) {
+            this.heading = heading;
         }
     }
 

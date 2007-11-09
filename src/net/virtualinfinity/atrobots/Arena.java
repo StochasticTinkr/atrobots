@@ -5,7 +5,7 @@ import java.util.Arrays;
 import java.util.Collection;
 
 /**
- @author Daniel Pitts
+ * @author Daniel Pitts
  */
 public class Arena {
     private final Collection<Robot> robots = new ArrayList<Robot>();
@@ -44,7 +44,7 @@ public class Arena {
         Vector vectorToClosest = null;
         Distance closestDistance = maxDistance;
         Robot closest = null;
-        for (Robot robot: robots) {
+        for (Robot robot : robots) {
             if (robot == ignore) {
                 continue;
             }
@@ -71,8 +71,8 @@ public class Arena {
 
     public void buildFrame() {
         simulationFrameBuffer.beginFrame();
-        for (Collection<? extends ArenaObject> objectCollection: allArenaObjectCollections) {
-            for (ArenaObject object: objectCollection) {
+        for (Collection<? extends ArenaObject> objectCollection : allArenaObjectCollections) {
+            for (ArenaObject object : objectCollection) {
                 simulationFrameBuffer.addObject(object.getSnapshot());
             }
         }
@@ -82,8 +82,8 @@ public class Arena {
     private void updateSimulation(Duration time) {
         while (time.getCycles() > 0) {
             time = time.minus(Duration.ONE_CYCLE);
-            for (Collection<? extends ArenaObject> objectCollection: allArenaObjectCollections) {
-                for (ArenaObject object: objectCollection) {
+            for (Collection<? extends ArenaObject> objectCollection : allArenaObjectCollections) {
+                for (ArenaObject object : objectCollection) {
                     object.update(Duration.ONE_CYCLE);
                 }
             }
@@ -92,5 +92,10 @@ public class Arena {
 
     public void setSimulationFrameBuffer(SimulationFrameBuffer simulationFrameBuffer) {
         this.simulationFrameBuffer = simulationFrameBuffer;
+    }
+
+    public void addRobot(Robot robot) {
+        robot.getPosition().copyFrom(Position.random(0.0, 0.0, 1000.0, 1000.0));
+        robots.add(robot);
     }
 }

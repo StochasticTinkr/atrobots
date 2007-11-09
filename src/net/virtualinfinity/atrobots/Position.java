@@ -1,5 +1,7 @@
 package net.virtualinfinity.atrobots;
 
+import java.util.Random;
+
 /**
  * @author Daniel Pitts
  */
@@ -36,5 +38,14 @@ public class Position {
 
     Vector getVector() {
         return vector;
+    }
+
+    public static Position random(double lowerX, double lowerY, double higherX, double higherY) {
+        final Position position = new Position();
+        Random random = new Random();
+        position.vector = Vector.createCartesian(
+                Distance.fromMeters(lowerX + random.nextDouble() * (higherX - lowerX)),
+                Distance.fromMeters(lowerY + random.nextDouble() * (higherY - lowerY)));
+        return position;
     }
 }

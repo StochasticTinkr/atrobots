@@ -23,4 +23,8 @@ public class Round {
     public int getNumber() {
         return number;
     }
+
+    public void step() {
+        arena.simulate(Duration.ONE_CYCLE);
+    }
 }

@@ -1,22 +1,16 @@
 package net.virtualinfinity.atrobots.gui;
 
-import net.virtualinfinity.atrobots.EntrantFactory;
 import net.virtualinfinity.atrobots.Game;
 
 import javax.swing.*;
-import javax.swing.table.AbstractTableModel;
-import javax.swing.table.TableModel;
 import java.awt.event.*;
-import java.io.File;
-import java.util.ArrayList;
-import java.util.List;
 
 public class NewGameDialog extends JDialog {
     private JPanel contentPane;
     private JButton buttonOK;
     private JButton buttonCancel;
     private JSpinner numberOfRounds;
-    private JSpinner spinner1;
+    private JSpinner maxCpu;
     private Game game;
 
     public NewGameDialog() {
@@ -54,7 +48,7 @@ public class NewGameDialog extends JDialog {
 
     private void onOK() {
 // add your code here
-        game = new Game(((Number)numberOfRounds.getValue()).intValue());
+        game = new Game(((Number) numberOfRounds.getValue()).intValue());
 
         dispose();
     }

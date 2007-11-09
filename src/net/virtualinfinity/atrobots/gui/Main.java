@@ -1,26 +1,29 @@
 package net.virtualinfinity.atrobots.gui;
 
+import net.virtualinfinity.atrobots.Entrant;
 import net.virtualinfinity.atrobots.EntrantFactory;
-import net.virtualinfinity.atrobots.Game;
 import net.virtualinfinity.atrobots.Errors;
+import net.virtualinfinity.atrobots.Game;
 
 import javax.swing.*;
+import javax.swing.border.BevelBorder;
 import java.awt.*;
 import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.io.File;
+import java.io.FilenameFilter;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.concurrent.ExecutionException;
 
 /**
  * @author Daniel Pitts
  */
-public class Main implements Runnable{
+public class Main implements Runnable {
     private JFrame mainFrame;
     private JMenuBar menubar;
     private JMenu menu;
     private Game game;
+    private ArenaPane arenaPane;
 
     public void run() {
         initializeSystemLookAndFeel();
@@ -32,8 +35,28 @@ public class Main implements Runnable{
         menubar = new JMenuBar();
         mainFrame.setJMenuBar(menubar);
         menubar.add(createFileMenu());
+        menubar.add(new JMenuItem(new AbstractAction("Step") {
+            public void actionPerformed(ActionEvent e) {
+                game.stepRound();
+                new Timer(100, new ActionListener() {
+                    public void actionPerformed(ActionEvent e) {
+                        game.stepRound();
+                    }
+                })
+//                        .start()
+                        ;
+            }
+        }));
+        arenaPane = new ArenaPane();
+        mainFrame.getContentPane().add(arenaPane, BorderLayout.CENTER);
+        arenaPane.setBackground(Color.black);
+        arenaPane.setOpaque(true);
+        arenaPane.setBorder(BorderFactory.createBevelBorder(BevelBorder.LOWERED, Color.gray, Color.darkGray));
+        arenaPane.setPreferredSize(new Dimension(500, 500));
         mainFrame.pack();
         mainFrame.setVisible(true);
+        game = new Game(1000);
+        game.addSimulationObserver(arenaPane);
     }
 
     private JMenu createFileMenu() {
@@ -50,6 +73,7 @@ public class Main implements Runnable{
                         game.dispose();
                     }
                     game = newGame;
+                    game.addSimulationObserver(arenaPane);
                 }
             }
         });
@@ -58,40 +82,18 @@ public class Main implements Runnable{
                 final JFileChooser chooser = new JFileChooser();
                 chooser.setMultiSelectionEnabled(true);
                 if (chooser.showOpenDialog(mainFrame) == JFileChooser.APPROVE_OPTION) {
-                    final SwingWorker<Errors, Object> worker = new SwingWorker<Errors, Object>() {
-                        protected Errors doInBackground() throws Exception {
-                            Errors errors = new Errors();
-                            for (File file : chooser.getSelectedFiles()) {
-                                EntrantFactory factory = new EntrantFactory(file);
-                                try {
-                                    System.out.println("Loading " + file);
-                                    final Errors result = factory.compile();
-                                    if (result.hasErrors()) {
-                                        errors.info("Errors in " + file.getName());
-                                        errors.addAll(result);
-                                    }
-                                } catch (IOException e1) {
-                                    errors.info("Errors in " + file.getName());
-                                    errors.info(e1.getMessage());
-                                } catch (Throwable t) {
-                                    errors.info("Compiler error in " + file.getName());
-                                    errors.info(t.getMessage());
-                                    t.printStackTrace();
-                                }
-                            }
-                            return errors;
-                        }
-
-                        protected void done() {
-                            try {
-                                get().showErrorDialog("Errors", mainFrame);
-                            } catch (InterruptedException e1) {
-                            } catch (ExecutionException e1) {
-                            }
-                        }
-                    };
-                    worker.execute();
+                    new EntrantLoader(chooser.getSelectedFiles()).execute();
                 }
+            }
+        });
+        menu.add(new AbstractAction("Add all original") {
+            public void actionPerformed(ActionEvent e) {
+                new EntrantLoader(new File("original").listFiles(new FilenameFilter() {
+                    public boolean accept(File dir, String name) {
+                        return name.toLowerCase().endsWith(".at2");
+                    }
+                })).execute();
+
             }
         });
         return menu;
@@ -111,5 +113,48 @@ public class Main implements Runnable{
 
     public static void main(String[] args) {
         EventQueue.invokeLater(new Main());
+    }
+
+    private class EntrantLoader extends SwingWorker<Errors, Entrant> {
+        private final File[] selectedFiles;
+
+        public EntrantLoader(File[] selectedFiles) {
+            this.selectedFiles = selectedFiles;
+        }
+
+        protected Errors doInBackground() throws Exception {
+            Errors errors = new Errors();
+            for (File file : selectedFiles) {
+                EntrantFactory factory = new EntrantFactory(file);
+                try {
+                    System.out.println("Loading " + file);
+                    final Errors result = factory.compile();
+                    if (result.hasErrors()) {
+                        errors.info("Errors in " + file.getName());
+                        errors.addAll(result);
+                    }
+                    if (game != null) {
+                        game.addEntrant(factory.createEntrant());
+                    }
+                } catch (IOException e1) {
+                    errors.info("Errors in " + file.getName());
+                    errors.info(e1.getMessage());
+                } catch (Throwable t) {
+                    errors.info("Compiler error in " + file.getName());
+                    errors.info(t.getMessage());
+                    t.printStackTrace();
+                }
+            }
+            return errors;
+        }
+
+        protected void done() {
+            try {
+                get().showErrorDialog("Errors", mainFrame);
+                game.nextRound();
+            } catch (InterruptedException e1) {
+            } catch (ExecutionException e1) {
+            }
+        }
     }
 }
