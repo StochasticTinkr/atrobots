@@ -30,7 +30,7 @@ public class Heading {
     public PortHandler getRotationPort() {
         return new PortHandler() {
             public void write(short value) {
-                rotate(RelativeAngle.fromCounterClockwiseBygrees(value));
+                rotate(RelativeAngle.fromBygrees(value));
             }
         };
     }

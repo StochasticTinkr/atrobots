@@ -27,7 +27,7 @@ public class Robot extends ArenaObject implements Resetable {
     private boolean overburn;
     private HardwareBus hardwareBus;
     private final LastScanResult lastScanResult = new LastScanResult();
-    private static final RelativeAngle STEERING_SPEED = RelativeAngle.fromCounterClockwiseBygrees(8);
+    private static final RelativeAngle STEERING_SPEED = RelativeAngle.fromBygrees(8);
 
     {
         position.setOdometer(odometer);
@@ -122,7 +122,7 @@ public class Robot extends ArenaObject implements Resetable {
     public PortHandler getAimTurretPort() {
         return new PortHandler() {
             public void write(short value) {
-                setTurretOffset(RelativeAngle.fromCounterClockwiseBygrees(value));
+                setTurretOffset(RelativeAngle.fromBygrees(value));
             }
         };
     }

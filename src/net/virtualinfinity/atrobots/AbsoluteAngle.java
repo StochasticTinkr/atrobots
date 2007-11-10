@@ -65,7 +65,7 @@ public class AbsoluteAngle {
 
     public RelativeAngle getAngleClockwiseTo(AbsoluteAngle clockwiseValue) {
         final double difference = clockwiseValue.getNormalizedRadians() - getNormalizedRadians();
-        return RelativeAngle.fromCounterClockwiseRadians(difference < 0 ? difference + Math.PI * 2.0 : difference);
+        return RelativeAngle.fromRadians(difference < 0 ? difference + Math.PI * 2.0 : difference);
     }
 
     public boolean clockwiseIsCloserTo(AbsoluteAngle angle) {
@@ -73,7 +73,7 @@ public class AbsoluteAngle {
     }
 
     public static RelativeAngle fromRelativeBygrees(int bygrees) {
-        return RelativeAngle.fromCounterClockwiseBygrees(bygrees);
+        return RelativeAngle.fromBygrees(bygrees);
     }
 
     public String toString() {
@@ -81,7 +81,7 @@ public class AbsoluteAngle {
     }
 
     public RelativeAngle counterClockwiseFromStandardOrigin() {
-        return RelativeAngle.fromCounterClockwiseRadians(getRadians());
+        return RelativeAngle.fromRadians(getRadians());
     }
 
     public double getDegrees() {

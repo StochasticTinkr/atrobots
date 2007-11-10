@@ -19,7 +19,7 @@ public class Sonar {
                 if (angle == null) {
                     return Short.MIN_VALUE;
                 }
-                return (short) AngleBracket.around(angle, RelativeAngle.fromCounterClockwiseBygrees(64)).randomAngleBetween().getBygrees();
+                return (short) AngleBracket.around(angle, RelativeAngle.fromBygrees(64)).randomAngleBetween().getBygrees();
             }
         };
     }

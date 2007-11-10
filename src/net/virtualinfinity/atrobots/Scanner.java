@@ -60,7 +60,7 @@ public class Scanner implements Resetable {
             }
 
             public void write(short value) {
-                setScanArc(RelativeAngle.fromCounterClockwiseBygrees(Math.max(0, Math.min(64, value))));
+                setScanArc(RelativeAngle.fromBygrees(Math.max(0, Math.min(64, value))));
             }
         };
     }
@@ -74,7 +74,7 @@ public class Scanner implements Resetable {
     }
 
     public void reset() {
-        setScanArc(RelativeAngle.fromCounterClockwiseBygrees(8));
+        setScanArc(RelativeAngle.fromBygrees(8));
     }
 
     private void setAccuracy(int accuracy) {

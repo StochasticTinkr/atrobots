@@ -26,7 +26,7 @@ public class MissileLauncher {
     private void fireMissile(AbsoluteAngle shift) {
         final byte value = shift.getSignedBygrees();
         int bygrees = Math.max(-4, Math.min(value, 4));
-        AbsoluteAngle angle = heading.getAngle().counterClockwise(RelativeAngle.fromCounterClockwiseBygrees(bygrees));
+        AbsoluteAngle angle = heading.getAngle().counterClockwise(RelativeAngle.fromBygrees(bygrees));
         final Missile missile = new Missile(robot, position, angle);
         missile.getSpeed().setDistanceOverTime(Distance.fromMeters(32), Duration.ONE_CYCLE);
         getArena().fireMissile(missile);

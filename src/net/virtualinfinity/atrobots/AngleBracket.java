@@ -52,7 +52,7 @@ public class AngleBracket {
     public Shape toShape(Distance x, Distance y, Distance radius) {
         final Arc2D.Double arc = new Arc2D.Double();
         arc.setArcByCenter(x.getMeters(), y.getMeters(), radius.getMeters(), counterClockwiseBound.getDegrees(),
-                RelativeAngle.fromCounterClockwiseRadians(rangeSize).getDegrees(), Arc2D.PIE);
+                RelativeAngle.fromRadians(rangeSize).getDegrees(), Arc2D.PIE);
         return arc;
     }
 }
