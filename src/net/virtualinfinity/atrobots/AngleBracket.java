@@ -1,5 +1,8 @@
 package net.virtualinfinity.atrobots;
 
+import java.awt.*;
+import java.awt.geom.Arc2D;
+
 /**
  * @author Daniel Pitts
  */
@@ -44,5 +47,12 @@ public class AngleBracket {
 
     public AbsoluteAngle randomAngleBetween() {
         return AbsoluteAngle.fromRadians(counterClockwiseBound.getNormalizedRadians() + Math.random() * rangeSize);
+    }
+
+    public Shape toShape(Distance x, Distance y, Distance radius) {
+        final Arc2D.Double arc = new Arc2D.Double();
+        arc.setArcByCenter(x.getMeters(), y.getMeters(), radius.getMeters(), counterClockwiseBound.getDegrees(),
+                RelativeAngle.fromCounterClockwiseRadians(rangeSize).getDegrees(), Arc2D.PIE);
+        return arc;
     }
 }

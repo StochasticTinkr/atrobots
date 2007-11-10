@@ -83,4 +83,8 @@ public class AbsoluteAngle {
     public RelativeAngle counterClockwiseFromStandardOrigin() {
         return RelativeAngle.fromCounterClockwiseRadians(getRadians());
     }
+
+    public double getDegrees() {
+        return getRadians() / Math.PI * 360;
+    }
 }

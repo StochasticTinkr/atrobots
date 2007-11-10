@@ -54,4 +54,8 @@ public class RelativeAngle implements Comparable<RelativeAngle> {
     public int compareTo(RelativeAngle angle) {
         return Double.valueOf(getRadians()).compareTo(angle.getRadians());
     }
+
+    public double getDegrees() {
+        return getRadians() * 180 / Math.PI;
+    }
 }

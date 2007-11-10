@@ -1,5 +1,6 @@
 package net.virtualinfinity.atrobots;
 
+import java.awt.*;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
@@ -16,6 +17,7 @@ public class Arena {
     Collection<? extends Collection<? extends ArenaObject>> allArenaObjectCollections =
             Arrays.asList(mines, robots, missiles);
     private SimulationFrameBuffer simulationFrameBuffer;
+    private Collection<ArenaObjectSnapshot> scans = new ArrayList<ArenaObjectSnapshot>();
 
     public int countActiveRobots() {
         return robots.size();
@@ -40,7 +42,20 @@ public class Arena {
     }
 
 
-    public ScanResult scan(Robot ignore, Position position, AngleBracket angleBracket, Distance maxDistance) {
+    public ScanResult scan(Robot ignore, Position position, final AngleBracket angleBracket, final Distance maxDistance) {
+        final ScanResult scanResult = calculateResult(ignore, position, angleBracket, maxDistance);
+        final ArenaObjectSnapshot objectSnapshot = new ArenaObjectSnapshot() {
+            public void paint(Graphics2D g2d) {
+                g2d.setPaint(Color.white);
+                g2d.draw(angleBracket.toShape(positionVector.getX(), positionVector.getY(), maxDistance));
+            }
+        };
+        objectSnapshot.setPositionVector(position.getVector());
+        scans.add(objectSnapshot);
+        return scanResult;
+    }
+
+    private ScanResult calculateResult(Robot ignore, Position position, AngleBracket angleBracket, Distance maxDistance) {
         Vector vectorToClosest = null;
         Distance closestDistance = maxDistance;
         Robot closest = null;
@@ -76,6 +91,10 @@ public class Arena {
                 simulationFrameBuffer.addObject(object.getSnapshot());
             }
         }
+        for (ArenaObjectSnapshot snapshot : scans) {
+            simulationFrameBuffer.addObject(snapshot);
+        }
+        scans.clear();
         simulationFrameBuffer.endFrame();
     }
 
