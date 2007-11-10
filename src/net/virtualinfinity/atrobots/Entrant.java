@@ -28,6 +28,8 @@ public class Entrant {
         robot.getHardwareBus().addResetable(robot.getOdometer());
         robot.getHardwareBus().addResetable(robot);
         robot.getHardwareBus().addResetable(robot.getShield());
+        robot.getHardwareBus().setComputer(robot.getComputer());
+        robot.getHardwareBus().setRobot(robot);
         return robot;
     }
 

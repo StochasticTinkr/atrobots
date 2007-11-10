@@ -5,19 +5,24 @@ package net.virtualinfinity.atrobots;
  */
 public class Heading {
     private Angle angle = Angle.fromBygrees((int) (Math.random() * 256));
+    private boolean absolute = true;
+    private Heading relation;
 
     public Vector times(Distance distance) {
         return getAngle().toVector(distance);
     }
 
     public Angle getAngle() {
-        return angle;
+        if (absolute) {
+            return angle;
+        }
+        return angle.counterClockwise(relation.getAngle());
     }
 
     public PortHandler getCompass() {
         return new PortHandler() {
             public short read() {
-                return (short) angle.getBygrees();
+                return (short) getAngle().getBygrees();
             }
         };
     }
@@ -31,22 +36,35 @@ public class Heading {
     }
 
     private void rotate(Angle angle) {
-        setAngle(this.angle.counterClockwise(angle));
+        setAngle(this.getAngle().counterClockwise(angle));
     }
 
     public void setAngle(Angle angle) {
-        this.angle = angle;
+        if (absolute) {
+            this.angle = angle;
+            return;
+        }
+        this.angle = relation.getAngle().clockwise(angle);
     }
 
     public void moveToward(Heading desiredHeading, Angle maxDelta) {
-        if (AngleBracket.around(angle, maxDelta).contains(desiredHeading.getAngle())) {
-            angle = desiredHeading.getAngle();
-        } else if (angle.clockwiseIsCloserTo(desiredHeading.getAngle())) {
-            angle = angle.clockwise(maxDelta);
+        if (AngleBracket.around(getAngle(), maxDelta).contains(desiredHeading.getAngle())) {
+            setAngle(desiredHeading.getAngle());
+        } else if (getAngle().clockwiseIsCloserTo(desiredHeading.getAngle())) {
+            setAngle(getAngle().clockwise(maxDelta));
         } else {
-            angle = angle.counterClockwise(maxDelta);
+            setAngle(getAngle().counterClockwise(maxDelta));
         }
 
     }
 
+    public void setAbsolute(boolean absolute) {
+        Angle angle = getAngle();
+        this.absolute = absolute;
+        setAngle(angle);
+    }
+
+    public void setRelation(Heading relation) {
+        this.relation = relation;
+    }
 }

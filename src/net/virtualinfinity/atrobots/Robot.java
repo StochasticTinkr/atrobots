@@ -2,6 +2,7 @@ package net.virtualinfinity.atrobots;
 
 import java.awt.*;
 import java.awt.geom.GeneralPath;
+import java.awt.geom.Line2D;
 
 /**
  * @author Daniel Pitts
@@ -101,9 +102,13 @@ public class Robot extends ArenaObject implements Resetable {
     public PortHandler getTurretOffsetSensor() {
         return new PortHandler() {
             public short read() {
-                return (short) getTurret().getHeading().getAngle().clockwise(getHeading().getAngle()).getBygrees();
+                return (short) getTurretShift();
             }
         };
+    }
+
+    public int getTurretShift() {
+        return getTurret().getHeading().getAngle().clockwise(getHeading().getAngle()).getBygrees();
     }
 
     public Armor getArmor() {
@@ -117,7 +122,7 @@ public class Robot extends ArenaObject implements Resetable {
     public PortHandler getAimTurretPort() {
         return new PortHandler() {
             public void write(short value) {
-                setTurretOffset(Angle.fromBygrees(value));
+                setTurretOffset(Angle.fromRelativeBygrees(value));
             }
         };
     }
@@ -245,6 +250,7 @@ public class Robot extends ArenaObject implements Resetable {
         robotSnapshot.setOverburn(overburn);
         robotSnapshot.setActiveShield(shield.isActive());
         robotSnapshot.setHeading(heading.getAngle());
+        robotSnapshot.setTurretHeading(turret.getHeading().getAngle());
         return robotSnapshot;
     }
 
@@ -254,6 +260,7 @@ public class Robot extends ArenaObject implements Resetable {
         private boolean overburn;
         private boolean activeShield;
         private Angle heading;
+        private Angle turretHeading;
 
         public void setTemperature(Temperature temperature) {
             this.temperature = temperature;
@@ -273,20 +280,26 @@ public class Robot extends ArenaObject implements Resetable {
 
         public void paint(Graphics2D g2d) {
             g2d.setPaint(Color.red);
-//            g2d.draw(new Line2D.Double(getX()-10, getY() - 10, getX() + 10, getY() + 10));
             final GeneralPath path = new GeneralPath();
             path.moveTo(getX() + heading.cosine() * 25, getY() + heading.sine() * 25);
-            Angle cc = heading.counterClockwise(Angle.fromRelativeBygrees(32));
-            Angle c = heading.clockwise(Angle.fromRelativeBygrees(32));
+            Angle cc = heading.counterClockwise(Angle.fromRelativeBygrees(160));
+            Angle c = heading.clockwise(Angle.fromRelativeBygrees(160));
             path.lineTo(getX() + cc.cosine() * 12, getY() + cc.sine() * 12);
+            path.lineTo(getX(), getY());
             path.lineTo(getX() + c.cosine() * 12, getY() + c.sine() * 12);
             path.closePath();
             g2d.fill(path);
+            g2d.setPaint(Color.white);
+            g2d.draw(new Line2D.Double(getX(), getY(), getX() + turretHeading.cosine() * 30, getY() + turretHeading.sine() * 30));
             // TODO:
         }
 
         public void setHeading(Angle heading) {
             this.heading = heading;
+        }
+
+        public void setTurretHeading(Angle turretHeading) {
+            this.turretHeading = turretHeading;
         }
     }
 

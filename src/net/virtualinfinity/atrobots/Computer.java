@@ -58,6 +58,7 @@ public class Computer {
     }
 
     private void executeInstruction() {
+        hardwareBus.preInstruction();
         instructionPointer = nextInstructionPointer;
         nextInstructionPointer++;
 //        System.out.println(getInstructionString());

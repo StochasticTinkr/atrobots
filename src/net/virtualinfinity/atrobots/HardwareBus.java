@@ -1,8 +1,8 @@
 package net.virtualinfinity.atrobots;
 
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Map;
-import java.util.ArrayList;
 
 /**
  * @author Daniel Pitts
@@ -13,6 +13,8 @@ public class HardwareBus {
     private Map<Integer, InterruptHandler> interrupts;
     private final Collection<Resetable> resetables = new ArrayList<Resetable>();
     private final Heading desiredHeading = new Heading();
+    private Computer computer;
+    private Robot robot;
 
     public Map<Integer, PortHandler> getPorts() {
         return ports;
@@ -43,7 +45,7 @@ public class HardwareBus {
     }
 
     public void reset() {
-        for (Resetable resetable: resetables) {
+        for (Resetable resetable : resetables) {
             resetable.reset();
         }
     }
@@ -54,5 +56,23 @@ public class HardwareBus {
 
     public Heading getDesiredHeading() {
         return desiredHeading;
+    }
+
+    public void preInstruction() {
+        computer.getRegisters().getDesiredSpeed().set((short) robot.getThrottle().getDesiredPower());
+        computer.getRegisters().getDesiredHeading().set(desiredHeading.getAngle().getSignedBygrees());
+        computer.getRegisters().getTurretOffset().set((short) robot.getTurretShift());
+        computer.getRegisters().getMeters().set((short) Math.round(robot.getOdometer().getDistance().getMeters()));
+    }
+
+
+    public void setComputer(Computer computer) {
+        this.computer = computer;
+
+    }
+
+    public void setRobot(Robot robot) {
+        this.robot = robot;
+        desiredHeading.setAngle(robot.getHeading().getAngle());
     }
 }

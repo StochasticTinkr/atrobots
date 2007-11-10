@@ -17,4 +17,8 @@ public class Odometer implements Resetable {
     public void reset() {
         distance = Distance.fromMeters(0);
     }
+
+    public Distance getDistance() {
+        return distance;
+    }
 }

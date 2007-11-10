@@ -48,6 +48,9 @@ public class HardwareSpecification {
         robot.setTransceiver(createTransceiver(robot));
         robot.setTransponder(createTransponder());
         robot.setTurret(createTurret());
+        robot.getTurret().getHeading().setRelation(robot.getHeading());
+        robot.getTurret().setKeepshift(false);
+        robot.getTurret().getHeading().setAngle(robot.getHeading().getAngle());
         robot.getTurret().setMissileLauncher(new MissileLauncher(robot, robot.getPosition(), robot.getTurret().getHeading()));
         robot.getMineLayer().setArena(robot.getEntrant().getGame().getRound().getArena());
         robot.getComputer().setCommQueue(new CommunicationsQueue(robot.getComputer().getCommQueueMemoryRegion(),

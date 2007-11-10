@@ -10,6 +10,7 @@ public class Turret implements Resetable {
     private MissileLauncher missileLauncher;
 
     public void setKeepshift(boolean keepshift) {
+        heading.setAbsolute(keepshift);
         this.keepshift = keepshift;
     }
 
