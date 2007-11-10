@@ -9,4 +9,8 @@ public class Speed {
     public Distance times(Duration duration) {
         return distanceOverTime.times(duration);
     }
+
+    public void setDistanceOverTime(Distance distance, Duration duration) {
+        distanceOverTime = new DistanceOverTime(distance, duration);
+    }
 }

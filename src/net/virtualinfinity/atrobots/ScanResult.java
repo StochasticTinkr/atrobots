@@ -15,7 +15,7 @@ public class ScanResult {
         this.distance = distance;
         this.angle = angle;
         heading = match.getHeading().getAngle();
-        throttle = match.getThrottle().getPower();
+        throttle = match.getThrottle().getDesiredPower();
     }
 
     public ScanResult() {

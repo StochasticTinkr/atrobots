@@ -26,10 +26,11 @@ public class Robot extends ArenaObject implements Resetable {
     private boolean overburn;
     private HardwareBus hardwareBus;
     private final LastScanResult lastScanResult = new LastScanResult();
-    private static final Angle STEERING_SPEED = Angle.fromRelativeBygrees(4);
+    private static final Angle STEERING_SPEED = Angle.fromRelativeBygrees(8);
 
     {
         position.setOdometer(odometer);
+        throttle.setSpeed(speed);
     }
 
     public void setComputer(Computer computer) {
@@ -291,6 +292,7 @@ public class Robot extends ArenaObject implements Resetable {
 
     public void update(Duration duration) {
         super.update(duration);
+        getThrottle().update(duration);
         getHeading().moveToward(getDesiredHeading(), STEERING_SPEED);
         // TODO: Handle throttle.
         getComputer().update(duration);

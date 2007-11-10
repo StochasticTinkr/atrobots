@@ -60,12 +60,15 @@ public class Computer {
     private void executeInstruction() {
         instructionPointer = nextInstructionPointer;
         nextInstructionPointer++;
-        final Instruction instruction = getInstruction();
-        System.out.println(instructionPointer + ": "
+//        System.out.println(getInstructionString());
+        getInstruction().execute(Computer.this);
+    }
+
+    public String getInstructionString() {
+        return instructionPointer + ": "
                 + getOperandString(0) + "  "
                 + getOperandString(1) + ", "
-                + getOperandString(2) + ":  " + getInstruction().getClass().getSimpleName());
-        instruction.execute(Computer.this);
+                + getOperandString(2) + ":  " + getInstruction().getClass().getSimpleName();
     }
 
     private String getOperandString(int opnumber) {
@@ -114,11 +117,11 @@ public class Computer {
 
     public Instruction getInstruction() {
         final Microcode microcode = getMicrocode(0);
-        if (!microcode.hasValue()) {
-            return instructionTable.getInvalidMicrocodeInstruction();
-        }
         if (microcode == Microcode.NumberedLabel) {
             return instructionTable.getNumberedLabelInstruction();
+        }
+        if (!microcode.hasValue()) {
+            return instructionTable.getInvalidMicrocodeInstruction();
         }
         return instructionTable.getInstruction(microcode.getValue(Computer.this, 0));
     }
