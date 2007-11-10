@@ -4,7 +4,7 @@ package net.virtualinfinity.atrobots;
  * @author Daniel Pitts
  */
 public class Heading {
-    private Angle angle = Angle.fromBygrees((int) (Math.random() * 256));
+    private AbsoluteAngle angle = AbsoluteAngle.fromBygrees((int) (Math.random() * 256));
     private boolean absolute = true;
     private Heading relation;
 
@@ -12,11 +12,11 @@ public class Heading {
         return getAngle().toVector(distance);
     }
 
-    public Angle getAngle() {
+    public AbsoluteAngle getAngle() {
         if (absolute) {
             return angle;
         }
-        return angle.counterClockwise(relation.getAngle());
+        return angle.counterClockwise(relation.getAngle().counterClockwiseFromStandardOrigin());
     }
 
     public PortHandler getCompass() {
@@ -30,24 +30,24 @@ public class Heading {
     public PortHandler getRotationPort() {
         return new PortHandler() {
             public void write(short value) {
-                rotate(Angle.fromRelativeBygrees(value));
+                rotate(RelativeAngle.fromCounterClockwiseBygrees(value));
             }
         };
     }
 
-    private void rotate(Angle angle) {
+    private void rotate(RelativeAngle angle) {
         setAngle(this.getAngle().counterClockwise(angle));
     }
 
-    public void setAngle(Angle angle) {
+    public void setAngle(AbsoluteAngle angle) {
         if (absolute) {
             this.angle = angle;
             return;
         }
-        this.angle = relation.getAngle().clockwise(angle);
+        this.angle = relation.getAngle().clockwise(angle.counterClockwiseFromStandardOrigin());
     }
 
-    public void moveToward(Heading desiredHeading, Angle maxDelta) {
+    public void moveToward(Heading desiredHeading, RelativeAngle maxDelta) {
         if (AngleBracket.around(getAngle(), maxDelta).contains(desiredHeading.getAngle())) {
             setAngle(desiredHeading.getAngle());
         } else if (getAngle().clockwiseIsCloserTo(desiredHeading.getAngle())) {
@@ -59,7 +59,7 @@ public class Heading {
     }
 
     public void setAbsolute(boolean absolute) {
-        Angle angle = getAngle();
+        AbsoluteAngle angle = getAngle();
         this.absolute = absolute;
         setAngle(angle);
     }

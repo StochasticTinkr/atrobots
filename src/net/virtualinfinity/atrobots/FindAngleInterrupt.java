@@ -16,7 +16,7 @@ public class FindAngleInterrupt extends InterruptHandler {
 
     public void handleInterrupt() {
         destination.set(
-                (short)Angle.fromCartesian(Distance.fromMeters(x.signed()), Distance.fromMeters(y.signed())).getBygrees()
+                (short) AbsoluteAngle.fromCartesian(Distance.fromMeters(x.signed()), Distance.fromMeters(y.signed())).getBygrees()
         );
     }
 }

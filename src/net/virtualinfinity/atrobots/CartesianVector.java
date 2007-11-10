@@ -2,7 +2,7 @@ package net.virtualinfinity.atrobots;
 
 /**
  * @author Daniel Pitts
-*/
+ */
 class CartesianVector extends Vector {
     private final Distance x;
     private final Distance y;
@@ -16,8 +16,8 @@ class CartesianVector extends Vector {
         return x.times(x).plus(y.times(y)).squareRoot();
     }
 
-    public Angle getAngle() {
-        return Angle.fromCartesian(x, y);
+    public AbsoluteAngle getAngle() {
+        return AbsoluteAngle.fromCartesian(x, y);
     }
 
     public Distance getX() {

@@ -18,15 +18,18 @@ public class MissileLauncher {
         return new PortHandler() {
             public void write(short value) {
                 getComputer().consumeCycles(3);
-                fireMissile(Angle.fromBygrees(value));
+                fireMissile(AbsoluteAngle.fromBygrees(value));
             }
         };
     }
 
-    private void fireMissile(Angle shift) {
+    private void fireMissile(AbsoluteAngle shift) {
         final byte value = shift.getSignedBygrees();
-        Angle angle = heading.getAngle().counterClockwise(Angle.fromBygrees(Math.max(-4, Math.min(value, 4))));
-//TODO://        getArena().fireMissile(new Missile(robot, position, angle));
+        int bygrees = Math.max(-4, Math.min(value, 4));
+        AbsoluteAngle angle = heading.getAngle().counterClockwise(RelativeAngle.fromCounterClockwiseBygrees(bygrees));
+        final Missile missile = new Missile(robot, position, angle);
+        missile.getSpeed().setDistanceOverTime(Distance.fromMeters(32), Duration.ONE_CYCLE);
+        getArena().fireMissile(missile);
     }
 
     public Arena getArena() {

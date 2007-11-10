@@ -3,10 +3,10 @@ package net.virtualinfinity.atrobots;
 /**
  * @author Daniel Pitts
  */
-public class Angle {
+public class AbsoluteAngle {
     private final double radians;
 
-    private Angle(double radians) {
+    private AbsoluteAngle(double radians) {
         this.radians = radians;
     }
 
@@ -18,15 +18,15 @@ public class Angle {
         return Math.sin(radians);
     }
 
-    public static Angle fromCartesian(Distance x, Distance y) {
+    public static AbsoluteAngle fromCartesian(Distance x, Distance y) {
         return fromRadians(Math.atan2(y.getMeters(), x.getMeters()));
     }
 
-    public static Angle fromRadians(double radians) {
-        return new Angle(radians);
+    public static AbsoluteAngle fromRadians(double radians) {
+        return new AbsoluteAngle(radians);
     }
 
-    public Angle counterClockwise(Angle angle) {
+    public AbsoluteAngle counterClockwise(RelativeAngle angle) {
         return fromRadians(getRadians() + angle.getRadians());
     }
 
@@ -46,11 +46,11 @@ public class Angle {
         return (int) Math.round(64 - (radians * 128 / Math.PI)) & 255;
     }
 
-    public Angle clockwise(Angle angle) {
+    public AbsoluteAngle clockwise(RelativeAngle angle) {
         return fromRadians(getRadians() - angle.getRadians());
     }
 
-    public static Angle fromBygrees(int value) {
+    public static AbsoluteAngle fromBygrees(int value) {
         return fromRadians((64 - value) * Math.PI / 128);
     }
 
@@ -58,20 +58,29 @@ public class Angle {
         return (byte) getBygrees();
     }
 
-    public double getNormalizedRadiansClockwiseTo(Angle clockwiseBound) {
+    public double getNormalizedRadiansClockwiseTo(AbsoluteAngle clockwiseBound) {
         final double difference = getNormalizedRadians() - clockwiseBound.getNormalizedRadians();
         return difference < 0 ? difference + Math.PI * 2.0 : difference;
     }
 
-    boolean clockwiseIsCloserTo(Angle angle) {
-        return getNormalizedRadiansClockwiseTo(angle) < Math.PI;
+    public RelativeAngle getAngleClockwiseTo(AbsoluteAngle clockwiseValue) {
+        final double difference = clockwiseValue.getNormalizedRadians() - getNormalizedRadians();
+        return RelativeAngle.fromCounterClockwiseRadians(difference < 0 ? difference + Math.PI * 2.0 : difference);
     }
 
-    public static Angle fromRelativeBygrees(int bygrees) {
-        return Angle.fromRadians(bygrees * Math.PI / 128);
+    public boolean clockwiseIsCloserTo(AbsoluteAngle angle) {
+        return getAngleClockwiseTo(angle).compareTo(RelativeAngle.HALF_CIRCLE) < 0;
+    }
+
+    public static RelativeAngle fromRelativeBygrees(int bygrees) {
+        return RelativeAngle.fromCounterClockwiseBygrees(bygrees);
     }
 
     public String toString() {
         return getNormalizedRadians() + "r/" + getBygrees();
+    }
+
+    public RelativeAngle counterClockwiseFromStandardOrigin() {
+        return RelativeAngle.fromCounterClockwiseRadians(getRadians());
     }
 }

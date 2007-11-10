@@ -5,7 +5,7 @@ package net.virtualinfinity.atrobots;
  */
 public class Scanner implements Resetable {
     private int accuracy;
-    private Angle scanArc;
+    private RelativeAngle scanArc;
     private Robot robot;
     private Distance maxDistance = Distance.fromMeters(1500);
 
@@ -60,21 +60,21 @@ public class Scanner implements Resetable {
             }
 
             public void write(short value) {
-                setScanArc(Angle.fromRelativeBygrees(Math.max(0, Math.min(64, value))));
+                setScanArc(RelativeAngle.fromCounterClockwiseBygrees(Math.max(0, Math.min(64, value))));
             }
         };
     }
 
-    public Angle getScanArc() {
+    public RelativeAngle getScanArc() {
         return scanArc;
     }
 
-    public void setScanArc(Angle scanArc) {
+    public void setScanArc(RelativeAngle scanArc) {
         this.scanArc = scanArc;
     }
 
     public void reset() {
-        setScanArc(Angle.fromBygrees(8));
+        setScanArc(RelativeAngle.fromCounterClockwiseBygrees(8));
     }
 
     private void setAccuracy(int accuracy) {

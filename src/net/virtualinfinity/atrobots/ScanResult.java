@@ -6,11 +6,11 @@ package net.virtualinfinity.atrobots;
 public class ScanResult {
     private final Robot match;
     private final Distance distance;
-    private final Angle angle;
-    private Angle heading;
+    private final AbsoluteAngle angle;
+    private AbsoluteAngle heading;
     private int throttle;
 
-    public ScanResult(Robot match, Distance distance, Angle angle) {
+    public ScanResult(Robot match, Distance distance, AbsoluteAngle angle) {
         this.match = match;
         this.distance = distance;
         this.angle = angle;
@@ -32,11 +32,11 @@ public class ScanResult {
         return distance;
     }
 
-    public Angle getAngle() {
+    public AbsoluteAngle getAngle() {
         return angle;
     }
 
-    public Angle getHeading() {
+    public AbsoluteAngle getHeading() {
         return heading;
     }
 

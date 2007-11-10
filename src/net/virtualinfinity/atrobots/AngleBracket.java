@@ -4,10 +4,10 @@ package net.virtualinfinity.atrobots;
  * @author Daniel Pitts
  */
 public class AngleBracket {
-    private final Angle counterClockwiseBound;
+    private final AbsoluteAngle counterClockwiseBound;
     private final double rangeSize;
 
-    private AngleBracket(Angle counterClockwiseBound, Angle clockwiseBound) {
+    private AngleBracket(AbsoluteAngle counterClockwiseBound, AbsoluteAngle clockwiseBound) {
         this.counterClockwiseBound = counterClockwiseBound;
         rangeSize = counterClockwiseBound.getNormalizedRadiansClockwiseTo(clockwiseBound);
     }
@@ -17,32 +17,32 @@ public class AngleBracket {
         rangeSize = Math.PI * 2;
     }
 
-    static AngleBracket around(Angle center, Angle width) {
+    static AngleBracket around(AbsoluteAngle center, RelativeAngle width) {
         return between(center.counterClockwise(width), center.clockwise(width));
     }
 
-    public static AngleBracket between(Angle counterClockwiseBound, Angle clockwiseBound) {
+    public static AngleBracket between(AbsoluteAngle counterClockwiseBound, AbsoluteAngle clockwiseBound) {
         return new AngleBracket(counterClockwiseBound, clockwiseBound);
     }
 
     public static AngleBracket all() {
         return new AngleBracket() {
             @Override
-            public boolean contains(Angle angle) {
+            public boolean contains(AbsoluteAngle angle) {
                 return true;
             }
         };
     }
 
-    public boolean contains(Angle angle) {
+    public boolean contains(AbsoluteAngle angle) {
         return Math.abs(counterClockwiseBound.getNormalizedRadiansClockwiseTo(angle)) <= rangeSize;
     }
 
-    public double fractionTo(Angle angle) {
+    public double fractionTo(AbsoluteAngle angle) {
         return rangeSize / counterClockwiseBound.getNormalizedRadiansClockwiseTo(angle);
     }
 
-    public Angle randomAngleBetween() {
-        return Angle.fromRadians(counterClockwiseBound.getNormalizedRadians() + Math.random() * rangeSize);
+    public AbsoluteAngle randomAngleBetween() {
+        return AbsoluteAngle.fromRadians(counterClockwiseBound.getNormalizedRadians() + Math.random() * rangeSize);
     }
 }

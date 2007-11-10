@@ -6,13 +6,13 @@ package net.virtualinfinity.atrobots;
 abstract class Vector {
     public abstract Distance getMagnatude();
 
-    public abstract Angle getAngle();
+    public abstract AbsoluteAngle getAngle();
 
     public abstract Distance getX();
 
     public abstract Distance getY();
 
-    public static Vector createPolar(Angle angle, Distance magnatude) {
+    public static Vector createPolar(AbsoluteAngle angle, Distance magnatude) {
         return PolarVector.createPolar(angle, magnatude);
     }
 
@@ -22,10 +22,6 @@ abstract class Vector {
 
     public Vector add(Vector vector) {
         return createCartesian(getX().plus(vector.getX()), getY().plus(vector.getY()));
-    }
-
-    public Vector rotate(Angle angle) {
-        return createPolar(angle.counterClockwise(angle), getMagnatude());
     }
 
     public String toString() {

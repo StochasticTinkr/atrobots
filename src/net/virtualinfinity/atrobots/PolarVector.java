@@ -2,12 +2,12 @@ package net.virtualinfinity.atrobots;
 
 /**
  * @author Daniel Pitts
-*/
+ */
 class PolarVector extends Vector {
     private final Distance magnatude;
-    private final Angle angle;
+    private final AbsoluteAngle angle;
 
-    private PolarVector(Distance magnatude, Angle angle) {
+    private PolarVector(Distance magnatude, AbsoluteAngle angle) {
         this.magnatude = magnatude;
         this.angle = angle;
     }
@@ -16,7 +16,7 @@ class PolarVector extends Vector {
         return magnatude;
     }
 
-    public Angle getAngle() {
+    public AbsoluteAngle getAngle() {
         return angle;
     }
 
@@ -28,7 +28,7 @@ class PolarVector extends Vector {
         return magnatude.times(angle.sine());
     }
 
-    public static PolarVector createPolar(Angle angle, Distance magnatude) {
+    public static PolarVector createPolar(AbsoluteAngle angle, Distance magnatude) {
         return new PolarVector(magnatude, angle);
     }
 }

@@ -98,4 +98,8 @@ public class Arena {
         robot.getPosition().copyFrom(Position.random(0.0, 0.0, 1000.0, 1000.0));
         robots.add(robot);
     }
+
+    public void fireMissile(Missile missile) {
+        missiles.add(missile);
+    }
 }

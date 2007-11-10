@@ -9,7 +9,7 @@ import java.awt.geom.Line2D;
 public class Missile extends ArenaObject {
     private final Robot robot;
 
-    public Missile(Robot robot, Position position, Angle angle) {
+    public Missile(Robot robot, Position position, AbsoluteAngle angle) {
         this.robot = robot;
         this.position.copyFrom(position);
         this.heading.setAngle(angle);
@@ -17,6 +17,10 @@ public class Missile extends ArenaObject {
 
     protected ArenaObjectSnapshot createSpecificSnapshot() {
         return new MissileSnapshot();
+    }
+
+    public Speed getSpeed() {
+        return speed;
     }
 
     private static class MissileSnapshot extends ArenaObjectSnapshot {

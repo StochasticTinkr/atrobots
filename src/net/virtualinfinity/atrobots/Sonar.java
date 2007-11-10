@@ -15,16 +15,16 @@ public class Sonar {
         return new PortHandler() {
             public short read() {
                 getComputer().consumeCycles(40);
-                final Angle angle = scan();
+                final AbsoluteAngle angle = scan();
                 if (angle == null) {
                     return Short.MIN_VALUE;
                 }
-                return (short) AngleBracket.around(angle, Angle.fromBygrees(64)).randomAngleBetween().getBygrees();
+                return (short) AngleBracket.around(angle, RelativeAngle.fromCounterClockwiseBygrees(64)).randomAngleBetween().getBygrees();
             }
         };
     }
 
-    private Angle scan() {
+    private AbsoluteAngle scan() {
         final ScanResult scanResult = robot.scan(AngleBracket.all(), maxDistance);
         return scanResult.getAngle();
     }

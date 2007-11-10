@@ -27,7 +27,7 @@ public class Robot extends ArenaObject implements Resetable {
     private boolean overburn;
     private HardwareBus hardwareBus;
     private final LastScanResult lastScanResult = new LastScanResult();
-    private static final Angle STEERING_SPEED = Angle.fromRelativeBygrees(8);
+    private static final RelativeAngle STEERING_SPEED = RelativeAngle.fromCounterClockwiseBygrees(8);
 
     {
         position.setOdometer(odometer);
@@ -108,7 +108,7 @@ public class Robot extends ArenaObject implements Resetable {
     }
 
     public int getTurretShift() {
-        return getTurret().getHeading().getAngle().clockwise(getHeading().getAngle()).getBygrees();
+        return getTurret().getHeading().getAngle().getAngleClockwiseTo(getHeading().getAngle()).getBygrees();
     }
 
     public Armor getArmor() {
@@ -122,12 +122,12 @@ public class Robot extends ArenaObject implements Resetable {
     public PortHandler getAimTurretPort() {
         return new PortHandler() {
             public void write(short value) {
-                setTurretOffset(Angle.fromRelativeBygrees(value));
+                setTurretOffset(RelativeAngle.fromCounterClockwiseBygrees(value));
             }
         };
     }
 
-    private void setTurretOffset(Angle angle) {
+    private void setTurretOffset(RelativeAngle angle) {
         getTurret().getHeading().setAngle(getHeading().getAngle().counterClockwise(angle));
     }
 
@@ -259,8 +259,8 @@ public class Robot extends ArenaObject implements Resetable {
         private double armor;
         private boolean overburn;
         private boolean activeShield;
-        private Angle heading;
-        private Angle turretHeading;
+        private AbsoluteAngle heading;
+        private AbsoluteAngle turretHeading;
 
         public void setTemperature(Temperature temperature) {
             this.temperature = temperature;
@@ -282,8 +282,8 @@ public class Robot extends ArenaObject implements Resetable {
             g2d.setPaint(Color.red);
             final GeneralPath path = new GeneralPath();
             path.moveTo(getX() + heading.cosine() * 25, getY() + heading.sine() * 25);
-            Angle cc = heading.counterClockwise(Angle.fromRelativeBygrees(160));
-            Angle c = heading.clockwise(Angle.fromRelativeBygrees(160));
+            AbsoluteAngle cc = heading.counterClockwise(AbsoluteAngle.fromRelativeBygrees(160));
+            AbsoluteAngle c = heading.clockwise(AbsoluteAngle.fromRelativeBygrees(160));
             path.lineTo(getX() + cc.cosine() * 12, getY() + cc.sine() * 12);
             path.lineTo(getX(), getY());
             path.lineTo(getX() + c.cosine() * 12, getY() + c.sine() * 12);
@@ -294,11 +294,11 @@ public class Robot extends ArenaObject implements Resetable {
             // TODO:
         }
 
-        public void setHeading(Angle heading) {
+        public void setHeading(AbsoluteAngle heading) {
             this.heading = heading;
         }
 
-        public void setTurretHeading(Angle turretHeading) {
+        public void setTurretHeading(AbsoluteAngle turretHeading) {
             this.turretHeading = turretHeading;
         }
     }
