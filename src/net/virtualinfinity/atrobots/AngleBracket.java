@@ -2,6 +2,7 @@ package net.virtualinfinity.atrobots;
 
 import java.awt.*;
 import java.awt.geom.Arc2D;
+import java.awt.geom.Ellipse2D;
 
 /**
  * @author Daniel Pitts
@@ -34,7 +35,17 @@ public class AngleBracket {
             public boolean contains(AbsoluteAngle angle) {
                 return true;
             }
+
+            @Override
+
+            public Shape toShape(Distance x, Distance y, Distance radius) {
+                final Ellipse2D ellipse2D = new Ellipse2D.Double();
+                ellipse2D.setFrameFromCenter(x.getMeters(), y.getMeters(), x.plus(radius).getMeters(), y.plus(radius).getMeters());
+                return ellipse2D;
+            }
         };
+
+
     }
 
     public boolean contains(AbsoluteAngle angle) {
@@ -51,7 +62,7 @@ public class AngleBracket {
 
     public Shape toShape(Distance x, Distance y, Distance radius) {
         final Arc2D.Double arc = new Arc2D.Double();
-        arc.setArcByCenter(x.getMeters(), y.getMeters(), radius.getMeters(), counterClockwiseBound.getDegrees(),
+        arc.setArcByCenter(x.getMeters(), y.getMeters(), radius.getMeters(), -counterClockwiseBound.getDegrees(),
                 RelativeAngle.fromRadians(rangeSize).getDegrees(), Arc2D.PIE);
         return arc;
     }

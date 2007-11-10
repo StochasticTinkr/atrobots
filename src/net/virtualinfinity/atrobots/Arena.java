@@ -46,8 +46,14 @@ public class Arena {
         final ScanResult scanResult = calculateResult(ignore, position, angleBracket, maxDistance);
         final ArenaObjectSnapshot objectSnapshot = new ArenaObjectSnapshot() {
             public void paint(Graphics2D g2d) {
-                g2d.setPaint(Color.white);
-                g2d.draw(angleBracket.toShape(positionVector.getX(), positionVector.getY(), maxDistance));
+                final Color baseColor = scanResult.successful() ? Color.red : Color.white;
+                g2d.setPaint(baseColor);
+                final Shape shape = angleBracket.toShape(positionVector.getX(), positionVector.getY(), maxDistance);
+                g2d.draw(shape);
+                final Composite composite = g2d.getComposite();
+                g2d.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, .5f));
+                g2d.fill(shape);
+                g2d.setComposite(composite);
             }
         };
         objectSnapshot.setPositionVector(position.getVector());

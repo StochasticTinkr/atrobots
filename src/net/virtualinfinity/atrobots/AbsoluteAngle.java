@@ -85,6 +85,6 @@ public class AbsoluteAngle {
     }
 
     public double getDegrees() {
-        return getRadians() / Math.PI * 360;
+        return getRadians() / Math.PI * 180;
     }
 }
