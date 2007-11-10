@@ -44,6 +44,7 @@ public class HardwareSpecification {
         robot.setRadar(createRadar());
         robot.setShield(createShield());
         robot.setSonar(createSonar());
+        robot.getSonar().setRobot(robot);
         robot.setTransceiver(createTransceiver(robot));
         robot.setTransponder(createTransponder());
         robot.setTurret(createTurret());

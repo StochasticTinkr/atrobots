@@ -12,6 +12,7 @@ public abstract class Instruction {
 
     public final void execute(Computer computer) {
         computer.consumeCycles(baseExecutionCost);
+        perform(computer);
     }
 
     protected abstract void perform(Computer computer);

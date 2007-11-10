@@ -40,12 +40,16 @@ public class AtRobotPortFactory {
         ports.put(22, robot.getMineLayer().getMineBayPort());
         ports.put(23, robot.getMineLayer().getPlacedMinePort());
         ports.put(24, robot.getShield().getLatch());
+        for (PortHandler handler : ports.values()) {
+            handler.setComputer(robot.getComputer());
+        }
         return new MapWithDefaultValue<Integer, PortHandler>(ports, robot.getComputer().createDefaultPortHandler());
     }
 
     private PortHandler createRandomNumberGenerator() {
         return new PortHandler() {
             private final Random random = new Random();
+
             public short read() {
                 return (short) random.nextInt();
             }

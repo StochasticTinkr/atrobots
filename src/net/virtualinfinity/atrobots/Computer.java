@@ -60,7 +60,16 @@ public class Computer {
     private void executeInstruction() {
         instructionPointer = nextInstructionPointer;
         nextInstructionPointer++;
-        getInstruction().execute(Computer.this);
+        final Instruction instruction = getInstruction();
+        System.out.println(instructionPointer + ": "
+                + getOperandString(0) + "  "
+                + getOperandString(1) + ", "
+                + getOperandString(2) + ":  " + getInstruction().getClass().getSimpleName());
+        instruction.execute(Computer.this);
+    }
+
+    private String getOperandString(int opnumber) {
+        return getMicrocode(opnumber).formatValue(this, opnumber);
     }
 
     public short getOperandValue(int opnumber) {
@@ -202,6 +211,7 @@ public class Computer {
 
     public void update(Duration duration) {
         cycles += duration.getCycles() * getCyclesPerSimCycle();
+        useCycles();
     }
 
     public int getCyclesPerSimCycle() {
@@ -368,47 +378,79 @@ public class Computer {
             }
         }
 
+        public String formatValue(Computer computer, int opnumber) {
+            switch (this) {
+                case DoubleDereference:
+                    return "[@" + computer.getConstant(opnumber) +
+                            "]=[" + computer.getDeferencedValue(opnumber) + "]=" +
+                            computer.getDoubleDereferencedValue(opnumber);
+                case Dereference:
+                    return "@" + computer.getConstant(opnumber) + "=" + computer.getDeferencedValue(opnumber);
+                case NumberedLabel:
+                    return ":" + computer.getConstant(opnumber);
+                case ResolvedLabel:
+                    return "!" + computer.getConstant(opnumber);
+                case UnresolvedLabel:
+                    return "!?";
+                case Constant:
+                    return String.valueOf(computer.getConstant(opnumber));
+                default:
+                case Invalid:
+                    return "??";
+            }
+        }
     }
 
     private class ErrorHandler implements net.virtualinfinity.atrobots.ComputerErrorHandler {
         public void genericError(short operandValue) {
             // TODO: robot error
+            System.out.println("Computer$ErrorHandler.genericError");
         }
 
         public void unknownInstructionError() {
             // TODO: robot error
+            System.out.println("Computer$ErrorHandler.unknownInstructionError");
         }
 
         public void invalidInterruptError() {
             // TODO: robot error
+            System.out.println("Computer$ErrorHandler.invalidInterruptError");
         }
 
         public void notAddressableError() {
             // TODO: robot error
+            System.out.println("Computer$ErrorHandler.notAddressableError");
         }
 
         public void invalidMicrocodeError() {
             // TODO: robot error
+            System.out.println("Computer$ErrorHandler.invalidMicrocodeError");
         }
 
         public void divideByZeroError() {
             // TODO: robot error
+            System.out.println("Computer$ErrorHandler.divideByZeroError");
         }
 
         public void invalidPortError() {
             // TODO: robot error
+            System.out.println("Computer$ErrorHandler.invalidPortError");
+
         }
 
         public void commQueueEmptyError() {
             // TODO: robot error
+            System.out.println("Computer$ErrorHandler.commQueueEmptyError");
         }
 
         public void memoryBoundsError() {
             // TODO: robot error
+            System.out.println("Computer$ErrorHandler.memoryBoundsError");
         }
 
         public void writeToRomError() {
             // TODO: robot error
+            System.out.println("Computer$ErrorHandler.writeToRomError");
         }
     }
 }

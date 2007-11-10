@@ -11,23 +11,39 @@ public class RandomAccessMemoryArray extends MemoryArray {
     }
 
     public void put(int index, short value) {
-        cells[index] = value;
+        if (inRange(index)) {
+            // TODO: Error
+        } else
+            cells[index] = value;
+
     }
 
     public void decrement(int index) {
-        --cells[index];
+        if (inRange(index)) {
+            // TODO: Error
+        } else
+            --cells[index];
     }
 
     public void increment(int index) {
-        ++cells[index];
+        if (inRange(index)) {
+            // TODO: Error
+        } else
+            ++cells[index];
     }
 
     public void or(int index, short value) {
-        cells[index] |= value;
+        if (inRange(index)) {
+            // TODO: Error
+        } else
+            cells[index] |= value;
     }
 
     public void and(int index, short value) {
-        cells[index] |= value;
+        if (inRange(index)) {
+            // TODO: Error
+        } else
+            cells[index] |= value;
     }
 
     public void clear() {

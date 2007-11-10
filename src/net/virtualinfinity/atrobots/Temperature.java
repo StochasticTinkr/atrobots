@@ -6,7 +6,7 @@ package net.virtualinfinity.atrobots;
 public class Temperature {
     private final double celsius;
 
-    private static final Temperature BASE_TEMPERATURE = fromCelsius(20);
+    public static final Temperature BASE_TEMPERATURE = fromCelsius(20);
     private static final Temperature ROBOT_DEATH = fromCelsius(750);
     private static final int LOG_SCALE_ROBOT_DEATH = 500;
     private static final double LOG_ROBOT_DEATH = Math.log(ROBOT_DEATH.getCelsius());
@@ -17,7 +17,7 @@ public class Temperature {
     }
 
     public int getLogScale() {
-        return (int) Math.round(Math.log(getCelsius() - BASE_TEMPERATURE.getCelsius())/LOG_SCALER);
+        return (int) Math.round(Math.log(getCelsius() - BASE_TEMPERATURE.getCelsius()) / LOG_SCALER);
     }
 
     public static Temperature fromCelsius(double celsius) {
@@ -29,6 +29,6 @@ public class Temperature {
     }
 
     public static Temperature fromLogScale(int logTemp) {
-        return fromCelsius(Math.exp(logTemp*LOG_SCALER)+BASE_TEMPERATURE.getCelsius());
+        return fromCelsius(Math.exp(logTemp * LOG_SCALER) + BASE_TEMPERATURE.getCelsius());
     }
 }

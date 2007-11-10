@@ -85,7 +85,7 @@ public class Main implements Runnable {
                 }
             }
         });
-        menu.add(new AbstractAction("Add all original") {
+        menubar.add(new JMenuItem(new AbstractAction("Add all original") {
             public void actionPerformed(ActionEvent e) {
                 new EntrantLoader(new File("original").listFiles(new FilenameFilter() {
                     public boolean accept(File dir, String name) {
@@ -94,7 +94,17 @@ public class Main implements Runnable {
                 })).execute();
 
             }
-        });
+        }));
+        menubar.add(new JMenuItem(new AbstractAction("Add single") {
+            public void actionPerformed(ActionEvent e) {
+                new EntrantLoader(new File("original").listFiles(new FilenameFilter() {
+                    public boolean accept(File dir, String name) {
+                        return name.toLowerCase().endsWith("sduck.at2");
+                    }
+                })).execute();
+
+            }
+        }));
         return menu;
     }
 

@@ -35,7 +35,7 @@ public class AngleBracket {
     }
 
     public boolean contains(Angle angle) {
-        return rangeSize < counterClockwiseBound.getNormalizedRadiansClockwiseTo(angle);
+        return Math.abs(counterClockwiseBound.getNormalizedRadiansClockwiseTo(angle)) <= rangeSize;
     }
 
     public double fractionTo(Angle angle) {
@@ -43,6 +43,6 @@ public class AngleBracket {
     }
 
     public Angle randomAngleBetween() {
-        return Angle.fromRadians(counterClockwiseBound.getNormalizedRadians() + Math.random()*rangeSize);
+        return Angle.fromRadians(counterClockwiseBound.getNormalizedRadians() + Math.random() * rangeSize);
     }
 }

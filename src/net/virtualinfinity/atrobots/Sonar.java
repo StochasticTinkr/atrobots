@@ -28,4 +28,8 @@ public class Sonar {
         final ScanResult scanResult = robot.scan(AngleBracket.all(), maxDistance);
         return scanResult.getAngle();
     }
+
+    public void setRobot(Robot robot) {
+        this.robot = robot;
+    }
 }

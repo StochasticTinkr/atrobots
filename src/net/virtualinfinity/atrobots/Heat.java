@@ -4,7 +4,7 @@ package net.virtualinfinity.atrobots;
  * @author Daniel Pitts
  */
 public class Heat {
-    private Temperature temperature;
+    private Temperature temperature = Temperature.BASE_TEMPERATURE;
 
     public PortHandler getHeatSensor() {
         return new PortHandler() {

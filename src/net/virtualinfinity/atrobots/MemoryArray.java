@@ -1,7 +1,5 @@
 package net.virtualinfinity.atrobots;
 
-import java.util.Arrays;
-
 /**
  * @author Daniel Pitts
  */
@@ -18,7 +16,11 @@ public abstract class MemoryArray {
     }
 
     public final short get(int index) {
-        return cells[index];
+        if (inRange(index)) {
+            // TODO: Error
+            return 0;
+        } else
+            return cells[index];
     }
 
     public abstract void put(int index, short value);
@@ -39,5 +41,9 @@ public abstract class MemoryArray {
 
     public void setErrorHandler(ComputerErrorHandler errorHandler) {
         this.errorHandler = errorHandler;
+    }
+
+    protected boolean inRange(int index) {
+        return index < 0 || index > size();
     }
 }
