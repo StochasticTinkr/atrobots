@@ -12,7 +12,7 @@ public final class Duration {
     }
 
     public double divided(Duration duration) {
-        return ((double)cycles) / ((double)duration.cycles);
+        return ((double) cycles) / ((double) duration.cycles);
     }
 
     public int getCycles() {
@@ -25,5 +25,9 @@ public final class Duration {
 
     public Duration minus(Duration duration) {
         return new Duration(getCycles() - duration.getCycles());
+    }
+
+    public String toString() {
+        return cycles + "s";
     }
 }

@@ -67,4 +67,8 @@ public class Heading {
     public void setRelation(Heading relation) {
         this.relation = relation;
     }
+
+    public String toString() {
+        return String.valueOf(angle);
+    }
 }

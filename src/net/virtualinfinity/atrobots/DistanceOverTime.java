@@ -15,4 +15,8 @@ public final class DistanceOverTime {
     public Distance times(Duration duration) {
         return distance.times(this.duration.divided(duration));
     }
+
+    public String toString() {
+        return distance + "/" + duration;
+    }
 }

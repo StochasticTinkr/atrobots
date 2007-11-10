@@ -3,7 +3,7 @@ package net.virtualinfinity.atrobots;
 /**
  * @author Daniel Pitts
  */
-public final class Angle {
+public class Angle {
     private final double radians;
 
     private Angle(double radians) {
@@ -69,5 +69,9 @@ public final class Angle {
 
     public static Angle fromRelativeBygrees(int bygrees) {
         return Angle.fromRadians(bygrees * Math.PI / 128);
+    }
+
+    public String toString() {
+        return getNormalizedRadians() + "r/" + getBygrees();
     }
 }

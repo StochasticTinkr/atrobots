@@ -2,11 +2,14 @@ package net.virtualinfinity.atrobots;
 
 /**
  * @author Daniel Pitts
-*/
+ */
 abstract class Vector {
     public abstract Distance getMagnatude();
+
     public abstract Angle getAngle();
+
     public abstract Distance getX();
+
     public abstract Distance getY();
 
     public static Vector createPolar(Angle angle, Distance magnatude) {
@@ -23,5 +26,9 @@ abstract class Vector {
 
     public Vector rotate(Angle angle) {
         return createPolar(angle.counterClockwise(angle), getMagnatude());
+    }
+
+    public String toString() {
+        return "<" + getAngle() + ", " + getMagnatude() + ">:<" + getX() + ", " + getY() + ">";
     }
 }

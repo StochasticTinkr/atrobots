@@ -13,4 +13,9 @@ public class Speed {
     public void setDistanceOverTime(Distance distance, Duration duration) {
         distanceOverTime = new DistanceOverTime(distance, duration);
     }
+
+    public String toString() {
+        return distanceOverTime.toString();
+    }
+
 }

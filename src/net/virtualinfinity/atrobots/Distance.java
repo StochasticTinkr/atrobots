@@ -6,7 +6,7 @@ package net.virtualinfinity.atrobots;
 public class Distance implements Comparable<Distance> {
     private final double meters;
 
-    private  Distance(double meters) {
+    private Distance(double meters) {
         this.meters = meters;
     }
 
@@ -19,7 +19,7 @@ public class Distance implements Comparable<Distance> {
     }
 
     public Distance times(double scalar) {
-        return fromMeters(getMeters()*scalar);
+        return fromMeters(getMeters() * scalar);
     }
 
     public Area times(Distance distance) {
@@ -31,7 +31,7 @@ public class Distance implements Comparable<Distance> {
     }
 
     public double getCentimeters() {
-        return getMeters() * 100;
+        return getMeters() * 100.0;
     }
 
     public Distance minus(Distance distance) {
@@ -44,5 +44,9 @@ public class Distance implements Comparable<Distance> {
 
     public static Distance infinity() {
         return fromMeters(Double.POSITIVE_INFINITY);
+    }
+
+    public String toString() {
+        return meters == Double.POSITIVE_INFINITY ? "infinity" : meters + "m";
     }
 }

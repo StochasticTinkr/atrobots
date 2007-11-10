@@ -15,4 +15,8 @@ public class Velocity {
     public Vector times(Duration duration) {
         return heading.times(speed.times(duration));
     }
+
+    public String toString() {
+        return heading + "*" + speed;
+    }
 }
