@@ -10,7 +10,10 @@ public abstract class ConditionalJump extends Instruction {
 
     final protected void perform(Computer computer) {
         if (conditionMet(computer.getFlags())) {
+//            System.out.println("Doing jump");
             computer.jump();
+        } else {
+//            System.out.println("Not jumping");
         }
     }
 

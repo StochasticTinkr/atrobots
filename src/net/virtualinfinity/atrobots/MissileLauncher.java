@@ -18,12 +18,12 @@ public class MissileLauncher {
         return new PortHandler() {
             public void write(short value) {
                 getComputer().consumeCycles(3);
-                fireMissile(AbsoluteAngle.fromBygrees(value));
+                fireMissile(RelativeAngle.fromBygrees(value));
             }
         };
     }
 
-    private void fireMissile(AbsoluteAngle shift) {
+    private void fireMissile(RelativeAngle shift) {
         final byte value = shift.getSignedBygrees();
         int bygrees = Math.max(-4, Math.min(value, 4));
         AbsoluteAngle angle = heading.getAngle().counterClockwise(RelativeAngle.fromBygrees(bygrees));

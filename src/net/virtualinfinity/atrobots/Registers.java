@@ -139,4 +139,15 @@ public class Registers {
     public MemoryCell getTargetVelocity() {
         return targetVelocity;
     }
+
+    public String toString() {
+        return "AX=" + getAx().signed()
+                + ", BX=" + getBx().signed()
+                + ", CX=" + getCx().signed()
+                + ", DX=" + getDx().signed()
+                + ", EX=" + getEx().signed()
+                + ", FX=" + getFx().signed()
+                + ", SP=" + getSp().signed()
+                + ", FL=" + getFlags();
+    }
 }

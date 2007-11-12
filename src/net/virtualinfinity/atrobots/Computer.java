@@ -61,7 +61,7 @@ public class Computer {
         hardwareBus.preInstruction();
         instructionPointer = nextInstructionPointer;
         nextInstructionPointer++;
-//        System.out.println(getInstructionString());
+//        System.out.println(getInstructionString() + " ** " +registers);
         getInstruction().execute(Computer.this);
     }
 

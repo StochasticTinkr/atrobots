@@ -53,10 +53,22 @@ public class Flags {
     }
 
     private void addBitsInMask(int bitMask) {
+//        System.out.println("bitMask = " + bitMask);
         flagCell.or((short) bitMask);
     }
 
     public void reset() {
-        flagCell.and((short) 0xFFF0);
+        flagCell.and((short) 0xFF00);
+    }
+
+    public String toString() {
+        return higherIf('e', isEqual()) +
+                higherIf('l', isLess()) +
+                higherIf('g', isGreater()) +
+                higherIf('z', isZero());
+    }
+
+    private String higherIf(char c, boolean equal) {
+        return String.valueOf(equal ? Character.toUpperCase(c) : c);
     }
 }

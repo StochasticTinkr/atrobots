@@ -43,7 +43,7 @@ public class RandomAccessMemoryArray extends MemoryArray {
         if (inRange(index)) {
             // TODO: Error
         } else
-            cells[index] |= value;
+            cells[index] &= value;
     }
 
     public void clear() {
