@@ -1,5 +1,7 @@
 package net.virtualinfinity.atrobots;
 
+import java.awt.geom.Point2D;
+
 /**
  * @author Daniel Pitts
  */
@@ -26,5 +28,9 @@ abstract class Vector {
 
     public String toString() {
         return "<" + getAngle() + ", " + getMagnatude() + ">:<" + getX() + ", " + getY() + ">";
+    }
+
+    public Point2D toPoint2D() {
+        return new Point2D.Double(getX().getMeters(), getY().getMeters());
     }
 }

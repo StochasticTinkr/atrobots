@@ -23,9 +23,32 @@ public class Missile extends ArenaObject {
         return speed;
     }
 
+
     @Override
     public void checkCollision(Robot robot) {
-        // TODO;
+        if (!isDead()) {
+            //TODO: Better robot collision detection.
+            if (robot.getPosition().getVectorTo(position).getMagnatude().getMeters() < 10) {
+                explode();
+            }
+        }
+    }
+
+    private void explode() {
+        getArena().explosion(this.robot, new LinearDamageFunction(position, 1, 14));
+        setDead(true);
+    }
+
+    public void update(Duration duration) {
+        super.update(duration);    //To change body of overridden methods use File | Settings | File Templates.
+        if (!isDead() && isOutsideArena()) {
+            explode();
+        }
+    }
+
+    private boolean isOutsideArena() {
+        return position.getX().getMeters() < 0 || position.getX().getMeters() > 1000
+                || position.getY().getMeters() < 0 || position.getY().getMeters() > 1000;
     }
 
     private static class MissileSnapshot extends ArenaObjectSnapshot {

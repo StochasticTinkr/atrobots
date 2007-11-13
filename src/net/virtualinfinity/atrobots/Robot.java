@@ -3,6 +3,7 @@ package net.virtualinfinity.atrobots;
 import java.awt.*;
 import java.awt.geom.GeneralPath;
 import java.awt.geom.Line2D;
+import java.awt.geom.Rectangle2D;
 
 /**
  * @author Daniel Pitts
@@ -256,11 +257,26 @@ public class Robot extends ArenaObject implements Resetable {
 
     @Override
     public void checkCollision(Robot robot) {
-        // TODO:
+        if (robot.getPosition().getVectorTo(position).getMagnatude().getMeters() < 8) {
+            collides();
+            robot.collides();
+        }
+    }
+
+    private void collides() {
+        throttle.setPower(0);
+        throttle.setDesiredPower(0);
+        // TODO: Collision damage;
     }
 
     public void inflictDamage(Robot cause, double damageAmount) {
         // TODO:
+        armor.inflictDamage(damageAmount);
+    }
+
+    public void explode() {
+        setDead(true);
+        getArena().explosion(this, new LinearDamageFunction(position, 1, 25.0));
     }
 
     private static class RobotSnapshot extends ArenaObjectSnapshot {
@@ -300,6 +316,11 @@ public class Robot extends ArenaObject implements Resetable {
             g2d.fill(path);
             g2d.setPaint(Color.white);
             g2d.draw(new Line2D.Double(getX(), getY(), getX() + turretHeading.cosine() * 30, getY() + turretHeading.sine() * 30));
+            g2d.setPaint(new Color(0f, 0f, 1f, 0.6f));
+            g2d.fill(new Rectangle2D.Double(getX() - 50, getY() + 20, armor, 10));
+            g2d.setPaint(new Color(0f, 1f, 0f, 0.6f));
+            g2d.draw(new Rectangle2D.Double(getX() - 50, getY() + 20, 100, 10));
+
             // TODO:
         }
 

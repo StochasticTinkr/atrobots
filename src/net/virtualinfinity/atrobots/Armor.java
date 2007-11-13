@@ -4,8 +4,8 @@ package net.virtualinfinity.atrobots;
  * @author Daniel Pitts
  */
 public class Armor {
-    private double percentRemaining;
-    private double remaining;
+    private double percentRemaining = 100;
+    private Robot robot;
 
     public Armor() {
     }
@@ -19,14 +19,34 @@ public class Armor {
     }
 
     private double percentRemaining() {
-        return percentRemaining;
+        return getRemaining();
     }
 
-    public void setRemaining(double remaining) {
-        percentRemaining = 0;
+    public void setRemaining(double percentRemaining) {
+        this.percentRemaining = percentRemaining;
+        checkDead();
+    }
+
+    private void checkDead() {
+        if (percentRemaining <= 0) {
+            robot.explode();
+        }
     }
 
     public double getRemaining() {
-        return remaining;
+        return percentRemaining;
+    }
+
+    public void inflictDamage(double damageAmount) {
+        percentRemaining -= damageAmount;
+        checkDead();
+    }
+
+    public Robot getRobot() {
+        return robot;
+    }
+
+    public void setRobot(Robot robot) {
+        this.robot = robot;
     }
 }

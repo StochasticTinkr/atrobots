@@ -1,22 +1,21 @@
 package net.virtualinfinity.atrobots;
 
 import java.awt.*;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collection;
+import java.util.*;
 import java.util.List;
 
 /**
  * @author Daniel Pitts
  */
 public class Arena {
-    private final List<Robot> robots = new ArrayList<Robot>();
-    private final List<Mine> mines = new ArrayList<Mine>();
-    private final List<Missile> missiles = new ArrayList<Missile>();
-    private final RadioDispatcher radioDispatcher = new RadioDispatcher();
-
+    private final List<Robot> robots = new LinkedList<Robot>();
+    private final List<Mine> mines = new LinkedList<Mine>();
+    private final List<Missile> missiles = new LinkedList<Missile>();
+    private final Collection<Explosion> explosions = new ArrayList<Explosion>();
     Collection<? extends Collection<? extends ArenaObject>> allArenaObjectCollections =
-            Arrays.asList(mines, robots, missiles);
+            Arrays.asList(mines, robots, missiles, explosions);
+
+    private final RadioDispatcher radioDispatcher = new RadioDispatcher();
     private SimulationFrameBuffer simulationFrameBuffer;
     private Collection<ArenaObjectSnapshot> scans = new ArrayList<ArenaObjectSnapshot>();
 
@@ -50,18 +49,7 @@ public class Arena {
 
     public ScanResult scan(Robot ignore, Position position, final AngleBracket angleBracket, final Distance maxDistance) {
         final ScanResult scanResult = calculateResult(ignore, position, angleBracket, maxDistance);
-        final ArenaObjectSnapshot objectSnapshot = new ArenaObjectSnapshot() {
-            public void paint(Graphics2D g2d) {
-                final Color baseColor = scanResult.successful() ? Color.red : Color.white;
-                g2d.setPaint(baseColor);
-                final Shape shape = angleBracket.toShape(positionVector.getX(), positionVector.getY(), maxDistance);
-                g2d.draw(shape);
-                final Composite composite = g2d.getComposite();
-                g2d.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, .5f));
-                g2d.fill(shape);
-                g2d.setComposite(composite);
-            }
-        };
+        final ArenaObjectSnapshot objectSnapshot = new ScanSnapshot(scanResult, angleBracket, maxDistance);
         objectSnapshot.setPositionVector(position.getVector());
         scans.add(objectSnapshot);
         return scanResult;
@@ -119,6 +107,17 @@ public class Arena {
                 }
             }
             checkCollissions();
+            removeDead();
+        }
+    }
+
+    private void removeDead() {
+        for (Collection<? extends ArenaObject> objectCollection : allArenaObjectCollections) {
+            for (Iterator<? extends ArenaObject> it = objectCollection.iterator(); it.hasNext();) {
+                if (it.next().isDead()) {
+                    it.remove();
+                }
+            }
         }
     }
 
@@ -152,10 +151,34 @@ public class Arena {
         missiles.add(missile);
     }
 
-    public void explosion(Robot cause, DamageFunction damageFunction) {
+    public void explosion(Robot cause, ExplosionFunction explosionFunction) {
+        explosions.add(new Explosion(explosionFunction.getCenter(), explosionFunction.getRadius()));
         for (Robot robot : robots) {
-            damageFunction.inflictDamage(cause, robot);
+            explosionFunction.inflictDamage(cause, robot);
         }
     }
 
+
+    private static class ScanSnapshot extends ArenaObjectSnapshot {
+        private final ScanResult scanResult;
+        private final AngleBracket angleBracket;
+        private final Distance maxDistance;
+
+        public ScanSnapshot(ScanResult scanResult, AngleBracket angleBracket, Distance maxDistance) {
+            this.scanResult = scanResult;
+            this.angleBracket = angleBracket;
+            this.maxDistance = maxDistance;
+        }
+
+        public void paint(Graphics2D g2d) {
+            final Color baseColor = scanResult.successful() ? Color.red : Color.white;
+            g2d.setPaint(baseColor);
+            final Shape shape = angleBracket.toShape(positionVector.getX(), positionVector.getY(), maxDistance);
+            g2d.draw(shape);
+            final Composite composite = g2d.getComposite();
+            g2d.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, .5f));
+            g2d.fill(shape);
+            g2d.setComposite(composite);
+        }
+    }
 }

@@ -10,6 +10,8 @@ import javax.swing.border.BevelBorder;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 import java.io.File;
 import java.io.FilenameFilter;
 import java.io.IOException;
@@ -24,23 +26,35 @@ public class Main implements Runnable {
     private JMenu menu;
     private Game game;
     private ArenaPane arenaPane;
+    private Timer timer = new Timer(50, new ActionListener() {
+        public void actionPerformed(ActionEvent e) {
+            new Thread() {
+                public void run() {
+                    game.stepRound();
+                }
+            }.start();
+        }
+    });
 
     public void run() {
         initializeSystemLookAndFeel();
         mainFrame = new JFrame("AT-Robots 2 Clone 0.0.01");
         mainFrame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+        mainFrame.addWindowListener(new WindowAdapter() {
+            public void windowClosed(WindowEvent e) {
+                if (timer.isRunning()) {
+                    timer.stop();
+                }
+            }
+        });
         menubar = new JMenuBar();
         mainFrame.setJMenuBar(menubar);
         menubar.add(createFileMenu());
         menubar.add(new JMenuItem(new AbstractAction("Step") {
             public void actionPerformed(ActionEvent e) {
-                game.stepRound();
-                new Timer(100, new ActionListener() {
-                    public void actionPerformed(ActionEvent e) {
-                        game.stepRound();
-                    }
-                })
-//                        .start()
+//                new Thread() { public void run() { game.stepRound();}}.start();
+                timer.setCoalesce(true);
+                timer.start()
                         ;
             }
         }));

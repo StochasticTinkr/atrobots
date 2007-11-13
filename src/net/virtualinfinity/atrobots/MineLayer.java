@@ -26,6 +26,7 @@ public class MineLayer {
             mine.setTriggerRadius(triggerRadius);
             mine.setPosition(robot.getPosition());
             arena.placeMine(mine);
+            mines--;
         }
     }
 
