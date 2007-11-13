@@ -1,15 +1,12 @@
 package net.virtualinfinity.atrobots;
 
-import java.util.ArrayList;
-import java.util.List;
-
 /**
  * @author Daniel Pitts
  */
 public class MineLayer {
     private Arena arena;
-    private final List<Mine> unlayedMines = new ArrayList<Mine>();
-    private Position position;
+    private int mines = 2;
+    private Robot robot;
 
     public PortHandler getMineBayPort() {
         return new PortHandler() {
@@ -25,16 +22,11 @@ public class MineLayer {
 
     private void layMine(Distance triggerRadius) {
         if (hasMines()) {
-            final Mine mine = popUnlayedMine();
+            final Mine mine = new Mine(this, robot);
             mine.setTriggerRadius(triggerRadius);
-            mine.setPosition(position);
+            mine.setPosition(robot.getPosition());
             arena.placeMine(mine);
         }
-    }
-
-    private Mine popUnlayedMine() {
-        final Mine mine = unlayedMines.remove(unlayedMines.size() - 1);
-        return mine;
     }
 
     private boolean hasMines() {
@@ -42,7 +34,7 @@ public class MineLayer {
     }
 
     private int countMinesRemaining() {
-        return unlayedMines.size();
+        return mines;
     }
 
     public PortHandler getPlacedMinePort() {
@@ -69,11 +61,7 @@ public class MineLayer {
         this.arena = arena;
     }
 
-    public Position getPosition() {
-        return position;
-    }
-
-    public void setPosition(Position position) {
-        this.position = position;
+    public void setRobot(Robot robot) {
+        this.robot = robot;
     }
 }

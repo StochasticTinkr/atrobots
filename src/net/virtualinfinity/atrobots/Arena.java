@@ -4,14 +4,15 @@ import java.awt.*;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
+import java.util.List;
 
 /**
  * @author Daniel Pitts
  */
 public class Arena {
-    private final Collection<Robot> robots = new ArrayList<Robot>();
-    private final Collection<Mine> mines = new ArrayList<Mine>();
-    private final Collection<Missile> missiles = new ArrayList<Missile>();
+    private final List<Robot> robots = new ArrayList<Robot>();
+    private final List<Mine> mines = new ArrayList<Mine>();
+    private final List<Missile> missiles = new ArrayList<Missile>();
     private final RadioDispatcher radioDispatcher = new RadioDispatcher();
 
     Collection<? extends Collection<? extends ArenaObject>> allArenaObjectCollections =
@@ -24,7 +25,12 @@ public class Arena {
     }
 
     public void placeMine(Mine mine) {
+        connectArena(mine);
         mines.add(mine);
+    }
+
+    private void connectArena(ArenaObject object) {
+        object.setArena(this);
     }
 
     public int countMinesLayedBy(MineLayer mineLayer) {
@@ -112,6 +118,22 @@ public class Arena {
                     object.update(Duration.ONE_CYCLE);
                 }
             }
+            checkCollissions();
+        }
+    }
+
+    private void checkCollissions() {
+        for (int i = 0; i < robots.size(); ++i) {
+            final Robot robot = robots.get(i);
+            for (int j = 0; j < i; ++j) {
+                robots.get(j).checkCollision(robot);
+            }
+            for (Mine mine : mines) {
+                mine.checkCollision(robot);
+            }
+            for (Missile missile : missiles) {
+                missile.checkCollision(robot);
+            }
         }
     }
 
@@ -121,10 +143,19 @@ public class Arena {
 
     public void addRobot(Robot robot) {
         robot.getPosition().copyFrom(Position.random(0.0, 0.0, 1000.0, 1000.0));
+        connectArena(robot);
         robots.add(robot);
     }
 
     public void fireMissile(Missile missile) {
+        connectArena(missile);
         missiles.add(missile);
     }
+
+    public void explosion(Robot cause, DamageFunction damageFunction) {
+        for (Robot robot : robots) {
+            damageFunction.inflictDamage(cause, robot);
+        }
+    }
+
 }

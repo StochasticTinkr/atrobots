@@ -9,9 +9,11 @@ import java.awt.geom.Ellipse2D;
 public class Mine extends ArenaObject {
     private Distance triggerRadius;
     private final MineLayer owner;
+    private Robot robot;
 
-    public Mine(MineLayer owner) {
+    public Mine(MineLayer owner, Robot robot) {
         this.owner = owner;
+        this.robot = robot;
     }
 
     public void setTriggerRadius(Distance triggerRadius) {
@@ -23,13 +25,30 @@ public class Mine extends ArenaObject {
     }
 
     public boolean layedBy(MineLayer mineLayer) {
-        return false;
+        return mineLayer == owner;
     }
 
     protected ArenaObjectSnapshot createSpecificSnapshot() {
         final MineSnapshot snapshot = new MineSnapshot();
         snapshot.setTriggerRadius(triggerRadius);
         return snapshot;
+    }
+
+    @Override
+    public void checkCollision(Robot robot) {
+        if (isDead() || layedBy(robot.getMineLayer())) {
+            return;
+        }
+        if (robot.getPosition().getVectorTo(position).getMagnatude().compareTo(triggerRadius) < 0) {
+            explode();
+        }
+    }
+
+    private void explode() {
+        if (!isDead()) {
+            setDead(true);
+            getArena().explosion(robot, new LinearDamageFunction(position, 1, 35.0));
+        }
     }
 
     private static class MineSnapshot extends ArenaObjectSnapshot {
@@ -46,6 +65,7 @@ public class Mine extends ArenaObject {
             g2d.draw(ellipse);
             g2d.setPaint(Color.yellow);
             ellipse.setFrameFromCenter(getX(), getY(), getX() + 3, getY() + 3);
+            g2d.draw(ellipse);
         }
 
     }

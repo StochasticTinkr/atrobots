@@ -41,6 +41,7 @@ public class HardwareSpecification {
     void configureRobot(Robot robot) {
         robot.setArmor(createArmor());
         robot.setMineLayer(createMineLayer());
+        robot.getMineLayer().setRobot(robot);
         robot.setRadar(createRadar());
         robot.setShield(createShield());
         robot.setSonar(createSonar());

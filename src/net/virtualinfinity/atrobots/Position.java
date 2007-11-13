@@ -7,6 +7,7 @@ import java.util.Random;
  */
 public class Position {
     private Vector vector;
+    private Vector lastVector;
     private Odometer odometer;
 
     public Distance getX() {
@@ -21,6 +22,7 @@ public class Position {
         if (odometer != null) {
             odometer.accumulate(delta.getMagnatude());
         }
+        lastVector = vector;
         vector = vector.add(delta);
     }
 
@@ -30,6 +32,7 @@ public class Position {
 
     public void copyFrom(Position source) {
         vector = source.vector;
+        lastVector = source.lastVector;
     }
 
     public Vector getVectorTo(Position position) {
@@ -46,6 +49,7 @@ public class Position {
         position.vector = Vector.createCartesian(
                 Distance.fromMeters(lowerX + random.nextDouble() * (higherX - lowerX)),
                 Distance.fromMeters(lowerY + random.nextDouble() * (higherY - lowerY)));
+        position.lastVector = position.vector;
         return position;
     }
 }

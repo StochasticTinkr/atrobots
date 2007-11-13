@@ -8,6 +8,7 @@ public abstract class ArenaObject {
     protected final Speed speed = new Speed();
     protected final Velocity velocity = new Velocity(heading, speed);
     protected final Position position = new Position();
+    private Arena arena;
     private boolean dead;
 
     public final void simulateMovement(Duration duration) {
@@ -38,4 +39,14 @@ public abstract class ArenaObject {
     }
 
     protected abstract ArenaObjectSnapshot createSpecificSnapshot();
+
+    public abstract void checkCollision(Robot robot);
+
+    public Arena getArena() {
+        return arena;
+    }
+
+    public void setArena(Arena arena) {
+        this.arena = arena;
+    }
 }

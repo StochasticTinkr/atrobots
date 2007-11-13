@@ -23,6 +23,11 @@ public class Missile extends ArenaObject {
         return speed;
     }
 
+    @Override
+    public void checkCollision(Robot robot) {
+        // TODO;
+    }
+
     private static class MissileSnapshot extends ArenaObjectSnapshot {
         public void paint(Graphics2D g2d) {
             g2d.setPaint(Color.white);

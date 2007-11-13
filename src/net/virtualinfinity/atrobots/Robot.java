@@ -254,6 +254,15 @@ public class Robot extends ArenaObject implements Resetable {
         return robotSnapshot;
     }
 
+    @Override
+    public void checkCollision(Robot robot) {
+        // TODO:
+    }
+
+    public void inflictDamage(Robot cause, double damageAmount) {
+        // TODO:
+    }
+
     private static class RobotSnapshot extends ArenaObjectSnapshot {
         private Temperature temperature;
         private double armor;
