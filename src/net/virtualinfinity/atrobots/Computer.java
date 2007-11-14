@@ -23,6 +23,7 @@ public class Computer {
     private int cyclesPerSimCycle = 5;
     private final ErrorHandler errorHandler = new ErrorHandler();
     private boolean shutDown;
+    private int maxInstructionPointer;
 
     public Computer(Memory memory, int stackSize) {
         this.memory = memory;
@@ -31,8 +32,8 @@ public class Computer {
         this.program = new MemoryRegion(memory, 1024, 4096);
         instructionTable = new InstructionTable();
         Map<Integer, Integer> jumpTable = new HashMap<Integer, Integer>();
-        final int maxIP = program.size() / 4;
-        for (int i = 0; i < maxIP; ++i) {
+        maxInstructionPointer = program.size() / 4;
+        for (int i = 0; i < maxInstructionPointer; ++i) {
             if (getMicrocodeAt(0, i) == Microcode.NumberedLabel) {
                 jumpTable.put((int) getConstantAt(0, i), i);
             }
@@ -65,9 +66,12 @@ public class Computer {
 
     void executeInstruction() {
         hardwareBus.preInstruction();
+        if (nextInstructionPointer >= maxInstructionPointer) {
+            nextInstructionPointer = 0;
+        }
         instructionPointer = nextInstructionPointer;
         nextInstructionPointer++;
-//        System.out.println(getInstructionString() + " ** " +registers);
+        System.out.println(getInstructionString() + " ** " + registers);
         getInstruction().execute(Computer.this);
     }
 

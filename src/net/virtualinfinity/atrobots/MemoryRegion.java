@@ -11,7 +11,7 @@ public class MemoryRegion {
     public MemoryRegion(Memory memory, int startAddress, int length) {
         this.memory = memory;
         this.startAddress = startAddress;
-        this.length = length;
+        this.length = Math.min(length, memory.size() - startAddress);
     }
 
     public short get(int index) {

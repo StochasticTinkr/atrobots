@@ -9,7 +9,6 @@ import javax.swing.*;
 import javax.swing.border.BevelBorder;
 import java.awt.*;
 import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.io.File;
@@ -28,42 +27,29 @@ public class Main implements Runnable {
     private ArenaPane arenaPane;
     private boolean paused = true;
 
-    private Object pauseLock;
+    private final Object pauseLock;
     private Thread gameThread = new Thread() {
         public void run() {
             while (!closed) {
                 try {
                     Thread.sleep(25);
-                } catch (InterruptedException e) {
-                }
-                synchronized (pauseLock) {
-                    while (paused && !closed) {
-                        try {
+                    synchronized (pauseLock) {
+                        while (paused && !closed) {
                             pauseLock.wait();
-                        } catch (InterruptedException e) {
                         }
                     }
-                }
-                try {
                     game.stepRound();
-                } catch (Exception e) {
-                    e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
+                } catch (Throwable e) {
+                    e.printStackTrace();
                 }
             }
         }
     };
-    private Timer timer = new Timer(15, new ActionListener() {
-        public void actionPerformed(ActionEvent e) {
-            synchronized (pauseLock) {
-                paused = false;
-                pauseLock.notifyAll();
-            }
-        }
-    });
     private volatile boolean closed;
 
     public Main() {
         pauseLock = new Object();
+        gameThread.setDaemon(true);
         gameThread.start();
     }
 
@@ -75,6 +61,7 @@ public class Main implements Runnable {
             public void windowClosed(WindowEvent e) {
                 synchronized (pauseLock) {
                     closed = true;
+                    paused = false;
                     pauseLock.notifyAll();
                 }
 
@@ -85,10 +72,10 @@ public class Main implements Runnable {
         menubar.add(createFileMenu());
         menubar.add(new JMenuItem(new AbstractAction("Step") {
             public void actionPerformed(ActionEvent e) {
-//                new Thread() { public void run() { game.stepRound();}}.start();
-                timer.setCoalesce(true);
-                timer.start()
-                        ;
+                synchronized (pauseLock) {
+                    paused = false;
+                    pauseLock.notifyAll();
+                }
             }
         }));
         arenaPane = new ArenaPane();
@@ -146,7 +133,7 @@ public class Main implements Runnable {
             public void actionPerformed(ActionEvent e) {
                 new EntrantLoader(new File("original").listFiles(new FilenameFilter() {
                     public boolean accept(File dir, String name) {
-                        return name.toLowerCase().endsWith("circles.at2");
+                        return name.toLowerCase().endsWith("sniper.at2");
                     }
                 })).execute();
 
@@ -158,10 +145,8 @@ public class Main implements Runnable {
     private void initializeSystemLookAndFeel() {
         try {
             UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
-        } catch (ClassNotFoundException e) {
-        } catch (InstantiationException e) {
-        } catch (IllegalAccessException e) {
-        } catch (UnsupportedLookAndFeelException e) {
+        } catch (Exception e) {
+            throw new RuntimeException(e);
         }
         JFrame.setDefaultLookAndFeelDecorated(true);
         JDialog.setDefaultLookAndFeelDecorated(true);

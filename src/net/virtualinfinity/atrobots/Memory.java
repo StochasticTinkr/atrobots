@@ -24,6 +24,14 @@ public class Memory {
         return errorHandler;
     }
 
+    public int size() {
+        int size = 0;
+        for (MemoryArray array : arrays) {
+            size += array.size();
+        }
+        return size;
+    }
+
     private interface MemoryOperation {
         int perform(MemoryArray array, int index);
     }

@@ -95,4 +95,8 @@ public class Entrant {
     public Program getProgram() {
         return program;
     }
+
+    public String getName() {
+        return name;
+    }
 }

@@ -253,6 +253,7 @@ public class Robot extends ArenaObject implements Resetable {
         robotSnapshot.setActiveShield(shield.isActive());
         robotSnapshot.setHeading(heading.getAngle());
         robotSnapshot.setTurretHeading(turret.getHeading().getAngle());
+        robotSnapshot.setName(getEntrant().getName());
         return robotSnapshot;
     }
 
@@ -290,6 +291,7 @@ public class Robot extends ArenaObject implements Resetable {
         private boolean activeShield;
         private AbsoluteAngle heading;
         private AbsoluteAngle turretHeading;
+        private String name;
 
         public void setTemperature(Temperature temperature) {
             this.temperature = temperature;
@@ -330,6 +332,8 @@ public class Robot extends ArenaObject implements Resetable {
             ;
             g2d.fill(new Rectangle2D.Double(getX() - 50, getY() + 35, temperature.getLogScale() * .2, 10));
             g2d.draw(rect);
+            g2d.setPaint(Color.yellow);
+            g2d.drawString(name, (float) (getX() - 10), (float) (getY() - 10));
 
             // TODO:
         }
@@ -340,6 +344,10 @@ public class Robot extends ArenaObject implements Resetable {
 
         public void setTurretHeading(AbsoluteAngle turretHeading) {
             this.turretHeading = turretHeading;
+        }
+
+        public void setName(String name) {
+            this.name = name;
         }
     }
 
