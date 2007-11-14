@@ -1,28 +1,13 @@
 package net.virtualinfinity.atrobots;
 
-import junit.framework.TestCase;
-
-import java.io.*;
+import java.io.File;
+import java.io.FilenameFilter;
+import java.io.IOException;
 
 /**
  * @author Daniel Pitts
  */
-public class EntrantFactoryTest extends TestCase {
-    private EntrantFactory entrantFactory;
-    private PrintStream source;
-    private ByteArrayOutputStream out;
-
-    public void setUp() throws IOException {
-        entrantFactory = new EntrantFactory("test");
-        out = new ByteArrayOutputStream(1024);
-        source = new PrintStream(out);
-    }
-
-    public void tearDown() throws IOException {
-        out.close();
-        source.close();
-
-    }
+public class EntrantFactoryTest extends AbstractCompilerTest {
 
     public void testNumberLabel() throws IOException {
         source.println(":3");
@@ -84,13 +69,4 @@ public class EntrantFactoryTest extends TestCase {
         return entrantFactory.createEntrant().getProgram().createProgramMemory();
     }
 
-    private void compile() throws IOException {
-        out.flush();
-        final ByteArrayInputStream stream = new ByteArrayInputStream(out.toByteArray());
-        try {
-            entrantFactory.compile(stream).dumpErrors();
-        } finally {
-            stream.close();
-        }
-    }
 }

@@ -151,4 +151,8 @@ public class Arena {
             explosionFunction.inflictDamage(cause, robot);
         }
     }
+
+    public Robot getRobot(int i) {
+        return robots.get(i);
+    }
 }

@@ -13,14 +13,14 @@ public class StackMemory {
     }
 
     public short pop() {
-        final short value = stackMemory.get(stackPointer.signed());
         stackPointer.decrement();
+        final short value = stackMemory.get(stackPointer.signed());
         return value;
     }
 
     public void push(short value) {
         stackPointer.increment();
-        stackMemory.put(stackPointer.signed(), value);
+        stackMemory.put(stackPointer.signed() - 1, value);
     }
 
     public void reset() {

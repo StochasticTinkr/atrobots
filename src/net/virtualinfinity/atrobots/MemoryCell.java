@@ -39,4 +39,8 @@ public class MemoryCell {
     public void and(short value) {
         memory.and(index, value);
     }
+
+    public String toString() {
+        return "@" + index + "=" + this.signed();
+    }
 }

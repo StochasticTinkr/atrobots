@@ -12,6 +12,7 @@ public class EntrantLineVisitor implements LineVisitor {
     private Map<String, Symbol> symbols = new HashMap<String, Symbol>();
     private Map<Integer, Token> unresolved = new LinkedHashMap<Integer, Token>();
     private AtRobotLineLexer lexer;
+
     {
         addReference(8, "COLCNT");
         addReference(9, "METERS");
@@ -28,30 +29,30 @@ public class EntrantLineVisitor implements LineVisitor {
         addConstants(Short.MAX_VALUE, "MAXINT");
         addConstants(Short.MIN_VALUE, "MININT");
         addConstants(0, "NOP", "I_DESTRUCT");
-        addConstants(1, "ADD", "P_SPEDOMETER" ,"I_RESET");
-        addConstants(2, "SUB", "P_HEAT" ,"I_LOCATE");
-        addConstants(3, "OR ", "P_COMPASS" ,"I_KEEPSHIFT");
-        addConstants(4, "AND", "P_TURRET_OFS" ,"I_OVERBURN");
-        addConstants(5, "XOR", "P_TURRET_ABS" ,"I_ID");
-        addConstants(6, "NOT", "P_DAMAGE", "P_ARMOR" ,"I_TIMER");
-        addConstants(7, "MPY", "P_SCAN" ,"I_ANGLE");
-        addConstants(8, "DIV", "P_ACCURACY" ,"I_TID", "I_TARGETID");
-        addConstants(9, "MOD", "P_RADAR" ,"I_TINFO", "I_TARGETINFO");
-        addConstants(10, "RET", "P_RANDOM", "P_RAND" ,"I_GINFO", "I_GAMEINFO");
-        addConstants(11, "GSB", "CALL", "P_THROTTLE" ,"I_RINFO", "I_ROBOTINFO");
-        addConstants(12, "JMP", "GOTO", "P_OFS_TURRET", "P_TROTATE" ,"I_COLLISIONS");
-        addConstants(13, "JLS", "JB", "P_ABS_TURRET", "P_TAIM" ,"I_RESETCOLCNT");
-        addConstants(14, "JGR", "JA", "P_STEERING" ,"I_TRANSMIT");
-        addConstants(15, "JNE", "P_WEAP", "P_WEAPON","P_FIRE" ,"I_RECEIVE");
-        addConstants(16, "JEQ", "JE", "P_SONAR" ,"I_DATAREADY");
-        addConstants(17, "XCHG", "SWAP", "P_ARC", "P_SCANARC" ,"I_CLEARCOM");
-        addConstants(18, "DO" , "P_OVERBURN" ,"I_KILLS", "I_DEATHS");
-        addConstants(19, "LOOP" , "P_TRANSPONDER" ,"I_CLEARMETERS");
-        addConstants(20, "CMP" , "P_SHUTDOWN");
-        addConstants(21, "TEST" , "P_CHANNEL");
+        addConstants(1, "ADD", "P_SPEDOMETER", "I_RESET");
+        addConstants(2, "SUB", "P_HEAT", "I_LOCATE");
+        addConstants(3, "OR", "P_COMPASS", "I_KEEPSHIFT");
+        addConstants(4, "AND", "P_TURRET_OFS", "I_OVERBURN");
+        addConstants(5, "XOR", "P_TURRET_ABS", "I_ID");
+        addConstants(6, "NOT", "P_DAMAGE", "P_ARMOR", "I_TIMER");
+        addConstants(7, "MPY", "P_SCAN", "I_ANGLE");
+        addConstants(8, "DIV", "P_ACCURACY", "I_TID", "I_TARGETID");
+        addConstants(9, "MOD", "P_RADAR", "I_TINFO", "I_TARGETINFO");
+        addConstants(10, "RET", "P_RANDOM", "P_RAND", "I_GINFO", "I_GAMEINFO");
+        addConstants(11, "GSB", "CALL", "P_THROTTLE", "I_RINFO", "I_ROBOTINFO");
+        addConstants(12, "JMP", "GOTO", "P_OFS_TURRET", "P_TROTATE", "I_COLLISIONS");
+        addConstants(13, "JLS", "JB", "P_ABS_TURRET", "P_TAIM", "I_RESETCOLCNT");
+        addConstants(14, "JGR", "JA", "P_STEERING", "I_TRANSMIT");
+        addConstants(15, "JNE", "P_WEAP", "P_WEAPON", "P_FIRE", "I_RECEIVE");
+        addConstants(16, "JEQ", "JE", "P_SONAR", "I_DATAREADY");
+        addConstants(17, "XCHG", "SWAP", "P_ARC", "P_SCANARC", "I_CLEARCOM");
+        addConstants(18, "DO", "P_OVERBURN", "I_KILLS", "I_DEATHS");
+        addConstants(19, "LOOP", "P_TRANSPONDER", "I_CLEARMETERS");
+        addConstants(20, "CMP", "P_SHUTDOWN");
+        addConstants(21, "TEST", "P_CHANNEL");
         addConstants(22, "SET", "MOV", "P_MINELAYER");
-        addConstants(23, "LOC" , "P_MINETRIGGER");
-        addConstants(24, "GET" , "P_SHIELD","P_SHIELDS");
+        addConstants(23, "LOC", "P_MINETRIGGER");
+        addConstants(24, "GET", "P_SHIELD", "P_SHIELDS");
         addConstants(25, "PUT");
         addConstants(26, "INT");
         addConstants(27, "IPO", "IN");
@@ -75,7 +76,8 @@ public class EntrantLineVisitor implements LineVisitor {
         addConstants(45, "NEG");
         addConstants(46, "JTL");
     }
-    private void addConstants(int value, String...names) {
+
+    private void addConstants(int value, String... names) {
         for (String n : names) {
             symbols.put(n.toLowerCase(), new Symbol((short) 0, (short) value));
         }
@@ -119,9 +121,9 @@ public class EntrantLineVisitor implements LineVisitor {
     }
 
     public void numberedLabel(int value) {
-        programCode.add((short)value);
+        programCode.add((short) value);
         alignProgram();
-        programCode.set(programCode.size()-1, (short)2);
+        programCode.set(programCode.size() - 1, (short) 2);
     }
 
     public void maxProcessorSpeed(int speed) {
@@ -142,12 +144,12 @@ public class EntrantLineVisitor implements LineVisitor {
 
     private void alignProgram() {
         while (programCode.size() % 4 != 0) {
-            programCode.add((short)0);
+            programCode.add((short) 0);
         }
     }
 
     public void label(String line) {
-        symbols.put(line, new Symbol((short) 4, (short) (programCode.size()/4)));
+        symbols.put(line, new Symbol((short) 4, (short) (programCode.size() / 4)));
     }
 
     public void tokenizedLine(List<Token> tokens) {
@@ -161,11 +163,11 @@ public class EntrantLineVisitor implements LineVisitor {
     }
 
     private void addMicrocodeToProgram(List<Token> tokens) {
-        programCode.set(programCode.size()-1, getMicrocodeFor(tokens));
+        programCode.set(programCode.size() - 1, getMicrocodeFor(tokens));
     }
 
     private void addTokensToProgram(List<Token> tokens) {
-        for (Token token: tokens) {
+        for (Token token : tokens) {
             addTokenToProgram(token);
         }
     }
@@ -173,12 +175,12 @@ public class EntrantLineVisitor implements LineVisitor {
     private void addTokenToProgram(Token token) {
         programCode.add(token.getValue(symbols));
         if (token.isUnresolved(symbols)) {
-            unresolved.put(programCode.size()-1, token);
+            unresolved.put(programCode.size() - 1, token);
         }
     }
 
     private short getMicrocodeFor(List<Token> tokens) {
-        short microcode =0;
+        short microcode = 0;
         for (ListIterator<Token> iterator = tokens.listIterator(tokens.size()); iterator.hasPrevious();) {
             microcode = (short) ((microcode << 4) | iterator.previous().getMicrocode(symbols));
         }
@@ -186,9 +188,9 @@ public class EntrantLineVisitor implements LineVisitor {
     }
 
     public void resolve() {
-        for (Map.Entry<Integer, Token> entry: unresolved.entrySet()) {
+        for (Map.Entry<Integer, Token> entry : unresolved.entrySet()) {
             if (entry.getValue().isUnresolved(symbols)) {
-                errors.add("Unresolved symbol: " + entry.getValue().toString() , entry.getValue().getLineNumber());
+                errors.add("Unresolved symbol: " + entry.getValue().toString(), entry.getValue().getLineNumber());
             }
             programCode.set(entry.getKey(), entry.getValue().getValue(symbols));
         }

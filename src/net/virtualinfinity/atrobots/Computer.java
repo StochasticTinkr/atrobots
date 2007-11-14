@@ -25,10 +25,10 @@ public class Computer {
     private boolean shutDown;
 
     public Computer(Memory memory, int stackSize) {
-        Computer.this.memory = memory;
-        Computer.this.registers = new Registers(memory);
-        Computer.this.stack = new StackMemory(registers.getStackPointerCell(), stackSize);
-        Computer.this.program = new MemoryRegion(memory, 1024, 4096);
+        this.memory = memory;
+        this.registers = new Registers(memory);
+        this.stack = new StackMemory(registers.getStackPointerCell(), stackSize);
+        this.program = new MemoryRegion(memory, 1024, 4096);
         instructionTable = new InstructionTable();
         Map<Integer, Integer> jumpTable = new HashMap<Integer, Integer>();
         final int maxIP = program.size() / 4;
@@ -38,9 +38,9 @@ public class Computer {
             }
         }
         if (jumpTable.isEmpty()) {
-            Computer.this.jumpTable = Collections.emptyMap();
+            this.jumpTable = Collections.emptyMap();
         } else {
-            Computer.this.jumpTable = jumpTable;
+            this.jumpTable = jumpTable;
         }
     }
 
@@ -63,7 +63,7 @@ public class Computer {
         getHardwareBus().checkHeat();
     }
 
-    private void executeInstruction() {
+    void executeInstruction() {
         hardwareBus.preInstruction();
         instructionPointer = nextInstructionPointer;
         nextInstructionPointer++;
@@ -300,6 +300,18 @@ public class Computer {
         shutDown = false;
     }
 
+    public int getCycles() {
+        return cycles;
+    }
+
+    public int getInstructionPointer() {
+        return instructionPointer;
+    }
+
+    public int getNextInstructionPointer() {
+        return nextInstructionPointer;
+    }
+
     enum Microcode {
         Constant {
             public short getValue(Computer computer, int opnumber) {
@@ -474,5 +486,9 @@ public class Computer {
             // TODO: robot error
             System.out.println("Computer$ErrorHandler.writeToRomError");
         }
+    }
+
+    public StackMemory getStack() {
+        return stack;
     }
 }

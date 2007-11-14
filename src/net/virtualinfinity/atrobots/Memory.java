@@ -9,7 +9,7 @@ import java.util.List;
 public class Memory {
     private final List<MemoryArray> arrays = new ArrayList<MemoryArray>();
     private static final DecrementMemoryOperation DECREMENT = new DecrementMemoryOperation();
-    private static final DecrementMemoryOperation INCREMENT = new DecrementMemoryOperation();
+    private static final IncrementMemoryOperation INCREMENT = new IncrementMemoryOperation();
     private ComputerErrorHandler errorHandler;
 
     public void or(int index, short value) {
@@ -28,7 +28,7 @@ public class Memory {
         int perform(MemoryArray array, int index);
     }
 
-    private static class SetMemoryOperation implements MemoryOperation{
+    private static class SetMemoryOperation implements MemoryOperation {
 
         final short value;
 
@@ -42,7 +42,8 @@ public class Memory {
         }
 
     }
-    private static class OrMemoryOperation implements MemoryOperation{
+
+    private static class OrMemoryOperation implements MemoryOperation {
 
         final short value;
 
@@ -56,7 +57,8 @@ public class Memory {
         }
 
     }
-    private static class AndMemoryOperation implements MemoryOperation{
+
+    private static class AndMemoryOperation implements MemoryOperation {
 
         final short value;
 
@@ -71,7 +73,7 @@ public class Memory {
 
     }
 
-    private static class GetMemoryOperation implements MemoryOperation{
+    private static class GetMemoryOperation implements MemoryOperation {
 
         public int perform(MemoryArray array, int index) {
             return array.get(index);
@@ -79,7 +81,7 @@ public class Memory {
 
     }
 
-    private static class DecrementMemoryOperation implements MemoryOperation{
+    private static class DecrementMemoryOperation implements MemoryOperation {
 
         public int perform(MemoryArray array, int index) {
             array.decrement(index);
@@ -88,7 +90,7 @@ public class Memory {
 
     }
 
-    private static class IncrementMemoryOperation implements MemoryOperation{
+    private static class IncrementMemoryOperation implements MemoryOperation {
 
         public int perform(MemoryArray array, int index) {
             array.increment(index);
@@ -114,7 +116,7 @@ public class Memory {
     }
 
     private int doOperation(int index, MemoryOperation operation) {
-        for (MemoryArray array: arrays) {
+        for (MemoryArray array : arrays) {
             if (index < array.size()) {
                 return operation.perform(array, index);
             }
@@ -136,7 +138,7 @@ public class Memory {
     }
 
     public void setErrorHandler(ComputerErrorHandler errorHandler) {
-        for (MemoryArray array: arrays) {
+        for (MemoryArray array : arrays) {
             array.setErrorHandler(errorHandler);
         }
         this.errorHandler = errorHandler;
