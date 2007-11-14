@@ -352,7 +352,7 @@ public class Robot extends ArenaObject implements Resetable {
         if (heat.getTemperature().compareTo(Temperature.fromLogScale(500)) >= 0) {
             destruct();
         }
-        heat.cool(Temperature.fromLogScale(5));
+        heat.cool(Temperature.fromLogScale(1));
         if (position.getX().getMeters() < 4 || position.getX().getMeters() > 1000 - 4 ||
                 position.getY().getMeters() < 4 || position.getY().getMeters() > 1000 - 4) {
             collides();

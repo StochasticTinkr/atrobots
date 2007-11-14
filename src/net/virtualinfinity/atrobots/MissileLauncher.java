@@ -30,7 +30,7 @@ public class MissileLauncher {
         final Missile missile = new Missile(robot, position, angle);
         missile.getSpeed().setDistanceOverTime(Distance.fromMeters(32), Duration.ONE_CYCLE);
         getArena().fireMissile(missile);
-        robot.getHeat().warm(Temperature.fromLogScale(50));
+        robot.getHeat().warm(Temperature.fromLogScale(20));
     }
 
     public Arena getArena() {
