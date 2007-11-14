@@ -61,7 +61,7 @@ public class HardwareBus {
 
     public void preInstruction() {
         computer.getRegisters().getDesiredSpeed().set((short) robot.getThrottle().getDesiredPower());
-        computer.getRegisters().getDesiredHeading().set(desiredHeading.getAngle().getSignedBygrees());
+        computer.getRegisters().getDesiredHeading().set((short) (desiredHeading.getAngle().getBygrees() & 255));
         computer.getRegisters().getTurretOffset().set((short) robot.getTurretShift());
         computer.getRegisters().getMeters().set((short) Math.round(robot.getOdometer().getDistance().getMeters()));
     }

@@ -36,7 +36,7 @@ public class Heading {
     }
 
     private void rotate(RelativeAngle angle) {
-        setAngle(this.getAngle().counterClockwise(angle));
+        this.angle = this.angle.clockwise(angle);
     }
 
     public void setAngle(AbsoluteAngle angle) {
@@ -69,6 +69,6 @@ public class Heading {
     }
 
     public String toString() {
-        return String.valueOf(angle);
+        return String.valueOf(getAngle());
     }
 }

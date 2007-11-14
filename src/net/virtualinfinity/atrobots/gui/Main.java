@@ -133,7 +133,7 @@ public class Main implements Runnable {
             public void actionPerformed(ActionEvent e) {
                 new EntrantLoader(new File("original").listFiles(new FilenameFilter() {
                     public boolean accept(File dir, String name) {
-                        return name.toLowerCase().endsWith("sniper.at2");
+                        return name.toLowerCase().endsWith("sniper2.at2");
                     }
                 })).execute();
 
