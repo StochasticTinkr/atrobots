@@ -49,6 +49,26 @@ public class InstructionTest extends AbstractCompilerTest {
         assertBinaryOperation(16, 3, "MOD", 16 % 3);
     }
 
+    public void testSHL() {
+        assertBinaryOperation(16, 3, "SHL", 16 << 3);
+    }
+
+    public void testSHR() {
+        assertBinaryOperation(-16, 3, "SHR", (-16 & 0xFFFF) >> 3);
+    }
+
+    public void testSAR() {
+        assertBinaryOperation(-16, 3, "SAR", -16 >> 3);
+    }
+
+    public void testROR() {
+        assertBinaryOperation(0x8001, 1, "ROR", (short) 0xC000);
+    }
+
+    public void testROL() {
+        assertBinaryOperation(0x8001, 1, "ROL", (short) 0x0003);
+    }
+
     public void testPOP() {
         compile("POP AX");
         robot.getComputer().getStack().push((short) 3);
@@ -79,7 +99,61 @@ public class InstructionTest extends AbstractCompilerTest {
         assertInstructionPointer(3);
     }
 
-    // TODO: Conditional Jump Tests
+    public void testJLS() {
+        assertConditionalJump(0, 1, "JLS", 0, 0);
+    }
+
+    public void testJGR() {
+        assertConditionalJump(1, 0, "JGR", 0, 0);
+    }
+
+    public void testJE() {
+        assertConditionalJump(0, 0, "JE", 1, 0);
+    }
+
+    public void testJZ() {
+        assertConditionalJump(0, 0, "JZ", 1, 1);
+    }
+
+    public void testJGE_equal() {
+        assertConditionalJump(0, 0, "JGE", 0, 1);
+    }
+
+    public void testJGE_greater() {
+        assertConditionalJump(1, 0, "JGE", 0, 1);
+    }
+
+    public void testJLE_equal() {
+        assertConditionalJump(0, 0, "JlE", 2, 1);
+    }
+
+    public void testJLE_greater() {
+        assertConditionalJump(0, 1, "JlE", 2, 1);
+    }
+
+    public void testJNE() {
+        assertConditionalJump(0, 1, "JNE", 1, 1);
+    }
+
+    public void testJNZ() {
+        assertConditionalJump(1, 1, "JNZ", 0, 0);
+    }
+
+    public void testSWAP() {
+        addLine("MOV AX, 3");
+        addLine("MOV CX, 5");
+        addLine("SWAP AX CX");
+        compile();
+        executeInstruction();
+        executeInstruction();
+        executeInstruction();
+        assertAX(5);
+        assertCX(3);
+    }
+
+    private void addLine(String aba) {
+        source.println(aba);
+    }
 
     public void testDO() {
         executeFirst("DO 9");
@@ -102,7 +176,12 @@ public class InstructionTest extends AbstractCompilerTest {
     }
 
     public void testCMP() {
-        compile("CMP 1, 2\n CMP 2, 1\n CMP 0,0\nCMP 1,1");
+        addLine("CMP 1, 2");
+        addLine("CMP 2, 1");
+        addLine("CMP 0,0");
+        addLine("CMP 1,1");
+        compile();
+
         executeInstruction();
         assertCompareInequal();
         assetCompareLess();
@@ -122,6 +201,46 @@ public class InstructionTest extends AbstractCompilerTest {
         assertCompareNotLessAndNotGreater();
     }
 
+    public void testJTL() {
+        executeFirst("JTL 3\nNOP\nNOP\nNOP\nNOP\nNOP\n");
+        assertInstructionPointer(3);
+    }
+
+    public void testTEST() {
+        addLine("test 1, 2");
+        addLine("test 2, 1");
+        addLine("test 0,0");
+        addLine("test 1,1");
+        addLine("test 1,5");
+        compile();
+        executeInstruction();
+        assertCompareZeroNotEqual();
+        assertCompareNotLessAndNotGreater();
+
+        executeInstruction();
+        assertCompareZeroNotEqual();
+        assertCompareNotLessAndNotGreater();
+
+        executeInstruction();
+        assertFlagEqual();
+        assertFlagZero();
+        assertCompareNotLessAndNotGreater();
+
+        executeInstruction();
+        assertFlagEqual();
+        assertFlagNotZero();
+        assertCompareNotLessAndNotGreater();
+
+        executeInstruction();
+        assertCompareInequal();
+        assertCompareNotLessAndNotGreater();
+    }
+
+    private void assertCompareZeroNotEqual() {
+        assertFlagNotEqual();
+        assertFlagZero();
+    }
+
     private void assertCompareNotLessAndNotGreater() {
         assertFlagNotGreater();
         assertFlagNotLess();
@@ -138,7 +257,7 @@ public class InstructionTest extends AbstractCompilerTest {
     }
 
     private void assertCompareInequal() {
-        assertFlagsNotEqual();
+        assertFlagNotEqual();
         assertFlagNotZero();
     }
 
@@ -170,11 +289,9 @@ public class InstructionTest extends AbstractCompilerTest {
         assertFalse(robot.getComputer().getFlags().isGreater());
     }
 
-    private void assertFlagsNotEqual() {
+    private void assertFlagNotEqual() {
         assertFalse(robot.getComputer().getFlags().isEqual());
     }
-
-    // TODO: Compare Tests
 
     private void executeFirst(String program) {
         compile(program);
@@ -194,7 +311,7 @@ public class InstructionTest extends AbstractCompilerTest {
     }
 
     private void compile(String instruction) {
-        source.println(instruction);
+        addLine(instruction);
         compile();
     }
 
@@ -215,5 +332,23 @@ public class InstructionTest extends AbstractCompilerTest {
 
     private void executeInstruction() {
         robot.getComputer().executeInstruction();
+    }
+
+    private void assertConditionalJump(int v1, int v2, String jump, int v3, int v4) {
+        addLine("!fail");
+        addLine("CMP " + v1 + ", " + v2);
+        addLine(jump + " !succeed");
+        addLine("NOP");
+        addLine("!succeed");
+        addLine("CMP " + v3 + ", " + v4);
+        addLine(jump + " !fail");
+        addLine("NOP");
+        compile();
+        executeInstruction();
+        executeInstruction();
+        assertInstructionPointer(3);
+        executeInstruction();
+        executeInstruction();
+        assertInstructionPointer(5);
     }
 }

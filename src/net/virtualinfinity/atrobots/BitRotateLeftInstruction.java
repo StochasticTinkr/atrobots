@@ -9,6 +9,6 @@ public class BitRotateLeftInstruction extends AbstractCombiningInstruction {
     }
 
     protected int combine(short first, short second) {
-        return (first << second) | (first >>> (16 - second));
+        return (first << second) | ((first & 0xFFFF) >>> (16 - second));
     }
 }

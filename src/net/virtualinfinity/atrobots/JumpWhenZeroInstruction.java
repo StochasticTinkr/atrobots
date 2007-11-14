@@ -9,6 +9,6 @@ public class JumpWhenZeroInstruction extends ConditionalJump {
     }
 
     protected boolean conditionMet(Flags flags) {
-        return flags.isEqual();
+        return flags.isZero();
     }
 }

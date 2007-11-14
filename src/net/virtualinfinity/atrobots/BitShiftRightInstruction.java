@@ -9,6 +9,6 @@ public class BitShiftRightInstruction extends AbstractCombiningInstruction {
     }
 
     protected int combine(short first, short second) {
-        return first >>> second;
+        return (first & 0xFFFF) >>> second;
     }
 }
