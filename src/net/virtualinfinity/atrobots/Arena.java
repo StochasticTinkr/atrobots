@@ -1,8 +1,6 @@
 package net.virtualinfinity.atrobots;
 
-import java.awt.*;
 import java.util.*;
-import java.util.List;
 
 /**
  * @author Daniel Pitts
@@ -11,13 +9,13 @@ public class Arena {
     private final List<Robot> robots = new LinkedList<Robot>();
     private final List<Mine> mines = new LinkedList<Mine>();
     private final List<Missile> missiles = new LinkedList<Missile>();
-    private final Collection<Explosion> explosions = new ArrayList<Explosion>();
+    private final Collection<ArenaObject> others = new LinkedList<ArenaObject>();
     Collection<? extends Collection<? extends ArenaObject>> allArenaObjectCollections =
-            Arrays.asList(mines, robots, missiles, explosions);
+            Arrays.asList(mines, robots, missiles, others);
 
     private final RadioDispatcher radioDispatcher = new RadioDispatcher();
     private SimulationFrameBuffer simulationFrameBuffer;
-    private Collection<ArenaObjectSnapshot> scans = new ArrayList<ArenaObjectSnapshot>();
+//    private Collection<ArenaObjectSnapshot> scans = new ArrayList<ArenaObjectSnapshot>();
 
     public int countActiveRobots() {
         return robots.size();
@@ -49,9 +47,9 @@ public class Arena {
 
     public ScanResult scan(Robot ignore, Position position, final AngleBracket angleBracket, final Distance maxDistance) {
         final ScanResult scanResult = calculateResult(ignore, position, angleBracket, maxDistance);
-        final ArenaObjectSnapshot objectSnapshot = new ScanSnapshot(scanResult, angleBracket, maxDistance);
-        objectSnapshot.setPositionVector(position.getVector());
-        scans.add(objectSnapshot);
+        final ScanObject object = new ScanObject(angleBracket, maxDistance, scanResult.successful(), scanResult.getMatchPositionVector());
+        others.add(object);
+        object.getPosition().copyFrom(position);
         return scanResult;
     }
 
@@ -91,10 +89,6 @@ public class Arena {
                 simulationFrameBuffer.addObject(object.getSnapshot());
             }
         }
-        for (ArenaObjectSnapshot snapshot : scans) {
-            simulationFrameBuffer.addObject(snapshot);
-        }
-        scans.clear();
         simulationFrameBuffer.endFrame();
     }
 
@@ -152,33 +146,9 @@ public class Arena {
     }
 
     public void explosion(Robot cause, ExplosionFunction explosionFunction) {
-        explosions.add(new Explosion(explosionFunction.getCenter(), explosionFunction.getRadius()));
+        others.add(new Explosion(explosionFunction.getCenter(), explosionFunction.getRadius()));
         for (Robot robot : robots) {
             explosionFunction.inflictDamage(cause, robot);
-        }
-    }
-
-
-    private static class ScanSnapshot extends ArenaObjectSnapshot {
-        private final ScanResult scanResult;
-        private final AngleBracket angleBracket;
-        private final Distance maxDistance;
-
-        public ScanSnapshot(ScanResult scanResult, AngleBracket angleBracket, Distance maxDistance) {
-            this.scanResult = scanResult;
-            this.angleBracket = angleBracket;
-            this.maxDistance = maxDistance;
-        }
-
-        public void paint(Graphics2D g2d) {
-            final Color baseColor = scanResult.successful() ? Color.red : Color.white;
-            g2d.setPaint(baseColor);
-            final Shape shape = angleBracket.toShape(positionVector.getX(), positionVector.getY(), maxDistance);
-            g2d.draw(shape);
-            final Composite composite = g2d.getComposite();
-            g2d.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, .5f));
-            g2d.fill(shape);
-            g2d.setComposite(composite);
         }
     }
 }

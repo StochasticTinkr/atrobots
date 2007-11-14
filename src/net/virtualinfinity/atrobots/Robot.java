@@ -29,6 +29,7 @@ public class Robot extends ArenaObject implements Resetable {
     private HardwareBus hardwareBus;
     private final LastScanResult lastScanResult = new LastScanResult();
     private static final RelativeAngle STEERING_SPEED = RelativeAngle.fromBygrees(8);
+    private final Position oldPosition = new Position();
 
     {
         position.setOdometer(odometer);
@@ -264,6 +265,7 @@ public class Robot extends ArenaObject implements Resetable {
     }
 
     private void collides() {
+        position.copyFrom(oldPosition);
         throttle.setPower(0);
         throttle.setDesiredPower(0);
         // TODO: Collision damage;
@@ -275,8 +277,10 @@ public class Robot extends ArenaObject implements Resetable {
     }
 
     public void explode() {
-        setDead(true);
-        getArena().explosion(this, new LinearDamageFunction(position, 1, 25.0));
+        if (!isDead()) {
+            setDead(true);
+            getArena().explosion(this, new LinearDamageFunction(position, 1, 25.0));
+        }
     }
 
     private static class RobotSnapshot extends ArenaObjectSnapshot {
@@ -306,20 +310,26 @@ public class Robot extends ArenaObject implements Resetable {
         public void paint(Graphics2D g2d) {
             g2d.setPaint(Color.red);
             final GeneralPath path = new GeneralPath();
-            path.moveTo(getX() + heading.cosine() * 25, getY() + heading.sine() * 25);
+            path.moveTo(getX() + heading.cosine() * 5, getY() + heading.sine() * 5);
             AbsoluteAngle cc = heading.counterClockwise(AbsoluteAngle.fromRelativeBygrees(160));
             AbsoluteAngle c = heading.clockwise(AbsoluteAngle.fromRelativeBygrees(160));
-            path.lineTo(getX() + cc.cosine() * 12, getY() + cc.sine() * 12);
+            path.lineTo(getX() + cc.cosine() * 3, getY() + cc.sine() * 3);
             path.lineTo(getX(), getY());
-            path.lineTo(getX() + c.cosine() * 12, getY() + c.sine() * 12);
+            path.lineTo(getX() + c.cosine() * 3, getY() + c.sine() * 3);
             path.closePath();
             g2d.fill(path);
             g2d.setPaint(Color.white);
-            g2d.draw(new Line2D.Double(getX(), getY(), getX() + turretHeading.cosine() * 30, getY() + turretHeading.sine() * 30));
+            g2d.draw(new Line2D.Double(getX(), getY(), getX() + turretHeading.cosine() * 5, getY() + turretHeading.sine() * 5));
             g2d.setPaint(new Color(0f, 0f, 1f, 0.6f));
             g2d.fill(new Rectangle2D.Double(getX() - 50, getY() + 20, armor, 10));
             g2d.setPaint(new Color(0f, 1f, 0f, 0.6f));
             g2d.draw(new Rectangle2D.Double(getX() - 50, getY() + 20, 100, 10));
+            final Rectangle2D.Double rect = new Rectangle2D.Double(getX() - 50, getY() + 35, 100, 10);
+            g2d.setPaint(new GradientPaint((float) rect.getMinX(), (float) rect.getMinY(), new Color(1f, 0f, 0f, 0.1f),
+                    (float) rect.getMaxX(), (float) rect.getMinY(), new Color(1f, 1f, 0f, 1f)));
+            ;
+            g2d.fill(new Rectangle2D.Double(getX() - 50, getY() + 35, temperature.getLogScale() * .2, 10));
+            g2d.draw(rect);
 
             // TODO:
         }
@@ -334,10 +344,18 @@ public class Robot extends ArenaObject implements Resetable {
     }
 
     public void update(Duration duration) {
+        oldPosition.copyFrom(position);
         super.update(duration);
         getThrottle().update(duration);
         getHeading().moveToward(getDesiredHeading(), STEERING_SPEED);
-        // TODO: Handle throttle.
         getComputer().update(duration);
+        if (heat.getTemperature().compareTo(Temperature.fromLogScale(500)) >= 0) {
+            destruct();
+        }
+        heat.cool(Temperature.fromLogScale(5));
+        if (position.getX().getMeters() < 4 || position.getX().getMeters() > 1000 - 4 ||
+                position.getY().getMeters() < 4 || position.getY().getMeters() > 1000 - 4) {
+            collides();
+        }
     }
 }

@@ -23,7 +23,7 @@ public class Position {
             odometer.accumulate(delta.getMagnatude());
         }
         lastVector = vector;
-        vector = vector.add(delta);
+        vector = vector.plus(delta);
     }
 
     public void setOdometer(Odometer odometer) {

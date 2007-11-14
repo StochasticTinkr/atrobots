@@ -47,4 +47,8 @@ public class ScanResult {
     public boolean successful() {
         return match != null;
     }
+
+    Vector getMatchPositionVector() {
+        return successful() ? getMatch().getPosition().getVector() : null;
+    }
 }

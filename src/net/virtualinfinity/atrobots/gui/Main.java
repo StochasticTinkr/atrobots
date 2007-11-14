@@ -26,15 +26,46 @@ public class Main implements Runnable {
     private JMenu menu;
     private Game game;
     private ArenaPane arenaPane;
-    private Timer timer = new Timer(50, new ActionListener() {
-        public void actionPerformed(ActionEvent e) {
-            new Thread() {
-                public void run() {
-                    game.stepRound();
+    private boolean paused = true;
+
+    private Object pauseLock;
+    private Thread gameThread = new Thread() {
+        public void run() {
+            while (!closed) {
+                try {
+                    Thread.sleep(25);
+                } catch (InterruptedException e) {
                 }
-            }.start();
+                synchronized (pauseLock) {
+                    while (paused && !closed) {
+                        try {
+                            pauseLock.wait();
+                        } catch (InterruptedException e) {
+                        }
+                    }
+                }
+                try {
+                    game.stepRound();
+                } catch (Exception e) {
+                    e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
+                }
+            }
+        }
+    };
+    private Timer timer = new Timer(15, new ActionListener() {
+        public void actionPerformed(ActionEvent e) {
+            synchronized (pauseLock) {
+                paused = false;
+                pauseLock.notifyAll();
+            }
         }
     });
+    private volatile boolean closed;
+
+    public Main() {
+        pauseLock = new Object();
+        gameThread.start();
+    }
 
     public void run() {
         initializeSystemLookAndFeel();
@@ -42,9 +73,11 @@ public class Main implements Runnable {
         mainFrame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         mainFrame.addWindowListener(new WindowAdapter() {
             public void windowClosed(WindowEvent e) {
-                if (timer.isRunning()) {
-                    timer.stop();
+                synchronized (pauseLock) {
+                    closed = true;
+                    pauseLock.notifyAll();
                 }
+
             }
         });
         menubar = new JMenuBar();

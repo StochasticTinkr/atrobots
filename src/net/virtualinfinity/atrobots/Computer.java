@@ -22,6 +22,7 @@ public class Computer {
     private CommunicationsQueue commQueue;
     private int cyclesPerSimCycle = 5;
     private final ErrorHandler errorHandler = new ErrorHandler();
+    private boolean shutDown;
 
     public Computer(Memory memory, int stackSize) {
         Computer.this.memory = memory;
@@ -52,9 +53,14 @@ public class Computer {
     }
 
     public void useCycles() {
-        while (cycles > 0) {
+        while (cycles > 0 && !shutDown) {
+            getHardwareBus().checkHeat();
             executeInstruction();
         }
+        if (shutDown && cycles > 0) {
+            cycles = 0;
+        }
+        getHardwareBus().checkHeat();
     }
 
     private void executeInstruction() {
@@ -280,6 +286,18 @@ public class Computer {
 
     public void notAddressableError() {
         errorHandler.notAddressableError();
+    }
+
+    public void shutDown() {
+        shutDown = true;
+    }
+
+    public boolean isShutDown() {
+        return shutDown;
+    }
+
+    public void startUp() {
+        shutDown = false;
     }
 
     enum Microcode {

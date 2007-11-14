@@ -22,7 +22,7 @@ abstract class Vector {
         return CartesianVector.fromCartesian(x, y);
     }
 
-    public Vector add(Vector vector) {
+    public Vector plus(Vector vector) {
         return createCartesian(getX().plus(vector.getX()), getY().plus(vector.getY()));
     }
 
@@ -32,5 +32,9 @@ abstract class Vector {
 
     public Point2D toPoint2D() {
         return new Point2D.Double(getX().getMeters(), getY().getMeters());
+    }
+
+    public Vector minus(Vector vector) {
+        return createCartesian(getX().minus(vector.getX()), getY().minus(vector.getY()));
     }
 }

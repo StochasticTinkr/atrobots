@@ -13,6 +13,7 @@ public class HardwareBus {
     private Map<Integer, InterruptHandler> interrupts;
     private final Collection<Resetable> resetables = new ArrayList<Resetable>();
     private final Heading desiredHeading = new Heading();
+    private Temperature autoShutDown = Temperature.fromLogScale(300);
     private Computer computer;
     private Robot robot;
 
@@ -74,5 +75,24 @@ public class HardwareBus {
     public void setRobot(Robot robot) {
         this.robot = robot;
         desiredHeading.setAngle(robot.getHeading().getAngle());
+    }
+
+    public void checkHeat() {
+        if (robot.getHeat().getTemperature().compareTo(autoShutDown) >= 0) {
+            shutDown();
+        }
+        if (computer.isShutDown() && robot.getHeat().getTemperature().compareTo(autoShutDown.minus(Temperature.fromLogScale(50))) < 0) {
+            startUp();
+        }
+    }
+
+    private void startUp() {
+        computer.startUp();
+    }
+
+    private void shutDown() {
+        desiredHeading.setAngle(robot.getHeading().getAngle());
+        robot.getThrottle().setDesiredPower(0);
+        computer.shutDown();
     }
 }

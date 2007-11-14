@@ -53,7 +53,7 @@ public class Game {
         entrant.setGame(this);
     }
 
-    public void stepRound() {
+    public synchronized void stepRound() {
         getRound().step();
     }
 }

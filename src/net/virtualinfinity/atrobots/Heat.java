@@ -17,4 +17,15 @@ public class Heat {
     public Temperature getTemperature() {
         return temperature;
     }
+
+    public void warm(Temperature temperature) {
+        this.temperature = this.temperature.plus(temperature);
+    }
+
+    public void cool(Temperature temperature) {
+        this.temperature = this.temperature.minus(temperature);
+        if (this.temperature.compareTo(Temperature.BASE_TEMPERATURE) < 0) {
+            this.temperature = Temperature.BASE_TEMPERATURE;
+        }
+    }
 }
