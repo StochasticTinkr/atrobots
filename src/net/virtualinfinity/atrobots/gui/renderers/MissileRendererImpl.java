@@ -1,6 +1,6 @@
 package net.virtualinfinity.atrobots.gui.renderers;
 
-import net.virtualinfinity.atrobots.MissileSnapshot;
+import net.virtualinfinity.atrobots.snapshots.MissileSnapshot;
 
 import java.awt.*;
 import java.awt.geom.Line2D;

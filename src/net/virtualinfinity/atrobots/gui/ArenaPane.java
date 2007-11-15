@@ -1,7 +1,9 @@
 package net.virtualinfinity.atrobots.gui;
 
-import net.virtualinfinity.atrobots.*;
+import net.virtualinfinity.atrobots.SimulationFrameBuffer;
+import net.virtualinfinity.atrobots.SimulationObserver;
 import net.virtualinfinity.atrobots.gui.renderers.*;
+import net.virtualinfinity.atrobots.snapshots.*;
 
 import javax.swing.*;
 import java.awt.*;

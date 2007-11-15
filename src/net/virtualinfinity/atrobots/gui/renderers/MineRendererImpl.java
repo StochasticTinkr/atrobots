@@ -1,6 +1,6 @@
 package net.virtualinfinity.atrobots.gui.renderers;
 
-import net.virtualinfinity.atrobots.MineSnapshot;
+import net.virtualinfinity.atrobots.snapshots.MineSnapshot;
 
 import java.awt.*;
 import java.awt.geom.Ellipse2D;

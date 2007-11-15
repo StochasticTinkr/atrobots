@@ -1,7 +1,7 @@
 package net.virtualinfinity.atrobots.gui.renderers;
 
 import net.virtualinfinity.atrobots.AbsoluteAngle;
-import net.virtualinfinity.atrobots.RobotSnapshot;
+import net.virtualinfinity.atrobots.snapshots.RobotSnapshot;
 
 import java.awt.*;
 import java.awt.geom.GeneralPath;

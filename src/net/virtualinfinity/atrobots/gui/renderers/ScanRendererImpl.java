@@ -1,6 +1,6 @@
 package net.virtualinfinity.atrobots.gui.renderers;
 
-import net.virtualinfinity.atrobots.ScanSnapshot;
+import net.virtualinfinity.atrobots.snapshots.ScanSnapshot;
 
 import java.awt.*;
 

@@ -1,5 +1,8 @@
 package net.virtualinfinity.atrobots;
 
+import net.virtualinfinity.atrobots.snapshots.ArenaObjectSnapshot;
+import net.virtualinfinity.atrobots.snapshots.MineSnapshot;
+
 /**
  * @author Daniel Pitts
  */

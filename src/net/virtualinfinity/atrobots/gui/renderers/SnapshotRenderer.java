@@ -1,6 +1,6 @@
 package net.virtualinfinity.atrobots.gui.renderers;
 
-import net.virtualinfinity.atrobots.ArenaObjectSnapshot;
+import net.virtualinfinity.atrobots.snapshots.ArenaObjectSnapshot;
 
 import java.awt.*;
 
