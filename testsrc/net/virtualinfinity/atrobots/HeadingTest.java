@@ -61,7 +61,7 @@ public class HeadingTest extends TestCase {
         assertRelativeHeading(AbsoluteAngle.fromBygrees(-9));
     }
 
-    public void testRelativeMoveTo() {
+    public void testRelativeMoveToClockwise() {
         desiredHeading.setAngle(AbsoluteAngle.fromBygrees(9));
         absoluteHeading.moveToward(desiredHeading, RelativeAngle.fromBygrees(5));
         assertAbsoluteHeading(AbsoluteAngle.fromBygrees(5));
@@ -69,6 +69,19 @@ public class HeadingTest extends TestCase {
         relativeHeading.moveToward(desiredHeading, RelativeAngle.fromBygrees(5));
         assertAbsoluteHeading(AbsoluteAngle.fromBygrees(5));
         assertRelativeHeading(AbsoluteAngle.fromBygrees(9));
+    }
+
+    public void testRelativeMoveToCounterClockwise() {
+        desiredHeading.setAngle(AbsoluteAngle.fromBygrees(-9));
+        absoluteHeading.moveToward(desiredHeading, RelativeAngle.fromBygrees(5));
+        assertAbsoluteHeading(AbsoluteAngle.fromBygrees(-5));
+        assertRelativeHeading(AbsoluteAngle.fromBygrees(-5));
+        relativeHeading.moveToward(desiredHeading, RelativeAngle.fromBygrees(5));
+        assertAbsoluteHeading(AbsoluteAngle.fromBygrees(-5));
+        assertRelativeHeading(AbsoluteAngle.fromBygrees(-9));
+    }
+
+    public void test() {
     }
 
     private void assertRelativeHeading(AbsoluteAngle actual) {
@@ -82,5 +95,4 @@ public class HeadingTest extends TestCase {
     private static void assertEquals(AbsoluteAngle expected, AbsoluteAngle actual) {
         assertEquals(expected.getNormalizedRadians(), actual.getNormalizedRadians(), Math.PI / 8000);
     }
-
 }

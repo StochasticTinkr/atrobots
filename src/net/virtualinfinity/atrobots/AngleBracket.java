@@ -53,7 +53,7 @@ public class AngleBracket {
     }
 
     public double fractionTo(AbsoluteAngle angle) {
-        return rangeSize / counterClockwiseBound.getNormalizedRadiansClockwiseTo(angle);
+        return counterClockwiseBound.getAngleCounterClockwiseTo(angle).normalize().getRadians() / rangeSize;
     }
 
     public AbsoluteAngle randomAngleBetween() {
