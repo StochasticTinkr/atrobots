@@ -87,7 +87,6 @@ public class Scanner implements Resetable {
 
     private void setAccuracy(int accuracy) {
         this.accuracy = accuracy;
-        System.out.println("accuracy = " + accuracy);
     }
 
     public void setRobot(Robot robot) {
