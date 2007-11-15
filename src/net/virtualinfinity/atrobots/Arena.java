@@ -25,8 +25,8 @@ public class Arena {
 
     private final RadioDispatcher radioDispatcher = new RadioDispatcher();
     private SimulationFrameBuffer simulationFrameBuffer;
-//    private Collection<ArenaObjectSnapshot> scans = new ArrayList<ArenaObjectSnapshot>();
 
+    //    private Collection<ArenaObjectSnapshot> scans = new ArrayList<ArenaObjectSnapshot>();
     public int countActiveRobots() {
         return robots.size();
     }

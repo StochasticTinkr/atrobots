@@ -1,5 +1,7 @@
 package net.virtualinfinity.atrobots;
 
+import net.virtualinfinity.atrobots.util.MapWithDefaultValue;
+
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Random;

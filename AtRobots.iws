@@ -20,96 +20,12 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" name="Default" comment="">
-      <change type="MOVED" beforePath="C:\Users\Daniel\IdeaProjects\AtRobots\src\net\virtualinfinity\atrobots\MemoryRegion.java" afterPath="$PROJECT_DIR$/src/net/virtualinfinity/atrobots/computer/MemoryRegion.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/AtRobots.iws" afterPath="$PROJECT_DIR$/AtRobots.iws" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/net/virtualinfinity/atrobots/Scanner.java" afterPath="$PROJECT_DIR$/src/net/virtualinfinity/atrobots/Scanner.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/testsrc/net/virtualinfinity/atrobots/EntrantFactoryTest.java" afterPath="$PROJECT_DIR$/testsrc/net/virtualinfinity/atrobots/EntrantFactoryTest.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/net/virtualinfinity/atrobots/Missile.java" afterPath="$PROJECT_DIR$/src/net/virtualinfinity/atrobots/Missile.java" />
-      <change type="MOVED" beforePath="C:\Users\Daniel\IdeaProjects\AtRobots\src\net\virtualinfinity\atrobots\RandomAccessMemoryArray.java" afterPath="$PROJECT_DIR$/src/net/virtualinfinity/atrobots/computer/RandomAccessMemoryArray.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/net/virtualinfinity/atrobots/Speed.java" afterPath="$PROJECT_DIR$/src/net/virtualinfinity/atrobots/Speed.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/net/virtualinfinity/atrobots/Position.java" afterPath="$PROJECT_DIR$/src/net/virtualinfinity/atrobots/Position.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/net/virtualinfinity/atrobots/interrupts/GetRobotInfoInterrupt.java" afterPath="$PROJECT_DIR$/src/net/virtualinfinity/atrobots/interrupts/GetRobotInfoInterrupt.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/net/virtualinfinity/atrobots/interrupts/ZeroMemoryCellsInterrupt.java" afterPath="$PROJECT_DIR$/src/net/virtualinfinity/atrobots/interrupts/ZeroMemoryCellsInterrupt.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/net/virtualinfinity/atrobots/computer/BitShiftRightInstruction.java" afterPath="$PROJECT_DIR$/src/net/virtualinfinity/atrobots/computer/BitShiftRightInstruction.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/net/virtualinfinity/atrobots/interrupts/ResetMetersInterrupt.java" afterPath="$PROJECT_DIR$/src/net/virtualinfinity/atrobots/interrupts/ResetMetersInterrupt.java" />
-      <change type="MOVED" beforePath="C:\Users\Daniel\IdeaProjects\AtRobots\src\net\virtualinfinity\atrobots\AngleBracket.java" afterPath="$PROJECT_DIR$/src/net/virtualinfinity/atrobots/measures/AngleBracket.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/net/virtualinfinity/atrobots/parser/EntrantLineVisitor.java" afterPath="$PROJECT_DIR$/src/net/virtualinfinity/atrobots/parser/EntrantLineVisitor.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/testsrc/net/virtualinfinity/atrobots/AngleBracketTest.java" afterPath="$PROJECT_DIR$/testsrc/net/virtualinfinity/atrobots/AngleBracketTest.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/net/virtualinfinity/atrobots/Explosion.java" afterPath="$PROJECT_DIR$/src/net/virtualinfinity/atrobots/Explosion.java" />
-      <change type="MOVED" beforePath="C:\Users\Daniel\IdeaProjects\AtRobots\src\net\virtualinfinity\atrobots\DistanceOverTime.java" afterPath="$PROJECT_DIR$/src/net/virtualinfinity/atrobots/measures/DistanceOverTime.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/net/virtualinfinity/atrobots/LinearDamageFunction.java" afterPath="$PROJECT_DIR$/src/net/virtualinfinity/atrobots/LinearDamageFunction.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/net/virtualinfinity/atrobots/computer/BitShiftLeftInstruction.java" afterPath="$PROJECT_DIR$/src/net/virtualinfinity/atrobots/computer/BitShiftLeftInstruction.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/net/virtualinfinity/atrobots/HardwareSpecification.java" afterPath="$PROJECT_DIR$/src/net/virtualinfinity/atrobots/HardwareSpecification.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/net/virtualinfinity/atrobots/computer/Computer.java" afterPath="$PROJECT_DIR$/src/net/virtualinfinity/atrobots/computer/Computer.java" />
-      <change type="MOVED" beforePath="C:\Users\Daniel\IdeaProjects\AtRobots\src\net\virtualinfinity\atrobots\ReadOnlyMemoryArray.java" afterPath="$PROJECT_DIR$/src/net/virtualinfinity/atrobots/computer/ReadOnlyMemoryArray.java" />
-      <change type="MOVED" beforePath="C:\Users\Daniel\IdeaProjects\AtRobots\src\net\virtualinfinity\atrobots\MemoryArray.java" afterPath="$PROJECT_DIR$/src/net/virtualinfinity/atrobots/computer/MemoryArray.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/net/virtualinfinity/atrobots/Flags.java" afterPath="$PROJECT_DIR$/src/net/virtualinfinity/atrobots/Flags.java" />
-      <change type="MOVED" beforePath="C:\Users\Daniel\IdeaProjects\AtRobots\src\net\virtualinfinity\atrobots\CommunicationsQueue.java" afterPath="$PROJECT_DIR$/src/net/virtualinfinity/atrobots/computer/CommunicationsQueue.java" />
-      <change type="MOVED" beforePath="C:\Users\Daniel\IdeaProjects\AtRobots\src\net\virtualinfinity\atrobots\AbsoluteAngle.java" afterPath="$PROJECT_DIR$/src/net/virtualinfinity/atrobots/measures/AbsoluteAngle.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/net/virtualinfinity/atrobots/interrupts/FindAngleInterrupt.java" afterPath="$PROJECT_DIR$/src/net/virtualinfinity/atrobots/interrupts/FindAngleInterrupt.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/net/virtualinfinity/atrobots/Entrant.java" afterPath="$PROJECT_DIR$/src/net/virtualinfinity/atrobots/Entrant.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/net/virtualinfinity/atrobots/snapshots/RobotSnapshot.java" afterPath="$PROJECT_DIR$/src/net/virtualinfinity/atrobots/snapshots/RobotSnapshot.java" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/net/virtualinfinity/atrobots/util" />
+      <change type="MOVED" beforePath="C:\Users\Daniel\IdeaProjects\AtRobots\src\net\virtualinfinity\atrobots\MapWithDefaultValue.java" afterPath="$PROJECT_DIR$/src/net/virtualinfinity/atrobots/util/MapWithDefaultValue.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/net/virtualinfinity/atrobots/interrupts/AtRobotInterruptFactory.java" afterPath="$PROJECT_DIR$/src/net/virtualinfinity/atrobots/interrupts/AtRobotInterruptFactory.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/net/virtualinfinity/atrobots/Arena.java" afterPath="$PROJECT_DIR$/src/net/virtualinfinity/atrobots/Arena.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/net/virtualinfinity/atrobots/interrupts/GetQueueSizeInterrupt.java" afterPath="$PROJECT_DIR$/src/net/virtualinfinity/atrobots/interrupts/GetQueueSizeInterrupt.java" />
-      <change type="MOVED" beforePath="C:\Users\Daniel\IdeaProjects\AtRobots\src\net\virtualinfinity\atrobots\RelativeAngle.java" afterPath="$PROJECT_DIR$/src/net/virtualinfinity/atrobots/measures/RelativeAngle.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/testsrc/net/virtualinfinity/atrobots/HeadingTest.java" afterPath="$PROJECT_DIR$/testsrc/net/virtualinfinity/atrobots/HeadingTest.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/net/virtualinfinity/atrobots/interrupts/GetIdInterrupt.java" afterPath="$PROJECT_DIR$/src/net/virtualinfinity/atrobots/interrupts/GetIdInterrupt.java" />
-      <change type="MOVED" beforePath="C:\Users\Daniel\IdeaProjects\AtRobots\src\net\virtualinfinity\atrobots\Distance.java" afterPath="$PROJECT_DIR$/src/net/virtualinfinity/atrobots/measures/Distance.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/net/virtualinfinity/atrobots/snapshots/ArenaObjectSnapshot.java" afterPath="$PROJECT_DIR$/src/net/virtualinfinity/atrobots/snapshots/ArenaObjectSnapshot.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/net/virtualinfinity/atrobots/computer/AddInstruction.java" afterPath="$PROJECT_DIR$/src/net/virtualinfinity/atrobots/computer/AddInstruction.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/net/virtualinfinity/atrobots/Odometer.java" afterPath="$PROJECT_DIR$/src/net/virtualinfinity/atrobots/Odometer.java" />
-      <change type="MOVED" beforePath="C:\Users\Daniel\IdeaProjects\AtRobots\src\net\virtualinfinity\atrobots\Vector.java" afterPath="$PROJECT_DIR$/src/net/virtualinfinity/atrobots/measures/Vector.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/net/virtualinfinity/atrobots/interrupts/GetRobotStatisticsInterrupt.java" afterPath="$PROJECT_DIR$/src/net/virtualinfinity/atrobots/interrupts/GetRobotStatisticsInterrupt.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/net/virtualinfinity/atrobots/snapshots/ScanSnapshot.java" afterPath="$PROJECT_DIR$/src/net/virtualinfinity/atrobots/snapshots/ScanSnapshot.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/net/virtualinfinity/atrobots/Round.java" afterPath="$PROJECT_DIR$/src/net/virtualinfinity/atrobots/Round.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/net/virtualinfinity/atrobots/ArenaObject.java" afterPath="$PROJECT_DIR$/src/net/virtualinfinity/atrobots/ArenaObject.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/net/virtualinfinity/atrobots/Velocity.java" afterPath="$PROJECT_DIR$/src/net/virtualinfinity/atrobots/Velocity.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/net/virtualinfinity/atrobots/measures" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/net/virtualinfinity/atrobots/Mine.java" afterPath="$PROJECT_DIR$/src/net/virtualinfinity/atrobots/Mine.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/net/virtualinfinity/atrobots/interrupts/OverburnInterrupt.java" afterPath="$PROJECT_DIR$/src/net/virtualinfinity/atrobots/interrupts/OverburnInterrupt.java" />
-      <change type="MOVED" beforePath="C:\Users\Daniel\IdeaProjects\AtRobots\src\net\virtualinfinity\atrobots\Memory.java" afterPath="$PROJECT_DIR$/src/net/virtualinfinity/atrobots/computer/Memory.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/net/virtualinfinity/atrobots/Robot.java" afterPath="$PROJECT_DIR$/src/net/virtualinfinity/atrobots/Robot.java" />
-      <change type="MOVED" beforePath="C:\Users\Daniel\IdeaProjects\AtRobots\src\net\virtualinfinity\atrobots\ComputerErrorHandler.java" afterPath="$PROJECT_DIR$/src/net/virtualinfinity/atrobots/computer/ComputerErrorHandler.java" />
-      <change type="MOVED" beforePath="C:\Users\Daniel\IdeaProjects\AtRobots\src\net\virtualinfinity\atrobots\SubtractInstruction.java" afterPath="$PROJECT_DIR$/src/net/virtualinfinity/atrobots/computer/SubtractInstruction.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/net/virtualinfinity/atrobots/computer/BitwiseExclusiveOrInstruction.java" afterPath="$PROJECT_DIR$/src/net/virtualinfinity/atrobots/computer/BitwiseExclusiveOrInstruction.java" />
-      <change type="MOVED" beforePath="C:\Users\Daniel\IdeaProjects\AtRobots\src\net\virtualinfinity\atrobots\StackMemory.java" afterPath="$PROJECT_DIR$/src/net/virtualinfinity/atrobots/computer/StackMemory.java" />
-      <change type="MOVED" beforePath="C:\Users\Daniel\IdeaProjects\AtRobots\src\net\virtualinfinity\atrobots\PolarVector.java" afterPath="$PROJECT_DIR$/src/net/virtualinfinity/atrobots/measures/PolarVector.java" />
-      <change type="MOVED" beforePath="C:\Users\Daniel\IdeaProjects\AtRobots\src\net\virtualinfinity\atrobots\Area.java" afterPath="$PROJECT_DIR$/src/net/virtualinfinity/atrobots/measures/Area.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/net/virtualinfinity/atrobots/Throttle.java" afterPath="$PROJECT_DIR$/src/net/virtualinfinity/atrobots/Throttle.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/net/virtualinfinity/atrobots/interrupts/GetTimerInterrupt.java" afterPath="$PROJECT_DIR$/src/net/virtualinfinity/atrobots/interrupts/GetTimerInterrupt.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/net/virtualinfinity/atrobots/interrupts/GetGameInfoInterrupt.java" afterPath="$PROJECT_DIR$/src/net/virtualinfinity/atrobots/interrupts/GetGameInfoInterrupt.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/net/virtualinfinity/atrobots/MineLayer.java" afterPath="$PROJECT_DIR$/src/net/virtualinfinity/atrobots/MineLayer.java" />
-      <change type="MOVED" beforePath="C:\Users\Daniel\IdeaProjects\AtRobots\src\net\virtualinfinity\atrobots\Registers.java" afterPath="$PROJECT_DIR$/src/net/virtualinfinity/atrobots/computer/Registers.java" />
-      <change type="MOVED" beforePath="C:\Users\Daniel\IdeaProjects\AtRobots\src\net\virtualinfinity\atrobots\Program.java" afterPath="$PROJECT_DIR$/src/net/virtualinfinity/atrobots/computer/Program.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/net/virtualinfinity/atrobots/ScanObject.java" afterPath="$PROJECT_DIR$/src/net/virtualinfinity/atrobots/ScanObject.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/net/virtualinfinity/atrobots/interrupts/InvalidInterrupt.java" afterPath="$PROJECT_DIR$/src/net/virtualinfinity/atrobots/interrupts/InvalidInterrupt.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/net/virtualinfinity/atrobots/snapshots/MineSnapshot.java" afterPath="$PROJECT_DIR$/src/net/virtualinfinity/atrobots/snapshots/MineSnapshot.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/net/virtualinfinity/atrobots/ScanResult.java" afterPath="$PROJECT_DIR$/src/net/virtualinfinity/atrobots/ScanResult.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/net/virtualinfinity/atrobots/interrupts/CopyMemoryCellsInterrupt.java" afterPath="$PROJECT_DIR$/src/net/virtualinfinity/atrobots/interrupts/CopyMemoryCellsInterrupt.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/net/virtualinfinity/atrobots/Sonar.java" afterPath="$PROJECT_DIR$/src/net/virtualinfinity/atrobots/Sonar.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/net/virtualinfinity/atrobots/gui/renderers/RobotRendererImpl.java" afterPath="$PROJECT_DIR$/src/net/virtualinfinity/atrobots/gui/renderers/RobotRendererImpl.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/net/virtualinfinity/atrobots/interrupts/SetKeepshiftInterrupt.java" afterPath="$PROJECT_DIR$/src/net/virtualinfinity/atrobots/interrupts/SetKeepshiftInterrupt.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/net/virtualinfinity/atrobots/computer/BitRotateLeftInstruction.java" afterPath="$PROJECT_DIR$/src/net/virtualinfinity/atrobots/computer/BitRotateLeftInstruction.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/net/virtualinfinity/atrobots/Radar.java" afterPath="$PROJECT_DIR$/src/net/virtualinfinity/atrobots/Radar.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/net/virtualinfinity/atrobots/Heading.java" afterPath="$PROJECT_DIR$/src/net/virtualinfinity/atrobots/Heading.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/net/virtualinfinity/atrobots/interrupts/TransmitInterrupt.java" afterPath="$PROJECT_DIR$/src/net/virtualinfinity/atrobots/interrupts/TransmitInterrupt.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/net/virtualinfinity/atrobots/Transceiver.java" afterPath="$PROJECT_DIR$/src/net/virtualinfinity/atrobots/Transceiver.java" />
-      <change type="MOVED" beforePath="C:\Users\Daniel\IdeaProjects\AtRobots\src\net\virtualinfinity\atrobots\SignedBitShiftRightInstruction.java" afterPath="$PROJECT_DIR$/src/net/virtualinfinity/atrobots/computer/SignedBitShiftRightInstruction.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/net/virtualinfinity/atrobots/computer/LoopInstruction.java" afterPath="$PROJECT_DIR$/src/net/virtualinfinity/atrobots/computer/LoopInstruction.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/net/virtualinfinity/atrobots/EntrantFactory.java" afterPath="$PROJECT_DIR$/src/net/virtualinfinity/atrobots/EntrantFactory.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/net/virtualinfinity/atrobots/computer/BitwiseOrInstruction.java" afterPath="$PROJECT_DIR$/src/net/virtualinfinity/atrobots/computer/BitwiseOrInstruction.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/net/virtualinfinity/atrobots/computer/BitRotateRightInstruction.java" afterPath="$PROJECT_DIR$/src/net/virtualinfinity/atrobots/computer/BitRotateRightInstruction.java" />
-      <change type="MOVED" beforePath="C:\Users\Daniel\IdeaProjects\AtRobots\src\net\virtualinfinity\atrobots\Duration.java" afterPath="$PROJECT_DIR$/src/net/virtualinfinity/atrobots/measures/Duration.java" />
-      <change type="MOVED" beforePath="C:\Users\Daniel\IdeaProjects\AtRobots\src\net\virtualinfinity\atrobots\CartesianVector.java" afterPath="$PROJECT_DIR$/src/net/virtualinfinity/atrobots/measures/CartesianVector.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/net/virtualinfinity/atrobots/computer/MultiplyInstruction.java" afterPath="$PROJECT_DIR$/src/net/virtualinfinity/atrobots/computer/MultiplyInstruction.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/net/virtualinfinity/atrobots/computer/InstructionTable.java" afterPath="$PROJECT_DIR$/src/net/virtualinfinity/atrobots/computer/InstructionTable.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/net/virtualinfinity/atrobots/interrupts/LocateInterrupt.java" afterPath="$PROJECT_DIR$/src/net/virtualinfinity/atrobots/interrupts/LocateInterrupt.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/net/virtualinfinity/atrobots/interrupts/ReceiveInterrupt.java" afterPath="$PROJECT_DIR$/src/net/virtualinfinity/atrobots/interrupts/ReceiveInterrupt.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/net/virtualinfinity/atrobots/MissileLauncher.java" afterPath="$PROJECT_DIR$/src/net/virtualinfinity/atrobots/MissileLauncher.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/net/virtualinfinity/atrobots/snapshots/ExplosionSnapshot.java" afterPath="$PROJECT_DIR$/src/net/virtualinfinity/atrobots/snapshots/ExplosionSnapshot.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/net/virtualinfinity/atrobots/ExplosionFunction.java" afterPath="$PROJECT_DIR$/src/net/virtualinfinity/atrobots/ExplosionFunction.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/net/virtualinfinity/atrobots/computer/BitwiseAndInstruction.java" afterPath="$PROJECT_DIR$/src/net/virtualinfinity/atrobots/computer/BitwiseAndInstruction.java" />
-      <change type="MOVED" beforePath="C:\Users\Daniel\IdeaProjects\AtRobots\src\net\virtualinfinity\atrobots\MemoryCell.java" afterPath="$PROJECT_DIR$/src/net/virtualinfinity/atrobots/computer/MemoryCell.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/net/virtualinfinity/atrobots/AtRobotPortFactory.java" afterPath="$PROJECT_DIR$/src/net/virtualinfinity/atrobots/AtRobotPortFactory.java" />
     </list>
     <ignored path="AtRobots.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -203,7 +119,7 @@
       <file leaf-file-name="AtRobotPortFactory.java" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/net/virtualinfinity/atrobots/AtRobotPortFactory.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="24" column="29" selection-start="806" selection-end="806" vertical-scroll-proportion="0.5067751">
+            <state line="26" column="29" selection-start="869" selection-end="869" vertical-scroll-proportion="0.5067751">
               <folding />
             </state>
           </provider>
@@ -218,10 +134,10 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="Arena.java" pinned="false" current="true" current-in-tab="true">
+      <file leaf-file-name="Arena.java" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/net/virtualinfinity/atrobots/Arena.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="24" column="0" selection-start="898" selection-end="898" vertical-scroll-proportion="0.37621024">
+            <state line="145" column="26" selection-start="5188" selection-end="5188" vertical-scroll-proportion="0.3416321">
               <folding>
                 <element signature="imports" expanded="true" />
               </folding>
@@ -229,10 +145,10 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="Instruction.java" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/net/virtualinfinity/atrobots/computer/Instruction.java">
+      <file leaf-file-name="MapWithDefaultValue.java" pinned="false" current="true" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/src/net/virtualinfinity/atrobots/util/MapWithDefaultValue.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="19" column="0" selection-start="462" selection-end="462" vertical-scroll-proportion="0.43766937">
+            <state line="9" column="13" selection-start="163" selection-end="163" vertical-scroll-proportion="0.16124661">
               <folding />
             </state>
           </provider>
@@ -505,40 +421,6 @@
           <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
         </PATH_ELEMENT>
       </PATH>
-      <PATH>
-        <PATH_ELEMENT>
-          <option name="myItemId" value="AtRobots" />
-          <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-        </PATH_ELEMENT>
-        <PATH_ELEMENT>
-          <option name="myItemId" value="AtRobots" />
-          <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewModuleNode" />
-        </PATH_ELEMENT>
-        <PATH_ELEMENT>
-          <option name="myItemId" value="PsiDirectory:C:\Users\Daniel\IdeaProjects\AtRobots" />
-          <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-        </PATH_ELEMENT>
-        <PATH_ELEMENT>
-          <option name="myItemId" value="PsiDirectory:C:\Users\Daniel\IdeaProjects\AtRobots\src" />
-          <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-        </PATH_ELEMENT>
-        <PATH_ELEMENT>
-          <option name="myItemId" value="PsiDirectory:C:\Users\Daniel\IdeaProjects\AtRobots\src\net" />
-          <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-        </PATH_ELEMENT>
-        <PATH_ELEMENT>
-          <option name="myItemId" value="PsiDirectory:C:\Users\Daniel\IdeaProjects\AtRobots\src\net\virtualinfinity" />
-          <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-        </PATH_ELEMENT>
-        <PATH_ELEMENT>
-          <option name="myItemId" value="PsiDirectory:C:\Users\Daniel\IdeaProjects\AtRobots\src\net\virtualinfinity\atrobots" />
-          <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-        </PATH_ELEMENT>
-        <PATH_ELEMENT>
-          <option name="myItemId" value="PsiDirectory:C:\Users\Daniel\IdeaProjects\AtRobots\src\net\virtualinfinity\atrobots\computer" />
-          <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-        </PATH_ELEMENT>
-      </PATH>
     </subPane>
   </component>
   <component name="ProjectReloadState">
@@ -586,6 +468,7 @@
       <recent name="net.virtualinfinity.atrobots" />
     </key>
     <key name="MoveClassesOrPackagesDialog.RECENTS_KEY">
+      <recent name="net.virtualinfinity.atrobots.util" />
       <recent name="net.virtualinfinity.atrobots.computer" />
       <recent name="net.virtualinfinity.atrobots" />
     </key>
@@ -1014,13 +897,6 @@
     <option name="FILTER_TARGETS" value="false" />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/src/net/virtualinfinity/atrobots/gui/renderers/ExplosionRendererImpl.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="11" column="71" selection-start="304" selection-end="304" vertical-scroll-proportion="0.25701943">
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/net/virtualinfinity/atrobots/gui/renderers/MissileRendererImpl.java">
       <provider selected="true" editor-type-id="text-editor">
         <state line="10" column="76" selection-start="274" selection-end="274" vertical-scroll-proportion="0.25701943">
@@ -1065,7 +941,7 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/net/virtualinfinity/atrobots/AtRobotPortFactory.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="24" column="29" selection-start="806" selection-end="806" vertical-scroll-proportion="0.5067751">
+        <state line="26" column="29" selection-start="869" selection-end="869" vertical-scroll-proportion="0.5067751">
           <folding />
         </state>
       </provider>
@@ -1125,10 +1001,17 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/net/virtualinfinity/atrobots/Arena.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="24" column="0" selection-start="898" selection-end="898" vertical-scroll-proportion="0.37621024">
+        <state line="145" column="26" selection-start="5188" selection-end="5188" vertical-scroll-proportion="0.3416321">
           <folding>
             <element signature="imports" expanded="true" />
           </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/net/virtualinfinity/atrobots/util/MapWithDefaultValue.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="9" column="13" selection-start="163" selection-end="163" vertical-scroll-proportion="0.16124661">
+          <folding />
         </state>
       </provider>
     </entry>

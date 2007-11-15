@@ -1,13 +1,13 @@
-package net.virtualinfinity.atrobots;
+package net.virtualinfinity.atrobots.util;
 
+import java.util.Collection;
 import java.util.Map;
 import java.util.Set;
-import java.util.Collection;
 
 /**
  * @author Daniel Pitts
  */
-public class MapWithDefaultValue<K,E> implements Map<K,E> {
+public class MapWithDefaultValue<K, E> implements Map<K, E> {
     private final Map<K, E> backingMap;
     private E defaultValue;
 

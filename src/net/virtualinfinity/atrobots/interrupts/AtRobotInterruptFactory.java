@@ -1,7 +1,7 @@
 package net.virtualinfinity.atrobots.interrupts;
 
-import net.virtualinfinity.atrobots.MapWithDefaultValue;
 import net.virtualinfinity.atrobots.Robot;
+import net.virtualinfinity.atrobots.util.MapWithDefaultValue;
 
 import java.util.HashMap;
 import java.util.Map;
