@@ -1,4 +1,6 @@
-package net.virtualinfinity.atrobots;
+package net.virtualinfinity.atrobots.interrupts;
+
+import net.virtualinfinity.atrobots.MemoryCell;
 
 /**
  * @author Daniel Pitts
@@ -11,7 +13,7 @@ public class ZeroMemoryCellsInterrupt extends InterruptHandler {
     }
 
     public void handleInterrupt() {
-        for (MemoryCell cell: cells) {
+        for (MemoryCell cell : cells) {
             cell.set((short) 0);
         }
     }

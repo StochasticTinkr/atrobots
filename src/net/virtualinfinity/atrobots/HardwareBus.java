@@ -1,6 +1,7 @@
 package net.virtualinfinity.atrobots;
 
 import net.virtualinfinity.atrobots.computer.Computer;
+import net.virtualinfinity.atrobots.interrupts.InterruptHandler;
 
 import java.util.ArrayList;
 import java.util.Collection;

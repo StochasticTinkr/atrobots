@@ -1,4 +1,7 @@
-package net.virtualinfinity.atrobots;
+package net.virtualinfinity.atrobots.interrupts;
+
+import net.virtualinfinity.atrobots.MapWithDefaultValue;
+import net.virtualinfinity.atrobots.Robot;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -99,7 +102,7 @@ public class AtRobotInterruptFactory {
         return new InvalidInterrupt(robot.getComputer().getErrorHandler());
     }
 
-    Map<Integer, InterruptHandler> createInterruptTable() {
+    public Map<Integer, InterruptHandler> createInterruptTable() {
         Map<Integer, InterruptHandler> interrupts = new HashMap<Integer, InterruptHandler>();
 
         interrupts.put(0, createDestructInterrupt());

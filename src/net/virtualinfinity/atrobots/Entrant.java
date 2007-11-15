@@ -1,6 +1,8 @@
 package net.virtualinfinity.atrobots;
 
 import net.virtualinfinity.atrobots.computer.Computer;
+import net.virtualinfinity.atrobots.interrupts.AtRobotInterruptFactory;
+import net.virtualinfinity.atrobots.interrupts.InterruptHandler;
 
 import java.util.Map;
 

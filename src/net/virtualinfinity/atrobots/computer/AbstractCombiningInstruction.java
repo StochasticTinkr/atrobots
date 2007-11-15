@@ -1,7 +1,4 @@
-package net.virtualinfinity.atrobots;
-
-import net.virtualinfinity.atrobots.computer.Computer;
-import net.virtualinfinity.atrobots.computer.Instruction;
+package net.virtualinfinity.atrobots.computer;
 
 /**
  * @author Daniel Pitts

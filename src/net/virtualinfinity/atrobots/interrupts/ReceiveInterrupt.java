@@ -1,4 +1,7 @@
-package net.virtualinfinity.atrobots;
+package net.virtualinfinity.atrobots.interrupts;
+
+import net.virtualinfinity.atrobots.CommunicationsQueue;
+import net.virtualinfinity.atrobots.MemoryCell;
 
 /**
  * @author Daniel Pitts
@@ -11,6 +14,7 @@ public class ReceiveInterrupt extends InterruptHandler {
         this.queue = queue;
         this.destination = destination;
     }
+
     public void handleInterrupt() {
         queue.popTo(destination);
     }

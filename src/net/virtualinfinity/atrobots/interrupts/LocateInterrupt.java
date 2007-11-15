@@ -1,4 +1,7 @@
-package net.virtualinfinity.atrobots;
+package net.virtualinfinity.atrobots.interrupts;
+
+import net.virtualinfinity.atrobots.ArenaObject;
+import net.virtualinfinity.atrobots.MemoryCell;
 
 /**
  * @author Daniel Pitts
@@ -15,7 +18,7 @@ public class LocateInterrupt extends InterruptHandler {
     }
 
     public void handleInterrupt() {
-        xHolder.set((short)Math.round(object.getPosition().getX().getMeters()));
-        yHolder.set((short)Math.round(object.getPosition().getY().getMeters()));
+        xHolder.set((short) Math.round(object.getPosition().getX().getMeters()));
+        yHolder.set((short) Math.round(object.getPosition().getY().getMeters()));
     }
 }

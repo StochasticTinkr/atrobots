@@ -20,10 +20,31 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/net/virtualinfinity/atrobots/computer/Computer.java" afterPath="$PROJECT_DIR$/src/net/virtualinfinity/atrobots/computer/Computer.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/AtRobots.iws" afterPath="$PROJECT_DIR$/AtRobots.iws" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/testsrc/net/virtualinfinity/atrobots/computer" />
-      <change type="MOVED" beforePath="C:\Users\Daniel\IdeaProjects\AtRobots\testsrc\net\virtualinfinity\atrobots\InstructionTest.java" afterPath="$PROJECT_DIR$/testsrc/net/virtualinfinity/atrobots/computer/InstructionTest.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/net/virtualinfinity/atrobots/HardwareBus.java" afterPath="$PROJECT_DIR$/src/net/virtualinfinity/atrobots/HardwareBus.java" />
+      <change type="MOVED" beforePath="C:\Users\Daniel\IdeaProjects\AtRobots\src\net\virtualinfinity\atrobots\GetRobotStatisticsInterrupt.java" afterPath="$PROJECT_DIR$/src/net/virtualinfinity/atrobots/interrupts/GetRobotStatisticsInterrupt.java" />
+      <change type="MOVED" beforePath="C:\Users\Daniel\IdeaProjects\AtRobots\src\net\virtualinfinity\atrobots\InterruptHandler.java" afterPath="$PROJECT_DIR$/src/net/virtualinfinity/atrobots/interrupts/InterruptHandler.java" />
+      <change type="MOVED" beforePath="C:\Users\Daniel\IdeaProjects\AtRobots\src\net\virtualinfinity\atrobots\InvalidInterrupt.java" afterPath="$PROJECT_DIR$/src/net/virtualinfinity/atrobots/interrupts/InvalidInterrupt.java" />
+      <change type="MOVED" beforePath="C:\Users\Daniel\IdeaProjects\AtRobots\src\net\virtualinfinity\atrobots\ResetMetersInterrupt.java" afterPath="$PROJECT_DIR$/src/net/virtualinfinity/atrobots/interrupts/ResetMetersInterrupt.java" />
+      <change type="MOVED" beforePath="C:\Users\Daniel\IdeaProjects\AtRobots\src\net\virtualinfinity\atrobots\TransmitInterrupt.java" afterPath="$PROJECT_DIR$/src/net/virtualinfinity/atrobots/interrupts/TransmitInterrupt.java" />
+      <change type="MOVED" beforePath="C:\Users\Daniel\IdeaProjects\AtRobots\src\net\virtualinfinity\atrobots\ZeroMemoryCellsInterrupt.java" afterPath="$PROJECT_DIR$/src/net/virtualinfinity/atrobots/interrupts/ZeroMemoryCellsInterrupt.java" />
+      <change type="MOVED" beforePath="C:\Users\Daniel\IdeaProjects\AtRobots\src\net\virtualinfinity\atrobots\LocateInterrupt.java" afterPath="$PROJECT_DIR$/src/net/virtualinfinity/atrobots/interrupts/LocateInterrupt.java" />
+      <change type="MOVED" beforePath="C:\Users\Daniel\IdeaProjects\AtRobots\src\net\virtualinfinity\atrobots\CopyMemoryCellsInterrupt.java" afterPath="$PROJECT_DIR$/src/net/virtualinfinity/atrobots/interrupts/CopyMemoryCellsInterrupt.java" />
+      <change type="MOVED" beforePath="C:\Users\Daniel\IdeaProjects\AtRobots\src\net\virtualinfinity\atrobots\DestructInterrupt.java" afterPath="$PROJECT_DIR$/src/net/virtualinfinity/atrobots/interrupts/DestructInterrupt.java" />
+      <change type="MOVED" beforePath="C:\Users\Daniel\IdeaProjects\AtRobots\src\net\virtualinfinity\atrobots\GetTimerInterrupt.java" afterPath="$PROJECT_DIR$/src/net/virtualinfinity/atrobots/interrupts/GetTimerInterrupt.java" />
+      <change type="MOVED" beforePath="C:\Users\Daniel\IdeaProjects\AtRobots\src\net\virtualinfinity\atrobots\GetQueueSizeInterrupt.java" afterPath="$PROJECT_DIR$/src/net/virtualinfinity/atrobots/interrupts/GetQueueSizeInterrupt.java" />
+      <change type="MOVED" beforePath="C:\Users\Daniel\IdeaProjects\AtRobots\src\net\virtualinfinity\atrobots\ResetInterrupt.java" afterPath="$PROJECT_DIR$/src/net/virtualinfinity/atrobots/interrupts/ResetInterrupt.java" />
+      <change type="MOVED" beforePath="C:\Users\Daniel\IdeaProjects\AtRobots\src\net\virtualinfinity\atrobots\AtRobotInterruptFactory.java" afterPath="$PROJECT_DIR$/src/net/virtualinfinity/atrobots/interrupts/AtRobotInterruptFactory.java" />
+      <change type="MOVED" beforePath="C:\Users\Daniel\IdeaProjects\AtRobots\src\net\virtualinfinity\atrobots\GetGameInfoInterrupt.java" afterPath="$PROJECT_DIR$/src/net/virtualinfinity/atrobots/interrupts/GetGameInfoInterrupt.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/net/virtualinfinity/atrobots/Entrant.java" afterPath="$PROJECT_DIR$/src/net/virtualinfinity/atrobots/Entrant.java" />
+      <change type="MOVED" beforePath="C:\Users\Daniel\IdeaProjects\AtRobots\src\net\virtualinfinity\atrobots\OverburnInterrupt.java" afterPath="$PROJECT_DIR$/src/net/virtualinfinity/atrobots/interrupts/OverburnInterrupt.java" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/net/virtualinfinity/atrobots/interrupts" />
+      <change type="MOVED" beforePath="C:\Users\Daniel\IdeaProjects\AtRobots\src\net\virtualinfinity\atrobots\SetKeepshiftInterrupt.java" afterPath="$PROJECT_DIR$/src/net/virtualinfinity/atrobots/interrupts/SetKeepshiftInterrupt.java" />
+      <change type="MOVED" beforePath="C:\Users\Daniel\IdeaProjects\AtRobots\src\net\virtualinfinity\atrobots\AbstractCombiningInstruction.java" afterPath="$PROJECT_DIR$/src/net/virtualinfinity/atrobots/computer/AbstractCombiningInstruction.java" />
+      <change type="MOVED" beforePath="C:\Users\Daniel\IdeaProjects\AtRobots\src\net\virtualinfinity\atrobots\ReceiveInterrupt.java" afterPath="$PROJECT_DIR$/src/net/virtualinfinity/atrobots/interrupts/ReceiveInterrupt.java" />
+      <change type="MOVED" beforePath="C:\Users\Daniel\IdeaProjects\AtRobots\src\net\virtualinfinity\atrobots\FindAngleInterrupt.java" afterPath="$PROJECT_DIR$/src/net/virtualinfinity/atrobots/interrupts/FindAngleInterrupt.java" />
+      <change type="MOVED" beforePath="C:\Users\Daniel\IdeaProjects\AtRobots\src\net\virtualinfinity\atrobots\GetIdInterrupt.java" afterPath="$PROJECT_DIR$/src/net/virtualinfinity/atrobots/interrupts/GetIdInterrupt.java" />
+      <change type="MOVED" beforePath="C:\Users\Daniel\IdeaProjects\AtRobots\src\net\virtualinfinity\atrobots\GetRobotInfoInterrupt.java" afterPath="$PROJECT_DIR$/src/net/virtualinfinity/atrobots/interrupts/GetRobotInfoInterrupt.java" />
     </list>
     <ignored path="AtRobots.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -89,8 +110,8 @@
       <property name="field_breakpoints_groupByClasses" value="true" />
       <property name="method_breakpoints_groupByClasses" value="true" />
       <property name="exception_breakpoints_viewId" value="TABLE" />
-      <property name="exception_breakpoints_groupByClasses" value="true" />
       <property name="field_breakpoints_viewId" value="TABLE" />
+      <property name="exception_breakpoints_groupByClasses" value="true" />
       <property name="method_breakpoints_groupByMethods" value="false" />
     </ui_properties>
   </component>
@@ -103,99 +124,30 @@
   </component>
   <component name="FileEditorManager">
     <leaf>
-      <file leaf-file-name="ArenaPane.java" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/net/virtualinfinity/atrobots/gui/ArenaPane.java">
+      <file leaf-file-name="Entrant.java" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/net/virtualinfinity/atrobots/Entrant.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="94" column="43" selection-start="3559" selection-end="3559" vertical-scroll-proportion="0.5764463">
+            <state line="47" column="0" selection-start="1723" selection-end="1723" vertical-scroll-proportion="0.40120968">
               <folding>
-                <element signature="imports" expanded="true" />
+                <marker date="1195162237879" expanded="false" signature="46:253" placeholder="..." />
               </folding>
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="AtRobotPortFactory.java" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/net/virtualinfinity/atrobots/AtRobotPortFactory.java">
+      <file leaf-file-name="Instruction.java" pinned="false" current="true" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/src/net/virtualinfinity/atrobots/computer/Instruction.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="45" column="97" selection-start="2120" selection-end="2120" vertical-scroll-proportion="0.857438">
+            <state line="19" column="0" selection-start="462" selection-end="462" vertical-scroll-proportion="0.65120965">
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="InstructionTest.java" pinned="false" current="true" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/testsrc/net/virtualinfinity/atrobots/computer/InstructionTest.java">
+      <file leaf-file-name="AbstractCombiningInstruction.java" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/net/virtualinfinity/atrobots/computer/AbstractCombiningInstruction.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="12" column="42" selection-start="321" selection-end="321" vertical-scroll-proportion="0.4214876">
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="RobotRendererImpl.java" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/net/virtualinfinity/atrobots/gui/renderers/RobotRendererImpl.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="13" column="73" selection-start="388" selection-end="388" vertical-scroll-proportion="0.25373134">
-              <folding>
-                <marker date="1195151032356" expanded="false" signature="60:281" placeholder="..." />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="SnapshotRenderer.java" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/net/virtualinfinity/atrobots/gui/renderers/SnapshotRenderer.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="10" column="37" selection-start="277" selection-end="277" vertical-scroll-proportion="0.35123968">
-              <folding>
-                <element signature="imports" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="ScanRendererImpl.java" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/net/virtualinfinity/atrobots/gui/renderers/ScanRendererImpl.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="9" column="13" selection-start="179" selection-end="179" vertical-scroll-proportion="0.25373134">
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="ExplosionRendererImpl.java" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/net/virtualinfinity/atrobots/gui/renderers/ExplosionRendererImpl.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="11" column="71" selection-start="304" selection-end="304" vertical-scroll-proportion="0.39872068">
-              <folding>
-                <element signature="imports" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="MissileRendererImpl.java" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/net/virtualinfinity/atrobots/gui/renderers/MissileRendererImpl.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="10" column="76" selection-start="274" selection-end="274" vertical-scroll-proportion="0.25373134">
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="MineRendererImpl.java" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/net/virtualinfinity/atrobots/gui/renderers/MineRendererImpl.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="10" column="70" selection-start="268" selection-end="268" vertical-scroll-proportion="0.25373134">
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="Position.java" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/net/virtualinfinity/atrobots/Position.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="12" column="23" selection-start="234" selection-end="234" vertical-scroll-proportion="0.4214876">
+            <state line="5" column="64" selection-start="144" selection-end="144" vertical-scroll-proportion="0.17137097">
               <folding />
             </state>
           </provider>
@@ -412,6 +364,14 @@
           <option name="myItemId" value="PsiDirectory:C:\Users\Daniel\IdeaProjects\AtRobots\src\net" />
           <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
         </PATH_ELEMENT>
+        <PATH_ELEMENT>
+          <option name="myItemId" value="PsiDirectory:C:\Users\Daniel\IdeaProjects\AtRobots\src\net\virtualinfinity" />
+          <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+        </PATH_ELEMENT>
+        <PATH_ELEMENT>
+          <option name="myItemId" value="PsiDirectory:C:\Users\Daniel\IdeaProjects\AtRobots\src\net\virtualinfinity\atrobots" />
+          <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+        </PATH_ELEMENT>
       </PATH>
     </subPane>
   </component>
@@ -447,13 +407,13 @@
       <recent name="net.virtualinfinity.atrobots.gui.renderers" />
       <recent name="net.virtualinfinity.atrobots" />
     </key>
-    <key name="MoveMembersDialog.RECENTS_KEY">
-      <recent name="net.virtualinfinity.atrobots.AngleBracket" />
-    </key>
     <key name="IntroduceConstantDialog.RECENTS_KEY">
       <recent name="" />
       <recent name="net.virtualinfinity.atrobots.RelativeAngle" />
       <recent name="net.virtualinfinity.atrobots.Duration" />
+    </key>
+    <key name="MoveMembersDialog.RECENTS_KEY">
+      <recent name="net.virtualinfinity.atrobots.AngleBracket" />
     </key>
     <key name="CreateClassDialog.RecentsKey">
       <recent name="net.virtualinfinity.atrobots.gui.renderers" />
@@ -461,7 +421,7 @@
     </key>
   </component>
   <component name="RestoreUpdateTree">
-    <UpdateInfo date="11/15/07 10:32 AM" ActionInfo="_Update">
+    <UpdateInfo date="11/15/07 1:25 PM" ActionInfo="_Update">
       <UpdatedFiles>
         <FILE-GROUP>
           <option name="myUpdateName" value="Updated from server" />
@@ -482,14 +442,14 @@
             <option name="mySupportsDeletion" value="false" />
             <option name="myCanBeAbsent" value="false" />
             <option name="myId" value="CREATED" />
-            <PATH vcs="svn" revision="51">C:\Users\Daniel\IdeaProjects\AtRobots\src\net\virtualinfinity\atrobots\snapshots</PATH>
-            <PATH vcs="svn" revision="51">C:\Users\Daniel\IdeaProjects\AtRobots\src\net\virtualinfinity\atrobots\snapshots\SnapshotVisitor.java</PATH>
-            <PATH vcs="svn" revision="51">C:\Users\Daniel\IdeaProjects\AtRobots\src\net\virtualinfinity\atrobots\snapshots\ExplosionSnapshot.java</PATH>
-            <PATH vcs="svn" revision="51">C:\Users\Daniel\IdeaProjects\AtRobots\src\net\virtualinfinity\atrobots\snapshots\ScanSnapshot.java</PATH>
-            <PATH vcs="svn" revision="51">C:\Users\Daniel\IdeaProjects\AtRobots\src\net\virtualinfinity\atrobots\snapshots\MissileSnapshot.java</PATH>
-            <PATH vcs="svn" revision="51">C:\Users\Daniel\IdeaProjects\AtRobots\src\net\virtualinfinity\atrobots\snapshots\RobotSnapshot.java</PATH>
-            <PATH vcs="svn" revision="51">C:\Users\Daniel\IdeaProjects\AtRobots\src\net\virtualinfinity\atrobots\snapshots\MineSnapshot.java</PATH>
-            <PATH vcs="svn" revision="51">C:\Users\Daniel\IdeaProjects\AtRobots\src\net\virtualinfinity\atrobots\snapshots\ArenaObjectSnapshot.java</PATH>
+            <PATH vcs="svn" revision="52">C:\Users\Daniel\IdeaProjects\AtRobots\src\net\virtualinfinity\atrobots\snapshots</PATH>
+            <PATH vcs="svn" revision="52">C:\Users\Daniel\IdeaProjects\AtRobots\src\net\virtualinfinity\atrobots\snapshots\SnapshotVisitor.java</PATH>
+            <PATH vcs="svn" revision="52">C:\Users\Daniel\IdeaProjects\AtRobots\src\net\virtualinfinity\atrobots\snapshots\ExplosionSnapshot.java</PATH>
+            <PATH vcs="svn" revision="52">C:\Users\Daniel\IdeaProjects\AtRobots\src\net\virtualinfinity\atrobots\snapshots\ScanSnapshot.java</PATH>
+            <PATH vcs="svn" revision="52">C:\Users\Daniel\IdeaProjects\AtRobots\src\net\virtualinfinity\atrobots\snapshots\MissileSnapshot.java</PATH>
+            <PATH vcs="svn" revision="52">C:\Users\Daniel\IdeaProjects\AtRobots\src\net\virtualinfinity\atrobots\snapshots\RobotSnapshot.java</PATH>
+            <PATH vcs="svn" revision="52">C:\Users\Daniel\IdeaProjects\AtRobots\src\net\virtualinfinity\atrobots\snapshots\MineSnapshot.java</PATH>
+            <PATH vcs="svn" revision="52">C:\Users\Daniel\IdeaProjects\AtRobots\src\net\virtualinfinity\atrobots\snapshots\ArenaObjectSnapshot.java</PATH>
           </FILE-GROUP>
           <FILE-GROUP>
             <option name="myUpdateName" value="Deleted" />
@@ -541,7 +501,6 @@
           <option name="mySupportsDeletion" value="true" />
           <option name="myCanBeAbsent" value="false" />
           <option name="myId" value="UNKNOWN" />
-          <PATH>C:\Users\Daniel\IdeaProjects\AtRobots\out</PATH>
         </FILE-GROUP>
         <FILE-GROUP>
           <option name="myUpdateName" value="Locally added" />
@@ -772,7 +731,7 @@
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="1456" height="916" extended-state="6" />
-    <editor active="true" />
+    <editor active="false" />
     <layout>
       <window_info id="UI Designer" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.24212034" order="3" />
       <window_info id="Changes" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32909784" order="8" />
@@ -783,18 +742,18 @@
       <window_info id="IDEtalk Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" order="13" />
       <window_info id="IDEtalk" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" order="3" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32909784" order="9" />
-      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32147396" order="10" />
+      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.32147396" order="10" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25540024" order="7" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.24982053" order="1" />
       <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" order="0" />
       <window_info id="Maven projects" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" order="4" />
       <window_info id="Module Dependencies" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" order="5" />
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.3287868" order="0" />
+      <window_info id="Project" active="true" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.3287868" order="0" />
       <window_info id="Dependency Viewer" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" order="11" />
       <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.24982053" order="2" />
       <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" order="6" />
       <window_info id="Duplicates" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" order="12" />
-      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.31385008" order="2" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.31385008" order="2" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" order="5" />
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" order="0" />
       <window_info id="Web" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" order="2" />
@@ -892,80 +851,97 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/net/virtualinfinity/atrobots/gui/renderers/SnapshotRenderer.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="10" column="37" selection-start="277" selection-end="277" vertical-scroll-proportion="0.35123968">
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/net/virtualinfinity/atrobots/gui/renderers/RobotRendererImpl.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="13" column="73" selection-start="388" selection-end="388" vertical-scroll-proportion="0.25373134">
+        <state line="13" column="73" selection-start="388" selection-end="388" vertical-scroll-proportion="0.25701943">
           <folding>
-            <marker date="1195151032356" expanded="false" signature="60:281" placeholder="..." />
+            <marker date="1195160730589" expanded="false" signature="60:281" placeholder="..." />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/net/virtualinfinity/atrobots/gui/renderers/MissileRendererImpl.java">
+    <entry file="file://$PROJECT_DIR$/src/net/virtualinfinity/atrobots/gui/renderers/SnapshotRenderer.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="10" column="76" selection-start="274" selection-end="274" vertical-scroll-proportion="0.25373134">
+        <state line="10" column="37" selection-start="277" selection-end="277" vertical-scroll-proportion="0.28451884">
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/net/virtualinfinity/atrobots/gui/renderers/MineRendererImpl.java">
+    <entry file="file://$PROJECT_DIR$/src/net/virtualinfinity/atrobots/gui/renderers/ScanRendererImpl.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="10" column="70" selection-start="268" selection-end="268" vertical-scroll-proportion="0.25373134">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/net/virtualinfinity/atrobots/Position.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="12" column="23" selection-start="234" selection-end="234" vertical-scroll-proportion="0.4214876">
+        <state line="9" column="13" selection-start="179" selection-end="179" vertical-scroll-proportion="0.25701943">
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/net/virtualinfinity/atrobots/gui/renderers/ExplosionRendererImpl.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="11" column="71" selection-start="304" selection-end="304" vertical-scroll-proportion="0.39872068">
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/net/virtualinfinity/atrobots/gui/renderers/ScanRendererImpl.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="9" column="13" selection-start="179" selection-end="179" vertical-scroll-proportion="0.25373134">
+        <state line="11" column="71" selection-start="304" selection-end="304" vertical-scroll-proportion="0.25701943">
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/net/virtualinfinity/atrobots/gui/ArenaPane.java">
+    <entry file="file://$PROJECT_DIR$/src/net/virtualinfinity/atrobots/gui/renderers/MissileRendererImpl.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="94" column="43" selection-start="3559" selection-end="3559" vertical-scroll-proportion="0.5764463">
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
+        <state line="10" column="76" selection-start="274" selection-end="274" vertical-scroll-proportion="0.25701943">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/net/virtualinfinity/atrobots/gui/renderers/MineRendererImpl.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="10" column="70" selection-start="268" selection-end="268" vertical-scroll-proportion="0.25701943">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/net/virtualinfinity/atrobots/Position.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="12" column="23" selection-start="234" selection-end="234" vertical-scroll-proportion="0.035564855">
+          <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/net/virtualinfinity/atrobots/AtRobotPortFactory.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="45" column="97" selection-start="2120" selection-end="2120" vertical-scroll-proportion="0.857438">
+        <state line="45" column="97" selection-start="2120" selection-end="2120" vertical-scroll-proportion="0.91422594">
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/testsrc/net/virtualinfinity/atrobots/computer/InstructionTest.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="12" column="42" selection-start="321" selection-end="321" vertical-scroll-proportion="0.4214876">
+        <state line="33" column="10" selection-start="760" selection-end="760" vertical-scroll-proportion="0.49470899">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/net/virtualinfinity/atrobots/gui/ArenaPane.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="94" column="43" selection-start="3559" selection-end="3559" vertical-scroll-proportion="0.39814815">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/net/virtualinfinity/atrobots/Entrant.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="47" column="0" selection-start="1723" selection-end="1723" vertical-scroll-proportion="0.40120968">
+          <folding>
+            <marker date="1195162237879" expanded="false" signature="46:253" placeholder="..." />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/net/virtualinfinity/atrobots/computer/AbstractCombiningInstruction.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="5" column="64" selection-start="144" selection-end="144" vertical-scroll-proportion="0.17137097">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/net/virtualinfinity/atrobots/computer/Instruction.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="19" column="0" selection-start="462" selection-end="462" vertical-scroll-proportion="0.65120965">
           <folding />
         </state>
       </provider>

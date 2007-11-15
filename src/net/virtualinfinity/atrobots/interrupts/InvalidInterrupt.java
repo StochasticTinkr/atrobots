@@ -1,4 +1,6 @@
-package net.virtualinfinity.atrobots;
+package net.virtualinfinity.atrobots.interrupts;
+
+import net.virtualinfinity.atrobots.ComputerErrorHandler;
 
 /**
  * @author Daniel Pitts

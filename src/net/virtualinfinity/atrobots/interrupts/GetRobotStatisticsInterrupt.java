@@ -1,4 +1,7 @@
-package net.virtualinfinity.atrobots;
+package net.virtualinfinity.atrobots.interrupts;
+
+import net.virtualinfinity.atrobots.Entrant;
+import net.virtualinfinity.atrobots.MemoryCell;
 
 /**
  * @author Daniel Pitts
