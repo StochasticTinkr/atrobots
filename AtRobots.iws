@@ -20,58 +20,10 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" name="Default" comment="">
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/net/virtualinfinity/atrobots/computer/Computer.java" afterPath="$PROJECT_DIR$/src/net/virtualinfinity/atrobots/computer/Computer.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/AtRobots.iws" afterPath="$PROJECT_DIR$/AtRobots.iws" />
-      <change type="MOVED" beforePath="C:\Users\Daniel\IdeaProjects\AtRobots\src\net\virtualinfinity\atrobots\InstructionTable.java" afterPath="$PROJECT_DIR$/src/net/virtualinfinity/atrobots/computer/InstructionTable.java" />
-      <change type="MOVED" beforePath="C:\Users\Daniel\IdeaProjects\AtRobots\src\net\virtualinfinity\atrobots\BitwiseExclusiveOrInstruction.java" afterPath="$PROJECT_DIR$/src/net/virtualinfinity/atrobots/computer/BitwiseExclusiveOrInstruction.java" />
-      <change type="MOVED" beforePath="C:\Users\Daniel\IdeaProjects\AtRobots\src\net\virtualinfinity\atrobots\DivideInstruction.java" afterPath="$PROJECT_DIR$/src/net/virtualinfinity/atrobots/computer/DivideInstruction.java" />
-      <change type="MOVED" beforePath="C:\Users\Daniel\IdeaProjects\AtRobots\src\net\virtualinfinity\atrobots\BitwiseOrInstruction.java" afterPath="$PROJECT_DIR$/src/net/virtualinfinity/atrobots/computer/BitwiseOrInstruction.java" />
-      <change type="MOVED" beforePath="C:\Users\Daniel\IdeaProjects\AtRobots\src\net\virtualinfinity\atrobots\WritePortInstruction.java" afterPath="$PROJECT_DIR$/src/net/virtualinfinity/atrobots/computer/WritePortInstruction.java" />
-      <change type="MOVED" beforePath="C:\Users\Daniel\IdeaProjects\AtRobots\src\net\virtualinfinity\atrobots\JumpWhenGreaterOrEqualInstruction.java" afterPath="$PROJECT_DIR$/src/net/virtualinfinity/atrobots/computer/JumpWhenGreaterOrEqualInstruction.java" />
-      <change type="MOVED" beforePath="C:\Users\Daniel\IdeaProjects\AtRobots\src\net\virtualinfinity\atrobots\SetInstructionPointerInstruction.java" afterPath="$PROJECT_DIR$/src/net/virtualinfinity/atrobots/computer/SetInstructionPointerInstruction.java" />
-      <change type="MOVED" beforePath="C:\Users\Daniel\IdeaProjects\AtRobots\src\net\virtualinfinity\atrobots\PopInstructionPointerInstruction.java" afterPath="$PROJECT_DIR$/src/net/virtualinfinity/atrobots/computer/PopInstructionPointerInstruction.java" />
-      <change type="MOVED" beforePath="C:\Users\Daniel\IdeaProjects\AtRobots\src\net\virtualinfinity\atrobots\GetInstruction.java" afterPath="$PROJECT_DIR$/src/net/virtualinfinity/atrobots/computer/GetInstruction.java" />
-      <change type="MOVED" beforePath="C:\Users\Daniel\IdeaProjects\AtRobots\src\net\virtualinfinity\atrobots\BitRotateRightInstruction.java" afterPath="$PROJECT_DIR$/src/net/virtualinfinity/atrobots/computer/BitRotateRightInstruction.java" />
-      <change type="MOVED" beforePath="C:\Users\Daniel\IdeaProjects\AtRobots\src\net\virtualinfinity\atrobots\DecrementInstruction.java" afterPath="$PROJECT_DIR$/src/net/virtualinfinity/atrobots/computer/DecrementInstruction.java" />
-      <change type="MOVED" beforePath="C:\Users\Daniel\IdeaProjects\AtRobots\src\net\virtualinfinity\atrobots\PopInstruction.java" afterPath="$PROJECT_DIR$/src/net/virtualinfinity/atrobots/computer/PopInstruction.java" />
-      <change type="MOVED" beforePath="C:\Users\Daniel\IdeaProjects\AtRobots\src\net\virtualinfinity\atrobots\JumpWhenZeroInstruction.java" afterPath="$PROJECT_DIR$/src/net/virtualinfinity/atrobots/computer/JumpWhenZeroInstruction.java" />
-      <change type="MOVED" beforePath="C:\Users\Daniel\IdeaProjects\AtRobots\src\net\virtualinfinity\atrobots\LoopInstruction.java" afterPath="$PROJECT_DIR$/src/net/virtualinfinity/atrobots/computer/LoopInstruction.java" />
-      <change type="MOVED" beforePath="C:\Users\Daniel\IdeaProjects\AtRobots\src\net\virtualinfinity\atrobots\CallInstruction.java" afterPath="$PROJECT_DIR$/src/net/virtualinfinity/atrobots/computer/CallInstruction.java" />
-      <change type="MOVED" beforePath="C:\Users\Daniel\IdeaProjects\AtRobots\src\net\virtualinfinity\atrobots\ReadPortInstruction.java" afterPath="$PROJECT_DIR$/src/net/virtualinfinity/atrobots/computer/ReadPortInstruction.java" />
-      <change type="MOVED" beforePath="C:\Users\Daniel\IdeaProjects\AtRobots\src\net\virtualinfinity\atrobots\MultiplyInstruction.java" afterPath="$PROJECT_DIR$/src/net/virtualinfinity/atrobots/computer/MultiplyInstruction.java" />
-      <change type="MOVED" beforePath="C:\Users\Daniel\IdeaProjects\AtRobots\src\net\virtualinfinity\atrobots\JumpWhenLessInstruction.java" afterPath="$PROJECT_DIR$/src/net/virtualinfinity/atrobots/computer/JumpWhenLessInstruction.java" />
-      <change type="MOVED" beforePath="C:\Users\Daniel\IdeaProjects\AtRobots\src\net\virtualinfinity\atrobots\CallInterruptInstruction.java" afterPath="$PROJECT_DIR$/src/net/virtualinfinity/atrobots/computer/CallInterruptInstruction.java" />
-      <change type="MOVED" beforePath="C:\Users\Daniel\IdeaProjects\AtRobots\src\net\virtualinfinity\atrobots\JumpWhenNotEqualInstruction.java" afterPath="$PROJECT_DIR$/src/net/virtualinfinity/atrobots/computer/JumpWhenNotEqualInstruction.java" />
-      <change type="MOVED" beforePath="C:\Users\Daniel\IdeaProjects\AtRobots\src\net\virtualinfinity\atrobots\TestInstruction.java" afterPath="$PROJECT_DIR$/src/net/virtualinfinity/atrobots/computer/TestInstruction.java" />
-      <change type="MOVED" beforePath="C:\Users\Daniel\IdeaProjects\AtRobots\src\net\virtualinfinity\atrobots\BitShiftRightInstruction.java" afterPath="$PROJECT_DIR$/src/net/virtualinfinity/atrobots/computer/BitShiftRightInstruction.java" />
-      <change type="MOVED" beforePath="C:\Users\Daniel\IdeaProjects\AtRobots\src\net\virtualinfinity\atrobots\NoOperationInstruction.java" afterPath="$PROJECT_DIR$/src/net/virtualinfinity/atrobots/computer/NoOperationInstruction.java" />
-      <change type="MOVED" beforePath="C:\Users\Daniel\IdeaProjects\AtRobots\src\net\virtualinfinity\atrobots\JumpInstruction.java" afterPath="$PROJECT_DIR$/src/net/virtualinfinity/atrobots/computer/JumpInstruction.java" />
-      <change type="MOVED" beforePath="C:\Users\Daniel\IdeaProjects\AtRobots\src\net\virtualinfinity\atrobots\SetCXInstruction.java" afterPath="$PROJECT_DIR$/src/net/virtualinfinity/atrobots/computer/SetCXInstruction.java" />
-      <change type="MOVED" beforePath="C:\Users\Daniel\IdeaProjects\AtRobots\src\net\virtualinfinity\atrobots\JumpWhenNotZeroInstruction.java" afterPath="$PROJECT_DIR$/src/net/virtualinfinity/atrobots/computer/JumpWhenNotZeroInstruction.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/net/virtualinfinity/atrobots/computer" />
-      <change type="MOVED" beforePath="C:\Users\Daniel\IdeaProjects\AtRobots\src\net\virtualinfinity\atrobots\BitShiftLeftInstruction.java" afterPath="$PROJECT_DIR$/src/net/virtualinfinity/atrobots/computer/BitShiftLeftInstruction.java" />
-      <change type="MOVED" beforePath="C:\Users\Daniel\IdeaProjects\AtRobots\src\net\virtualinfinity\atrobots\InvalidMicrocodeInstruction.java" afterPath="$PROJECT_DIR$/src/net/virtualinfinity/atrobots/computer/InvalidMicrocodeInstruction.java" />
-      <change type="MOVED" beforePath="C:\Users\Daniel\IdeaProjects\AtRobots\src\net\virtualinfinity\atrobots\JumpWhenEqualInstruction.java" afterPath="$PROJECT_DIR$/src/net/virtualinfinity/atrobots/computer/JumpWhenEqualInstruction.java" />
-      <change type="MOVED" beforePath="C:\Users\Daniel\IdeaProjects\AtRobots\src\net\virtualinfinity\atrobots\ModuloInstruction.java" afterPath="$PROJECT_DIR$/src/net/virtualinfinity/atrobots/computer/ModuloInstruction.java" />
-      <change type="MOVED" beforePath="C:\Users\Daniel\IdeaProjects\AtRobots\src\net\virtualinfinity\atrobots\ConditionalJump.java" afterPath="$PROJECT_DIR$/src/net/virtualinfinity/atrobots/computer/ConditionalJump.java" />
-      <change type="MOVED" beforePath="C:\Users\Daniel\IdeaProjects\AtRobots\src\net\virtualinfinity\atrobots\UnknownInstruction.java" afterPath="$PROJECT_DIR$/src/net/virtualinfinity/atrobots/computer/UnknownInstruction.java" />
-      <change type="MOVED" beforePath="C:\Users\Daniel\IdeaProjects\AtRobots\src\net\virtualinfinity\atrobots\IncrementInstruction.java" afterPath="$PROJECT_DIR$/src/net/virtualinfinity/atrobots/computer/IncrementInstruction.java" />
-      <change type="MOVED" beforePath="C:\Users\Daniel\IdeaProjects\AtRobots\src\net\virtualinfinity\atrobots\BitwiseNegationInstruction.java" afterPath="$PROJECT_DIR$/src/net/virtualinfinity/atrobots/computer/BitwiseNegationInstruction.java" />
-      <change type="MOVED" beforePath="C:\Users\Daniel\IdeaProjects\AtRobots\src\net\virtualinfinity\atrobots\BitRotateLeftInstruction.java" afterPath="$PROJECT_DIR$/src/net/virtualinfinity/atrobots/computer/BitRotateLeftInstruction.java" />
-      <change type="MOVED" beforePath="C:\Users\Daniel\IdeaProjects\AtRobots\src\net\virtualinfinity\atrobots\JumpWhenGreaterInstruction.java" afterPath="$PROJECT_DIR$/src/net/virtualinfinity/atrobots/computer/JumpWhenGreaterInstruction.java" />
-      <change type="MOVED" beforePath="C:\Users\Daniel\IdeaProjects\AtRobots\src\net\virtualinfinity\atrobots\ErrorInstruction.java" afterPath="$PROJECT_DIR$/src/net/virtualinfinity/atrobots/computer/ErrorInstruction.java" />
-      <change type="MOVED" beforePath="C:\Users\Daniel\IdeaProjects\AtRobots\src\net\virtualinfinity\atrobots\Computer.java" afterPath="$PROJECT_DIR$/src/net/virtualinfinity/atrobots/computer/Computer.java" />
-      <change type="MOVED" beforePath="C:\Users\Daniel\IdeaProjects\AtRobots\src\net\virtualinfinity\atrobots\CompareInstruction.java" afterPath="$PROJECT_DIR$/src/net/virtualinfinity/atrobots/computer/CompareInstruction.java" />
-      <change type="MOVED" beforePath="C:\Users\Daniel\IdeaProjects\AtRobots\src\net\virtualinfinity\atrobots\Instruction.java" afterPath="$PROJECT_DIR$/src/net/virtualinfinity/atrobots/computer/Instruction.java" />
-      <change type="MOVED" beforePath="C:\Users\Daniel\IdeaProjects\AtRobots\src\net\virtualinfinity\atrobots\NegateInstruction.java" afterPath="$PROJECT_DIR$/src/net/virtualinfinity/atrobots/computer/NegateInstruction.java" />
-      <change type="MOVED" beforePath="C:\Users\Daniel\IdeaProjects\AtRobots\src\net\virtualinfinity\atrobots\SwapInstruction.java" afterPath="$PROJECT_DIR$/src/net/virtualinfinity/atrobots/computer/SwapInstruction.java" />
-      <change type="MOVED" beforePath="C:\Users\Daniel\IdeaProjects\AtRobots\src\net\virtualinfinity\atrobots\DelayInstruction.java" afterPath="$PROJECT_DIR$/src/net/virtualinfinity/atrobots/computer/DelayInstruction.java" />
-      <change type="MOVED" beforePath="C:\Users\Daniel\IdeaProjects\AtRobots\src\net\virtualinfinity\atrobots\AddressInstruction.java" afterPath="$PROJECT_DIR$/src/net/virtualinfinity/atrobots/computer/AddressInstruction.java" />
-      <change type="MOVED" beforePath="C:\Users\Daniel\IdeaProjects\AtRobots\src\net\virtualinfinity\atrobots\MoveInstruction.java" afterPath="$PROJECT_DIR$/src/net/virtualinfinity/atrobots/computer/MoveInstruction.java" />
-      <change type="MOVED" beforePath="C:\Users\Daniel\IdeaProjects\AtRobots\src\net\virtualinfinity\atrobots\BitwiseAndInstruction.java" afterPath="$PROJECT_DIR$/src/net/virtualinfinity/atrobots/computer/BitwiseAndInstruction.java" />
-      <change type="MOVED" beforePath="C:\Users\Daniel\IdeaProjects\AtRobots\src\net\virtualinfinity\atrobots\JumpWhenLessOrEqualInstruction.java" afterPath="$PROJECT_DIR$/src/net/virtualinfinity/atrobots/computer/JumpWhenLessOrEqualInstruction.java" />
-      <change type="MOVED" beforePath="C:\Users\Daniel\IdeaProjects\AtRobots\src\net\virtualinfinity\atrobots\PushInstruction.java" afterPath="$PROJECT_DIR$/src/net/virtualinfinity/atrobots/computer/PushInstruction.java" />
-      <change type="MOVED" beforePath="C:\Users\Daniel\IdeaProjects\AtRobots\src\net\virtualinfinity\atrobots\PutInstruction.java" afterPath="$PROJECT_DIR$/src/net/virtualinfinity/atrobots/computer/PutInstruction.java" />
-      <change type="MOVED" beforePath="C:\Users\Daniel\IdeaProjects\AtRobots\src\net\virtualinfinity\atrobots\AddInstruction.java" afterPath="$PROJECT_DIR$/src/net/virtualinfinity/atrobots/computer/AddInstruction.java" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/testsrc/net/virtualinfinity/atrobots/computer" />
+      <change type="MOVED" beforePath="C:\Users\Daniel\IdeaProjects\AtRobots\testsrc\net\virtualinfinity\atrobots\InstructionTest.java" afterPath="$PROJECT_DIR$/testsrc/net/virtualinfinity/atrobots/computer/InstructionTest.java" />
     </list>
     <ignored path="AtRobots.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -151,13 +103,31 @@
   </component>
   <component name="FileEditorManager">
     <leaf>
-      <file leaf-file-name="ArenaPane.java" pinned="false" current="true" current-in-tab="true">
+      <file leaf-file-name="ArenaPane.java" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/net/virtualinfinity/atrobots/gui/ArenaPane.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="97" column="20" selection-start="3643" selection-end="3643" vertical-scroll-proportion="0.6818182">
+            <state line="94" column="43" selection-start="3559" selection-end="3559" vertical-scroll-proportion="0.5764463">
               <folding>
                 <element signature="imports" expanded="true" />
               </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="AtRobotPortFactory.java" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/net/virtualinfinity/atrobots/AtRobotPortFactory.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="45" column="97" selection-start="2120" selection-end="2120" vertical-scroll-proportion="0.857438">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="InstructionTest.java" pinned="false" current="true" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/testsrc/net/virtualinfinity/atrobots/computer/InstructionTest.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="12" column="42" selection-start="321" selection-end="321" vertical-scroll-proportion="0.4214876">
+              <folding />
             </state>
           </provider>
         </entry>
@@ -401,19 +371,45 @@
           <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
         </PATH_ELEMENT>
         <PATH_ELEMENT>
+          <option name="myItemId" value="PsiDirectory:C:\Users\Daniel\IdeaProjects\AtRobots\testsrc" />
+          <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+        </PATH_ELEMENT>
+        <PATH_ELEMENT>
+          <option name="myItemId" value="PsiDirectory:C:\Users\Daniel\IdeaProjects\AtRobots\testsrc\net" />
+          <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+        </PATH_ELEMENT>
+        <PATH_ELEMENT>
+          <option name="myItemId" value="PsiDirectory:C:\Users\Daniel\IdeaProjects\AtRobots\testsrc\net\virtualinfinity" />
+          <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+        </PATH_ELEMENT>
+        <PATH_ELEMENT>
+          <option name="myItemId" value="PsiDirectory:C:\Users\Daniel\IdeaProjects\AtRobots\testsrc\net\virtualinfinity\atrobots" />
+          <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+        </PATH_ELEMENT>
+        <PATH_ELEMENT>
+          <option name="myItemId" value="PsiDirectory:C:\Users\Daniel\IdeaProjects\AtRobots\testsrc\net\virtualinfinity\atrobots\computer" />
+          <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+        </PATH_ELEMENT>
+      </PATH>
+      <PATH>
+        <PATH_ELEMENT>
+          <option name="myItemId" value="AtRobots" />
+          <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+        </PATH_ELEMENT>
+        <PATH_ELEMENT>
+          <option name="myItemId" value="AtRobots" />
+          <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewModuleNode" />
+        </PATH_ELEMENT>
+        <PATH_ELEMENT>
+          <option name="myItemId" value="PsiDirectory:C:\Users\Daniel\IdeaProjects\AtRobots" />
+          <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+        </PATH_ELEMENT>
+        <PATH_ELEMENT>
           <option name="myItemId" value="PsiDirectory:C:\Users\Daniel\IdeaProjects\AtRobots\src" />
           <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
         </PATH_ELEMENT>
         <PATH_ELEMENT>
           <option name="myItemId" value="PsiDirectory:C:\Users\Daniel\IdeaProjects\AtRobots\src\net" />
-          <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-        </PATH_ELEMENT>
-        <PATH_ELEMENT>
-          <option name="myItemId" value="PsiDirectory:C:\Users\Daniel\IdeaProjects\AtRobots\src\net\virtualinfinity" />
-          <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-        </PATH_ELEMENT>
-        <PATH_ELEMENT>
-          <option name="myItemId" value="PsiDirectory:C:\Users\Daniel\IdeaProjects\AtRobots\src\net\virtualinfinity\atrobots" />
           <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
         </PATH_ELEMENT>
       </PATH>
@@ -465,7 +461,7 @@
     </key>
   </component>
   <component name="RestoreUpdateTree">
-    <UpdateInfo date="11/15/07 10:21 AM" ActionInfo="_Update">
+    <UpdateInfo date="11/15/07 10:32 AM" ActionInfo="_Update">
       <UpdatedFiles>
         <FILE-GROUP>
           <option name="myUpdateName" value="Updated from server" />
@@ -486,6 +482,14 @@
             <option name="mySupportsDeletion" value="false" />
             <option name="myCanBeAbsent" value="false" />
             <option name="myId" value="CREATED" />
+            <PATH vcs="svn" revision="51">C:\Users\Daniel\IdeaProjects\AtRobots\src\net\virtualinfinity\atrobots\snapshots</PATH>
+            <PATH vcs="svn" revision="51">C:\Users\Daniel\IdeaProjects\AtRobots\src\net\virtualinfinity\atrobots\snapshots\SnapshotVisitor.java</PATH>
+            <PATH vcs="svn" revision="51">C:\Users\Daniel\IdeaProjects\AtRobots\src\net\virtualinfinity\atrobots\snapshots\ExplosionSnapshot.java</PATH>
+            <PATH vcs="svn" revision="51">C:\Users\Daniel\IdeaProjects\AtRobots\src\net\virtualinfinity\atrobots\snapshots\ScanSnapshot.java</PATH>
+            <PATH vcs="svn" revision="51">C:\Users\Daniel\IdeaProjects\AtRobots\src\net\virtualinfinity\atrobots\snapshots\MissileSnapshot.java</PATH>
+            <PATH vcs="svn" revision="51">C:\Users\Daniel\IdeaProjects\AtRobots\src\net\virtualinfinity\atrobots\snapshots\RobotSnapshot.java</PATH>
+            <PATH vcs="svn" revision="51">C:\Users\Daniel\IdeaProjects\AtRobots\src\net\virtualinfinity\atrobots\snapshots\MineSnapshot.java</PATH>
+            <PATH vcs="svn" revision="51">C:\Users\Daniel\IdeaProjects\AtRobots\src\net\virtualinfinity\atrobots\snapshots\ArenaObjectSnapshot.java</PATH>
           </FILE-GROUP>
           <FILE-GROUP>
             <option name="myUpdateName" value="Deleted" />
@@ -509,15 +513,6 @@
           <option name="myCanBeAbsent" value="false" />
           <option name="myId" value="MODIFIED" />
           <PATH>C:\Users\Daniel\IdeaProjects\AtRobots\AtRobots.iws</PATH>
-          <PATH>C:\Users\Daniel\IdeaProjects\AtRobots\src\net\virtualinfinity\atrobots\ArenaObject.java</PATH>
-          <PATH>C:\Users\Daniel\IdeaProjects\AtRobots\src\net\virtualinfinity\atrobots\Explosion.java</PATH>
-          <PATH>C:\Users\Daniel\IdeaProjects\AtRobots\src\net\virtualinfinity\atrobots\gui\ArenaPane.java</PATH>
-          <PATH>C:\Users\Daniel\IdeaProjects\AtRobots\src\net\virtualinfinity\atrobots\Mine.java</PATH>
-          <PATH>C:\Users\Daniel\IdeaProjects\AtRobots\src\net\virtualinfinity\atrobots\Missile.java</PATH>
-          <PATH>C:\Users\Daniel\IdeaProjects\AtRobots\src\net\virtualinfinity\atrobots\Robot.java</PATH>
-          <PATH>C:\Users\Daniel\IdeaProjects\AtRobots\src\net\virtualinfinity\atrobots\ScanObject.java</PATH>
-          <PATH>C:\Users\Daniel\IdeaProjects\AtRobots\src\net\virtualinfinity\atrobots\SimulationFrameBuffer.java</PATH>
-          <PATH>C:\Users\Daniel\IdeaProjects\AtRobots\src\net\virtualinfinity\atrobots\SnapshotVisitor.java</PATH>
         </FILE-GROUP>
         <FILE-GROUP>
           <option name="myUpdateName" value="Skipped" />
@@ -554,21 +549,6 @@
           <option name="mySupportsDeletion" value="false" />
           <option name="myCanBeAbsent" value="false" />
           <option name="myId" value="LOCALLY_ADDED" />
-          <PATH>C:\Users\Daniel\IdeaProjects\AtRobots\src\net\virtualinfinity\atrobots\computer</PATH>
-          <PATH>C:\Users\Daniel\IdeaProjects\AtRobots\src\net\virtualinfinity\atrobots\gui\renderers</PATH>
-          <PATH>C:\Users\Daniel\IdeaProjects\AtRobots\src\net\virtualinfinity\atrobots\gui\renderers\ExplosionRendererImpl.java</PATH>
-          <PATH>C:\Users\Daniel\IdeaProjects\AtRobots\src\net\virtualinfinity\atrobots\gui\renderers\MineRendererImpl.java</PATH>
-          <PATH>C:\Users\Daniel\IdeaProjects\AtRobots\src\net\virtualinfinity\atrobots\gui\renderers\MissileRendererImpl.java</PATH>
-          <PATH>C:\Users\Daniel\IdeaProjects\AtRobots\src\net\virtualinfinity\atrobots\gui\renderers\RobotRendererImpl.java</PATH>
-          <PATH>C:\Users\Daniel\IdeaProjects\AtRobots\src\net\virtualinfinity\atrobots\gui\renderers\ScanRendererImpl.java</PATH>
-          <PATH>C:\Users\Daniel\IdeaProjects\AtRobots\src\net\virtualinfinity\atrobots\gui\renderers\SnapshotRenderer.java</PATH>
-          <PATH>C:\Users\Daniel\IdeaProjects\AtRobots\src\net\virtualinfinity\atrobots\snapshots</PATH>
-          <PATH>C:\Users\Daniel\IdeaProjects\AtRobots\src\net\virtualinfinity\atrobots\snapshots\ArenaObjectSnapshot.java</PATH>
-          <PATH>C:\Users\Daniel\IdeaProjects\AtRobots\src\net\virtualinfinity\atrobots\snapshots\ExplosionSnapshot.java</PATH>
-          <PATH>C:\Users\Daniel\IdeaProjects\AtRobots\src\net\virtualinfinity\atrobots\snapshots\MineSnapshot.java</PATH>
-          <PATH>C:\Users\Daniel\IdeaProjects\AtRobots\src\net\virtualinfinity\atrobots\snapshots\MissileSnapshot.java</PATH>
-          <PATH>C:\Users\Daniel\IdeaProjects\AtRobots\src\net\virtualinfinity\atrobots\snapshots\RobotSnapshot.java</PATH>
-          <PATH>C:\Users\Daniel\IdeaProjects\AtRobots\src\net\virtualinfinity\atrobots\snapshots\ScanSnapshot.java</PATH>
         </FILE-GROUP>
         <FILE-GROUP>
           <option name="myUpdateName" value="Locally removed" />
@@ -576,17 +556,11 @@
           <option name="mySupportsDeletion" value="false" />
           <option name="myCanBeAbsent" value="false" />
           <option name="myId" value="LOCALLY_REMOVED" />
-          <PATH>C:\Users\Daniel\IdeaProjects\AtRobots\src\net\virtualinfinity\atrobots\ArenaObjectSnapshot.java</PATH>
-          <PATH>C:\Users\Daniel\IdeaProjects\AtRobots\src\net\virtualinfinity\atrobots\ExplosionSnapshot.java</PATH>
-          <PATH>C:\Users\Daniel\IdeaProjects\AtRobots\src\net\virtualinfinity\atrobots\MineSnapshot.java</PATH>
-          <PATH>C:\Users\Daniel\IdeaProjects\AtRobots\src\net\virtualinfinity\atrobots\MissileSnapshot.java</PATH>
-          <PATH>C:\Users\Daniel\IdeaProjects\AtRobots\src\net\virtualinfinity\atrobots\RobotSnapshot.java</PATH>
-          <PATH>C:\Users\Daniel\IdeaProjects\AtRobots\src\net\virtualinfinity\atrobots\ScanSnapshot.java</PATH>
         </FILE-GROUP>
       </UpdatedFiles>
     </UpdateInfo>
   </component>
-  <component name="RunManager" selected="Application.Main">
+  <component name="RunManager" selected="JUnit.Tests">
     <tempConfiguration default="false" name="TestAccel" type="Application" factoryName="Application" enabled="false" merge="false">
       <option name="MAIN_CLASS_NAME" value="net.virtualinfinity.atrobots.gui.TestAccel" />
       <option name="VM_PARAMETERS" value="-Dsun.java2d.d3d=true" />
@@ -798,7 +772,7 @@
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="1456" height="916" extended-state="6" />
-    <editor active="false" />
+    <editor active="true" />
     <layout>
       <window_info id="UI Designer" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.24212034" order="3" />
       <window_info id="Changes" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32909784" order="8" />
@@ -815,7 +789,7 @@
       <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" order="0" />
       <window_info id="Maven projects" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" order="4" />
       <window_info id="Module Dependencies" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" order="5" />
-      <window_info id="Project" active="true" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.3287868" order="0" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.3287868" order="0" />
       <window_info id="Dependency Viewer" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" order="11" />
       <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.24982053" order="2" />
       <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" order="6" />
@@ -835,7 +809,7 @@
     <option name="PERFORM_EDIT_IN_BACKGROUND" value="true" />
     <option name="PERFORM_ADD_REMOVE_IN_BACKGROUND" value="true" />
     <option name="FORCE_NON_EMPTY_COMMENT" value="false" />
-    <option name="LAST_COMMIT_MESSAGE" value="Some more clean up." />
+    <option name="LAST_COMMIT_MESSAGE" value="Some more cleanup." />
     <option name="OPTIMIZE_IMPORTS_BEFORE_PROJECT_COMMIT" value="true" />
     <option name="REFORMAT_BEFORE_PROJECT_COMMIT" value="true" />
     <option name="REFORMAT_BEFORE_FILE_COMMIT" value="false" />
@@ -846,7 +820,6 @@
     <option name="UPDATE_GROUP_BY_CHANGELIST" value="false" />
     <option name="SHOW_FILE_HISTORY_AS_TREE" value="false" />
     <option name="FILE_HISTORY_SPLITTER_PROPORTION" value="0.6" />
-    <MESSAGE value="Fix frame location" />
     <MESSAGE value="fixed a lot of things" />
     <MESSAGE value="Fix throttle." />
     <MESSAGE value="Fix keep shift." />
@@ -871,6 +844,7 @@
     <MESSAGE value="Seperate Model and View." />
     <MESSAGE value="Some refactoring and cleaning up." />
     <MESSAGE value="Some more clean up." />
+    <MESSAGE value="Some more cleanup." />
   </component>
   <component name="VssConfiguration">
     <option name="CLIENT_PATH" value="" />
@@ -911,22 +885,6 @@
     <option name="FILTER_TARGETS" value="false" />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/src/net/virtualinfinity/atrobots/snapshots/ArenaObjectSnapshot.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="17" column="0" selection-start="410" selection-end="410" vertical-scroll-proportion="0.40082645">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/net/virtualinfinity/atrobots/snapshots/ExplosionSnapshot.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="9" column="20" selection-start="217" selection-end="217" vertical-scroll-proportion="0.3161157">
-          <folding>
-            <marker date="1195151043878" expanded="true" signature="96:127" placeholder="/**...*/" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/net/virtualinfinity/atrobots/Explosion.java">
       <provider selected="true" editor-type-id="text-editor">
         <state line="10" column="50" selection-start="272" selection-end="272" vertical-scroll-proportion="0.35123968">
@@ -991,10 +949,24 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/net/virtualinfinity/atrobots/gui/ArenaPane.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="97" column="20" selection-start="3643" selection-end="3643" vertical-scroll-proportion="0.6818182">
+        <state line="94" column="43" selection-start="3559" selection-end="3559" vertical-scroll-proportion="0.5764463">
           <folding>
             <element signature="imports" expanded="true" />
           </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/net/virtualinfinity/atrobots/AtRobotPortFactory.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="45" column="97" selection-start="2120" selection-end="2120" vertical-scroll-proportion="0.857438">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/testsrc/net/virtualinfinity/atrobots/computer/InstructionTest.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="12" column="42" selection-start="321" selection-end="321" vertical-scroll-proportion="0.4214876">
+          <folding />
         </state>
       </provider>
     </entry>

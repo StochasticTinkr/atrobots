@@ -1,4 +1,6 @@
-package net.virtualinfinity.atrobots;
+package net.virtualinfinity.atrobots.computer;
+
+import net.virtualinfinity.atrobots.AbstractCompilerTest;
 
 /**
  * @author Daniel Pitts

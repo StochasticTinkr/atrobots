@@ -213,7 +213,7 @@ public class Computer {
         getHardwareBus().reset();
     }
 
-    PortHandler createDefaultPortHandler() {
+    public PortHandler createDefaultPortHandler() {
         return new InvalidPort().setComputer(Computer.this);
     }
 
