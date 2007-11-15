@@ -1,10 +1,5 @@
 package net.virtualinfinity.atrobots;
 
-import java.awt.*;
-import java.awt.geom.GeneralPath;
-import java.awt.geom.Line2D;
-import java.awt.geom.Rectangle2D;
-
 /**
  * @author Daniel Pitts
  */
@@ -281,73 +276,6 @@ public class Robot extends ArenaObject implements Resetable {
         if (!isDead()) {
             setDead(true);
             getArena().explosion(this, new LinearDamageFunction(position, 1, 25.0));
-        }
-    }
-
-    private static class RobotSnapshot extends ArenaObjectSnapshot {
-        private Temperature temperature;
-        private double armor;
-        private boolean overburn;
-        private boolean activeShield;
-        private AbsoluteAngle heading;
-        private AbsoluteAngle turretHeading;
-        private String name;
-
-        public void setTemperature(Temperature temperature) {
-            this.temperature = temperature;
-        }
-
-        public void setArmor(double armor) {
-            this.armor = armor;
-        }
-
-        public void setOverburn(boolean overburn) {
-            this.overburn = overburn;
-        }
-
-        public void setActiveShield(boolean activeShield) {
-            this.activeShield = activeShield;
-        }
-
-        public void paint(Graphics2D g2d) {
-            g2d.setPaint(Color.red);
-            final GeneralPath path = new GeneralPath();
-            path.moveTo(getX() + heading.cosine() * 5, getY() + heading.sine() * 5);
-            AbsoluteAngle cc = heading.counterClockwise(AbsoluteAngle.fromRelativeBygrees(160));
-            AbsoluteAngle c = heading.clockwise(AbsoluteAngle.fromRelativeBygrees(160));
-            path.lineTo(getX() + cc.cosine() * 3, getY() + cc.sine() * 3);
-            path.lineTo(getX(), getY());
-            path.lineTo(getX() + c.cosine() * 3, getY() + c.sine() * 3);
-            path.closePath();
-            g2d.fill(path);
-            g2d.setPaint(Color.white);
-            g2d.draw(new Line2D.Double(getX(), getY(), getX() + turretHeading.cosine() * 5, getY() + turretHeading.sine() * 5));
-            g2d.setPaint(new Color(0f, 0f, 1f, 0.6f));
-            g2d.fill(new Rectangle2D.Double(getX() - 50, getY() + 20, armor, 10));
-            g2d.setPaint(new Color(0f, 1f, 0f, 0.6f));
-            g2d.draw(new Rectangle2D.Double(getX() - 50, getY() + 20, 100, 10));
-            final Rectangle2D.Double rect = new Rectangle2D.Double(getX() - 50, getY() + 35, 100, 10);
-            g2d.setPaint(new GradientPaint((float) rect.getMinX(), (float) rect.getMinY(), new Color(1f, 0f, 0f, 0.1f),
-                    (float) rect.getMaxX(), (float) rect.getMinY(), new Color(1f, 1f, 0f, 1f)));
-            ;
-            g2d.fill(new Rectangle2D.Double(getX() - 50, getY() + 35, temperature.getLogScale() * .2, 10));
-            g2d.draw(rect);
-            g2d.setPaint(Color.yellow);
-            g2d.drawString(name, (float) (getX() - 10), (float) (getY() - 10));
-
-            // TODO:
-        }
-
-        public void setHeading(AbsoluteAngle heading) {
-            this.heading = heading;
-        }
-
-        public void setTurretHeading(AbsoluteAngle turretHeading) {
-            this.turretHeading = turretHeading;
-        }
-
-        public void setName(String name) {
-            this.name = name;
         }
     }
 

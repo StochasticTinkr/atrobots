@@ -5,7 +5,7 @@ import java.awt.geom.Point2D;
 /**
  * @author Daniel Pitts
  */
-abstract class Vector {
+public abstract class Vector {
     public abstract Distance getMagnatude();
 
     public abstract AbsoluteAngle getAngle();

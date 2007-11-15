@@ -6,6 +6,7 @@ import java.util.Map;
  * @author Daniel Pitts
  */
 public class Entrant {
+    private int id;
     private Game game;
     private String name;
     private Program program;
@@ -98,5 +99,13 @@ public class Entrant {
 
     public String getName() {
         return name;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 }

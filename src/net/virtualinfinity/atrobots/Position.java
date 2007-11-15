@@ -10,6 +10,13 @@ public class Position {
     private Vector lastVector;
     private Odometer odometer;
 
+    public Position() {
+    }
+
+    public Position(Vector vector) {
+        this.vector = vector;
+    }
+
     public Distance getX() {
         return vector.getX();
     }

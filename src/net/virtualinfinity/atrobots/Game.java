@@ -49,6 +49,7 @@ public class Game {
     }
 
     public void addEntrant(Entrant entrant) {
+        entrant.setId(entrants.size());
         entrants.add(entrant);
         entrant.setGame(this);
     }

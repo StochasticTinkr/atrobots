@@ -1,13 +1,11 @@
 package net.virtualinfinity.atrobots;
 
-import java.awt.*;
-
 /**
  * @author Daniel Pitts
  */
 public abstract class ArenaObjectSnapshot {
-    protected Vector positionVector;
-    protected Vector velocityVector;
+    private Vector positionVector;
+    private Vector velocityVector;
 
     public void setPositionVector(Vector positionVector) {
         this.positionVector = positionVector;
@@ -17,21 +15,29 @@ public abstract class ArenaObjectSnapshot {
         this.velocityVector = velocityVector;
     }
 
-    public abstract void paint(Graphics2D g2d);
+    public abstract void visit(SnapshotVisitor visitor);
 
-    protected double getY() {
-        return positionVector.getY().getMeters();
+    public double getY() {
+        return getPositionVector().getY().getMeters();
     }
 
-    protected double getX() {
-        return positionVector.getX().getMeters();
+    public double getX() {
+        return getPositionVector().getX().getMeters();
     }
 
-    protected double getVelocityX() {
-        return velocityVector.getX().getMeters();
+    public double getVelocityX() {
+        return getVelocityVector().getX().getMeters();
     }
 
-    protected double getVelocityY() {
-        return velocityVector.getY().getMeters();
+    public double getVelocityY() {
+        return getVelocityVector().getY().getMeters();
+    }
+
+    public Vector getPositionVector() {
+        return positionVector;
+    }
+
+    public Vector getVelocityVector() {
+        return velocityVector;
     }
 }
