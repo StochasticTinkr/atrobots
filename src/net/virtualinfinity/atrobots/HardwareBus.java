@@ -1,5 +1,7 @@
 package net.virtualinfinity.atrobots;
 
+import net.virtualinfinity.atrobots.computer.Computer;
+
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Map;

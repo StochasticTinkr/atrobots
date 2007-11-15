@@ -1,5 +1,6 @@
 package net.virtualinfinity.atrobots;
 
+import net.virtualinfinity.atrobots.computer.Computer;
 import net.virtualinfinity.atrobots.snapshots.ArenaObjectSnapshot;
 import net.virtualinfinity.atrobots.snapshots.RobotSnapshot;
 

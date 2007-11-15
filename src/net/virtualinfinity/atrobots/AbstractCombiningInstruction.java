@@ -1,5 +1,8 @@
 package net.virtualinfinity.atrobots;
 
+import net.virtualinfinity.atrobots.computer.Computer;
+import net.virtualinfinity.atrobots.computer.Instruction;
+
 /**
  * @author Daniel Pitts
  */
@@ -9,7 +12,7 @@ public abstract class AbstractCombiningInstruction extends Instruction {
     }
 
     protected final void perform(Computer computer) {
-        computer.setOperandValue(1, (short)combine(computer.getOperandValue(1), computer.getOperandValue(2)));
+        computer.setOperandValue(1, (short) combine(computer.getOperandValue(1), computer.getOperandValue(2)));
     }
 
     protected abstract int combine(short first, short second);
