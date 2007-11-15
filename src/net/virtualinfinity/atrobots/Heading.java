@@ -35,7 +35,7 @@ public class Heading {
         };
     }
 
-    private void rotate(RelativeAngle angle) {
+    void rotate(RelativeAngle angle) {
         this.angle = this.angle.clockwise(angle);
     }
 

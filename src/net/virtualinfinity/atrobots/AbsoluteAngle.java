@@ -69,7 +69,7 @@ public class AbsoluteAngle {
     }
 
     public boolean clockwiseIsCloserTo(AbsoluteAngle angle) {
-        return getAngleClockwiseTo(angle).compareTo(RelativeAngle.HALF_CIRCLE) < 0;
+        return getAngleClockwiseTo(angle).compareTo(RelativeAngle.HALF_CIRCLE) > 0;
     }
 
     public static RelativeAngle fromRelativeBygrees(int bygrees) {
