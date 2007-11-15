@@ -71,7 +71,7 @@ public class Computer {
         }
         instructionPointer = nextInstructionPointer;
         nextInstructionPointer++;
-        System.out.println(getInstructionString() + " ** " + registers);
+//        System.out.println(getInstructionString() + " ** " + registers);
         getInstruction().execute(Computer.this);
     }
 

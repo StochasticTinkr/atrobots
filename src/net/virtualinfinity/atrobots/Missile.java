@@ -28,7 +28,7 @@ public class Missile extends ArenaObject {
     public void checkCollision(Robot robot) {
         if (!isDead()) {
             //TODO: Better robot collision detection.
-            if (robot.getPosition().getVectorTo(position).getMagnatude().getMeters() < 10) {
+            if (robot.getPosition().getVectorTo(position).getMagnatude().getMeters() < 14) {
                 explode();
             }
         }

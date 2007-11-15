@@ -7,6 +7,7 @@ import net.virtualinfinity.atrobots.SimulationObserver;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.geom.AffineTransform;
+import java.awt.image.VolatileImage;
 import java.util.Collection;
 
 /**
@@ -15,6 +16,8 @@ import java.util.Collection;
 public class ArenaPane extends JComponent implements SimulationObserver {
     private Collection<ArenaObjectSnapshot> currentFrame;
     private Collection<ArenaObjectSnapshot> toPaint;
+    private VolatileImage volatileImage;
+    private static final boolean SHOULD_ACCELERATE = false;
 
     public ArenaPane() {
     }
@@ -26,13 +29,22 @@ public class ArenaPane extends JComponent implements SimulationObserver {
 
     protected void paintComponent(Graphics g) {
         Graphics2D g2d = (Graphics2D) g;
+        innerPaint(g2d);
+    }
+
+    private void innerPaint(Graphics2D g2d) {
+        final RenderingHints renderingHints = g2d.getRenderingHints();
+        g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
+        g2d.setRenderingHint(RenderingHints.KEY_TEXT_ANTIALIASING, RenderingHints.VALUE_TEXT_ANTIALIAS_LCD_HBGR);
+        g2d.setRenderingHint(RenderingHints.KEY_FRACTIONALMETRICS, RenderingHints.VALUE_FRACTIONALMETRICS_ON);
+        g2d.setRenderingHint(RenderingHints.KEY_RENDERING, RenderingHints.VALUE_RENDER_SPEED);
         if (isOpaque()) {
             final Paint paint = g2d.getPaint();
             g2d.setPaint(getBackground());
-            g2d.fill(g2d.getClip());
+            g2d.fill(getBounds());
             g2d.setPaint(paint);
         }
-        if ((isFullRepaint(g2d) || !hasFullFrame()) && hasNewFrame()) {
+        if (hasNewFrame()) {
             makeNewFrameCurrentFrame();
         }
         if (hasFullFrame()) {
@@ -49,6 +61,7 @@ public class ArenaPane extends JComponent implements SimulationObserver {
             }
             g2d.setTransform(originalTransform);
         }
+        g2d.setRenderingHints(renderingHints);
     }
 
     private void makeNewFrameCurrentFrame() {
@@ -62,9 +75,5 @@ public class ArenaPane extends JComponent implements SimulationObserver {
 
     private boolean hasNewFrame() {
         return currentFrame != null;
-    }
-
-    private boolean isFullRepaint(Graphics2D g2d) {
-        return true;
     }
 }

@@ -5,7 +5,7 @@ package net.virtualinfinity.atrobots;
  */
 public class Scanner implements Resetable {
     private int accuracy;
-    private RelativeAngle scanArc;
+    private RelativeAngle scanArc = RelativeAngle.fromBygrees(8);
     private Robot robot;
     private Distance maxDistance = Distance.fromMeters(1500);
 
@@ -27,13 +27,13 @@ public class Scanner implements Resetable {
         ScanResult scanResult = robot.scan(angleBracket, maxDistance);
         if (scanResult.successful()) {
             final double v = angleBracket.fractionTo(scanResult.getAngle()) - 0.5d;
-            setAccuracy(roundTowardZero(v * 5));
+            setAccuracy(roundAwayFromZero(v * 2));
         }
         return scanResult.getDistance();
     }
 
-    private int roundTowardZero(double value) {
-        return (int) (value < 0 ? Math.ceil(value + 0.5d) : Math.floor(value - 0.5d));
+    private int roundAwayFromZero(double value) {
+        return (int) (value < 0 ? Math.ceil(value - 0.5d) : Math.floor(value + 0.5d));
     }
 
     private AngleBracket getAngleBracket() {
@@ -60,7 +60,11 @@ public class Scanner implements Resetable {
             }
 
             public void write(short value) {
-                setScanArc(RelativeAngle.fromBygrees(Math.max(0, Math.min(64, value))));
+                if (value == 0) {
+                    setScanArc(RelativeAngle.fromRadians(Math.PI / 1024));
+                } else {
+                    setScanArc(RelativeAngle.fromBygrees(Math.max(0, Math.min(64, value))));
+                }
             }
         };
     }
@@ -79,6 +83,7 @@ public class Scanner implements Resetable {
 
     private void setAccuracy(int accuracy) {
         this.accuracy = accuracy;
+        System.out.println("accuracy = " + accuracy);
     }
 
     public void setRobot(Robot robot) {

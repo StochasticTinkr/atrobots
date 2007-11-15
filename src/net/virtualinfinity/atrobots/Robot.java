@@ -160,11 +160,11 @@ public class Robot extends ArenaObject implements Resetable {
     public PortHandler getShutdownLevelLatchPort() {
         return new PortHandler() {
             public short read() {
-                return (short) getShutdownLevel().getLogScale();
+                return (short) hardwareBus.getShutdownLevel();
             }
 
             public void write(short value) {
-                setShutdownLevel(Temperature.fromLogScale(value));
+                hardwareBus.setShutdownLevel(value);
             }
         };
     }

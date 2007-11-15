@@ -13,7 +13,7 @@ public class HardwareBus {
     private Map<Integer, InterruptHandler> interrupts;
     private final Collection<Resetable> resetables = new ArrayList<Resetable>();
     private final Heading desiredHeading = new Heading();
-    private Temperature autoShutDown = Temperature.fromLogScale(300);
+    private Temperature autoShutDown = Temperature.fromLogScale(350);
     private Computer computer;
     private Robot robot;
 
@@ -63,6 +63,7 @@ public class HardwareBus {
         computer.getRegisters().getDesiredSpeed().set((short) robot.getThrottle().getDesiredPower());
         computer.getRegisters().getDesiredHeading().set((short) (desiredHeading.getAngle().getBygrees() & 255));
         computer.getRegisters().getTurretOffset().set((short) robot.getTurretShift());
+        computer.getRegisters().getAccuracy().set((short) robot.getTurret().getScanner().getAccuracy());
         computer.getRegisters().getMeters().set((short) Math.round(robot.getOdometer().getDistance().getMeters()));
     }
 
@@ -94,5 +95,14 @@ public class HardwareBus {
         desiredHeading.setAngle(robot.getHeading().getAngle());
         robot.getThrottle().setDesiredPower(0);
         computer.shutDown();
+    }
+
+    public int getShutdownLevel() {
+        return autoShutDown.getLogScale();
+    }
+
+
+    public void setShutdownLevel(int value) {
+        autoShutDown = Temperature.fromLogScale(value);
     }
 }
