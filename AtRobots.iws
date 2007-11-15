@@ -20,10 +20,9 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/net/virtualinfinity/atrobots/gui/Main.java" afterPath="$PROJECT_DIR$/src/net/virtualinfinity/atrobots/gui/Main.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/testsrc/net/virtualinfinity/atrobots/HeadingTest.java" afterPath="$PROJECT_DIR$/testsrc/net/virtualinfinity/atrobots/HeadingTest.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/AtRobots.iws" afterPath="$PROJECT_DIR$/AtRobots.iws" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/net/virtualinfinity/atrobots/Heading.java" afterPath="$PROJECT_DIR$/src/net/virtualinfinity/atrobots/Heading.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/testsrc/net/virtualinfinity/atrobots/HeadingTest.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/net/virtualinfinity/atrobots/AbsoluteAngle.java" afterPath="$PROJECT_DIR$/src/net/virtualinfinity/atrobots/AbsoluteAngle.java" />
     </list>
     <ignored path="AtRobots.iws" />
@@ -107,25 +106,33 @@
       <file leaf-file-name="HeadingTest.java" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/testsrc/net/virtualinfinity/atrobots/HeadingTest.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="43" column="27" selection-start="1480" selection-end="1480" vertical-scroll-proportion="0.604">
-              <folding />
+            <state line="27" column="26" selection-start="918" selection-end="918" vertical-scroll-proportion="0.524">
+              <folding>
+                <marker date="1195085062923" expanded="true" signature="768:1022" placeholder="{...}" />
+                <marker date="1195085062923" expanded="true" signature="1061:1252" placeholder="{...}" />
+                <marker date="1195085062923" expanded="true" signature="1291:1482" placeholder="{...}" />
+                <marker date="1195085062923" expanded="true" signature="1522:2000" placeholder="{...}" />
+                <marker date="1195085062923" expanded="true" signature="2046:2529" placeholder="{...}" />
+                <marker date="1195085062923" expanded="true" signature="2568:3046" placeholder="{...}" />
+                <marker date="1195085062923" expanded="true" signature="3109:3174" placeholder="{...}" />
+              </folding>
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="Heading.java" pinned="false" current="true" current-in-tab="true">
+      <file leaf-file-name="Heading.java" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/net/virtualinfinity/atrobots/Heading.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="53" column="28" selection-start="1620" selection-end="1620" vertical-scroll-proportion="0.502">
+            <state line="47" column="64" selection-start="1311" selection-end="1311" vertical-scroll-proportion="0.728">
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="AbsoluteAngle.java" pinned="false" current="false" current-in-tab="false">
+      <file leaf-file-name="AbsoluteAngle.java" pinned="false" current="true" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/net/virtualinfinity/atrobots/AbsoluteAngle.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="71" column="80" selection-start="2135" selection-end="2135" vertical-scroll-proportion="0.366">
+            <state line="78" column="21" selection-start="2292" selection-end="2292" vertical-scroll-proportion="0.286">
               <folding />
             </state>
           </provider>
@@ -332,7 +339,31 @@
       <recent name="net.virtualinfinity.atrobots" />
     </key>
   </component>
-  <component name="RunManager" selected="Application.Main">
+  <component name="RunManager" selected="JUnit.HeadingTest">
+    <tempConfiguration default="false" name="HeadingTest" type="JUnit" factoryName="JUnit" enabled="false" merge="false">
+      <pattern value="net.virtualinfinity.atrobots.*" />
+      <module name="AtRobots" />
+      <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
+      <option name="ALTERNATIVE_JRE_PATH" value="" />
+      <option name="PACKAGE_NAME" value="net.virtualinfinity.atrobots" />
+      <option name="MAIN_CLASS_NAME" value="net.virtualinfinity.atrobots.HeadingTest" />
+      <option name="METHOD_NAME" value="" />
+      <option name="TEST_OBJECT" value="class" />
+      <option name="VM_PARAMETERS" value="" />
+      <option name="PARAMETERS" value="" />
+      <option name="WORKING_DIRECTORY" value="file://$PROJECT_DIR$" />
+      <option name="ENV_VARIABLES" />
+      <option name="PASS_PARENT_ENVS" value="true" />
+      <option name="ADDITIONAL_CLASS_PATH" />
+      <option name="TEST_SEARCH_SCOPE">
+        <value defaultName="wholeProject" />
+      </option>
+      <RunnerSettings RunnerId="Run" />
+      <ConfigurationWrapper RunnerId="Run" />
+      <method>
+        <option name="Make" value="true" />
+      </method>
+    </tempConfiguration>
     <configuration default="true" type="Application" factoryName="Application" enabled="false" merge="false">
       <option name="MAIN_CLASS_NAME" />
       <option name="VM_PARAMETERS" />
@@ -469,9 +500,10 @@
         <option name="Make" value="true" />
       </method>
     </configuration>
-    <list size="2">
+    <list size="3">
       <item index="0" class="java.lang.String" itemvalue="Application.Main" />
       <item index="1" class="java.lang.String" itemvalue="JUnit.Tests" />
+      <item index="2" class="java.lang.String" itemvalue="JUnit.HeadingTest" />
     </list>
     <configuration name="&lt;template&gt;" type="WebApp" default="true" selected="false">
       <Host>localhost</Host>
@@ -563,7 +595,7 @@
     <option name="PERFORM_EDIT_IN_BACKGROUND" value="true" />
     <option name="PERFORM_ADD_REMOVE_IN_BACKGROUND" value="true" />
     <option name="FORCE_NON_EMPTY_COMMENT" value="false" />
-    <option name="LAST_COMMIT_MESSAGE" value="Fix a couple bugs." />
+    <option name="LAST_COMMIT_MESSAGE" value="Heading tests and minor fixes." />
     <option name="OPTIMIZE_IMPORTS_BEFORE_PROJECT_COMMIT" value="true" />
     <option name="REFORMAT_BEFORE_PROJECT_COMMIT" value="true" />
     <option name="REFORMAT_BEFORE_FILE_COMMIT" value="false" />
@@ -597,6 +629,7 @@
     <MESSAGE value="Fixed heat." />
     <MESSAGE value="Fix some bugs." />
     <MESSAGE value="Fix a couple bugs." />
+    <MESSAGE value="Heading tests and minor fixes." />
   </component>
   <component name="VssConfiguration">
     <option name="CLIENT_PATH" value="" />
@@ -732,21 +765,29 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/testsrc/net/virtualinfinity/atrobots/HeadingTest.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="43" column="27" selection-start="1480" selection-end="1480" vertical-scroll-proportion="0.604">
+        <state line="27" column="26" selection-start="918" selection-end="918" vertical-scroll-proportion="0.524">
+          <folding>
+            <marker date="1195085062923" expanded="true" signature="768:1022" placeholder="{...}" />
+            <marker date="1195085062923" expanded="true" signature="1061:1252" placeholder="{...}" />
+            <marker date="1195085062923" expanded="true" signature="1291:1482" placeholder="{...}" />
+            <marker date="1195085062923" expanded="true" signature="1522:2000" placeholder="{...}" />
+            <marker date="1195085062923" expanded="true" signature="2046:2529" placeholder="{...}" />
+            <marker date="1195085062923" expanded="true" signature="2568:3046" placeholder="{...}" />
+            <marker date="1195085062923" expanded="true" signature="3109:3174" placeholder="{...}" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/net/virtualinfinity/atrobots/Heading.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="47" column="64" selection-start="1311" selection-end="1311" vertical-scroll-proportion="0.728">
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/net/virtualinfinity/atrobots/AbsoluteAngle.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="71" column="80" selection-start="2135" selection-end="2135" vertical-scroll-proportion="0.366">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/net/virtualinfinity/atrobots/Heading.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="53" column="28" selection-start="1620" selection-end="1620" vertical-scroll-proportion="0.502">
+        <state line="78" column="21" selection-start="2292" selection-end="2292" vertical-scroll-proportion="0.286">
           <folding />
         </state>
       </provider>

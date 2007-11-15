@@ -4,7 +4,8 @@ package net.virtualinfinity.atrobots;
  * @author Daniel Pitts
  */
 public class Heading {
-    private AbsoluteAngle angle = AbsoluteAngle.fromBygrees((int) (Math.random() * 256));
+    private AbsoluteAngle absoluteAngle = AbsoluteAngle.fromBygrees((int) (Math.random() * 256));
+    private RelativeAngle relativeAngle = RelativeAngle.fromBygrees(0);
     private boolean absolute = true;
     private Heading relation;
 
@@ -14,9 +15,9 @@ public class Heading {
 
     public AbsoluteAngle getAngle() {
         if (absolute) {
-            return angle;
+            return absoluteAngle;
         }
-        return angle.counterClockwise(relation.getAngle().counterClockwiseFromStandardOrigin());
+        return relation.getAngle().clockwise(relativeAngle);
     }
 
     public PortHandler getCompass() {
@@ -36,15 +37,15 @@ public class Heading {
     }
 
     void rotate(RelativeAngle angle) {
-        this.angle = this.angle.clockwise(angle);
+        setAngle(getAngle().clockwise(angle));
     }
 
     public void setAngle(AbsoluteAngle angle) {
         if (absolute) {
-            this.angle = angle;
+            this.absoluteAngle = angle;
             return;
         }
-        this.angle = relation.getAngle().clockwise(angle.counterClockwiseFromStandardOrigin());
+        this.relativeAngle = relation.getAngle().getAngleCounterClockwiseTo(angle);
     }
 
     public void moveToward(Heading desiredHeading, RelativeAngle maxDelta) {

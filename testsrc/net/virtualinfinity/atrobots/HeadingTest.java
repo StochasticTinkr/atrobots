@@ -25,6 +25,8 @@ public class HeadingTest extends TestCase {
     public void testSetup() {
         assertAbsoluteHeading(AbsoluteAngle.fromBygrees(0));
         assertRelativeHeading(AbsoluteAngle.fromBygrees(0));
+        relativeHeading.setAngle(AbsoluteAngle.fromBygrees(5));
+        assertRelativeHeading(AbsoluteAngle.fromBygrees(5));
     }
 
     public void testRotateAbsolute() {
@@ -39,13 +41,33 @@ public class HeadingTest extends TestCase {
         assertRelativeHeading(AbsoluteAngle.fromBygrees(5));
     }
 
-    public void testMoveTo() {
+    public void testMoveToClockwise() {
         desiredHeading.setAngle(AbsoluteAngle.fromBygrees(9));
         absoluteHeading.moveToward(desiredHeading, RelativeAngle.fromBygrees(5));
         assertAbsoluteHeading(AbsoluteAngle.fromBygrees(5));
         assertRelativeHeading(AbsoluteAngle.fromBygrees(5));
         absoluteHeading.moveToward(desiredHeading, RelativeAngle.fromBygrees(5));
         assertAbsoluteHeading(AbsoluteAngle.fromBygrees(9));
+        assertRelativeHeading(AbsoluteAngle.fromBygrees(9));
+    }
+
+    public void testMoveToCounterClockwise() {
+        desiredHeading.setAngle(AbsoluteAngle.fromBygrees(-9));
+        absoluteHeading.moveToward(desiredHeading, RelativeAngle.fromBygrees(5));
+        assertAbsoluteHeading(AbsoluteAngle.fromBygrees(-5));
+        assertRelativeHeading(AbsoluteAngle.fromBygrees(-5));
+        absoluteHeading.moveToward(desiredHeading, RelativeAngle.fromBygrees(5));
+        assertAbsoluteHeading(AbsoluteAngle.fromBygrees(-9));
+        assertRelativeHeading(AbsoluteAngle.fromBygrees(-9));
+    }
+
+    public void testRelativeMoveTo() {
+        desiredHeading.setAngle(AbsoluteAngle.fromBygrees(9));
+        absoluteHeading.moveToward(desiredHeading, RelativeAngle.fromBygrees(5));
+        assertAbsoluteHeading(AbsoluteAngle.fromBygrees(5));
+        assertRelativeHeading(AbsoluteAngle.fromBygrees(5));
+        relativeHeading.moveToward(desiredHeading, RelativeAngle.fromBygrees(5));
+        assertAbsoluteHeading(AbsoluteAngle.fromBygrees(5));
         assertRelativeHeading(AbsoluteAngle.fromBygrees(9));
     }
 
