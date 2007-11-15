@@ -10,14 +10,14 @@ import net.virtualinfinity.atrobots.snapshots.ScanSnapshot;
 /**
  * @author Daniel Pitts
  */
-public class ScanObject extends ArenaObject {
+public class ScanParameters extends ArenaObject {
     private AngleBracket angleBracket;
     private Distance maxDistance;
     private boolean successful;
     private Vector matchPositionVector;
     private int frame;
 
-    public ScanObject(AngleBracket angleBracket, Distance maxDistance, boolean successful, Vector matchPositionVector) {
+    public ScanParameters(AngleBracket angleBracket, Distance maxDistance, boolean successful, Vector matchPositionVector) {
         this.angleBracket = angleBracket;
         this.maxDistance = maxDistance;
         this.successful = successful;

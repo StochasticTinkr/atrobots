@@ -1,20 +1,21 @@
-package net.virtualinfinity.atrobots;
+package net.virtualinfinity.atrobots.parser;
 
 import javax.swing.*;
-import java.util.List;
-import java.util.ArrayList;
 import java.awt.*;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * @author Daniel Pitts
  */
 public class Errors {
     List<String> messages = new ArrayList<String>();
+
     public void add(String error, int lineNumber) {
         messages.add("Line " + lineNumber + ": " + error);
     }
 
-    public  boolean hasErrors() {
+    public boolean hasErrors() {
         return !messages.isEmpty();
     }
 
@@ -30,7 +31,7 @@ public class Errors {
         final JList jList = new JList();
         dialog.add(new JScrollPane(jList));
         final DefaultListModel listModel = new DefaultListModel();
-        for (String st: messages) {
+        for (String st : messages) {
             listModel.addElement(st);
         }
         jList.setModel(listModel);
@@ -48,7 +49,7 @@ public class Errors {
 
     public void dumpErrors() {
         if (hasErrors()) {
-            for (String m: messages) {
+            for (String m : messages) {
                 System.out.println(m);
             }
         }

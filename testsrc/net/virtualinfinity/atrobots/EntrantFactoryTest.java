@@ -1,6 +1,7 @@
 package net.virtualinfinity.atrobots;
 
 import net.virtualinfinity.atrobots.computer.MemoryArray;
+import net.virtualinfinity.atrobots.parser.Errors;
 
 import java.io.File;
 import java.io.FilenameFilter;

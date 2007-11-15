@@ -2,8 +2,8 @@ package net.virtualinfinity.atrobots.gui;
 
 import net.virtualinfinity.atrobots.Entrant;
 import net.virtualinfinity.atrobots.EntrantFactory;
-import net.virtualinfinity.atrobots.Errors;
 import net.virtualinfinity.atrobots.Game;
+import net.virtualinfinity.atrobots.parser.Errors;
 
 import javax.swing.*;
 import javax.swing.border.BevelBorder;
@@ -195,7 +195,9 @@ public class Main implements Runnable {
                 get().showErrorDialog("Errors", mainFrame);
                 game.nextRound();
             } catch (InterruptedException e1) {
+                e1.printStackTrace();
             } catch (ExecutionException e1) {
+                e1.printStackTrace();
             }
         }
     }

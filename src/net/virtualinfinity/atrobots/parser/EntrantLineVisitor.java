@@ -1,6 +1,5 @@
 package net.virtualinfinity.atrobots.parser;
 
-import net.virtualinfinity.atrobots.Errors;
 import net.virtualinfinity.atrobots.HardwareSpecification;
 import net.virtualinfinity.atrobots.computer.Program;
 

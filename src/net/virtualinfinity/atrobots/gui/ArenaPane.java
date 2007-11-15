@@ -8,7 +8,6 @@ import net.virtualinfinity.atrobots.snapshots.*;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.geom.AffineTransform;
-import java.awt.image.VolatileImage;
 import java.util.Collection;
 
 /**
@@ -17,8 +16,6 @@ import java.util.Collection;
 public class ArenaPane extends JComponent implements SimulationObserver {
     private Collection<ArenaObjectSnapshot> currentFrame;
     private Collection<ArenaObjectSnapshot> toPaint;
-    private VolatileImage volatileImage;
-    private static final boolean SHOULD_ACCELERATE = false;
 
     public ArenaPane() {
     }

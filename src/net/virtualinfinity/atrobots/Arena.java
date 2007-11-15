@@ -57,7 +57,7 @@ public class Arena {
 
     public ScanResult scan(Robot ignore, Position position, final AngleBracket angleBracket, final Distance maxDistance) {
         final ScanResult scanResult = calculateResult(ignore, position, angleBracket, maxDistance);
-        final ScanObject object = new ScanObject(angleBracket, maxDistance, scanResult.successful(), scanResult.getMatchPositionVector());
+        final ScanParameters object = new ScanParameters(angleBracket, maxDistance, scanResult.successful(), scanResult.getMatchPositionVector());
         others.add(object);
         object.getPosition().copyFrom(position);
         return scanResult;
