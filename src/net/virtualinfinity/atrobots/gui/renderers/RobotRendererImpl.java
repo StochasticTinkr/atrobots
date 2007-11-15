@@ -1,6 +1,6 @@
 package net.virtualinfinity.atrobots.gui.renderers;
 
-import net.virtualinfinity.atrobots.AbsoluteAngle;
+import net.virtualinfinity.atrobots.measures.AbsoluteAngle;
 import net.virtualinfinity.atrobots.snapshots.RobotSnapshot;
 
 import java.awt.*;

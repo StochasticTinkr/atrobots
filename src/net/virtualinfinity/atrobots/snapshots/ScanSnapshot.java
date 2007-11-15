@@ -1,8 +1,8 @@
 package net.virtualinfinity.atrobots.snapshots;
 
-import net.virtualinfinity.atrobots.AngleBracket;
-import net.virtualinfinity.atrobots.Distance;
-import net.virtualinfinity.atrobots.Vector;
+import net.virtualinfinity.atrobots.measures.AngleBracket;
+import net.virtualinfinity.atrobots.measures.Distance;
+import net.virtualinfinity.atrobots.measures.Vector;
 
 /**
  * @author Daniel Pitts

@@ -1,5 +1,9 @@
 package net.virtualinfinity.atrobots;
 
+import net.virtualinfinity.atrobots.measures.AngleBracket;
+import net.virtualinfinity.atrobots.measures.Distance;
+import net.virtualinfinity.atrobots.measures.Duration;
+
 import java.util.*;
 
 /**
@@ -10,8 +14,14 @@ public class Arena {
     private final List<Mine> mines = new LinkedList<Mine>();
     private final List<Missile> missiles = new LinkedList<Missile>();
     private final Collection<ArenaObject> others = new LinkedList<ArenaObject>();
-    Collection<? extends Collection<? extends ArenaObject>> allArenaObjectCollections =
-            Arrays.asList(mines, robots, missiles, others);
+    final Collection<Collection<? extends ArenaObject>> allArenaObjectCollections = new ArrayList<Collection<? extends ArenaObject>>();
+
+    {
+        allArenaObjectCollections.add(missiles);
+        allArenaObjectCollections.add(mines);
+        allArenaObjectCollections.add(robots);
+        allArenaObjectCollections.add(others);
+    }
 
     private final RadioDispatcher radioDispatcher = new RadioDispatcher();
     private SimulationFrameBuffer simulationFrameBuffer;
@@ -54,14 +64,14 @@ public class Arena {
     }
 
     private ScanResult calculateResult(Robot ignore, Position position, AngleBracket angleBracket, Distance maxDistance) {
-        Vector vectorToClosest = null;
+        net.virtualinfinity.atrobots.measures.Vector vectorToClosest = null;
         Distance closestDistance = maxDistance;
         Robot closest = null;
         for (Robot robot : robots) {
             if (robot == ignore) {
                 continue;
             }
-            final Vector vector = robot.getPosition().getVectorTo(position);
+            final net.virtualinfinity.atrobots.measures.Vector vector = robot.getPosition().getVectorTo(position);
             final Distance distance = vector.getMagnatude();
             if (closest == null || distance.compareTo(closestDistance) < 0) {
                 if (angleBracket.contains(vector.getAngle())) {

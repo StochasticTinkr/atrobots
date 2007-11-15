@@ -2,7 +2,7 @@ package net.virtualinfinity.atrobots.parser;
 
 import net.virtualinfinity.atrobots.Errors;
 import net.virtualinfinity.atrobots.HardwareSpecification;
-import net.virtualinfinity.atrobots.Program;
+import net.virtualinfinity.atrobots.computer.Program;
 
 import java.util.*;
 

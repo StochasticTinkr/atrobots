@@ -1,4 +1,4 @@
-package net.virtualinfinity.atrobots;
+package net.virtualinfinity.atrobots.measures;
 
 import java.awt.geom.Point2D;
 

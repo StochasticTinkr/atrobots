@@ -1,6 +1,6 @@
 package net.virtualinfinity.atrobots.snapshots;
 
-import net.virtualinfinity.atrobots.Vector;
+import net.virtualinfinity.atrobots.measures.Vector;
 
 /**
  * @author Daniel Pitts

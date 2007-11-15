@@ -1,4 +1,4 @@
-package net.virtualinfinity.atrobots;
+package net.virtualinfinity.atrobots.measures;
 
 import java.awt.*;
 import java.awt.geom.Arc2D;
@@ -21,7 +21,7 @@ public class AngleBracket {
         rangeSize = Math.PI * 2;
     }
 
-    static AngleBracket around(AbsoluteAngle center, RelativeAngle width) {
+    public static AngleBracket around(AbsoluteAngle center, RelativeAngle width) {
         return between(center.counterClockwise(width), center.clockwise(width));
     }
 

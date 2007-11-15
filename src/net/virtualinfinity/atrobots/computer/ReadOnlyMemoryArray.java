@@ -1,6 +1,4 @@
-package net.virtualinfinity.atrobots;
-
-import java.util.Arrays;
+package net.virtualinfinity.atrobots.computer;
 
 /**
  * @author Daniel Pitts

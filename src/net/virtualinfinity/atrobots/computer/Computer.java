@@ -1,6 +1,10 @@
 package net.virtualinfinity.atrobots.computer;
 
-import net.virtualinfinity.atrobots.*;
+import net.virtualinfinity.atrobots.Flags;
+import net.virtualinfinity.atrobots.HardwareBus;
+import net.virtualinfinity.atrobots.InvalidPort;
+import net.virtualinfinity.atrobots.PortHandler;
+import net.virtualinfinity.atrobots.measures.Duration;
 
 import java.util.Arrays;
 import java.util.Collections;
@@ -441,7 +445,7 @@ public class Computer {
         }
     }
 
-    private class ErrorHandler implements net.virtualinfinity.atrobots.ComputerErrorHandler {
+    private class ErrorHandler implements ComputerErrorHandler {
         public void genericError(short operandValue) {
             // TODO: robot error
             System.out.println("Computer$ErrorHandler.genericError");

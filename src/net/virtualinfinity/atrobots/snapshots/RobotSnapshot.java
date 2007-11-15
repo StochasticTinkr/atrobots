@@ -1,7 +1,7 @@
 package net.virtualinfinity.atrobots.snapshots;
 
-import net.virtualinfinity.atrobots.AbsoluteAngle;
 import net.virtualinfinity.atrobots.Temperature;
+import net.virtualinfinity.atrobots.measures.AbsoluteAngle;
 
 /**
  * @author Daniel Pitts

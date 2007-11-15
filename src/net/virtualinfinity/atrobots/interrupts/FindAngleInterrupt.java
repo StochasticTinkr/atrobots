@@ -1,8 +1,8 @@
 package net.virtualinfinity.atrobots.interrupts;
 
-import net.virtualinfinity.atrobots.AbsoluteAngle;
-import net.virtualinfinity.atrobots.Distance;
-import net.virtualinfinity.atrobots.MemoryCell;
+import net.virtualinfinity.atrobots.computer.MemoryCell;
+import net.virtualinfinity.atrobots.measures.AbsoluteAngle;
+import net.virtualinfinity.atrobots.measures.Distance;
 
 /**
  * @author Daniel Pitts

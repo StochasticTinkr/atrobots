@@ -1,6 +1,6 @@
 package net.virtualinfinity.atrobots.interrupts;
 
-import net.virtualinfinity.atrobots.ComputerErrorHandler;
+import net.virtualinfinity.atrobots.computer.ComputerErrorHandler;
 
 /**
  * @author Daniel Pitts

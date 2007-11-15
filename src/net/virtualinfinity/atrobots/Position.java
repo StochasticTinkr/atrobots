@@ -1,5 +1,8 @@
 package net.virtualinfinity.atrobots;
 
+import net.virtualinfinity.atrobots.measures.Distance;
+import net.virtualinfinity.atrobots.measures.Vector;
+
 import java.util.Random;
 
 /**

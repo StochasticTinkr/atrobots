@@ -1,5 +1,7 @@
 package net.virtualinfinity.atrobots;
 
+import net.virtualinfinity.atrobots.computer.CommunicationsQueue;
+
 /**
  * @author Daniel Pitts
  */

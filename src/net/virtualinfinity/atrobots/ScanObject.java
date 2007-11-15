@@ -1,5 +1,9 @@
 package net.virtualinfinity.atrobots;
 
+import net.virtualinfinity.atrobots.measures.AngleBracket;
+import net.virtualinfinity.atrobots.measures.Distance;
+import net.virtualinfinity.atrobots.measures.Duration;
+import net.virtualinfinity.atrobots.measures.Vector;
 import net.virtualinfinity.atrobots.snapshots.ArenaObjectSnapshot;
 import net.virtualinfinity.atrobots.snapshots.ScanSnapshot;
 

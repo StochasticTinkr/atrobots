@@ -1,5 +1,6 @@
 package net.virtualinfinity.atrobots;
 
+import net.virtualinfinity.atrobots.computer.Program;
 import net.virtualinfinity.atrobots.parser.AtRobotLineLexer;
 import net.virtualinfinity.atrobots.parser.EntrantLineVisitor;
 

@@ -1,6 +1,9 @@
 package net.virtualinfinity.atrobots;
 
 import net.virtualinfinity.atrobots.computer.Computer;
+import net.virtualinfinity.atrobots.computer.Memory;
+import net.virtualinfinity.atrobots.computer.Program;
+import net.virtualinfinity.atrobots.computer.RandomAccessMemoryArray;
 import net.virtualinfinity.atrobots.interrupts.AtRobotInterruptFactory;
 import net.virtualinfinity.atrobots.interrupts.InterruptHandler;
 

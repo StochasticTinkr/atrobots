@@ -1,7 +1,5 @@
 package net.virtualinfinity.atrobots.computer;
 
-import net.virtualinfinity.atrobots.MemoryCell;
-
 /**
  * @author Daniel Pitts
  */

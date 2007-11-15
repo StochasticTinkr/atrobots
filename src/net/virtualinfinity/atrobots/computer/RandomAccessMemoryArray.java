@@ -1,4 +1,4 @@
-package net.virtualinfinity.atrobots;
+package net.virtualinfinity.atrobots.computer;
 
 import java.util.Arrays;
 

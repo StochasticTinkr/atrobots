@@ -1,5 +1,7 @@
 package net.virtualinfinity.atrobots;
 
+import net.virtualinfinity.atrobots.measures.Duration;
+
 /**
  * @author Daniel Pitts
  */

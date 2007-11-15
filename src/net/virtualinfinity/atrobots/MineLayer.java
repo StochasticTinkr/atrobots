@@ -1,5 +1,7 @@
 package net.virtualinfinity.atrobots;
 
+import net.virtualinfinity.atrobots.measures.Distance;
+
 /**
  * @author Daniel Pitts
  */

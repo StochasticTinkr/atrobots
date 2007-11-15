@@ -1,8 +1,5 @@
 package net.virtualinfinity.atrobots.computer;
 
-import net.virtualinfinity.atrobots.SignedBitShiftRightInstruction;
-import net.virtualinfinity.atrobots.SubtractInstruction;
-
 /**
  * @author Daniel Pitts
  */

@@ -1,8 +1,8 @@
 package net.virtualinfinity.atrobots.interrupts;
 
-import net.virtualinfinity.atrobots.Duration;
-import net.virtualinfinity.atrobots.MemoryCell;
 import net.virtualinfinity.atrobots.Robot;
+import net.virtualinfinity.atrobots.computer.MemoryCell;
+import net.virtualinfinity.atrobots.measures.Duration;
 
 /**
  * @author Daniel Pitts

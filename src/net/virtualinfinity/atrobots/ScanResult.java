@@ -1,5 +1,9 @@
 package net.virtualinfinity.atrobots;
 
+import net.virtualinfinity.atrobots.measures.AbsoluteAngle;
+import net.virtualinfinity.atrobots.measures.Distance;
+import net.virtualinfinity.atrobots.measures.Vector;
+
 /**
  * @author Daniel Pitts
  */

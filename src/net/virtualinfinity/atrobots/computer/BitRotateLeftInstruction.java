@@ -1,6 +1,5 @@
 package net.virtualinfinity.atrobots.computer;
 
-import net.virtualinfinity.atrobots.AbstractCombiningInstruction;
 
 /**
  * @author Daniel Pitts

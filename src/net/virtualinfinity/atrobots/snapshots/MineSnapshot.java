@@ -1,6 +1,6 @@
 package net.virtualinfinity.atrobots.snapshots;
 
-import net.virtualinfinity.atrobots.Distance;
+import net.virtualinfinity.atrobots.measures.Distance;
 
 /**
  * @author Daniel Pitts
