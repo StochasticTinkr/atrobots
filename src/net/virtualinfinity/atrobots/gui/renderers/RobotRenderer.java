@@ -11,7 +11,7 @@ import java.awt.geom.Rectangle2D;
 /**
  * @author Daniel Pitts
  */
-public class RobotRendererImpl implements SnapshotRenderer<RobotSnapshot> {
+public class RobotRenderer implements SnapshotRenderer<RobotSnapshot> {
     public void render(Graphics2D g2d, RobotSnapshot robotSnapshot) {
         g2d.setPaint(Color.red);
         final GeneralPath path = new GeneralPath();

@@ -4,6 +4,8 @@ import net.virtualinfinity.atrobots.measures.AngleBracket;
 import net.virtualinfinity.atrobots.measures.Distance;
 import net.virtualinfinity.atrobots.measures.Vector;
 
+import java.awt.*;
+
 /**
  * @author Daniel Pitts
  */
@@ -46,5 +48,9 @@ public class ScanSnapshot extends ArenaObjectSnapshot {
 
     public void setSuccessful(boolean successful) {
         this.successful = successful;
+    }
+
+    public Shape getScanArea() {
+        return getAngleBracket().toShape(getPositionVector().getX(), getPositionVector().getY(), getMaxDistance());
     }
 }

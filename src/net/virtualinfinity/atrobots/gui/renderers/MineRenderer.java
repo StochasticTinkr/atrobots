@@ -8,7 +8,7 @@ import java.awt.geom.Ellipse2D;
 /**
  * @author Daniel Pitts
  */
-public class MineRendererImpl implements SnapshotRenderer<MineSnapshot> {
+public class MineRenderer implements SnapshotRenderer<MineSnapshot> {
     public void render(Graphics2D g2d, MineSnapshot mineSnapshot) {
         final Ellipse2D.Double ellipse = new Ellipse2D.Double();
         ellipse.setFrameFromCenter(mineSnapshot.getX(), mineSnapshot.getY(), mineSnapshot.getX() + mineSnapshot.getTriggerRadius().getMeters(), mineSnapshot.getY() + mineSnapshot.getTriggerRadius().getMeters());

@@ -82,11 +82,11 @@ public class ArenaPane extends JComponent implements SimulationObserver {
 
     private static class SnapshotPainter implements SnapshotVisitor {
         private final Graphics2D g2d;
-        private SnapshotRenderer<RobotSnapshot> robotRenderer = new RobotRendererImpl();
-        private SnapshotRenderer<MissileSnapshot> missileRenderer = new MissileRendererImpl();
-        private SnapshotRenderer<MineSnapshot> mineRenderer = new MineRendererImpl();
-        private SnapshotRenderer<ExplosionSnapshot> explosionRenderer = new ExplosionRendererImpl();
-        private SnapshotRenderer<ScanSnapshot> scanRenderer = new ScanRendererImpl();
+        private SnapshotRenderer<RobotSnapshot> robotRenderer = new RobotRenderer();
+        private SnapshotRenderer<MissileSnapshot> missileRenderer = new MissileRenderer();
+        private SnapshotRenderer<MineSnapshot> mineRenderer = new MineRenderer();
+        private SnapshotRenderer<ExplosionSnapshot> explosionRenderer = new SimpleExplosionRenderer();
+        private SnapshotRenderer<ScanSnapshot> scanRenderer = new ScanRenderer();
 
         public SnapshotPainter(Graphics2D g2d) {
             this.g2d = g2d;
