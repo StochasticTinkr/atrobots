@@ -1,9 +1,9 @@
-package net.virtualinfinity.atrobots;
+package net.virtualinfinity.atrobots.parser;
 
 import java.io.IOException;
 import java.io.LineNumberReader;
-import java.util.List;
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * @author Daniel Pitts
@@ -56,7 +56,7 @@ public class AtRobotLineLexer {
     private void visitLabel(String line) {
         int i = 0;
         while (i < line.length()) {
-            if (isSeperator(line.charAt(i))){
+            if (isSeperator(line.charAt(i))) {
                 line = line.substring(0, i);
                 break;
             }
@@ -109,7 +109,7 @@ public class AtRobotLineLexer {
         final int radix;
         final int end;
         if (token.endsWith("h")) {
-            end = token.length()-1;
+            end = token.length() - 1;
             radix = 16;
         } else {
             end = token.length();
@@ -134,7 +134,7 @@ public class AtRobotLineLexer {
                 break;
             }
             if (!Character.isDigit(number.charAt(i))) {
-                lineVisitor.expectedDigit(i+1);
+                lineVisitor.expectedDigit(i + 1);
                 return;
             }
             value = value * 10 + Character.digit(number.charAt(i), 10);
@@ -162,7 +162,7 @@ public class AtRobotLineLexer {
         if (i < line.length() && !isSeperator(line.charAt(i))) {
             lineVisitor.unexpectedCharacter(i);
         }
-        while (i < line.length() && isSeperator(line.charAt(i))){
+        while (i < line.length() && isSeperator(line.charAt(i))) {
             ++i;
         }
         final int start = i;
@@ -180,7 +180,7 @@ public class AtRobotLineLexer {
         }
         if (directive.equals("time")) {
             while (i < line.length()) {
-                if (!Character.isDigit(line.charAt(i))){
+                if (!Character.isDigit(line.charAt(i))) {
                     lineVisitor.expectedDigit(i);
                     return;
                 }
@@ -199,7 +199,7 @@ public class AtRobotLineLexer {
                     String name = line.substring(start, i);
                     int valueStart = ++i;
                     while (i < line.length() && !isSeperator(line.charAt(i))) {
-                        if (!Character.isDigit(line.charAt(i))){
+                        if (!Character.isDigit(line.charAt(i))) {
                             lineVisitor.expectedDigit(i);
                             return;
                         }

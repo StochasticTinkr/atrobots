@@ -1,4 +1,4 @@
-package net.virtualinfinity.atrobots;
+package net.virtualinfinity.atrobots.parser;
 
 import java.util.Map;
 
@@ -16,13 +16,13 @@ public abstract class Token {
 
     private static Token getToken(int lineNumber, String token) {
         if (token.startsWith("[") && token.endsWith("]")) {
-            return new Indirect(parse(lineNumber, token.substring(1, token.length()-2)));
+            return new Indirect(parse(lineNumber, token.substring(1, token.length() - 2)));
         }
         if (token.startsWith("@")) {
             return new Indirect(new Constant(AtRobotLineLexer.parseNumber(token.substring(1))));
         }
         if (Character.isDigit(token.charAt(0)) ||
-                (token.charAt(0) == '-' && token.length() > 1 &&  Character.isDigit(token.charAt(1)))) {
+                (token.charAt(0) == '-' && token.length() > 1 && Character.isDigit(token.charAt(1)))) {
             return new Constant(AtRobotLineLexer.parseNumber(token));
         }
         if (token.charAt(0) == '!') {
@@ -32,6 +32,7 @@ public abstract class Token {
     }
 
     abstract public short getValue(Map<String, EntrantLineVisitor.Symbol> symbols);
+
     abstract public short getMicrocode(Map<String, EntrantLineVisitor.Symbol> symbols);
 
     public boolean isUnresolved(Map<String, EntrantLineVisitor.Symbol> symbols) {
@@ -96,6 +97,7 @@ public abstract class Token {
         public boolean isUnresolved(Map<String, EntrantLineVisitor.Symbol> symbols) {
             return !symbols.containsKey(name);
         }
+
         public String toString() {
             return name;
         }
@@ -120,6 +122,7 @@ public abstract class Token {
         public boolean isUnresolved(Map<String, EntrantLineVisitor.Symbol> symbols) {
             return !symbols.containsKey(name);
         }
+
         public String toString() {
             return name;
         }
