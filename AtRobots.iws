@@ -20,17 +20,12 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/net/virtualinfinity/atrobots/HardwareSpecification.java" afterPath="$PROJECT_DIR$/src/net/virtualinfinity/atrobots/HardwareSpecification.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/net/virtualinfinity/atrobots/parser/Errors.java" afterPath="$PROJECT_DIR$/src/net/virtualinfinity/atrobots/parser/Errors.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/net/virtualinfinity/atrobots/gui/Main.java" afterPath="$PROJECT_DIR$/src/net/virtualinfinity/atrobots/gui/Main.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/AtRobots.iws" afterPath="$PROJECT_DIR$/AtRobots.iws" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/net/virtualinfinity/atrobots/Scanner.java" afterPath="$PROJECT_DIR$/src/net/virtualinfinity/atrobots/Scanner.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/net/virtualinfinity/atrobots/gui/renderers/RobotRenderer.java" afterPath="$PROJECT_DIR$/src/net/virtualinfinity/atrobots/gui/renderers/RobotRenderer.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/net/virtualinfinity/atrobots/Shield.java" afterPath="$PROJECT_DIR$/src/net/virtualinfinity/atrobots/Shield.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/net/virtualinfinity/atrobots/Armor.java" afterPath="$PROJECT_DIR$/src/net/virtualinfinity/atrobots/Armor.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/net/virtualinfinity/atrobots/Entrant.java" afterPath="$PROJECT_DIR$/src/net/virtualinfinity/atrobots/Entrant.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/net/virtualinfinity/atrobots/Throttle.java" afterPath="$PROJECT_DIR$/src/net/virtualinfinity/atrobots/Throttle.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/net/virtualinfinity/atrobots/MineLayer.java" afterPath="$PROJECT_DIR$/src/net/virtualinfinity/atrobots/MineLayer.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/net/virtualinfinity/atrobots/Robot.java" afterPath="$PROJECT_DIR$/src/net/virtualinfinity/atrobots/Robot.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/net/virtualinfinity/atrobots/parser/EntrantLineVisitor.java" afterPath="$PROJECT_DIR$/src/net/virtualinfinity/atrobots/parser/EntrantLineVisitor.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/net/virtualinfinity/atrobots/Game.java" afterPath="$PROJECT_DIR$/src/net/virtualinfinity/atrobots/Game.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/net/virtualinfinity/atrobots/gui/NewGameDialog.java" afterPath="$PROJECT_DIR$/src/net/virtualinfinity/atrobots/gui/NewGameDialog.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/net/virtualinfinity/atrobots/gui/NewGameDialog.form" afterPath="$PROJECT_DIR$/src/net/virtualinfinity/atrobots/gui/NewGameDialog.form" />
     </list>
     <ignored path="AtRobots.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -111,8 +106,8 @@
       <property name="field_breakpoints_groupByClasses" value="true" />
       <property name="method_breakpoints_groupByClasses" value="true" />
       <property name="exception_breakpoints_viewId" value="TABLE" />
-      <property name="exception_breakpoints_groupByClasses" value="true" />
       <property name="field_breakpoints_viewId" value="TABLE" />
+      <property name="exception_breakpoints_groupByClasses" value="true" />
       <property name="method_breakpoints_groupByMethods" value="false" />
     </ui_properties>
   </component>
@@ -128,7 +123,7 @@
       <file leaf-file-name="ATR2.DOC" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/original/ATR2.DOC">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="758" column="43" selection-start="32594" selection-end="32594" vertical-scroll-proportion="0.28439152">
+            <state line="758" column="43" selection-start="32594" selection-end="32594" vertical-scroll-proportion="0.033864543">
               <folding />
             </state>
           </provider>
@@ -137,7 +132,7 @@
       <file leaf-file-name="ATR2.PAS" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/original/ATR2.PAS">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="1151" column="25" selection-start="41433" selection-end="41433" vertical-scroll-proportion="-53.43783">
+            <state line="1151" column="25" selection-start="41433" selection-end="41433" vertical-scroll-proportion="0.033864543">
               <folding />
             </state>
           </provider>
@@ -146,7 +141,51 @@
       <file leaf-file-name="Main.java" pinned="false" current="true" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/net/virtualinfinity/atrobots/gui/Main.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="66" column="120" selection-start="2002" selection-end="2002" vertical-scroll-proportion="0.29232803">
+            <state line="92" column="69" selection-start="3030" selection-end="3030" vertical-scroll-proportion="0.28884462">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="NewGameDialog.form" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/net/virtualinfinity/atrobots/gui/NewGameDialog.form">
+          <provider selected="true" editor-type-id="ui-designer">
+            <state />
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="NewGameDialog.java" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/net/virtualinfinity/atrobots/gui/NewGameDialog.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="62" column="71" selection-start="2262" selection-end="2262" vertical-scroll-proportion="0.4243028">
+              <folding>
+                <element signature="imports" expanded="true" />
+                <marker date="1195184672434" expanded="true" signature="3906:3988" placeholder="{...}" />
+                <marker date="1195184672434" expanded="true" signature="4033:4172" placeholder="{...}" />
+                <marker date="1195184672434" expanded="true" signature="4212:4319" placeholder="{...}" />
+                <marker date="1195184672434" expanded="true" signature="4347:4375" placeholder="{...}" />
+                <marker date="1195184672434" expanded="true" signature="4567:4610" placeholder="{...}" />
+                <marker date="1195184672434" expanded="true" signature="4658:4715" placeholder="{...}" />
+                <marker date="1195184672434" expanded="true" signature="4765:4878" placeholder="{...}" />
+                <marker date="1195184672434" expanded="true" signature="4931:5113" placeholder="{...}" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="Errors.java" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/net/virtualinfinity/atrobots/parser/Errors.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="22" column="31" selection-start="536" selection-end="536" vertical-scroll-proportion="0.2310757">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="Game.java" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/net/virtualinfinity/atrobots/Game.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="25" column="72" selection-start="665" selection-end="665" vertical-scroll-proportion="0.7788845">
               <folding />
             </state>
           </provider>
@@ -682,13 +721,13 @@
       <recent name="net.virtualinfinity.atrobots.gui.renderers" />
       <recent name="net.virtualinfinity.atrobots" />
     </key>
-    <key name="MoveMembersDialog.RECENTS_KEY">
-      <recent name="net.virtualinfinity.atrobots.AngleBracket" />
-    </key>
     <key name="IntroduceConstantDialog.RECENTS_KEY">
       <recent name="" />
       <recent name="net.virtualinfinity.atrobots.RelativeAngle" />
       <recent name="net.virtualinfinity.atrobots.Duration" />
+    </key>
+    <key name="MoveMembersDialog.RECENTS_KEY">
+      <recent name="net.virtualinfinity.atrobots.AngleBracket" />
     </key>
     <key name="CreateClassDialog.RecentsKey">
       <recent name="net.virtualinfinity.atrobots.gui.renderers" />
@@ -719,23 +758,29 @@
         <option name="Make" value="true" />
       </method>
     </tempConfiguration>
-    <configuration default="true" type="JUnit" factoryName="JUnit" enabled="false" merge="false">
+    <configuration default="true" type="Applet" factoryName="Applet">
       <module name="" />
+      <option name="MAIN_CLASS_NAME" />
+      <option name="HTML_FILE_NAME" />
+      <option name="HTML_USED" value="false" />
+      <option name="WIDTH" value="400" />
+      <option name="HEIGHT" value="300" />
+      <option name="POLICY_FILE" value="$APPLICATION_HOME_DIR$/bin/appletviewer.policy" />
+      <option name="VM_PARAMETERS" />
       <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
       <option name="ALTERNATIVE_JRE_PATH" />
-      <option name="PACKAGE_NAME" />
+    </configuration>
+    <configuration default="true" type="Application" factoryName="Application" enabled="false" merge="false">
       <option name="MAIN_CLASS_NAME" />
-      <option name="METHOD_NAME" />
-      <option name="TEST_OBJECT" value="class" />
       <option name="VM_PARAMETERS" />
-      <option name="PARAMETERS" />
+      <option name="PROGRAM_PARAMETERS" />
       <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
+      <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
+      <option name="ALTERNATIVE_JRE_PATH" />
+      <option name="ENABLE_SWING_INSPECTOR" value="false" />
       <option name="ENV_VARIABLES" />
       <option name="PASS_PARENT_ENVS" value="true" />
-      <option name="ADDITIONAL_CLASS_PATH" />
-      <option name="TEST_SEARCH_SCOPE">
-        <value defaultName="wholeProject" />
-      </option>
+      <module name="" />
       <method>
         <option name="Make" value="true" />
       </method>
@@ -775,32 +820,26 @@
       <option name="HOST" value="localhost" />
       <option name="PORT" value="5005" />
     </configuration>
-    <configuration default="true" type="Application" factoryName="Application" enabled="false" merge="false">
-      <option name="MAIN_CLASS_NAME" />
-      <option name="VM_PARAMETERS" />
-      <option name="PROGRAM_PARAMETERS" />
-      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
+    <configuration default="true" type="JUnit" factoryName="JUnit" enabled="false" merge="false">
+      <module name="" />
       <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
       <option name="ALTERNATIVE_JRE_PATH" />
-      <option name="ENABLE_SWING_INSPECTOR" value="false" />
+      <option name="PACKAGE_NAME" />
+      <option name="MAIN_CLASS_NAME" />
+      <option name="METHOD_NAME" />
+      <option name="TEST_OBJECT" value="class" />
+      <option name="VM_PARAMETERS" />
+      <option name="PARAMETERS" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
       <option name="ENV_VARIABLES" />
       <option name="PASS_PARENT_ENVS" value="true" />
-      <module name="" />
+      <option name="ADDITIONAL_CLASS_PATH" />
+      <option name="TEST_SEARCH_SCOPE">
+        <value defaultName="wholeProject" />
+      </option>
       <method>
         <option name="Make" value="true" />
       </method>
-    </configuration>
-    <configuration default="true" type="Applet" factoryName="Applet">
-      <module name="" />
-      <option name="MAIN_CLASS_NAME" />
-      <option name="HTML_FILE_NAME" />
-      <option name="HTML_USED" value="false" />
-      <option name="WIDTH" value="400" />
-      <option name="HEIGHT" value="300" />
-      <option name="POLICY_FILE" value="$APPLICATION_HOME_DIR$/bin/appletviewer.policy" />
-      <option name="VM_PARAMETERS" />
-      <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
-      <option name="ALTERNATIVE_JRE_PATH" />
     </configuration>
     <configuration default="false" name="Main" type="Application" factoryName="Application" enabled="false" merge="false">
       <option name="MAIN_CLASS_NAME" value="net.virtualinfinity.atrobots.gui.Main" />
@@ -935,7 +974,7 @@
       <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.24982053" order="2" />
       <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" order="6" />
       <window_info id="Duplicates" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" order="12" />
-      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.31385008" order="2" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.31385008" order="2" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" order="5" />
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" order="0" />
       <window_info id="Web" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" order="2" />
@@ -950,7 +989,7 @@
     <option name="PERFORM_EDIT_IN_BACKGROUND" value="true" />
     <option name="PERFORM_ADD_REMOVE_IN_BACKGROUND" value="true" />
     <option name="FORCE_NON_EMPTY_COMMENT" value="false" />
-    <option name="LAST_COMMIT_MESSAGE" value="Simple clean up." />
+    <option name="LAST_COMMIT_MESSAGE" value="Improve new game dialog." />
     <option name="OPTIMIZE_IMPORTS_BEFORE_PROJECT_COMMIT" value="true" />
     <option name="REFORMAT_BEFORE_PROJECT_COMMIT" value="true" />
     <option name="REFORMAT_BEFORE_FILE_COMMIT" value="false" />
@@ -961,8 +1000,6 @@
     <option name="UPDATE_GROUP_BY_CHANGELIST" value="false" />
     <option name="SHOW_FILE_HISTORY_AS_TREE" value="false" />
     <option name="FILE_HISTORY_SPLITTER_PROPORTION" value="0.6" />
-    <MESSAGE value="Display scans." />
-    <MESSAGE value="Naming convention change." />
     <MESSAGE value="Fix up scan display." />
     <MESSAGE value="Add more debug information, and fix memory AND" />
     <MESSAGE value="Mine collisions." />
@@ -986,6 +1023,8 @@
     <MESSAGE value="Fixed missile collisions." />
     <MESSAGE value="Added different renderers." />
     <MESSAGE value="Simple clean up." />
+    <MESSAGE value="Add config values." />
+    <MESSAGE value="Improve new game dialog." />
   </component>
   <component name="VssConfiguration">
     <option name="CLIENT_PATH" value="" />
@@ -1026,41 +1065,6 @@
     <option name="FILTER_TARGETS" value="false" />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/src/net/virtualinfinity/atrobots/parser/EntrantLineVisitor.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="210" column="61" selection-start="7331" selection-end="7331" vertical-scroll-proportion="0.3326226">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/net/virtualinfinity/atrobots/Armor.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="12" column="43" selection-start="232" selection-end="232" vertical-scroll-proportion="0.30991736">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/net/virtualinfinity/atrobots/MineLayer.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="12" column="33" selection-start="263" selection-end="263" vertical-scroll-proportion="0.30991736">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/net/virtualinfinity/atrobots/Turret.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="37" column="16" selection-start="827" selection-end="827" vertical-scroll-proportion="1.1735537">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/net/virtualinfinity/atrobots/Scanner.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="15" column="26" selection-start="496" selection-end="496" vertical-scroll-proportion="0.3326226">
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/net/virtualinfinity/atrobots/Throttle.java">
       <provider selected="true" editor-type-id="text-editor">
         <state line="17" column="68" selection-start="545" selection-end="545" vertical-scroll-proportion="0.34754798">
@@ -1087,9 +1091,7 @@
     <entry file="file://$PROJECT_DIR$/src/net/virtualinfinity/atrobots/gui/renderers/RobotRenderer.java">
       <provider selected="true" editor-type-id="text-editor">
         <state line="32" column="117" selection-start="1197" selection-end="1197" vertical-scroll-proportion="0.2070922">
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
+          <folding />
         </state>
       </provider>
     </entry>
@@ -1123,21 +1125,64 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/original/ATR2.DOC">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="758" column="43" selection-start="32594" selection-end="32594" vertical-scroll-proportion="0.28439152">
+        <state line="758" column="43" selection-start="32594" selection-end="32594" vertical-scroll-proportion="0.033864543">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar://C:/Program Files/Java/jdk1.6.0_03/src.zip!/javax/swing/DefaultListModel.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="35" column="13" selection-start="1208" selection-end="1208" vertical-scroll-proportion="-6.9083667">
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/original/ATR2.PAS">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="1151" column="25" selection-start="41433" selection-end="41433" vertical-scroll-proportion="-53.43783">
+        <state line="1151" column="25" selection-start="41433" selection-end="41433" vertical-scroll-proportion="0.033864543">
           <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/net/virtualinfinity/atrobots/Game.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="25" column="72" selection-start="665" selection-end="665" vertical-scroll-proportion="0.7788845">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/net/virtualinfinity/atrobots/gui/NewGameDialog.form">
+      <provider selected="true" editor-type-id="ui-designer">
+        <state />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/net/virtualinfinity/atrobots/parser/Errors.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="22" column="31" selection-start="536" selection-end="536" vertical-scroll-proportion="0.2310757">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/net/virtualinfinity/atrobots/gui/NewGameDialog.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="62" column="71" selection-start="2262" selection-end="2262" vertical-scroll-proportion="0.4243028">
+          <folding>
+            <element signature="imports" expanded="true" />
+            <marker date="1195184672434" expanded="true" signature="3906:3988" placeholder="{...}" />
+            <marker date="1195184672434" expanded="true" signature="4033:4172" placeholder="{...}" />
+            <marker date="1195184672434" expanded="true" signature="4212:4319" placeholder="{...}" />
+            <marker date="1195184672434" expanded="true" signature="4347:4375" placeholder="{...}" />
+            <marker date="1195184672434" expanded="true" signature="4567:4610" placeholder="{...}" />
+            <marker date="1195184672434" expanded="true" signature="4658:4715" placeholder="{...}" />
+            <marker date="1195184672434" expanded="true" signature="4765:4878" placeholder="{...}" />
+            <marker date="1195184672434" expanded="true" signature="4931:5113" placeholder="{...}" />
+          </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/net/virtualinfinity/atrobots/gui/Main.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="66" column="120" selection-start="2002" selection-end="2002" vertical-scroll-proportion="0.29232803">
+        <state line="92" column="69" selection-start="3030" selection-end="3030" vertical-scroll-proportion="0.28884462">
           <folding />
         </state>
       </provider>

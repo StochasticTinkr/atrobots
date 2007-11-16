@@ -108,6 +108,7 @@ public class Main implements Runnable {
                     game = newGame;
                     game.addSimulationObserver(arenaPane);
                 }
+                game.nextRound();
             }
         });
         menu.add(new AbstractAction("Add Entrant") {

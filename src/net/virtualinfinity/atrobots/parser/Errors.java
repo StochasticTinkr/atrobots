@@ -23,11 +23,11 @@ public class Errors {
         add(error, lineNumber);
     }
 
-    public void showErrorDialog(String name, Frame parent) {
+    public void showErrorDialog(String name, Object parent) {
         if (!hasErrors()) {
             return;
         }
-        final JDialog dialog = new JDialog(parent, name, true);
+        final JDialog dialog = parent instanceof Frame ? new JDialog((Frame) parent, name, true) : new JDialog((Dialog) parent, name, true);
         final JList jList = new JList();
         dialog.add(new JScrollPane(jList));
         final DefaultListModel listModel = new DefaultListModel();

@@ -18,18 +18,18 @@ public class Game {
         this.totalRounds = totalRounds;
     }
 
-    public Round getRound() {
+    public synchronized Round getRound() {
         return round;
     }
 
-    public int getTotalRounds() {
+    public synchronized int getTotalRounds() {
         return totalRounds;
     }
 
-    public void dispose() {
+    public synchronized void dispose() {
     }
 
-    public void nextRound() {
+    public synchronized void nextRound() {
         round = new Round(++roundNumber);
         round.getArena().setSimulationFrameBuffer(frameBuffer);
         for (Entrant entrant : entrants) {
@@ -40,15 +40,15 @@ public class Game {
 
     }
 
-    public void addSimulationObserver(SimulationObserver observer) {
+    public synchronized void addSimulationObserver(SimulationObserver observer) {
         frameBuffer.addSimulationObserver(observer);
     }
 
-    public void removeSimulationObserver(SimulationObserver observer) {
+    public synchronized void removeSimulationObserver(SimulationObserver observer) {
         frameBuffer.removeSimulationObserver(observer);
     }
 
-    public void addEntrant(Entrant entrant) {
+    public synchronized void addEntrant(Entrant entrant) {
         entrant.setId(entrants.size());
         entrants.add(entrant);
         entrant.setGame(this);
@@ -56,5 +56,9 @@ public class Game {
 
     public synchronized void stepRound() {
         getRound().step();
+    }
+
+    public List<Entrant> getEntrants() {
+        return new ArrayList<Entrant>(entrants);
     }
 }
