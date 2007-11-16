@@ -13,6 +13,10 @@ public class Scanner implements Resetable {
     private Robot robot;
     private Distance maxDistance = Distance.fromMeters(1500);
 
+    public Scanner(double maxDistance) {
+        this.maxDistance = Distance.fromMeters(maxDistance);
+    }
+
     public PortHandler getScanPort() {
         return new PortHandler() {
             public short read() {

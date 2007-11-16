@@ -12,6 +12,11 @@ public class Throttle {
     Speed speed;
     private static final int MAX_ACCELERATION = 4;
     private static final double STANDARD_MAX_VELOCITY = 4.0;
+    private double powerRatio = STANDARD_MAX_VELOCITY / 100.0;
+
+    public Throttle(double powerRatio) {
+        this.powerRatio = powerRatio * STANDARD_MAX_VELOCITY / 100.0;
+    }
 
     public PortHandler getSpedometer() {
         return new PortHandler() {
@@ -47,7 +52,7 @@ public class Throttle {
     }
 
     private void updateSpeed() {
-        speed.setDistanceOverTime(Distance.fromMeters(power * STANDARD_MAX_VELOCITY / 100.0), Duration.ONE_CYCLE);
+        speed.setDistanceOverTime(Distance.fromMeters(power * powerRatio), Duration.ONE_CYCLE);
     }
 
     public void setSpeed(Speed speed) {

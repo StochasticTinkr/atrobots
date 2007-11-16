@@ -10,6 +10,10 @@ public class MineLayer {
     private int mines = 2;
     private Robot robot;
 
+    public MineLayer(int mines) {
+        this.mines = mines;
+    }
+
     public PortHandler getMineBayPort() {
         return new PortHandler() {
             public short read() {

@@ -4,6 +4,7 @@ import net.virtualinfinity.atrobots.measures.AbsoluteAngle;
 import net.virtualinfinity.atrobots.snapshots.RobotSnapshot;
 
 import java.awt.*;
+import java.awt.geom.Ellipse2D;
 import java.awt.geom.GeneralPath;
 import java.awt.geom.Line2D;
 import java.awt.geom.Rectangle2D;
@@ -16,6 +17,7 @@ public class RobotRenderer implements SnapshotRenderer<RobotSnapshot> {
 
     public void render(Graphics2D g2d, RobotSnapshot robotSnapshot) {
         paintBody(g2d, robotSnapshot);
+        paintShield(g2d, robotSnapshot);
         paintTurret(g2d, robotSnapshot);
         if (showStatusBars) {
             paintArmor(g2d, robotSnapshot);
@@ -23,6 +25,17 @@ public class RobotRenderer implements SnapshotRenderer<RobotSnapshot> {
         }
         paintName(g2d, robotSnapshot);
 
+    }
+
+    private void paintShield(Graphics2D g2d, RobotSnapshot robotSnapshot) {
+        if (robotSnapshot.isActiveShield()) {
+            g2d.setPaint(new RadialGradientPaint(robotSnapshot.getPositionVector().toPoint2D(), 15, new float[]{0, .75f, 1f},
+                    new Color[]{new Color(.5f, .5f, 0f, .8f), new Color(0, 0, .5f, .1f), new Color(1f, 1f, 1f, 1f)}));
+            final Ellipse2D.Double s = new Ellipse2D.Double();
+            s.setFrameFromCenter(robotSnapshot.getX(), robotSnapshot.getY(), robotSnapshot.getX() + 15, robotSnapshot.getY() + 15);
+            g2d.fill(s);
+            g2d.fill(s);
+        }
     }
 
     private void paintName(Graphics2D g2d, RobotSnapshot robotSnapshot) {

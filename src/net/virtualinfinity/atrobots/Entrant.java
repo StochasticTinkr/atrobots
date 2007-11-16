@@ -115,4 +115,9 @@ public class Entrant {
     public void setId(int id) {
         this.id = id;
     }
+
+    public void incrementKills() {
+        roundKills++;
+        totalKills++;
+    }
 }

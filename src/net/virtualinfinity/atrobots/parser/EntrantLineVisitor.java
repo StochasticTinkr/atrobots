@@ -15,6 +15,20 @@ public class EntrantLineVisitor implements LineVisitor {
     private Map<String, Symbol> symbols = new HashMap<String, Symbol>();
     private Map<Integer, Token> unresolved = new LinkedHashMap<Integer, Token>();
     private AtRobotLineLexer lexer;
+    private String message;
+    private int speed;
+    private Map<String, Integer> configs = new HashMap<String, Integer>();
+
+    {
+        setConfig("scanner", 5);
+        setConfig("weapon", 2);
+        setConfig("armor", 2);
+        setConfig("engine", 2);
+        setConfig("heatsinks", 1);
+        setConfig("mines", 0);
+        setConfig("shield", 0);
+
+    }
 
     {
         addReference(8, "COLCNT");
@@ -130,12 +144,15 @@ public class EntrantLineVisitor implements LineVisitor {
     }
 
     public void maxProcessorSpeed(int speed) {
+        this.speed = speed;
     }
 
     public void setMessage(String message) {
+        this.message = message;
     }
 
     public void setConfig(String name, int value) {
+        configs.put(name.toLowerCase(), value);
     }
 
     public void machineCode(int[] values) {
@@ -191,6 +208,13 @@ public class EntrantLineVisitor implements LineVisitor {
     }
 
     public void resolve() {
+        int sum = 0;
+        for (int value : configs.values()) {
+            sum += value;
+        }
+        if (sum > 12) {
+            errors.info("Config points too high. " + sum + " out of a max of 12.");
+        }
         for (Map.Entry<Integer, Token> entry : unresolved.entrySet()) {
             if (entry.getValue().isUnresolved(symbols)) {
                 errors.add("Unresolved symbol: " + entry.getValue().toString(), entry.getValue().getLineNumber());
@@ -209,11 +233,19 @@ public class EntrantLineVisitor implements LineVisitor {
     }
 
     public Program createProgram() {
-        return hasErrors() ? null : new Program(getProgramCode());
+        if (hasErrors()) {
+            return null;
+        } else {
+            return new Program(getProgramCode());
+        }
     }
 
     public HardwareSpecification createHardwareSpecification() {
-        return hasErrors() ? null : new HardwareSpecification();
+        if (hasErrors()) {
+            return null;
+        } else {
+            return new HardwareSpecification(configs);
+        }
     }
 
     private boolean hasErrors() {

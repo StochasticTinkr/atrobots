@@ -10,6 +10,10 @@ public class Armor {
     public Armor() {
     }
 
+    public Armor(double percentRemaining) {
+        this.percentRemaining = percentRemaining;
+    }
+
     public PortHandler getSensor() {
         return new PortHandler() {
             public short read() {

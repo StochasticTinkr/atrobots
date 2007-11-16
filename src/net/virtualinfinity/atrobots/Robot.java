@@ -14,7 +14,7 @@ import net.virtualinfinity.atrobots.snapshots.RobotSnapshot;
 public class Robot extends ArenaObject implements Resetable {
     private final Heat heat = new Heat();
     private final Odometer odometer = new Odometer();
-    private final Throttle throttle = new Throttle();
+    private Throttle throttle;
     private Computer computer;
     private Turret turret;
     private Transponder transponder;
@@ -36,7 +36,6 @@ public class Robot extends ArenaObject implements Resetable {
 
     {
         position.setOdometer(odometer);
-        throttle.setSpeed(speed);
     }
 
     public void setComputer(Computer computer) {
@@ -270,14 +269,20 @@ public class Robot extends ArenaObject implements Resetable {
 
     private void collides() {
         position.copyFrom(oldPosition);
+        if (speed.times(Duration.ONE_CYCLE).compareTo(Distance.fromMeters(2)) > 0) {
+            armor.inflictDamage(1);
+        }
         throttle.setPower(0);
         throttle.setDesiredPower(0);
-        // TODO: Collision damage;
     }
 
     public void inflictDamage(Robot cause, double damageAmount) {
-        // TODO:
-        armor.inflictDamage(damageAmount);
+        if (!isDead()) {
+            armor.inflictDamage(shield.absorbDamage(damageAmount));
+            if (isDead()) {
+                cause.getEntrant().incrementKills();
+            }
+        }
     }
 
     public void explode() {
@@ -301,5 +306,10 @@ public class Robot extends ArenaObject implements Resetable {
                 position.getY().getMeters() < 4 || position.getY().getMeters() > 1000 - 4) {
             collides();
         }
+    }
+
+    public void setThrottle(Throttle throttle) {
+        this.throttle = throttle;
+        throttle.setSpeed(speed);
     }
 }
