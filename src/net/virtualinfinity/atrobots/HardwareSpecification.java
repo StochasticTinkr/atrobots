@@ -52,6 +52,11 @@ public class HardwareSpecification {
         return new Scanner(chooseDoubleFor("scanner", 250, 350, 500, 700, 1000, 1500));
     }
 
+    private MissileLauncher createMissileLauncher(Robot robot) {
+        return new MissileLauncher(robot, robot.getPosition(), robot.getTurret().getHeading(),
+                chooseDoubleFor("weapon", .5, .8, 1, 1.2, 1.35, 1.5));
+    }
+
     private Throttle createThrottle() {
         return new Throttle(chooseDoubleFor("engine", 0.5, 0.8, 1.0, 1.12, 1.35, 1.50) *
                 chooseDoubleFor("armor", 1.33, 1.20, 1.00, 0.85, 0.75, 0.66));
@@ -59,6 +64,8 @@ public class HardwareSpecification {
 
     void configureRobot(Robot robot) {
         robot.setThrottle(createThrottle());
+        robot.getThrottle().setRobot(robot);
+        robot.getHeat().setCoolMultiplier(chooseDoubleFor("heatsinks", 0.75, 1.00, 1.125, 1.25, 1.33, 1.50));
         robot.setArmor(createArmor());
         robot.getArmor().setRobot(robot);
         robot.setMineLayer(createMineLayer());
@@ -74,7 +81,7 @@ public class HardwareSpecification {
         robot.getTurret().getHeading().setRelation(robot.getHeading());
         robot.getTurret().setKeepshift(false);
         robot.getTurret().getHeading().setAngle(robot.getHeading().getAngle());
-        robot.getTurret().setMissileLauncher(new MissileLauncher(robot, robot.getPosition(), robot.getTurret().getHeading()));
+        robot.getTurret().setMissileLauncher(createMissileLauncher(robot));
         robot.getMineLayer().setArena(robot.getEntrant().getGame().getRound().getArena());
         robot.getComputer().setCommQueue(new CommunicationsQueue(robot.getComputer().getCommQueueMemoryRegion(),
                 robot.getComputer().getRegisters().getCommunicationQueueHead(),

@@ -1,5 +1,7 @@
 package net.virtualinfinity.atrobots;
 
+import net.virtualinfinity.atrobots.measures.Duration;
+
 /**
  * @author Daniel Pitts
  */
@@ -32,6 +34,7 @@ public class Shield implements Resetable {
 
     public void setActive(boolean active) {
         this.active = active;
+        robot.getHeat().blockHeat(active);
     }
 
     public void reset() {
@@ -48,5 +51,11 @@ public class Shield implements Resetable {
 
     public void setRobot(Robot robot) {
         this.robot = robot;
+    }
+
+    public void update(Duration duration) {
+        if (active && heatFraction > 0) {
+            robot.getHeat().warm(Temperature.fromLogScale(duration.getCycles()));
+        }
     }
 }

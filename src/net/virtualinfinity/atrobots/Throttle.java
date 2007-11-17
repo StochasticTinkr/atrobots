@@ -13,6 +13,8 @@ public class Throttle {
     private static final int MAX_ACCELERATION = 4;
     private static final double STANDARD_MAX_VELOCITY = 4.0;
     private double powerRatio = STANDARD_MAX_VELOCITY / 100.0;
+    private Heat heat;
+    private Robot robot;
 
     public Throttle(double powerRatio) {
         this.powerRatio = powerRatio * STANDARD_MAX_VELOCITY / 100.0;
@@ -52,7 +54,8 @@ public class Throttle {
     }
 
     private void updateSpeed() {
-        speed.setDistanceOverTime(Distance.fromMeters(power * powerRatio), Duration.ONE_CYCLE);
+        final double powerRatio = robot.isOverburn() ? this.powerRatio * 1.3 : this.powerRatio;
+        speed.setDistanceOverTime(Distance.fromMeters(power).times(powerRatio), Duration.ONE_CYCLE);
     }
 
     public void setSpeed(Speed speed) {
@@ -71,7 +74,22 @@ public class Throttle {
                 power -= MAX_ACCELERATION;
             }
             updateSpeed();
+            if (Math.abs(power) > 25) {
+                heat.cool(Temperature.fromLogScale(.125));
+            }
             duration = duration.minus(Duration.ONE_CYCLE);
         }
+    }
+
+    public void setHeat(Heat heat) {
+        this.heat = heat;
+    }
+
+    public Robot getRobot() {
+        return robot;
+    }
+
+    public void setRobot(Robot robot) {
+        this.robot = robot;
     }
 }

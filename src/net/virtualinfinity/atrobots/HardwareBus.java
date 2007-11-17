@@ -101,7 +101,7 @@ public class HardwareBus {
     }
 
     public int getShutdownLevel() {
-        return autoShutDown.getLogScale();
+        return (int) Math.round(autoShutDown.getLogScale());
     }
 
 

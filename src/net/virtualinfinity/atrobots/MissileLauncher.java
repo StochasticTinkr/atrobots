@@ -10,13 +10,15 @@ import net.virtualinfinity.atrobots.measures.RelativeAngle;
  */
 public class MissileLauncher {
     private final Heading heading;
+    private final double power;
     private final Position position;
     private final Robot robot;
 
-    public MissileLauncher(Robot robot, Position position, Heading heading) {
+    public MissileLauncher(Robot robot, Position position, Heading heading, double power) {
         this.robot = robot;
         this.position = position;
         this.heading = heading;
+        this.power = power;
     }
 
     public PortHandler getActuator() {
@@ -32,10 +34,15 @@ public class MissileLauncher {
         final byte value = shift.getSignedBygrees();
         int bygrees = Math.max(-4, Math.min(value, 4));
         AbsoluteAngle angle = heading.getAngle().counterClockwise(RelativeAngle.fromBygrees(bygrees));
-        final Missile missile = new Missile(robot, position, angle);
-        missile.getSpeed().setDistanceOverTime(Distance.fromMeters(32), Duration.ONE_CYCLE);
+        final Missile missile = new Missile(robot, position, angle, getPower());
+        missile.setOverburn(robot.isOverburn());
+        missile.getSpeed().setDistanceOverTime(Distance.fromMeters(32).times(getPower()), Duration.ONE_CYCLE);
         getArena().fireMissile(missile);
-        robot.getHeat().warm(Temperature.fromLogScale(20));
+        robot.getHeat().warm(Temperature.fromLogScale(robot.isOverburn() ? 20 : 30));
+    }
+
+    private double getPower() {
+        return robot.isOverburn() ? power * 1.30 : power;
     }
 
     public Arena getArena() {

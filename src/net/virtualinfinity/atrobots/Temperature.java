@@ -4,10 +4,10 @@ package net.virtualinfinity.atrobots;
  * @author Daniel Pitts
  */
 public class Temperature implements Comparable<Temperature> {
-    private final int logScale;
+    private final double logScale;
     public static final Temperature BASE_TEMPERATURE = fromLogScale(0);
 
-    public Temperature(int logScale) {
+    public Temperature(double logScale) {
         this.logScale = logScale;
     }
 //    private final double celsius;
@@ -46,11 +46,11 @@ public class Temperature implements Comparable<Temperature> {
 //        return fromCelsius(getCelsius() + temperature.getCelsius());
 //    }
 
-    public int getLogScale() {
+    public double getLogScale() {
         return logScale;
     }
 
-    public static Temperature fromLogScale(int value) {
+    public static Temperature fromLogScale(double value) {
         return new Temperature(value);
     }
 
@@ -63,6 +63,10 @@ public class Temperature implements Comparable<Temperature> {
     }
 
     public int compareTo(Temperature temperature) {
-        return Integer.valueOf(getLogScale()).compareTo(temperature.getLogScale());
+        return Double.valueOf(getLogScale()).compareTo(temperature.getLogScale());
+    }
+
+    public Temperature times(double multiplier) {
+        return fromLogScale(getLogScale() * multiplier);
     }
 }

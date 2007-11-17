@@ -10,15 +10,18 @@ import net.virtualinfinity.atrobots.snapshots.MissileSnapshot;
  */
 public class Missile extends ArenaObject {
     private final Robot robot;
+    private final double power;
+    private boolean overburn;
 
-    public Missile(Robot robot, Position position, AbsoluteAngle angle) {
+    public Missile(Robot robot, Position position, AbsoluteAngle angle, double power) {
         this.robot = robot;
+        this.power = power;
         this.position.copyFrom(position);
         this.heading.setAngle(angle);
     }
 
     protected ArenaObjectSnapshot createSpecificSnapshot() {
-        return new MissileSnapshot();
+        return new MissileSnapshot(overburn);
     }
 
     public Speed getSpeed() {
@@ -37,7 +40,7 @@ public class Missile extends ArenaObject {
     }
 
     private void explode() {
-        getArena().explosion(this.robot, new LinearDamageFunction(position, 1, 14));
+        getArena().explosion(this.robot, new LinearDamageFunction(position, power, 14));
         setDead(true);
     }
 
@@ -53,4 +56,7 @@ public class Missile extends ArenaObject {
                 || position.getY().getMeters() < 0 || position.getY().getMeters() > 1000;
     }
 
+    public void setOverburn(boolean overburn) {
+        this.overburn = overburn;
+    }
 }

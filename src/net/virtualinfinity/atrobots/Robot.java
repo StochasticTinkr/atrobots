@@ -288,7 +288,7 @@ public class Robot extends ArenaObject implements Resetable {
     public void explode() {
         if (!isDead()) {
             setDead(true);
-            getArena().explosion(this, new LinearDamageFunction(position, 1, 25.0));
+            getArena().explosion(this, new LinearDamageFunction(position, isOverburn() ? 1.3 : 1, 25.0));
         }
     }
 
@@ -298,18 +298,34 @@ public class Robot extends ArenaObject implements Resetable {
         getThrottle().update(duration);
         getHeading().moveToward(getDesiredHeading(), STEERING_SPEED);
         getComputer().update(duration);
-        if (heat.getTemperature().compareTo(Temperature.fromLogScale(500)) >= 0) {
+        if (heat.getTemperature().getLogScale() >= 500) {
             destruct();
+        } else if (heat.getTemperature().getLogScale() >= 475) {
+            armor.inflictDamage(duration.getCycles() / 4d);
+        } else if (heat.getTemperature().getLogScale() >= 450) {
+            armor.inflictDamage(duration.getCycles() / 8d);
+        } else if (heat.getTemperature().getLogScale() >= 400) {
+            armor.inflictDamage(duration.getCycles() / 16d);
+        } else if (heat.getTemperature().getLogScale() >= 350) {
+            armor.inflictDamage(duration.getCycles() / 32d);
+        } else if (heat.getTemperature().getLogScale() >= 300) {
+            armor.inflictDamage(duration.getCycles() / 64d);
         }
-        heat.cool(Temperature.fromLogScale(1));
+        heat.cool(isOverburn() ? getCoolTemp(duration).times(0.66) : getCoolTemp(duration));
+        shield.update(duration);
         if (position.getX().getMeters() < 4 || position.getX().getMeters() > 1000 - 4 ||
                 position.getY().getMeters() < 4 || position.getY().getMeters() > 1000 - 4) {
             collides();
         }
     }
 
+    private Temperature getCoolTemp(Duration duration) {
+        return Temperature.fromLogScale(duration.getCycles() * 1.125);
+    }
+
     public void setThrottle(Throttle throttle) {
         this.throttle = throttle;
         throttle.setSpeed(speed);
+        throttle.setHeat(heat);
     }
 }
