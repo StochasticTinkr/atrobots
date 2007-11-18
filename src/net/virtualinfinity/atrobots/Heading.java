@@ -39,7 +39,7 @@ public class Heading {
     }
 
     void rotate(RelativeAngle angle) {
-        setAngle(getAngle().clockwise(angle));
+        setAngle(getAngle().counterClockwise(angle));
     }
 
     public void setAngle(AbsoluteAngle angle) {

@@ -43,7 +43,7 @@ public class AbsoluteAngle {
     }
 
     public int getBygrees() {
-        return (int) Math.round(64 - (radians * 128 / Math.PI)) & 255;
+        return (int) Math.round(64 + (radians * 128 / Math.PI)) & 255;
     }
 
     public AbsoluteAngle clockwise(RelativeAngle angle) {
@@ -51,7 +51,8 @@ public class AbsoluteAngle {
     }
 
     public static AbsoluteAngle fromBygrees(int value) {
-        return fromRadians((64 - value) * Math.PI / 128);
+
+        return fromRadians((value - 64) * Math.PI / 128);
     }
 
     public byte getSignedBygrees() {
@@ -91,5 +92,10 @@ public class AbsoluteAngle {
     public RelativeAngle getAngleCounterClockwiseTo(AbsoluteAngle counterClockwiseValue) {
         final double difference = getNormalizedRadians() - counterClockwiseValue.getNormalizedRadians();
         return RelativeAngle.fromRadians(difference < 0 ? difference + Math.PI * 2.0 : difference);
+    }
+
+    public Vector projectAngle(Vector vector) {
+        final Vector unit = toVector(Distance.unit());
+        return unit.times(unit.dot(vector).getSquareMeters());
     }
 }

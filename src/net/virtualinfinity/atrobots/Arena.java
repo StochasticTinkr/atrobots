@@ -3,6 +3,7 @@ package net.virtualinfinity.atrobots;
 import net.virtualinfinity.atrobots.measures.AngleBracket;
 import net.virtualinfinity.atrobots.measures.Distance;
 import net.virtualinfinity.atrobots.measures.Duration;
+import net.virtualinfinity.atrobots.measures.Vector;
 
 import java.util.*;
 
@@ -64,14 +65,14 @@ public class Arena {
     }
 
     private ScanResult calculateResult(Robot ignore, Position position, AngleBracket angleBracket, Distance maxDistance) {
-        net.virtualinfinity.atrobots.measures.Vector vectorToClosest = null;
+        Vector vectorToClosest = null;
         Distance closestDistance = maxDistance;
         Robot closest = null;
         for (Robot robot : robots) {
             if (robot == ignore) {
                 continue;
             }
-            final net.virtualinfinity.atrobots.measures.Vector vector = robot.getPosition().getVectorTo(position);
+            final Vector vector = robot.getPosition().getVectorTo(position);
             final Distance distance = vector.getMagnatude();
             if (closest == null || distance.compareTo(closestDistance) < 0) {
                 if (angleBracket.contains(vector.getAngle())) {
@@ -81,7 +82,7 @@ public class Arena {
                 }
             }
         }
-        if (closest != null) {
+        if (closest != null && closestDistance.compareTo(maxDistance) <= 0) {
             return new ScanResult(closest, closestDistance, vectorToClosest.getAngle());
         }
         return new ScanResult();

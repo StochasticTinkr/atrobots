@@ -49,4 +49,8 @@ public class Distance implements Comparable<Distance> {
     public String toString() {
         return meters == Double.POSITIVE_INFINITY ? "infinity" : meters + "m";
     }
+
+    public static Distance unit() {
+        return fromMeters(1);
+    }
 }

@@ -1,9 +1,13 @@
 package net.virtualinfinity.atrobots;
 
 import net.virtualinfinity.atrobots.measures.AbsoluteAngle;
+import net.virtualinfinity.atrobots.measures.Distance;
 import net.virtualinfinity.atrobots.measures.Duration;
+import net.virtualinfinity.atrobots.measures.Vector;
 import net.virtualinfinity.atrobots.snapshots.ArenaObjectSnapshot;
 import net.virtualinfinity.atrobots.snapshots.MissileSnapshot;
+
+import java.util.Comparator;
 
 /**
  * @author Daniel Pitts
@@ -46,9 +50,35 @@ public class Missile extends ArenaObject {
 
     public void update(Duration duration) {
         super.update(duration);    //To change body of overridden methods use File | Settings | File Templates.
-        if (!isDead() && isOutsideArena()) {
+        if (!isDead()) {
+            checkWallCollision();
+        }
+    }
+
+    private void checkWallCollision() {
+        if (isOutsideArena()) {
+            position.move(getWallIntersectionDelta());
             explode();
         }
+    }
+
+    private Vector getWallIntersectionDelta() {
+        final Distance x = Distance.fromMeters(0).minus(position.getX());
+        final Distance y = Distance.fromMeters(0).minus(position.getY());
+        if (position.getX().getMeters() <= 0) {
+            return heading.getAngle().projectAngle(Vector.createCartesian(x, Distance.fromMeters(0)));
+        }
+        if (position.getX().getMeters() >= 1000) {
+            return heading.getAngle().projectAngle(Vector.createCartesian(Distance.fromMeters(1000).plus(x), Distance.fromMeters(0)));
+        }
+        if (position.getY().getMeters() <= 0) {
+            return heading.getAngle().projectAngle(Vector.createCartesian(Distance.fromMeters(0), y));
+        }
+        if (position.getY().getMeters() >= 1000) {
+            return heading.getAngle().projectAngle(Vector.createCartesian(Distance.fromMeters(0), Distance.fromMeters(1000).plus(y)));
+        }
+        throw new AssertionError("Should be outside arena.");
+
     }
 
     private boolean isOutsideArena() {
@@ -58,5 +88,11 @@ public class Missile extends ArenaObject {
 
     public void setOverburn(boolean overburn) {
         this.overburn = overburn;
+    }
+
+    private static class MagnatudeComparator implements Comparator<Vector> {
+        public int compare(Vector o1, Vector o2) {
+            return o1.getMagnatude().compareTo(o2.getMagnatude());
+        }
     }
 }

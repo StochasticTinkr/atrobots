@@ -37,4 +37,33 @@ public abstract class Vector {
     public Vector minus(Vector vector) {
         return createCartesian(getX().minus(vector.getX()), getY().minus(vector.getY()));
     }
+
+    public Area dot(Vector vector) {
+        return getX().times(vector.getX()).plus(getY().times(vector.getY()));
+    }
+
+    public Vector project(Vector vector) {
+        return times(dot(vector).divide(getMagnatudeSquared()));
+    }
+
+    public Vector perpendicularIntersectionFrom(Vector lineStart, AbsoluteAngle lineAngle, Distance segmentLength) {
+        final Vector intersectionVector = lineAngle.projectAngle(minus(lineStart));
+        if (intersectionVector.getMagnatude().compareTo(segmentLength) < 0)
+            return intersectionVector.plus(lineStart);
+        else {
+            return null;
+        }
+    }
+
+    public abstract Vector times(double v);
+
+    public abstract Area getMagnatudeSquared();
+
+    public boolean equals(Object o) {
+        if (!(o instanceof Vector)) {
+            return false;
+        }
+        Vector vector = (Vector) o;
+        return getX().equals(vector.getX()) && getY().equals(vector.getY());
+    }
 }

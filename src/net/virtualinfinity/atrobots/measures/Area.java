@@ -25,4 +25,8 @@ public final class Area {
     public Distance squareRoot() {
         return Distance.fromMeters(Math.sqrt(getSquareMeters()));
     }
+
+    public double divide(Area area) {
+        return getSquareMeters() / area.getSquareMeters();
+    }
 }

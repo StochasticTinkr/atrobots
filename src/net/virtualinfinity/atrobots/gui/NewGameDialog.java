@@ -5,6 +5,7 @@ import net.virtualinfinity.atrobots.Game;
 import net.virtualinfinity.atrobots.parser.Errors;
 
 import javax.swing.*;
+import javax.swing.filechooser.FileNameExtensionFilter;
 import java.awt.event.*;
 import java.io.File;
 import java.io.IOException;
@@ -58,6 +59,7 @@ public class NewGameDialog extends JDialog {
             public void actionPerformed(ActionEvent e) {
                 final JFileChooser jFileChooser = new JFileChooser(new File("."));
                 jFileChooser.setMultiSelectionEnabled(true);
+                jFileChooser.setFileFilter(new FileNameExtensionFilter("AT-Robots files", "at2", "ats"));
                 if (jFileChooser.showOpenDialog(NewGameDialog.this) == JFileChooser.APPROVE_OPTION) {
                     Errors errors = new Errors();
                     for (File file : jFileChooser.getSelectedFiles()) {

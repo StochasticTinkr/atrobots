@@ -286,10 +286,6 @@ public class Computer {
         errorHandler.commQueueEmptyError();
     }
 
-    public void memoryBoundsError() {
-        errorHandler.memoryBoundsError();
-    }
-
     public void writeToRomError() {
         errorHandler.writeToRomError();
     }
@@ -447,8 +443,9 @@ public class Computer {
 
     private class ErrorHandler implements ComputerErrorHandler {
         public void genericError(short operandValue) {
+            System.out.println("error " + operandValue);
             // TODO: robot error
-            System.out.println("Computer$ErrorHandler.genericError");
+//            System.out.println("Computer$ErrorHandler.genericError");
         }
 
         public void unknownInstructionError() {
@@ -484,12 +481,20 @@ public class Computer {
 
         public void commQueueEmptyError() {
             // TODO: robot error
-            System.out.println("Computer$ErrorHandler.commQueueEmptyError");
+//            System.out.println("Computer$ErrorHandler.commQueueEmptyError");
         }
 
-        public void memoryBoundsError() {
+        boolean inMethod = false;
+
+        public void memoryBoundsError(int address) {
             // TODO: robot error
-            System.out.println("Computer$ErrorHandler.memoryBoundsError");
+            if (inMethod) {
+                System.out.println("Computer$ErrorHandler.memoryBoundsError: @" + address);
+                return;
+            }
+            inMethod = true;
+            System.out.println("Computer$ErrorHandler.memoryBoundsError: @" + address + ":  " + Computer.this.getInstructionString());
+            inMethod = false;
         }
 
         public void writeToRomError() {

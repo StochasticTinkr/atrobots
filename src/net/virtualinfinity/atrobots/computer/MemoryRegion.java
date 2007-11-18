@@ -18,7 +18,7 @@ public class MemoryRegion {
         if (rangeCheck(index)) {
             return memory.get(startAddress + index);
         }
-        memory.getErrorHandler().memoryBoundsError();
+        memory.getErrorHandler().memoryBoundsError(index + startAddress);
         return 0;
     }
 
@@ -30,15 +30,16 @@ public class MemoryRegion {
         if (rangeCheck(index)) {
             return memory.unsigned(startAddress + index);
         }
-        memory.getErrorHandler().memoryBoundsError();
+        memory.getErrorHandler().memoryBoundsError(startAddress + index);
         return 0;
     }
 
     public void set(int index, short value) {
         if (rangeCheck(index)) {
-            memory.set(index, value);
+            memory.set(startAddress + index, value);
+            return;
         }
-        memory.getErrorHandler().memoryBoundsError();
+        memory.getErrorHandler().memoryBoundsError(startAddress + index);
     }
 
     public MemoryCell getCell(int index) {

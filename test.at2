@@ -1,0 +1,14 @@
+
+
+mov ax, @1
+neg ax
+out 14, ax
+;out 14, 64,
+!nothing
+in 3, ax
+err ax
+out 12, 1
+out 15, 0
+del 150
+jmp !nothing
+

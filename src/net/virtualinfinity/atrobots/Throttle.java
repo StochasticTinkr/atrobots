@@ -54,7 +54,8 @@ public class Throttle {
     }
 
     private void updateSpeed() {
-        final double powerRatio = robot.isOverburn() ? this.powerRatio * 1.3 : this.powerRatio;
+        double powerRatio = robot.isOverburn() ? this.powerRatio * 1.3 : this.powerRatio;
+
         speed.setDistanceOverTime(Distance.fromMeters(power).times(powerRatio), Duration.ONE_CYCLE);
     }
 
@@ -66,12 +67,8 @@ public class Throttle {
         while (duration.getCycles() > 0) {
             if (Math.abs(power - desiredPower) < MAX_ACCELERATION) {
                 power = desiredPower;
-            }
-            if (power < desiredPower) {
-                power += MAX_ACCELERATION;
-            }
-            if (power > desiredPower) {
-                power -= MAX_ACCELERATION;
+            } else {
+                power += desiredPower > power ? MAX_ACCELERATION : -MAX_ACCELERATION;
             }
             updateSpeed();
             if (Math.abs(power) > 25) {

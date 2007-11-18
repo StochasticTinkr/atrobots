@@ -1,6 +1,8 @@
 package net.virtualinfinity.atrobots.interrupts;
 
 import net.virtualinfinity.atrobots.Robot;
+import net.virtualinfinity.atrobots.computer.MemoryCell;
+import net.virtualinfinity.atrobots.computer.Registers;
 import net.virtualinfinity.atrobots.util.MapWithDefaultValue;
 
 import java.util.HashMap;
@@ -17,77 +19,98 @@ public class AtRobotInterruptFactory {
     }
 
     public InterruptHandler createResetMetersInterrupt() {
-        return new ResetMetersInterrupt(robot, robot.getComputer().getRegisters().getMeters());
+        return new ResetMetersInterrupt(robot, getRegisters().getMeters());
     }
 
     public InterruptHandler createGetRobotStatisticsInterrupt() {
-        return new GetRobotStatisticsInterrupt(robot.getEntrant(), robot.getComputer().getRegisters().getDx(), robot.getComputer().getRegisters().getEx(), robot.getComputer().getRegisters().getFx());
+        return new GetRobotStatisticsInterrupt(robot.getEntrant(), getDxCell(), getExCell(), getFxCell());
+    }
+
+    private MemoryCell getDxCell() {
+        return getRegisters().getDx();
     }
 
     public InterruptHandler createResetQueueInterrupt() {
-        return new ZeroMemoryCellsInterrupt(robot.getComputer().getRegisters().getCommunicationQueueHead(),
-                robot.getComputer().getRegisters().getCommunicationQueueTail());
+        return new ZeroMemoryCellsInterrupt(getRegisters().getCommunicationQueueHead(),
+                getRegisters().getCommunicationQueueTail());
     }
 
     public InterruptHandler createGetQueueSizeInterrupt() {
-        return new GetQueueSizeInterrupt(robot.getComputer().getCommQueue(), robot.getComputer().getRegisters().getFx());
+        return new GetQueueSizeInterrupt(robot.getComputer().getCommQueue(), getFxCell());
     }
 
     public InterruptHandler createRecieveInterrupt() {
-        return new ReceiveInterrupt(robot.getComputer().getCommQueue(), robot.getComputer().getRegisters().getFx());
+        return new ReceiveInterrupt(robot.getComputer().getCommQueue(), getFxCell());
     }
 
     public InterruptHandler createTransmitInterrupt() {
-        return new TransmitInterrupt(robot.getTransceiver(), robot.getComputer().getRegisters().getAx());
+        return new TransmitInterrupt(robot.getTransceiver(), getAxCell());
     }
 
     public InterruptHandler createResetCollisionCountInterrupt() {
-        return new ZeroMemoryCellsInterrupt(robot.getComputer().getRegisters().getCollisionCount());
+        return new ZeroMemoryCellsInterrupt(getRegisters().getCollisionCount());
     }
 
     public InterruptHandler createGetCollisionsInterrupt() {
-        return new CopyMemoryCellsInterrupt(robot.getComputer().getRegisters().getCollisionCount(), robot.getComputer().getRegisters().getFx());
+        return new CopyMemoryCellsInterrupt(getRegisters().getCollisionCount(), getFxCell());
     }
 
     public InterruptHandler createGetRobotInfoInterrupt() {
-        return new GetRobotInfoInterrupt(robot, robot.getComputer().getRegisters().getDx(), robot.getComputer().getRegisters().getEx(), robot.getComputer().getRegisters().getFx());
+        return new GetRobotInfoInterrupt(robot, getDxCell(), getExCell(), getFxCell());
     }
 
     public InterruptHandler createGetGameInfoInterrupt() {
-        return new GetGameInfoInterrupt(robot.getEntrant().getGame(), robot.getComputer().getRegisters().getDx(), robot.getComputer().getRegisters().getEx(), robot.getComputer().getRegisters().getFx());
+        return new GetGameInfoInterrupt(robot.getEntrant().getGame(), getDxCell(), getExCell(), getFxCell());
     }
 
     public InterruptHandler createGetTargetInfoInterrupt() {
-        return new CopyMemoryCellsInterrupt(robot.getComputer().getRegisters().getTargetHeading(), robot.getComputer().getRegisters().getEx(),
-                robot.getComputer().getRegisters().getTargetThrottle(), robot.getComputer().getRegisters().getFx());
+        return new CopyMemoryCellsInterrupt(getRegisters().getTargetHeading(), getExCell(),
+                getRegisters().getTargetThrottle(), getFxCell());
     }
 
     public InterruptHandler createGetTargetIdInterrupt() {
-        return new CopyMemoryCellsInterrupt(robot.getComputer().getRegisters().getTargetId(), robot.getComputer().getRegisters().getFx());
+        return new CopyMemoryCellsInterrupt(getRegisters().getTargetId(), getFxCell());
     }
 
     public InterruptHandler createFindangleInterrupt() {
-        return new FindAngleInterrupt(robot.getComputer().getRegisters().getEx(), robot.getComputer().getRegisters().getFx(), robot.getComputer().getRegisters().getAx());
+        return new FindAngleInterrupt(getExCell(), getFxCell(), getAxCell(), robot);
+    }
+
+    private MemoryCell getAxCell() {
+        return getRegisters().getAx();
     }
 
     public InterruptHandler createGetTimerInterrupt() {
-        return new GetTimerInterrupt(robot.getEntrant().getGame(), robot.getComputer().getRegisters().getEx(), robot.getComputer().getRegisters().getFx());
+        return new GetTimerInterrupt(robot.getEntrant().getGame(), getExCell(), getFxCell());
     }
 
     public InterruptHandler createGetTransponderIdInterrupt() {
-        return new GetIdInterrupt(robot.getTransponder(), robot.getComputer().getRegisters().getFx());
+        return new GetIdInterrupt(robot.getTransponder(), getFxCell());
     }
 
     public InterruptHandler createOverburnInterrupt() {
-        return new OverburnInterrupt(robot, robot.getComputer().getRegisters().getAx());
+        return new OverburnInterrupt(robot, getAxCell());
     }
 
     public InterruptHandler createSetKeepshiftInterrupt() {
-        return new SetKeepshiftInterrupt(robot.getTurret(), robot.getComputer().getRegisters().getAx());
+        return new SetKeepshiftInterrupt(robot.getTurret(), getAxCell());
     }
 
     public InterruptHandler createLocateInterrupt() {
-        return new LocateInterrupt(robot, robot.getComputer().getRegisters().getEx(), robot.getComputer().getRegisters().getFx());
+        return new LocateInterrupt(robot,
+                getExCell(), getFxCell());
+    }
+
+    private MemoryCell getFxCell() {
+        return getRegisters().getFx();
+    }
+
+    private MemoryCell getExCell() {
+        return getRegisters().getEx();
+    }
+
+    private Registers getRegisters() {
+        return robot.getComputer().getRegisters();
     }
 
     public InterruptHandler createResetInterrupt() {

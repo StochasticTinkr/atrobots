@@ -13,7 +13,11 @@ class CartesianVector extends Vector {
     }
 
     public Distance getMagnatude() {
-        return x.times(x).plus(y.times(y)).squareRoot();
+        return getMagnatudeSquared().squareRoot();
+    }
+
+    public Area getMagnatudeSquared() {
+        return x.times(x).plus(y.times(y));
     }
 
     public AbsoluteAngle getAngle() {
@@ -26,6 +30,10 @@ class CartesianVector extends Vector {
 
     public Distance getY() {
         return y;
+    }
+
+    public Vector times(double v) {
+        return fromCartesian(x.times(v), y.times(v));
     }
 
     public static Vector fromCartesian(Distance x, Distance y) {

@@ -31,4 +31,12 @@ class PolarVector extends Vector {
     public static PolarVector createPolar(AbsoluteAngle angle, Distance magnatude) {
         return new PolarVector(magnatude, angle);
     }
+
+    public Area getMagnatudeSquared() {
+        return magnatude.times(magnatude);
+    }
+
+    public Vector times(double v) {
+        return createPolar(angle, magnatude.times(v));
+    }
 }

@@ -18,7 +18,7 @@ public interface ComputerErrorHandler {
 
     void commQueueEmptyError();
 
-    void memoryBoundsError();
+    void memoryBoundsError(int address);
 
     void writeToRomError();
 

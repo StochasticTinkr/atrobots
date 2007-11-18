@@ -7,6 +7,7 @@ import net.virtualinfinity.atrobots.parser.Errors;
 
 import javax.swing.*;
 import javax.swing.border.BevelBorder;
+import javax.swing.filechooser.FileNameExtensionFilter;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.WindowAdapter;
@@ -114,6 +115,7 @@ public class Main implements Runnable {
         menu.add(new AbstractAction("Add Entrant") {
             public void actionPerformed(ActionEvent e) {
                 final JFileChooser chooser = new JFileChooser();
+                chooser.setFileFilter(new FileNameExtensionFilter("AT-Robots files", ".at2", ".ats"));
                 chooser.setMultiSelectionEnabled(true);
                 if (chooser.showOpenDialog(mainFrame) == JFileChooser.APPROVE_OPTION) {
                     new EntrantLoader(chooser.getSelectedFiles()).execute();
@@ -132,9 +134,9 @@ public class Main implements Runnable {
         }));
         menubar.add(new JMenuItem(new AbstractAction("Add single") {
             public void actionPerformed(ActionEvent e) {
-                new EntrantLoader(new File("original").listFiles(new FilenameFilter() {
+                new EntrantLoader(new File(".").listFiles(new FilenameFilter() {
                     public boolean accept(File dir, String name) {
-                        return name.toLowerCase().endsWith("sniper2.at2") ||
+                        return name.toLowerCase().endsWith("test.at2") ||
                                 name.toLowerCase().endsWith("sduck.at2");
                     }
                 })).execute();

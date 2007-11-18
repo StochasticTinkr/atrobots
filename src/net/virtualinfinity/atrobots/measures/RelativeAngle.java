@@ -11,11 +11,11 @@ public class RelativeAngle implements Comparable<RelativeAngle> {
         this.radians = radians;
     }
 
-    public double cosine() {
+    private double cosine() {
         return Math.cos(radians);
     }
 
-    public double sine() {
+    private double sine() {
         return Math.sin(radians);
     }
 
