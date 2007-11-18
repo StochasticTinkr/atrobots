@@ -36,12 +36,20 @@ public class Missile extends ArenaObject {
     @Override
     public void checkCollision(Robot robot) {
         if (robot != this.robot && !isDead()) {
-            //TODO: Better robot collision detection.
-            if (robot.getPosition().getVectorTo(position).getMagnatude().getMeters() < 14) {
-                explode();
+            final Vector collisionPoint = getCollisionPoint(robot);
+            if (collisionPoint != null) {
+                if (collisionPoint.minus(robot.getPosition().getVector()).getMagnatude().getMeters() < 8) {
+                    position.copyFrom(new Position(collisionPoint));
+                    explode();
+                }
             }
         }
     }
+
+    public Vector getCollisionPoint(Robot robot) {
+        return robot.getPosition().getVector().perpendicularIntersectionFrom(getPosition().getVector(), heading.getAngle(), speed.times(Duration.ONE_CYCLE));
+    }
+
 
     private void explode() {
         getArena().explosion(this.robot, new LinearDamageFunction(position, power, 14));
@@ -49,7 +57,7 @@ public class Missile extends ArenaObject {
     }
 
     public void update(Duration duration) {
-        super.update(duration);    //To change body of overridden methods use File | Settings | File Templates.
+        super.update(duration);
         if (!isDead()) {
             checkWallCollision();
         }
