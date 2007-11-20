@@ -34,8 +34,8 @@ public class Scanner implements Resetable {
         AngleBracket angleBracket = getAngleBracket();
         ScanResult scanResult = robot.scan(angleBracket, maxDistance);
         if (scanResult.successful()) {
-            final double v = angleBracket.fractionTo(scanResult.getAngle()) - 0.5d;
-            setAccuracy(roundAwayFromZero(v * 2));
+            final double v = 0.5d - angleBracket.fractionTo(scanResult.getAngle());
+            setAccuracy(roundAwayFromZero(v * 4));
         }
         return scanResult.getDistance();
     }

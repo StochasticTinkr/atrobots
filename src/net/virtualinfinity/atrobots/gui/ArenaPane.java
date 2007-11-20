@@ -8,6 +8,7 @@ import net.virtualinfinity.atrobots.snapshots.*;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.geom.AffineTransform;
+import java.awt.geom.Rectangle2D;
 import java.util.Collection;
 
 /**
@@ -16,6 +17,7 @@ import java.util.Collection;
 public class ArenaPane extends JComponent implements SimulationObserver {
     private Collection<ArenaObjectSnapshot> currentFrame;
     private Collection<ArenaObjectSnapshot> toPaint;
+    private static final Rectangle2D.Double ARENA_SIZE = new Rectangle2D.Double(0, 0, 1000, 1000);
 
     public ArenaPane() {
     }
@@ -48,7 +50,10 @@ public class ArenaPane extends JComponent implements SimulationObserver {
 
         if (hasFullFrame()) {
             final AffineTransform originalTransform = g2d.getTransform();
-            g2d.scale(getWidth() / 1000.0, getHeight() / 1000.0);
+            g2d.setPaint(Color.green);
+            g2d.scale(getWidth() / 1100.0, getHeight() / 1100.0);
+            g2d.translate(50, 50);
+            g2d.draw(ARENA_SIZE);
             final Paint paint = g2d.getPaint();
             final Stroke stroke = g2d.getStroke();
             final AffineTransform transform = g2d.getTransform();
@@ -82,8 +87,8 @@ public class ArenaPane extends JComponent implements SimulationObserver {
         private SnapshotRenderer<RobotSnapshot> robotRenderer = new RobotRenderer();
         private SnapshotRenderer<MissileSnapshot> missileRenderer = new MissileRenderer();
         private SnapshotRenderer<MineSnapshot> mineRenderer = new MineRenderer();
-        private SnapshotRenderer<ExplosionSnapshot> explosionRenderer = new SimpleExplosionRenderer();
-        private SnapshotRenderer<ScanSnapshot> scanRenderer = new ScanRenderer();
+        private SnapshotRenderer<ExplosionSnapshot> explosionRenderer = new GradientExplosionRenderer();
+        private SnapshotRenderer<ScanSnapshot> scanRenderer = new ScanRendererWithFilledArcs();
 
         public SnapshotPainter(Graphics2D g2d) {
             this.g2d = g2d;
@@ -104,6 +109,7 @@ public class ArenaPane extends JComponent implements SimulationObserver {
         public void acceptExplosion(ExplosionSnapshot explosionSnapshot) {
             explosionRenderer.render(g2d, explosionSnapshot);
         }
+
 
         public void acceptScan(ScanSnapshot scanSnapshot) {
             scanRenderer.render(g2d, scanSnapshot);

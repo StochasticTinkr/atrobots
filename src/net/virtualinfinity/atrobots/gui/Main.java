@@ -134,12 +134,13 @@ public class Main implements Runnable {
         }));
         menubar.add(new JMenuItem(new AbstractAction("Add single") {
             public void actionPerformed(ActionEvent e) {
-                new EntrantLoader(new File(".").listFiles(new FilenameFilter() {
-                    public boolean accept(File dir, String name) {
-                        return name.toLowerCase().endsWith("test.at2") ||
-                                name.toLowerCase().endsWith("sduck.at2");
-                    }
-                })).execute();
+                for (final File parent : new File[]{new File("."), new File("original")})
+                    new EntrantLoader(parent.listFiles(new FilenameFilter() {
+                        public boolean accept(File dir, String name) {
+                            return name.toLowerCase().equals("test.at2") ||
+                                    name.toLowerCase().endsWith("sduck.at2");
+                        }
+                    })).execute();
 
             }
         }));
