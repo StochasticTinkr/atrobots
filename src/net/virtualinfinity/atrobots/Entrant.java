@@ -21,6 +21,7 @@ public class Entrant {
     private int totalKills;
     private int roundKills;
     private int totalDeaths;
+    private DebugInfo debugInfo;
 
 
     public Robot createRobot() {
@@ -53,7 +54,9 @@ public class Entrant {
         final Memory memory = new Memory();
         memory.addMemoryArray(new RandomAccessMemoryArray(1024));
         memory.addMemoryArray(program.createProgramMemory());
-        return new Computer(memory, 256);
+        Computer computer = new Computer(memory, 256);
+        computer.setEntrant(this);
+        return computer;
     }
 
     public int getTotalKills() {
@@ -119,5 +122,13 @@ public class Entrant {
     public void incrementKills() {
         roundKills++;
         totalKills++;
+    }
+
+    public DebugInfo getDebugInfo() {
+        return debugInfo;
+    }
+
+    public void setDebugInfo(DebugInfo debugInfo) {
+        this.debugInfo = debugInfo;
     }
 }

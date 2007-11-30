@@ -72,7 +72,7 @@ public class AtRobotInterruptFactory {
         return new CopyMemoryCellsInterrupt(getRegisters().getTargetId(), getFxCell());
     }
 
-    public InterruptHandler createFindangleInterrupt() {
+    public InterruptHandler createFindAngleInterrupt() {
         return new FindAngleInterrupt(getExCell(), getFxCell(), getAxCell(), robot);
     }
 
@@ -135,7 +135,7 @@ public class AtRobotInterruptFactory {
         interrupts.put(4, createOverburnInterrupt().costs(1));
         interrupts.put(5, createGetTransponderIdInterrupt().costs(2));
         interrupts.put(6, createGetTimerInterrupt().costs(2));
-        interrupts.put(7, createFindangleInterrupt().costs(32));
+        interrupts.put(7, createFindAngleInterrupt().costs(32));
         interrupts.put(8, createGetTargetIdInterrupt().costs(1));
         interrupts.put(9, createGetTargetInfoInterrupt().costs(2));
         interrupts.put(10, createGetGameInfoInterrupt().costs(4));

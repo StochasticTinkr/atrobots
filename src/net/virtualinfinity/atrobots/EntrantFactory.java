@@ -13,6 +13,7 @@ import java.io.*;
 public class EntrantFactory {
     private File sourceFile;
     private HardwareSpecification hardwareSpecification;
+    private DebugInfo debugInfo;
     private Program program;
     private String name;
 
@@ -51,6 +52,8 @@ public class EntrantFactory {
         entrantLineVisitor.resolve();
         program = entrantLineVisitor.createProgram();
         hardwareSpecification = entrantLineVisitor.createHardwareSpecification();
+        debugInfo = entrantLineVisitor.getDebugInfo();
+//        entrantLineVisitor.getLines();
         return entrantLineVisitor.getErrors();
     }
 
@@ -59,6 +62,7 @@ public class EntrantFactory {
         entrant.setProgram(getProgram());
         entrant.setName(getName());
         entrant.setHardwareSpecification(getHardwareSpecification());
+        entrant.setDebugInfo(debugInfo);
         return entrant;
     }
 

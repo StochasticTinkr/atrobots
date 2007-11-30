@@ -22,6 +22,7 @@ public class AtRobotLineLexer {
         stopProcessing = false;
         String line;
         while (!(stopProcessing || (line = reader.readLine()) == null)) {
+            lineVisitor.appendRawLine(line);
             final int commentStart = line.indexOf(';');
             if (commentStart >= 0) {
                 line = line.substring(0, commentStart);
@@ -33,16 +34,16 @@ public class AtRobotLineLexer {
             line = line.substring(i);
             if (line.length() != 0) {
                 switch (line.charAt(0)) {
-                    case '#':
+                    case'#':
                         visitDirective(line);
                         break;
-                    case ':':
+                    case':':
                         visitNumberLabel(line);
                         break;
-                    case '*':
+                    case'*':
                         visitMachineCode(line);
                         break;
-                    case '!':
+                    case'!':
                         visitLabel(line);
                         break;
                     default:

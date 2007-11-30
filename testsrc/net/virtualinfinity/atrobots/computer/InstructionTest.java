@@ -15,8 +15,12 @@ public class InstructionTest extends AbstractCompilerTest {
         assertBinaryOperation(5, 9, "ADD", 5 + 9);
     }
 
-    public void testSUB() {
+    public void testSUB1() {
         assertBinaryOperation(5, 9, "SUB", 5 - 9);
+    }
+
+    public void testSUB2() {
+        assertBinaryOperation(0, -1, "SUB", 0 - -1);
     }
 
     public void testOR() {
@@ -59,8 +63,12 @@ public class InstructionTest extends AbstractCompilerTest {
         assertBinaryOperation(-16, 3, "SHR", (-16 & 0xFFFF) >> 3);
     }
 
-    public void testSAR() {
+    public void testSAR1() {
         assertBinaryOperation(-16, 3, "SAR", -16 >> 3);
+    }
+
+    public void testSAR2() {
+        assertBinaryOperation(16, 3, "SAR", 16 >> 3);
     }
 
     public void testROR() {

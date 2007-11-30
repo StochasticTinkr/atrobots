@@ -274,6 +274,7 @@ public class Robot extends ArenaObject implements Resetable {
         }
         throttle.setPower(0);
         throttle.setDesiredPower(0);
+        computer.getRegisters().getCollisionCount().increment();
     }
 
     public void inflictDamage(Robot cause, double damageAmount) {

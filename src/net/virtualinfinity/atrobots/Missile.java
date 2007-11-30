@@ -35,18 +35,19 @@ public class Missile extends ArenaObject {
 
     @Override
     public void checkCollision(Robot robot) {
-        if (robot != this.robot && !isDead()) {
-            final Vector collisionPoint = getCollisionPoint(robot);
-            if (collisionPoint != null) {
-                if (collisionPoint.minus(robot.getPosition().getVector()).getMagnatude().getMeters() < 8) {
-                    position.copyFrom(new Position(collisionPoint));
-                    explode();
-                }
+        if (robot == this.robot || isDead()) {
+            return;
+        }
+        final Vector collisionPoint = getCollisionPoint(robot);
+        if (collisionPoint != null) {
+            if (collisionPoint.minus(robot.getPosition().getVector()).getMagnatude().getMeters() < 8) {
+                position.copyFrom(new Position(collisionPoint));
+                explode();
             }
         }
     }
 
-    public Vector getCollisionPoint(Robot robot) {
+    private Vector getCollisionPoint(Robot robot) {
         return robot.getPosition().getVector().perpendicularIntersectionFrom(getPosition().getVector(), heading.getAngle(), speed.times(Duration.ONE_CYCLE));
     }
 

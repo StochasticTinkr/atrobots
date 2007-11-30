@@ -29,9 +29,4 @@ public class AngleBracketTest extends TestCase {
         assertEquals(.5, angleBracket.fractionTo(AbsoluteAngle.fromBygrees(0)), 0.000001);
         assertEquals(1, angleBracket.fractionTo(AbsoluteAngle.fromBygrees(-5)), 0.000001);
     }
-
-
-    private static void assertEquals(AbsoluteAngle expected, AbsoluteAngle actual) {
-        assertEquals(expected.getNormalizedRadians(), actual.getNormalizedRadians(), Math.PI / 8000);
-    }
 }

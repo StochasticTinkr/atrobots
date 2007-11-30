@@ -1,9 +1,6 @@
 package net.virtualinfinity.atrobots.computer;
 
-import net.virtualinfinity.atrobots.Flags;
-import net.virtualinfinity.atrobots.HardwareBus;
-import net.virtualinfinity.atrobots.InvalidPort;
-import net.virtualinfinity.atrobots.PortHandler;
+import net.virtualinfinity.atrobots.*;
 import net.virtualinfinity.atrobots.measures.Duration;
 
 import java.util.Arrays;
@@ -15,6 +12,7 @@ import java.util.Map;
  * @author Daniel Pitts
  */
 public class Computer {
+    private Entrant entrant;
     private Memory memory;
     private Registers registers;
     private StackMemory stack;
@@ -77,15 +75,26 @@ public class Computer {
         }
         instructionPointer = nextInstructionPointer;
         nextInstructionPointer++;
-//        System.out.println(getInstructionString() + " ** " + registers);
+        if (entrant.getName().contains("FOOBAR")) {
+//            System.out.println(entrant.getId() + " "+entrant.getName() + ": ");
+            System.out.println(getInstructionString() + " ** " + registers);
+            System.out.println(getSourceLine());
+            getSourceLine();
+        }
         getInstruction().execute(Computer.this);
+    }
+
+    private String getSourceLine() {
+        return entrant.getDebugInfo().getLineForInstructionPointer(instructionPointer);
     }
 
     public String getInstructionString() {
         return instructionPointer + ": "
                 + getOperandString(0) + "  "
                 + getOperandString(1) + ", "
-                + getOperandString(2) + ":  " + getInstruction().getClass().getSimpleName();
+                + getOperandString(2) + ":  "
+//                + getInstruction().getClass().getSimpleName()
+                ;
     }
 
     private String getOperandString(int opnumber) {
@@ -316,6 +325,14 @@ public class Computer {
 
     public int getNextInstructionPointer() {
         return nextInstructionPointer;
+    }
+
+    public Entrant getEntrant() {
+        return entrant;
+    }
+
+    public void setEntrant(Entrant entrant) {
+        this.entrant = entrant;
     }
 
     enum Microcode {

@@ -37,4 +37,6 @@ public interface LineVisitor {
     void tokenizedLine(List<Token> tokens);
 
     void unknownDirective(String directive);
+
+    void appendRawLine(String line);
 }

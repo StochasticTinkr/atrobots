@@ -1,5 +1,6 @@
 package net.virtualinfinity.atrobots.parser;
 
+import net.virtualinfinity.atrobots.DebugInfo;
 import net.virtualinfinity.atrobots.HardwareSpecification;
 import net.virtualinfinity.atrobots.computer.Program;
 
@@ -18,6 +19,9 @@ public class EntrantLineVisitor implements LineVisitor {
     private String message;
     private int speed;
     private Map<String, Integer> configs = new HashMap<String, Integer>();
+    private List<String> lines = new ArrayList<String>();
+    private List<Integer> instructionLineNumber = new ArrayList<Integer>();
+    private final DebugInfo debugInfo = new DebugInfo();
 
     {
         setConfig("scanner", 5);
@@ -27,7 +31,6 @@ public class EntrantLineVisitor implements LineVisitor {
         setConfig("heatsinks", 1);
         setConfig("mines", 0);
         setConfig("shield", 0);
-
     }
 
     {
@@ -141,6 +144,7 @@ public class EntrantLineVisitor implements LineVisitor {
         programCode.add((short) value);
         alignProgram();
         programCode.set(programCode.size() - 1, (short) 2);
+        markLineNumber();
     }
 
     public void maxProcessorSpeed(int speed) {
@@ -160,12 +164,18 @@ public class EntrantLineVisitor implements LineVisitor {
             programCode.add((short) value);
         }
         alignProgram();
+        markLineNumber();
     }
 
     private void alignProgram() {
         while (programCode.size() % 4 != 0) {
             programCode.add((short) 0);
         }
+    }
+
+    private void markLineNumber() {
+        debugInfo.setLineForInstructionPointer(instructionLineNumber.size(), lexer.getLineNumber() + ": " + lines.get(lines.size() - 1));
+        instructionLineNumber.add(lexer.getLineNumber());
     }
 
     public void label(String line) {
@@ -176,10 +186,15 @@ public class EntrantLineVisitor implements LineVisitor {
         addTokensToProgram(tokens);
         alignProgram();
         addMicrocodeToProgram(tokens);
+        markLineNumber();
     }
 
     public void unknownDirective(String directive) {
         errors.add("Unknown directive: #" + directive, lexer.getLineNumber());
+    }
+
+    public void appendRawLine(String line) {
+        lines.add(line);
     }
 
     private void addMicrocodeToProgram(List<Token> tokens) {
@@ -258,6 +273,14 @@ public class EntrantLineVisitor implements LineVisitor {
 
     public void setLexer(AtRobotLineLexer lexer) {
         this.lexer = lexer;
+    }
+
+    public List<String> getLines() {
+        return lines;
+    }
+
+    public DebugInfo getDebugInfo() {
+        return debugInfo;
     }
 
     public class Symbol {
