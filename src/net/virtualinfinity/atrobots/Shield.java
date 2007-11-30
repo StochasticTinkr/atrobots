@@ -55,7 +55,7 @@ public class Shield implements Resetable {
 
     public void update(Duration duration) {
         if (active && heatFraction > 0) {
-            robot.getHeat().warm(Temperature.fromLogScale(duration.getCycles()));
+            robot.getHeat().warm(Temperature.fromLogScale(duration.getCycles() / 3.0));
         }
     }
 }

@@ -97,6 +97,7 @@ public class HardwareBus {
     private void shutDown() {
         desiredHeading.setAngle(robot.getHeading().getAngle());
         robot.getThrottle().setDesiredPower(0);
+        robot.getShield().setActive(false);
         computer.shutDown();
     }
 
