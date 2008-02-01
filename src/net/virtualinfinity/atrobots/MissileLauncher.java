@@ -9,16 +9,35 @@ import net.virtualinfinity.atrobots.measures.RelativeAngle;
  * @author Daniel Pitts
  */
 public class MissileLauncher {
-    private final Heading heading;
-    private final double power;
-    private final Position position;
-    private final Robot robot;
+    private Heading heading;
+    private double power;
+    private Position position;
+    private Robot robot;
 
     public MissileLauncher(Robot robot, Position position, Heading heading, double power) {
         this.robot = robot;
         this.position = position;
         this.heading = heading;
         this.power = power;
+    }
+
+    public MissileLauncher() {
+    }
+
+    public void setHeading(Heading heading) {
+        this.heading = heading;
+    }
+
+    public void setPower(double power) {
+        this.power = power;
+    }
+
+    public void setPosition(Position position) {
+        this.position = position;
+    }
+
+    public void setRobot(Robot robot) {
+        this.robot = robot;
     }
 
     public PortHandler getActuator() {

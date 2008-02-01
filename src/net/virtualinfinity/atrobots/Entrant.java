@@ -4,10 +4,6 @@ import net.virtualinfinity.atrobots.computer.Computer;
 import net.virtualinfinity.atrobots.computer.Memory;
 import net.virtualinfinity.atrobots.computer.Program;
 import net.virtualinfinity.atrobots.computer.RandomAccessMemoryArray;
-import net.virtualinfinity.atrobots.interrupts.AtRobotInterruptFactory;
-import net.virtualinfinity.atrobots.interrupts.InterruptHandler;
-
-import java.util.Map;
 
 /**
  * @author Daniel Pitts
@@ -28,26 +24,11 @@ public class Entrant {
         final Robot robot = new Robot();
         robot.setEntrant(this);
         robot.setComputer(createComputer());
-        hardwareSpecification.configureRobot(robot);
-        robot.setHardwareBus(new HardwareBus());
-        robot.getHardwareBus().setPorts(createPortHandlers(robot));
-        robot.getHardwareBus().setInterrupts(createInterruptHandlers(robot));
-        robot.getHardwareBus().addResetable(robot.getTurret().getScanner());
-        robot.getHardwareBus().addResetable(robot.getTurret());
-        robot.getHardwareBus().addResetable(robot.getOdometer());
-        robot.getHardwareBus().addResetable(robot);
-        robot.getHardwareBus().addResetable(robot.getShield());
-        robot.getHardwareBus().setComputer(robot.getComputer());
-        robot.getHardwareBus().setRobot(robot);
+        HardwareContext hardwareContext = new HardwareContext();
+        hardwareContext.setRobot(robot);
+        hardwareSpecification.configureHardwareContext(hardwareContext);
+        hardwareContext.wireRobotComponents();
         return robot;
-    }
-
-    private Map<Integer, PortHandler> createPortHandlers(Robot robot) {
-        return new AtRobotPortFactory(robot).createPortHandlers();
-    }
-
-    private Map<Integer, InterruptHandler> createInterruptHandlers(Robot robot) {
-        return new AtRobotInterruptFactory(robot).createInterruptTable();
     }
 
     private Computer createComputer() {

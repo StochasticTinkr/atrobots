@@ -75,7 +75,7 @@ public class Computer {
         }
         instructionPointer = nextInstructionPointer;
         nextInstructionPointer++;
-        if (entrant.getName().contains("FOOBAR")) {
+        if (entrant.getName().contains("RANDMAN4")) {
 //            System.out.println(entrant.getId() + " "+entrant.getName() + ": ");
             System.out.println(getInstructionString() + " ** " + registers);
             System.out.println(getSourceLine());
