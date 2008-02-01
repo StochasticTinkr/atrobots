@@ -72,5 +72,6 @@ public class HardwareSpecification {
         robot.setMissileLauncher(new MissileLauncher());
         robot.setMissileLauncherPower(chooseFor("weapon", .5, .8, 1.0, 1.2, 1.35, 1.5));
         robot.setScanner(createScanner());
+        robot.setHardwareBus(new HardwareBus());
     }
 }

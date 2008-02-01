@@ -35,15 +35,10 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" name="Default" comment="">
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/net/virtualinfinity/atrobots/HardwareContext.java" afterPath="$PROJECT_DIR$/src/net/virtualinfinity/atrobots/HardwareContext.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/net/virtualinfinity/atrobots/gui/Main.java" afterPath="$PROJECT_DIR$/src/net/virtualinfinity/atrobots/gui/Main.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/net/virtualinfinity/atrobots/gui/Debugger.java" />
-    </list>
-    <list name="Rejected commit: Default" comment="Seperate creation from wiring.">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/net/virtualinfinity/atrobots/MissileLauncher.java" afterPath="$PROJECT_DIR$/src/net/virtualinfinity/atrobots/MissileLauncher.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/net/virtualinfinity/atrobots/Entrant.java" afterPath="$PROJECT_DIR$/src/net/virtualinfinity/atrobots/Entrant.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/net/virtualinfinity/atrobots/HardwareContext.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/net/virtualinfinity/atrobots/HardwareSpecification.java" afterPath="$PROJECT_DIR$/src/net/virtualinfinity/atrobots/HardwareSpecification.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/net/virtualinfinity/atrobots/computer/Computer.java" afterPath="$PROJECT_DIR$/src/net/virtualinfinity/atrobots/computer/Computer.java" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/net/virtualinfinity/atrobots/gui/Debugger.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/AtRobots.iws" afterPath="$PROJECT_DIR$/AtRobots.iws" />
     </list>
   </component>
@@ -190,10 +185,10 @@
   </component>
   <component name="FileEditorManager">
     <leaf>
-      <file leaf-file-name="Entrant.java" pinned="false" current="true" current-in-tab="true">
+      <file leaf-file-name="Entrant.java" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/net/virtualinfinity/atrobots/Entrant.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="5" column="69" selection-start="270" selection-end="270" vertical-scroll-proportion="0.034552846">
+            <state line="19" column="56" selection-start="598" selection-end="598" vertical-scroll-proportion="0.55119455">
               <folding>
                 <element signature="imports" expanded="true" />
               </folding>
@@ -204,16 +199,16 @@
       <file leaf-file-name="HardwareSpecification.java" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/net/virtualinfinity/atrobots/HardwareSpecification.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="7" column="13" selection-start="107" selection-end="107" vertical-scroll-proportion="0.24186991">
+            <state line="74" column="28" selection-start="2265" selection-end="2265" vertical-scroll-proportion="1.0170648">
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="HardwareContext.java" pinned="false" current="false" current-in-tab="false">
+      <file leaf-file-name="HardwareContext.java" pinned="false" current="true" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/net/virtualinfinity/atrobots/HardwareContext.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="25" column="24" selection-start="770" selection-end="770" vertical-scroll-proportion="0.33333334">
+            <state line="95" column="40" selection-start="2542" selection-end="2542" vertical-scroll-proportion="0.18941979">
               <folding>
                 <element signature="imports" expanded="true" />
               </folding>
@@ -224,7 +219,7 @@
       <file leaf-file-name="Robot.java" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/net/virtualinfinity/atrobots/Robot.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="138" column="0" selection-start="3523" selection-end="3523" vertical-scroll-proportion="0.39634147">
+            <state line="138" column="0" selection-start="3523" selection-end="3523" vertical-scroll-proportion="0.3327645">
               <folding />
             </state>
           </provider>
@@ -233,7 +228,7 @@
       <file leaf-file-name="RANDMAN3.AT2" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/original/RANDMAN3.AT2">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="195" column="47" selection-start="5094" selection-end="5094" vertical-scroll-proportion="0.034552846">
+            <state line="195" column="47" selection-start="5094" selection-end="5094" vertical-scroll-proportion="0.029010238">
               <folding />
             </state>
           </provider>
@@ -242,7 +237,7 @@
       <file leaf-file-name="FindAngleInterrupt.java" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/net/virtualinfinity/atrobots/interrupts/FindAngleInterrupt.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="1" column="140" selection-start="49" selection-end="49" vertical-scroll-proportion="0.035639413">
+            <state line="1" column="140" selection-start="49" selection-end="49" vertical-scroll-proportion="0.02977233">
               <folding />
             </state>
           </provider>
@@ -950,14 +945,14 @@
       <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.29157668" order="0" />
       <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.35" order="1" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.24982053" order="1" />
-      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.32051283" order="10" />
+      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32051283" order="10" />
       <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" order="6" />
       <window_info id="Module Dependencies" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" order="5" />
       <window_info id="Dependency Viewer" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" order="11" />
       <window_info id="Palette" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3273639" order="6" />
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" order="1" />
       <window_info id="Changes" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32820514" order="8" />
-      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.2" order="2" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.2" order="2" />
       <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.24982053" order="2" />
       <window_info id="File View" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" order="3" />
       <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.43333334" order="3" />
@@ -1113,14 +1108,14 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/net/virtualinfinity/atrobots/interrupts/FindAngleInterrupt.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="1" column="140" selection-start="49" selection-end="49" vertical-scroll-proportion="0.035639413">
+        <state line="1" column="140" selection-start="49" selection-end="49" vertical-scroll-proportion="0.02977233">
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/original/RANDMAN3.AT2">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="195" column="47" selection-start="5094" selection-end="5094" vertical-scroll-proportion="0.034552846">
+        <state line="195" column="47" selection-start="5094" selection-end="5094" vertical-scroll-proportion="0.029010238">
           <folding />
         </state>
       </provider>
@@ -1141,30 +1136,30 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/net/virtualinfinity/atrobots/Robot.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="138" column="0" selection-start="3523" selection-end="3523" vertical-scroll-proportion="0.39634147">
+        <state line="138" column="0" selection-start="3523" selection-end="3523" vertical-scroll-proportion="0.3327645">
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/net/virtualinfinity/atrobots/HardwareSpecification.java">
+    <entry file="file://$PROJECT_DIR$/src/net/virtualinfinity/atrobots/Entrant.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="7" column="13" selection-start="107" selection-end="107" vertical-scroll-proportion="0.24186991">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/net/virtualinfinity/atrobots/HardwareContext.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="25" column="24" selection-start="770" selection-end="770" vertical-scroll-proportion="0.33333334">
+        <state line="19" column="56" selection-start="598" selection-end="598" vertical-scroll-proportion="0.55119455">
           <folding>
             <element signature="imports" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/net/virtualinfinity/atrobots/Entrant.java">
+    <entry file="file://$PROJECT_DIR$/src/net/virtualinfinity/atrobots/HardwareSpecification.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="5" column="69" selection-start="270" selection-end="270" vertical-scroll-proportion="0.034552846">
+        <state line="74" column="28" selection-start="2265" selection-end="2265" vertical-scroll-proportion="1.0170648">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/net/virtualinfinity/atrobots/HardwareContext.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="95" column="40" selection-start="2542" selection-end="2542" vertical-scroll-proportion="0.18941979">
           <folding>
             <element signature="imports" expanded="true" />
           </folding>

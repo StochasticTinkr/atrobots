@@ -24,6 +24,7 @@ public class HardwareContext {
     private double missileLauncherPower;
     private Scanner scanner;
     private Robot robot;
+    private HardwareBus hardwareBus;
 
     public void setThrottle(Throttle throttle) {
         this.throttle = throttle;
@@ -92,7 +93,10 @@ public class HardwareContext {
         wireTurret();
         wireMissileLauncher();
         wireScanner();
-        final HardwareBus hardwareBus = new HardwareBus();
+        wireHardwareBus();
+    }
+
+    private void wireHardwareBus() {
         robot.setHardwareBus(hardwareBus);
         hardwareBus.setRobot(robot);
         hardwareBus.setPorts(createPortHandlers());
@@ -188,5 +192,9 @@ public class HardwareContext {
 
     public void setRobot(Robot robot) {
         this.robot = robot;
+    }
+
+    public void setHardwareBus(HardwareBus hardwareBus) {
+        this.hardwareBus = hardwareBus;
     }
 }
