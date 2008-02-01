@@ -58,20 +58,20 @@ public class HardwareSpecification {
         return values[Math.max(0, Math.min(configs.get(name), values.length))];
     }
 
-    void configureHardwareContext(HardwareContext robot) {
-        robot.setThrottle(createThrottle());
-        robot.setCoolMultiplier(chooseFor("heatsinks", 0.75, 1.00, 1.125, 1.25, 1.33, 1.50));
-        robot.setArmor(createArmor());
-        robot.setMineLayer(createMineLayer());
-        robot.setRadar(createRadar());
-        robot.setShield(createShield());
-        robot.setSonar(createSonar());
-        robot.setTransceiver(createTransceiver());
-        robot.setTransponder(createTransponder());
-        robot.setTurret(createTurret());
-        robot.setMissileLauncher(new MissileLauncher());
-        robot.setMissileLauncherPower(chooseFor("weapon", .5, .8, 1.0, 1.2, 1.35, 1.5));
-        robot.setScanner(createScanner());
-        robot.setHardwareBus(new HardwareBus());
+    void configureHardwareContext(HardwareContext hardwareContext) {
+        hardwareContext.setThrottle(createThrottle());
+        hardwareContext.setCoolMultiplier(chooseFor("heatsinks", 0.75, 1.00, 1.125, 1.25, 1.33, 1.50));
+        hardwareContext.setArmor(createArmor());
+        hardwareContext.setMineLayer(createMineLayer());
+        hardwareContext.setRadar(createRadar());
+        hardwareContext.setShield(createShield());
+        hardwareContext.setSonar(createSonar());
+        hardwareContext.setTransceiver(createTransceiver());
+        hardwareContext.setTransponder(createTransponder());
+        hardwareContext.setTurret(createTurret());
+        hardwareContext.setMissileLauncher(new MissileLauncher());
+        hardwareContext.setMissileLauncherPower(chooseFor("weapon", .5, .8, 1.0, 1.2, 1.35, 1.5));
+        hardwareContext.setScanner(createScanner());
+        hardwareContext.setHardwareBus(new HardwareBus());
     }
 }

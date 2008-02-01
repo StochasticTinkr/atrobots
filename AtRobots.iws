@@ -35,10 +35,7 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/net/virtualinfinity/atrobots/HardwareContext.java" afterPath="$PROJECT_DIR$/src/net/virtualinfinity/atrobots/HardwareContext.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/net/virtualinfinity/atrobots/gui/Main.java" afterPath="$PROJECT_DIR$/src/net/virtualinfinity/atrobots/gui/Main.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/net/virtualinfinity/atrobots/HardwareSpecification.java" afterPath="$PROJECT_DIR$/src/net/virtualinfinity/atrobots/HardwareSpecification.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/net/virtualinfinity/atrobots/gui/Debugger.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/AtRobots.iws" afterPath="$PROJECT_DIR$/AtRobots.iws" />
     </list>
   </component>
@@ -196,16 +193,16 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="HardwareSpecification.java" pinned="false" current="false" current-in-tab="false">
+      <file leaf-file-name="HardwareSpecification.java" pinned="false" current="true" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/net/virtualinfinity/atrobots/HardwareSpecification.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="74" column="28" selection-start="2265" selection-end="2265" vertical-scroll-proportion="1.0170648">
+            <state line="60" column="65" selection-start="1567" selection-end="1567" vertical-scroll-proportion="0.3327645">
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="HardwareContext.java" pinned="false" current="true" current-in-tab="true">
+      <file leaf-file-name="HardwareContext.java" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/net/virtualinfinity/atrobots/HardwareContext.java">
           <provider selected="true" editor-type-id="text-editor">
             <state line="95" column="40" selection-start="2542" selection-end="2542" vertical-scroll-proportion="0.18941979">
@@ -981,7 +978,7 @@
     <option name="PERFORM_COMMIT_IN_BACKGROUND" value="false" />
     <option name="PUT_FOCUS_INTO_COMMENT" value="false" />
     <option name="FORCE_NON_EMPTY_COMMENT" value="false" />
-    <option name="LAST_COMMIT_MESSAGE" value="Seperate creation from wiring." />
+    <option name="LAST_COMMIT_MESSAGE" value="Some more refactoring." />
     <option name="SAVE_LAST_COMMIT_MESSAGE" value="true" />
     <option name="CHECKIN_DIALOG_SPLITTER_PROPORTION" value="0.8" />
     <option name="OPTIMIZE_IMPORTS_BEFORE_PROJECT_COMMIT" value="true" />
@@ -994,7 +991,6 @@
     <option name="UPDATE_GROUP_BY_PACKAGES" value="false" />
     <option name="SHOW_FILE_HISTORY_AS_TREE" value="false" />
     <option name="FILE_HISTORY_SPLITTER_PROPORTION" value="0.6" />
-    <MESSAGE value="Simple clean up." />
     <MESSAGE value="Add config values." />
     <MESSAGE value="Improve new game dialog." />
     <MESSAGE value="Handle overburn" />
@@ -1004,6 +1000,7 @@
     <MESSAGE value="Fix lots of things, including scanner accuracy problem." />
     <MESSAGE value="Fixed shield heat." />
     <MESSAGE value="Seperate creation from wiring." />
+    <MESSAGE value="Some more refactoring." />
   </component>
   <component name="VssConfiguration">
     <option name="CLIENT_PATH" value="" />
@@ -1150,19 +1147,19 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/net/virtualinfinity/atrobots/HardwareSpecification.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="74" column="28" selection-start="2265" selection-end="2265" vertical-scroll-proportion="1.0170648">
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/net/virtualinfinity/atrobots/HardwareContext.java">
       <provider selected="true" editor-type-id="text-editor">
         <state line="95" column="40" selection-start="2542" selection-end="2542" vertical-scroll-proportion="0.18941979">
           <folding>
             <element signature="imports" expanded="true" />
           </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/net/virtualinfinity/atrobots/HardwareSpecification.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="60" column="65" selection-start="1567" selection-end="1567" vertical-scroll-proportion="0.3327645">
+          <folding />
         </state>
       </provider>
     </entry>
