@@ -7,21 +7,21 @@ import net.virtualinfinity.atrobots.measures.Vector;
 import net.virtualinfinity.atrobots.snapshots.ArenaObjectSnapshot;
 import net.virtualinfinity.atrobots.snapshots.MissileSnapshot;
 
-import java.util.Comparator;
-
 /**
  * @author Daniel Pitts
  */
 public class Missile extends ArenaObject {
     private final Robot robot;
     private final double power;
-    private boolean overburn;
+    private final boolean overburn;
 
     public Missile(Robot robot, Position position, AbsoluteAngle angle, double power) {
         this.robot = robot;
         this.power = power;
         this.position.copyFrom(position);
         this.heading.setAngle(angle);
+        this.overburn = robot.isOverburn();
+        getSpeed().setDistanceOverTime(Distance.fromMeters(32).times(power), Duration.ONE_CYCLE);
     }
 
     protected ArenaObjectSnapshot createSpecificSnapshot() {
@@ -96,13 +96,4 @@ public class Missile extends ArenaObject {
                 || position.getY().getMeters() < 0 || position.getY().getMeters() > 1000;
     }
 
-    public void setOverburn(boolean overburn) {
-        this.overburn = overburn;
-    }
-
-    private static class MagnatudeComparator implements Comparator<Vector> {
-        public int compare(Vector o1, Vector o2) {
-            return o1.getMagnatude().compareTo(o2.getMagnatude());
-        }
-    }
 }

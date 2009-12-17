@@ -148,7 +148,7 @@ public class HardwareContext {
 
     private void wireTranceiver(CommunicationsQueue commQueue) {
         robot.setTransceiver(transceiver);
-        transceiver.setRadioDispatcher(robot.getEntrant().getGame().getRound().getArena().getRadioDispatcher());
+        transceiver.setRadioDispatcher(robot.getArena().getRadioDispatcher());
         transceiver.setCommQueue(commQueue);
     }
 
@@ -169,7 +169,7 @@ public class HardwareContext {
     private void wireMineLayer() {
         robot.setMineLayer(mineLayer);
         mineLayer.setRobot(robot);
-        mineLayer.setArena(robot.getEntrant().getGame().getRound().getArena());
+        mineLayer.setArena(robot.getArena());
     }
 
     private void wireArmor() {

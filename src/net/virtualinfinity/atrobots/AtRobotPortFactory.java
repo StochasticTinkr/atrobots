@@ -7,6 +7,8 @@ import java.util.Map;
 import java.util.Random;
 
 /**
+ * Creates the port mapping for a standard AT-Robot configuration.
+ *
  * @author Daniel Pitts
  */
 public class AtRobotPortFactory {

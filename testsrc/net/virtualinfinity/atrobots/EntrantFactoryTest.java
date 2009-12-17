@@ -69,7 +69,7 @@ public class EntrantFactoryTest extends AbstractCompilerTest {
 
 
     private MemoryArray getMemoryArray() {
-        return entrantFactory.createEntrant().getProgram().createProgramMemory();
+        return entrantFactory.getProgram().createProgramMemory();
     }
 
 }

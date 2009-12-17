@@ -1,56 +1,84 @@
 package net.virtualinfinity.atrobots;
 
 /**
+ * Represents the armor of a robot.
+ *
  * @author Daniel Pitts
  */
 public class Armor {
-    private double percentRemaining = 100;
+    private double pointsRemaining;
     private Robot robot;
 
-    public Armor() {
+    /**
+     * Construct armor with the specific number of points remaining.
+     *
+     * @param points the number points this armor starts with.
+     */
+    public Armor(double points) {
+        this.pointsRemaining = points;
     }
 
-    public Armor(double percentRemaining) {
-        this.percentRemaining = percentRemaining;
-    }
-
+    /**
+     * Get a port handler which reads the number of remaining armor points.
+     *
+     * @return the Armor sensor PortHandler.
+     */
     public PortHandler getSensor() {
         return new PortHandler() {
             public short read() {
-                return (short) Math.round(percentRemaining());
+                return (short) Math.round(getRemaining());
             }
         };
     }
 
-    private double percentRemaining() {
-        return getRemaining();
-    }
-
-    public void setRemaining(double percentRemaining) {
-        this.percentRemaining = percentRemaining;
-        checkDead();
+    /**
+     * Destroy this robot by inflicting the damage equal to the current remaining points.
+     */
+    public void destruct() {
+        inflictDamage(getRemaining());
     }
 
     private void checkDead() {
-        if (percentRemaining <= 0) {
+        if (pointsRemaining <= 0) {
             robot.explode();
         }
     }
 
+    /**
+     * Get the remaining armor.
+     *
+     * @return the number of points remaining.
+     */
     public double getRemaining() {
-        return percentRemaining;
+        return pointsRemaining;
     }
 
+    /**
+     * Inflict the specific amount of damage. Causes the robot to explode if the points drop to 0 or below.
+     *
+     * @param damageAmount the amount of damage to inflict.
+     */
     public void inflictDamage(double damageAmount) {
-        percentRemaining -= damageAmount;
+        pointsRemaining -= damageAmount;
         checkDead();
     }
 
+    /**
+     * Get the robot which this armor protects.
+     *
+     * @return the robot.
+     */
     public Robot getRobot() {
         return robot;
     }
 
-    public void setRobot(Robot robot) {
+
+    /**
+     * Set the armor which this robot protects.
+     *
+     * @param robot the robot.
+     */
+    void setRobot(Robot robot) {
         this.robot = robot;
     }
 }

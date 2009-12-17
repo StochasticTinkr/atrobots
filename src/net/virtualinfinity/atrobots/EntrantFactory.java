@@ -70,7 +70,7 @@ public class EntrantFactory {
         return name;
     }
 
-    private Program getProgram() {
+    Program getProgram() {
         return program;
     }
 

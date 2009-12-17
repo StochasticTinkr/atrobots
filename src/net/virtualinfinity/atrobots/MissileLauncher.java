@@ -1,8 +1,6 @@
 package net.virtualinfinity.atrobots;
 
 import net.virtualinfinity.atrobots.measures.AbsoluteAngle;
-import net.virtualinfinity.atrobots.measures.Distance;
-import net.virtualinfinity.atrobots.measures.Duration;
 import net.virtualinfinity.atrobots.measures.RelativeAngle;
 
 /**
@@ -54,8 +52,6 @@ public class MissileLauncher {
         int bygrees = Math.max(-4, Math.min(value, 4));
         AbsoluteAngle angle = heading.getAngle().counterClockwise(RelativeAngle.fromBygrees(bygrees));
         final Missile missile = new Missile(robot, position, angle, getPower());
-        missile.setOverburn(robot.isOverburn());
-        missile.getSpeed().setDistanceOverTime(Distance.fromMeters(32).times(getPower()), Duration.ONE_CYCLE);
         getArena().fireMissile(missile);
         robot.getHeat().warm(Temperature.fromLogScale(robot.isOverburn() ? 20 : 30));
     }
@@ -65,6 +61,6 @@ public class MissileLauncher {
     }
 
     public Arena getArena() {
-        return robot.getEntrant().getGame().getRound().getArena();
+        return robot.getArena();
     }
 }

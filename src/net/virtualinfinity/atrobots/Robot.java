@@ -47,7 +47,7 @@ public class Robot extends ArenaObject implements Resetable {
     }
 
     public void destruct() {
-        getArmor().setRemaining(0);
+        getArmor().destruct();
     }
 
     public Turret getTurret() {
@@ -232,10 +232,6 @@ public class Robot extends ArenaObject implements Resetable {
     public void reset() {
         setOverburn(false);
 
-    }
-
-    public Arena getArena() {
-        return getEntrant().getGame().getRound().getArena();
     }
 
     public ScanResult scan(AngleBracket angleBracket, Distance maxDistance) {
