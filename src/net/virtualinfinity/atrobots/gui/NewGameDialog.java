@@ -63,10 +63,10 @@ public class NewGameDialog extends JDialog {
                 if (jFileChooser.showOpenDialog(NewGameDialog.this) == JFileChooser.APPROVE_OPTION) {
                     Errors errors = new Errors();
                     for (File file : jFileChooser.getSelectedFiles()) {
-                        EntrantFactory factory = new EntrantFactory(file);
+                        EntrantFactory factory = new EntrantFactory();
                         try {
                             System.out.println("Loading " + file);
-                            final Errors result = factory.compile();
+                            final Errors result = factory.compile(file);
                             if (result.hasErrors()) {
                                 errors.info("Errors in " + file.getName());
                                 errors.addAll(result);

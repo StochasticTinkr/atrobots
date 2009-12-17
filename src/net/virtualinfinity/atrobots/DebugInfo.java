@@ -4,7 +4,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
- * Maps instruction pointer to a source line
+ * Maps instruction pointer to a source line.
  *
  * @author Daniel Pitts
  */

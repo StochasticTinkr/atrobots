@@ -7,14 +7,22 @@ import net.virtualinfinity.atrobots.snapshots.ArenaObjectSnapshot;
 import net.virtualinfinity.atrobots.snapshots.ExplosionSnapshot;
 
 /**
+ * Represents an explosion in the arena.
+ *
  * @author Daniel Pitts
  */
 public class Explosion extends ArenaObject {
     int frame;
     private final Distance radius;
 
+    /**
+     * Create an explosing at the given
+     *
+     * @param center the center of the explosion.
+     * @param radius the radius of the explosion.
+     */
     public Explosion(Vector center, Distance radius) {
-        getPosition().copyFrom(new Position(center));
+        super(center);
         this.radius = radius;
     }
 
@@ -28,9 +36,12 @@ public class Explosion extends ArenaObject {
 
     @Override
     public void update(Duration duration) {
-        frame += duration.getCycles();
-        if (frame > radius.getMeters()) {
-            die();
+        if (!isDead()) {
+            frame += duration.getCycles();
+            if (frame > radius.getMeters()) {
+                frame = (int) Math.rint(radius.getMeters());
+                die();
+            }
         }
     }
 

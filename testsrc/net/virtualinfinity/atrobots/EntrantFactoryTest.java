@@ -46,10 +46,10 @@ public class EntrantFactoryTest extends AbstractCompilerTest {
         });
         Errors errors = new Errors();
         for (File file : files) {
-            EntrantFactory factory = new EntrantFactory(file);
+            EntrantFactory factory = new EntrantFactory();
             try {
                 System.out.println("Loading " + file);
-                final Errors result = factory.compile();
+                final Errors result = factory.compile(file);
                 if (result.hasErrors()) {
                     errors.info("Errors in " + file.getName());
                     errors.addAll(result);

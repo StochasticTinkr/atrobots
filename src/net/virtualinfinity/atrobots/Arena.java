@@ -17,7 +17,7 @@ public class Arena {
     private final List<Mine> mines = new LinkedList<Mine>();
     private final List<Missile> missiles = new LinkedList<Missile>();
     private final Collection<ArenaObject> others = new LinkedList<ArenaObject>();
-    final Collection<? extends Collection<? extends ArenaObject>> allArenaObjectCollections = Arrays.asList(
+    final Collection<Collection<? extends ArenaObject>> allArenaObjectCollections = Arrays.asList(
             missiles,
             mines,
             robots,

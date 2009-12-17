@@ -1,6 +1,7 @@
 package net.virtualinfinity.atrobots;
 
 import net.virtualinfinity.atrobots.measures.Duration;
+import net.virtualinfinity.atrobots.measures.Vector;
 import net.virtualinfinity.atrobots.snapshots.ArenaObjectSnapshot;
 
 /**
@@ -12,9 +13,17 @@ public abstract class ArenaObject {
     protected final Heading heading = new Heading();
     protected final Speed speed = new Speed();
     protected final Velocity velocity = new Velocity(heading, speed);
-    protected final Position position = new Position();
+    protected final Position position;
     private Arena arena;
     private boolean dead;
+
+    protected ArenaObject() {
+        position = new Position();
+    }
+
+    public ArenaObject(Vector location) {
+        position = new Position(location);
+    }
 
     /**
      * Update the position based on velocity.

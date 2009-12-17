@@ -110,11 +110,19 @@ public class HardwareContext {
     }
 
     private Map<Integer, PortHandler> createPortHandlers() {
-        return new AtRobotPortFactory(robot).createPortHandlers();
+        return getPortFactory().createPortHandlers(robot);
+    }
+
+    private AtRobotPortFactory getPortFactory() {
+        return new AtRobotPortFactory();
     }
 
     private Map<Integer, InterruptHandler> createInterruptHandlers() {
-        return new AtRobotInterruptFactory(robot).createInterruptTable();
+        return getInterruptFactory().createInterruptTable(robot);
+    }
+
+    private AtRobotInterruptFactory getInterruptFactory() {
+        return new AtRobotInterruptFactory();
     }
 
     private void wireMissileLauncher() {

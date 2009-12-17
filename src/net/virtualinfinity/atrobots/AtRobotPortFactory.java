@@ -12,13 +12,8 @@ import java.util.Random;
  * @author Daniel Pitts
  */
 public class AtRobotPortFactory {
-    private final Robot robot;
 
-    public AtRobotPortFactory(Robot robot) {
-        this.robot = robot;
-    }
-
-    public Map<Integer, PortHandler> createPortHandlers() {
+    public Map<Integer, PortHandler> createPortHandlers(Robot robot) {
         final Map<Integer, PortHandler> ports = new HashMap<Integer, PortHandler>();
         ports.put(1, robot.getThrottle().getSpedometer());
         ports.put(2, robot.getHeat().getHeatSensor());

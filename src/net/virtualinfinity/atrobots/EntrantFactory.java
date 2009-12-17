@@ -8,25 +8,27 @@ import net.virtualinfinity.atrobots.parser.Errors;
 import java.io.*;
 
 /**
+ * Configuration for an entrant.
+ *
  * @author Daniel Pitts
  */
 public class EntrantFactory {
-    private File sourceFile;
     private HardwareSpecification hardwareSpecification;
     private DebugInfo debugInfo;
     private Program program;
     private String name;
 
-    public EntrantFactory(File sourceFile) {
-        this.sourceFile = sourceFile;
-        name = sourceFile.getName();
+    public EntrantFactory() {
     }
 
     public EntrantFactory(String name) {
         this.name = name;
     }
 
-    public Errors compile() throws IOException {
+    public Errors compile(File sourceFile) throws IOException {
+        if (name == null) {
+            name = sourceFile.getName();
+        }
         final InputStream in = new FileInputStream(sourceFile);
         try {
             return compile(in);
@@ -36,7 +38,7 @@ public class EntrantFactory {
     }
 
     public Errors compile(InputStream in) throws IOException {
-        final LineNumberReader reader = new LineNumberReader(new InputStreamReader(in));
+        final Reader reader = new InputStreamReader(in);
         try {
             return compile(reader);
         } finally {
@@ -44,7 +46,19 @@ public class EntrantFactory {
         }
     }
 
-    private Errors compile(LineNumberReader reader) throws IOException {
+    public Errors compile(Reader in) throws IOException {
+        if (in instanceof LineNumberReader) {
+            return compile((LineNumberReader) in);
+        }
+        final LineNumberReader reader = new LineNumberReader(in);
+        try {
+            return compile(reader);
+        } finally {
+            reader.close();
+        }
+    }
+
+    public Errors compile(LineNumberReader reader) throws IOException {
         final EntrantLineVisitor entrantLineVisitor = new EntrantLineVisitor();
         AtRobotLineLexer lexer = new AtRobotLineLexer(reader, entrantLineVisitor);
         entrantLineVisitor.setLexer(lexer);
