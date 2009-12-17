@@ -12,6 +12,10 @@ import java.awt.geom.Rectangle2D;
 import java.util.Collection;
 
 /**
+ * A GUI component which renders the game arena.
+ * This object should be registered as a {@link net.virtualinfinity.atrobots.SimulationObserver} in the
+ * {@link net.virtualinfinity.atrobots.SimulationFrameBuffer}
+ *
  * @author Daniel Pitts
  */
 public class ArenaPane extends JComponent implements SimulationObserver {
@@ -23,8 +27,7 @@ public class ArenaPane extends JComponent implements SimulationObserver {
     }
 
     public void frameAvailable(SimulationFrameBuffer buffer) {
-        repaint();
-        currentFrame = buffer.getCurrentFrame();
+        EventQueue.invokeLater(new UpdateFrame(buffer));
     }
 
     protected void paintComponent(Graphics g) {
@@ -113,6 +116,19 @@ public class ArenaPane extends JComponent implements SimulationObserver {
 
         public void acceptScan(ScanSnapshot scanSnapshot) {
             scanRenderer.render(g2d, scanSnapshot);
+        }
+    }
+
+    private class UpdateFrame implements Runnable {
+        private final SimulationFrameBuffer buffer;
+
+        public UpdateFrame(SimulationFrameBuffer buffer) {
+            this.buffer = buffer;
+        }
+
+        public void run() {
+            repaint();
+            currentFrame = buffer.getCurrentFrame();
         }
     }
 }

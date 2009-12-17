@@ -33,11 +33,14 @@ public class Game {
         round = new Round(++roundNumber);
         round.getArena().setSimulationFrameBuffer(frameBuffer);
         for (Entrant entrant : entrants) {
-            final Robot robot = entrant.createRobot();
-            round.getArena().addRobot(robot);
+            round.getArena().addRobot(createRobotFor(entrant));
         }
         round.getArena().buildFrame();
 
+    }
+
+    protected Robot createRobotFor(Entrant entrant) {
+        return entrant.createRobot();
     }
 
     public synchronized void addSimulationObserver(SimulationObserver observer) {

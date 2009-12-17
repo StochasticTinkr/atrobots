@@ -24,13 +24,9 @@ public class SimulationFrameBuffer {
 
     public void endFrame() {
         currentFrame = frameToBuild;
-        EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                for (SimulationObserver observer : observers) {
-                    observer.frameAvailable(SimulationFrameBuffer.this);
-                }
-            }
-        });
+        for (SimulationObserver observer : observers) {
+            observer.frameAvailable(SimulationFrameBuffer.this);
+        }
     }
 
     public Collection<ArenaObjectSnapshot> getCurrentFrame() {

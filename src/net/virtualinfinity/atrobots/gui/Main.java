@@ -18,6 +18,8 @@ import java.io.IOException;
 import java.util.concurrent.ExecutionException;
 
 /**
+ * This is the main GUI class.
+ *
  * @author Daniel Pitts
  */
 public class Main implements Runnable {
