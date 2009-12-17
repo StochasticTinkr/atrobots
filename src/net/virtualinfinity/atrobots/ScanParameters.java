@@ -36,7 +36,7 @@ public class ScanParameters extends ArenaObject {
 
     public void update(Duration duration) {
         if (frame++ > 1) {
-            setDead(true);
+            die();
         }
     }
 

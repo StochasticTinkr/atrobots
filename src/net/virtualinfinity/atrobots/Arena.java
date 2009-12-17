@@ -127,7 +127,7 @@ public class Arena {
     }
 
     /**
-     * Prepare a snapshot of the current arena state.
+     * Prepare a snapshot of the current arena state in the {@link net.virtualinfinity.atrobots.SimulationFrameBuffer}.
      */
     public void buildFrame() {
         simulationFrameBuffer.beginFrame();

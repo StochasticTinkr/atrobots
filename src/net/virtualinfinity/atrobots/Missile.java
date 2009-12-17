@@ -54,9 +54,10 @@ public class Missile extends ArenaObject {
 
     private void explode() {
         getArena().explosion(this.robot, new LinearDamageFunction(position, power, 14));
-        setDead(true);
+        die();
     }
 
+    @Override
     public void update(Duration duration) {
         super.update(duration);
         if (!isDead()) {

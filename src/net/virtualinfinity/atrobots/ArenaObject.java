@@ -4,6 +4,8 @@ import net.virtualinfinity.atrobots.measures.Duration;
 import net.virtualinfinity.atrobots.snapshots.ArenaObjectSnapshot;
 
 /**
+ * Abstract base class for objects which can appear in the {@link Arena}.
+ *
  * @author Daniel Pitts
  */
 public abstract class ArenaObject {
@@ -14,42 +16,88 @@ public abstract class ArenaObject {
     private Arena arena;
     private boolean dead;
 
+    /**
+     * Update the position based on velocity.
+     *
+     * @param duration the amount of time to simulate movement for.
+     */
     public final void simulateMovement(Duration duration) {
         position.move(velocity.times(duration));
     }
 
-    public Position getPosition() {
+    /**
+     * Get the position.
+     *
+     * @return the position.
+     */
+    public final Position getPosition() {
         return position;
     }
 
-    public boolean isDead() {
+    /**
+     * Check if this ArenaObject is dead.
+     *
+     * @return true if this ArenaObject is dead
+     */
+    public final boolean isDead() {
         return dead;
     }
 
-    public void setDead(boolean dead) {
-        this.dead = dead;
+
+    /**
+     * Mark this ArenaObject as dead.
+     */
+    protected final void die() {
+        this.dead = true;
     }
 
     public void update(Duration duration) {
         simulateMovement(duration);
     }
 
-    public ArenaObjectSnapshot getSnapshot() {
+    /**
+     * Get a snapshot of the current state of this ArenaObject.
+     *
+     * @return the current snapshot.
+     * @see net.virtualinfinity.atrobots.SimulationFrameBuffer
+     * @see Arena#buildFrame()
+     */
+    public final ArenaObjectSnapshot getSnapshot() {
         final ArenaObjectSnapshot objectSnapshot = createSpecificSnapshot();
         objectSnapshot.setPositionVector(position.getVector());
         objectSnapshot.setVelocityVector(velocity.times(Duration.ONE_CYCLE));
         return objectSnapshot;
     }
 
+    /**
+     * Create the snapshot with type-specific information.
+     *
+     * @return a type-specific snapshot.
+     */
     protected abstract ArenaObjectSnapshot createSpecificSnapshot();
 
+    /**
+     * Check if this object is currently colliding with the given robot.
+     *
+     * @param robot the robot to check collision against.
+     */
     public abstract void checkCollision(Robot robot);
 
-    public Arena getArena() {
+    /**
+     * Get the arena that this object is in.
+     *
+     * @return the arena.
+     */
+    public final Arena getArena() {
         return arena;
     }
 
-    public void setArena(Arena arena) {
+    /**
+     * Set the arena that htis object lives in.
+     *
+     * @param arena the arena.
+     */
+    final void setArena(Arena arena) {
         this.arena = arena;
     }
 }

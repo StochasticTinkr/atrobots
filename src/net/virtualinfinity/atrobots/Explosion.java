@@ -18,19 +18,20 @@ public class Explosion extends ArenaObject {
         this.radius = radius;
     }
 
-    public boolean isDead() {
-        return frame > radius.getMeters();
-    }
-
     protected ArenaObjectSnapshot createSpecificSnapshot() {
         return new ExplosionSnapshot(radius, frame);
     }
 
+    @Override
     public void checkCollision(Robot robot) {
     }
 
+    @Override
     public void update(Duration duration) {
         frame += duration.getCycles();
+        if (frame > radius.getMeters()) {
+            die();
+        }
     }
 
 }

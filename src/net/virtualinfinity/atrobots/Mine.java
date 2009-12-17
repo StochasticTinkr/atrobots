@@ -47,7 +47,7 @@ public class Mine extends ArenaObject {
 
     private void explode() {
         if (!isDead()) {
-            setDead(true);
+            die();
             getArena().explosion(robot, new LinearDamageFunction(position, 1, 35.0));
         }
     }

@@ -288,7 +288,7 @@ public class Robot extends ArenaObject implements Resetable {
 
     public void explode() {
         if (!isDead()) {
-            setDead(true);
+            die();
             getArena().explosion(this, new LinearDamageFunction(position, isOverburn() ? 1.3 : 1, 25.0));
         }
     }
