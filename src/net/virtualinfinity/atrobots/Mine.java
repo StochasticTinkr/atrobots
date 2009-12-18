@@ -5,16 +5,16 @@ import net.virtualinfinity.atrobots.snapshots.ArenaObjectSnapshot;
 import net.virtualinfinity.atrobots.snapshots.MineSnapshot;
 
 /**
+ * A motionless but explosive arena object.
+ *
  * @author Daniel Pitts
  */
 public class Mine extends ArenaObject {
     private Distance triggerRadius;
     private final MineLayer owner;
-    private Robot robot;
 
-    public Mine(MineLayer owner, Robot robot) {
+    public Mine(MineLayer owner) {
         this.owner = owner;
-        this.robot = robot;
     }
 
     public void setTriggerRadius(Distance triggerRadius) {
@@ -48,8 +48,12 @@ public class Mine extends ArenaObject {
     private void explode() {
         if (!isDead()) {
             die();
-            getArena().explosion(robot, new LinearDamageFunction(position, 1, 35.0));
+            getArena().explosion(getRobot(), new LinearDamageFunction(position, 1, 35.0));
         }
+    }
+
+    private Robot getRobot() {
+        return owner.getRobot();
     }
 
 }

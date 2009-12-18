@@ -28,7 +28,7 @@ public class MineLayer {
 
     private void layMine(Distance triggerRadius) {
         if (hasMines()) {
-            final Mine mine = new Mine(this, robot);
+            final Mine mine = new Mine(this);
             mine.setTriggerRadius(triggerRadius);
             mine.setPosition(robot.getPosition());
             arena.placeMine(mine);
@@ -70,5 +70,9 @@ public class MineLayer {
 
     public void setRobot(Robot robot) {
         this.robot = robot;
+    }
+
+    public Robot getRobot() {
+        return robot;
     }
 }

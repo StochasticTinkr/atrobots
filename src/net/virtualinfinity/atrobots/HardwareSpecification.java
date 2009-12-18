@@ -3,6 +3,8 @@ package net.virtualinfinity.atrobots;
 import java.util.Map;
 
 /**
+ * A factory for various configurable hardware components.
+ *
  * @author Daniel Pitts
  */
 public class HardwareSpecification {
@@ -58,7 +60,12 @@ public class HardwareSpecification {
         return values[Math.max(0, Math.min(configs.get(name), values.length))];
     }
 
-    void configureHardwareContext(HardwareContext hardwareContext) {
+    /**
+     * Configure the specific hardware context based on this spec.
+     *
+     * @param hardwareContext the context to configure.
+     */
+    public void configureHardwareContext(HardwareContext hardwareContext) {
         hardwareContext.setThrottle(createThrottle());
         hardwareContext.setCoolMultiplier(chooseFor("heatsinks", 0.75, 1.00, 1.125, 1.25, 1.33, 1.50));
         hardwareContext.setArmor(createArmor());

@@ -97,8 +97,7 @@ public class HardwareContext {
     }
 
     private void wireHardwareBus() {
-        robot.setHardwareBus(hardwareBus);
-        hardwareBus.setRobot(robot);
+        hardwareBus.connectToRobot(robot);
         hardwareBus.setPorts(createPortHandlers());
         hardwareBus.setInterrupts(createInterruptHandlers());
         hardwareBus.addResetable(robot.getTurret().getScanner());
@@ -106,7 +105,7 @@ public class HardwareContext {
         hardwareBus.addResetable(robot.getOdometer());
         hardwareBus.addResetable(robot);
         hardwareBus.addResetable(robot.getShield());
-        hardwareBus.setComputer(robot.getComputer());
+        hardwareBus.connectComputer(robot.getComputer());
     }
 
     private Map<Integer, PortHandler> createPortHandlers() {

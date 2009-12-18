@@ -226,7 +226,6 @@ public class Robot extends ArenaObject implements Resetable {
 
     public void setHardwareBus(HardwareBus hardwareBus) {
         this.hardwareBus = hardwareBus;
-        getComputer().setHardwareBus(hardwareBus);
     }
 
     public void reset() {

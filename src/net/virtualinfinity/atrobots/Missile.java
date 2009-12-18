@@ -8,6 +8,8 @@ import net.virtualinfinity.atrobots.snapshots.ArenaObjectSnapshot;
 import net.virtualinfinity.atrobots.snapshots.MissileSnapshot;
 
 /**
+ * An explosive projectile arena object.
+ *
  * @author Daniel Pitts
  */
 public class Missile extends ArenaObject {
@@ -28,11 +30,21 @@ public class Missile extends ArenaObject {
         return new MissileSnapshot(overburn);
     }
 
+    /**
+     * Get the speed of this missile.
+     *
+     * @return the speed
+     */
     public Speed getSpeed() {
         return speed;
     }
 
 
+    /**
+     * See if this robot collides with this missile.
+     *
+     * @param robot the robot to check collision against.
+     */
     @Override
     public void checkCollision(Robot robot) {
         if (robot == this.robot || isDead()) {

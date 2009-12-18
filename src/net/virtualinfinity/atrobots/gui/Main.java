@@ -105,9 +105,9 @@ public class Main implements Runnable {
                 dialog.setVisible(true);
                 final Game newGame = dialog.getGame();
                 if (newGame != null) {
-                    if (game != null) {
-                        game.dispose();
-                    }
+//                    if (game != null) {
+//                        game.dispose();
+//                    }
                     game = newGame;
                     game.addSimulationObserver(arenaPane);
                 }
