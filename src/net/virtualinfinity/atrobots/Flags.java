@@ -3,74 +3,80 @@ package net.virtualinfinity.atrobots;
 import net.virtualinfinity.atrobots.computer.MemoryCell;
 
 /**
+ * Wrapper for CPU flags.
+ *
  * @author Daniel Pitts
  */
 public class Flags {
     private final MemoryCell flagCell;
+    private static final short EQUAL_BIT_MASK = 1;
+    private static final short LESS_BIT_MASK = 2;
+    private static final short GREATER_BIT_MASK = 4;
+    private static final short ZERO_BIT_MASK = 8;
+    private static final short RESET_MASK = (short) 0xFF00;
 
     public Flags(MemoryCell flagCell) {
         this.flagCell = flagCell;
     }
 
     public boolean isLess() {
-        return hasBitInMask(2);
+        return hasBitInMask(LESS_BIT_MASK);
     }
 
     public void setLess(boolean less) {
-        optionallySetBitsInMask(less, 2);
+        optionallySetBitsInMask(less, LESS_BIT_MASK);
     }
 
     public boolean isGreater() {
-        return hasBitInMask(4);
+        return hasBitInMask(GREATER_BIT_MASK);
     }
 
     public void setGreater(boolean greater) {
-        optionallySetBitsInMask(greater, 4);
+        optionallySetBitsInMask(greater, GREATER_BIT_MASK);
     }
 
     public boolean isEqual() {
-        return hasBitInMask(1);
+        return hasBitInMask(EQUAL_BIT_MASK);
     }
 
     public void setEqual(boolean equal) {
-        optionallySetBitsInMask(equal, 1);
+        optionallySetBitsInMask(equal, EQUAL_BIT_MASK);
     }
 
     public boolean isZero() {
-        return hasBitInMask(8);
+        return hasBitInMask(ZERO_BIT_MASK);
     }
 
     public void setZero(boolean zero) {
-        optionallySetBitsInMask(zero, 8);
+        optionallySetBitsInMask(zero, ZERO_BIT_MASK);
     }
 
-    private boolean hasBitInMask(int bitMask) {
+    private boolean hasBitInMask(short bitMask) {
         return 0 != (flagCell.unsigned() & bitMask);
     }
 
-    private void optionallySetBitsInMask(boolean shouldSet, int bitMask) {
+    private void optionallySetBitsInMask(boolean shouldSet, short bitMask) {
         if (shouldSet) {
             addBitsInMask(bitMask);
         }
     }
 
-    private void addBitsInMask(int bitMask) {
-//        System.out.println("bitMask = " + bitMask);
-        flagCell.or((short) bitMask);
+    private void addBitsInMask(short bitMask) {
+        flagCell.or(bitMask);
     }
 
     public void reset() {
-        flagCell.and((short) 0xFF00);
+        flagCell.and(RESET_MASK);
     }
 
     public String toString() {
-        return higherIf('e', isEqual()) +
-                higherIf('l', isLess()) +
-                higherIf('g', isGreater()) +
-                higherIf('z', isZero());
+        return uppercaseIf('e', isEqual()) +
+                uppercaseIf('l', isLess()) +
+                uppercaseIf('g', isGreater()) +
+                uppercaseIf('z', isZero());
     }
 
-    private String higherIf(char c, boolean equal) {
-        return String.valueOf(equal ? Character.toUpperCase(c) : c);
+    private String uppercaseIf(char c, boolean useUppercase) {
+        return String.valueOf(useUppercase ? Character.toUpperCase(c) : c);
     }
 }

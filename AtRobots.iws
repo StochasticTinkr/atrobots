@@ -34,20 +34,8 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" readonly="true" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/net/virtualinfinity/atrobots/AtRobotPortFactory.java" afterPath="$PROJECT_DIR$/src/net/virtualinfinity/atrobots/AtRobotPortFactory.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/net/virtualinfinity/atrobots/Explosion.java" afterPath="$PROJECT_DIR$/src/net/virtualinfinity/atrobots/Explosion.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/net/virtualinfinity/atrobots/gui/Main.java" afterPath="$PROJECT_DIR$/src/net/virtualinfinity/atrobots/gui/Main.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/net/virtualinfinity/atrobots/gui/NewGameDialog.java" afterPath="$PROJECT_DIR$/src/net/virtualinfinity/atrobots/gui/NewGameDialog.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/AtRobots.ipr" afterPath="$PROJECT_DIR$/AtRobots.ipr" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/testsrc/net/virtualinfinity/atrobots/EntrantFactoryTest.java" afterPath="$PROJECT_DIR$/testsrc/net/virtualinfinity/atrobots/EntrantFactoryTest.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/net/virtualinfinity/atrobots/interrupts/AtRobotInterruptFactory.java" afterPath="$PROJECT_DIR$/src/net/virtualinfinity/atrobots/interrupts/AtRobotInterruptFactory.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/net/virtualinfinity/atrobots/EntrantFactory.java" afterPath="$PROJECT_DIR$/src/net/virtualinfinity/atrobots/EntrantFactory.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/net/virtualinfinity/atrobots/HardwareContext.java" afterPath="$PROJECT_DIR$/src/net/virtualinfinity/atrobots/HardwareContext.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/net/virtualinfinity/atrobots/DebugInfo.java" afterPath="$PROJECT_DIR$/src/net/virtualinfinity/atrobots/DebugInfo.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/net/virtualinfinity/atrobots/Flags.java" afterPath="$PROJECT_DIR$/src/net/virtualinfinity/atrobots/Flags.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/AtRobots.iws" afterPath="$PROJECT_DIR$/AtRobots.iws" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/net/virtualinfinity/atrobots/Arena.java" afterPath="$PROJECT_DIR$/src/net/virtualinfinity/atrobots/Arena.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/net/virtualinfinity/atrobots/ArenaObject.java" afterPath="$PROJECT_DIR$/src/net/virtualinfinity/atrobots/ArenaObject.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/testsrc/net/virtualinfinity/atrobots/EntrantTest.java" afterPath="$PROJECT_DIR$/testsrc/net/virtualinfinity/atrobots/EntrantTest.java" />
     </list>
   </component>
   <component name="ChangesViewManager" flattened_view="true" show_ignored="false" />
@@ -161,8 +149,8 @@
       <property name="field_breakpoints_groupByClasses" value="true" />
       <property name="method_breakpoints_groupByClasses" value="true" />
       <property name="exception_breakpoints_viewId" value="TABLE" />
-      <property name="exception_breakpoints_groupByClasses" value="true" />
       <property name="field_breakpoints_viewId" value="TABLE" />
+      <property name="exception_breakpoints_groupByClasses" value="true" />
       <property name="method_breakpoints_groupByMethods" value="false" />
     </ui_properties>
   </component>
@@ -181,15 +169,6 @@
   </component>
   <component name="FileEditorManager">
     <leaf>
-      <file leaf-file-name="Main.java" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/net/virtualinfinity/atrobots/gui/Main.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="175" column="60" selection-start="6341" selection-end="6341" vertical-scroll-proportion="0.0">
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
       <file leaf-file-name="Arena.java" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/net/virtualinfinity/atrobots/Arena.java">
           <provider selected="true" editor-type-id="text-editor">
@@ -202,7 +181,19 @@
       <file leaf-file-name="Explosion.java" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/net/virtualinfinity/atrobots/Explosion.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="23" column="8" selection-start="746" selection-end="746" vertical-scroll-proportion="0.0">
+            <state line="13" column="13" selection-start="424" selection-end="424" vertical-scroll-proportion="0.0">
+              <folding>
+                <marker date="1261076199969" expanded="true" signature="335:410" placeholder="/**...*/" />
+                <marker date="1261076199969" expanded="true" signature="511:669" placeholder="/**...*/" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="Flags.java" pinned="false" current="true" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/src/net/virtualinfinity/atrobots/Flags.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="5" column="25" selection-start="126" selection-end="126" vertical-scroll-proportion="0.17034069">
               <folding />
             </state>
           </provider>
@@ -229,16 +220,11 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="MissileLauncher.java" pinned="false" current="true" current-in-tab="true">
+      <file leaf-file-name="MissileLauncher.java" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/net/virtualinfinity/atrobots/MissileLauncher.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="23" column="8" selection-start="593" selection-end="593" vertical-scroll-proportion="0.036247335">
-              <folding>
-                <element signature="method#setHeading#0;class#MissileLauncher#0" expanded="true" />
-                <element signature="method#setPower#0;class#MissileLauncher#0" expanded="true" />
-                <element signature="method#setPosition#0;class#MissileLauncher#0" expanded="true" />
-                <element signature="method#setRobot#0;class#MissileLauncher#0" expanded="true" />
-              </folding>
+            <state line="31" column="36" selection-start="754" selection-end="754" vertical-scroll-proportion="0.0">
+              <folding />
             </state>
           </provider>
         </entry>
@@ -246,7 +232,7 @@
       <file leaf-file-name="Robot.java" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/net/virtualinfinity/atrobots/Robot.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="287" column="92" selection-start="7627" selection-end="7627" vertical-scroll-proportion="-0.68">
+            <state line="287" column="92" selection-start="7627" selection-end="7627" vertical-scroll-proportion="0.0">
               <folding />
             </state>
           </provider>
@@ -375,13 +361,8 @@
       <file leaf-file-name="EntrantFactory.java" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/net/virtualinfinity/atrobots/EntrantFactory.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="61" column="18" selection-start="1705" selection-end="1705" vertical-scroll-proportion="0.0">
-              <folding>
-                <element signature="imports" expanded="true" />
-                <element signature="method#getName#0;class#EntrantFactory#0" expanded="true" />
-                <element signature="method#getProgram#0;class#EntrantFactory#0" expanded="true" />
-                <element signature="method#getHardwareSpecification#0;class#EntrantFactory#0" expanded="true" />
-              </folding>
+            <state line="62" column="18" selection-start="1707" selection-end="1707" vertical-scroll-proportion="0.0">
+              <folding />
             </state>
           </provider>
         </entry>
@@ -435,11 +416,7 @@
         <entry file="file://$PROJECT_DIR$/src/net/virtualinfinity/atrobots/gui/renderers/RobotRenderer.java">
           <provider selected="true" editor-type-id="text-editor">
             <state line="18" column="0" selection-start="542" selection-end="542" vertical-scroll-proportion="0.0">
-              <folding>
-                <marker date="1261075269818" expanded="true" signature="1538:1783" placeholder="{...}" />
-                <marker date="1261075269818" expanded="true" signature="1857:2375" placeholder="{...}" />
-                <marker date="1261075269818" expanded="true" signature="2450:2790" placeholder="{...}" />
-              </folding>
+              <folding />
             </state>
           </provider>
         </entry>
@@ -448,10 +425,7 @@
         <entry file="file://$PROJECT_DIR$/src/net/virtualinfinity/atrobots/snapshots/ArenaObjectSnapshot.java">
           <provider selected="true" editor-type-id="text-editor">
             <state line="19" column="0" selection-start="474" selection-end="474" vertical-scroll-proportion="0.0">
-              <folding>
-                <marker date="1261075269852" expanded="true" signature="646:708" placeholder="{...}" />
-                <marker date="1261075269852" expanded="true" signature="743:805" placeholder="{...}" />
-              </folding>
+              <folding />
             </state>
           </provider>
         </entry>
@@ -460,17 +434,7 @@
         <entry file="file://$PROJECT_DIR$/src/net/virtualinfinity/atrobots/snapshots/RobotSnapshot.java">
           <provider selected="true" editor-type-id="text-editor">
             <state line="16" column="16" selection-start="492" selection-end="492" vertical-scroll-proportion="0.0">
-              <folding>
-                <marker date="1261075269943" expanded="false" signature="585:632" placeholder="{...}" />
-                <marker date="1261075269943" expanded="false" signature="673:708" placeholder="{...}" />
-                <marker date="1261075269943" expanded="false" signature="756:797" placeholder="{...}" />
-                <marker date="1261075269943" expanded="false" signature="853:902" placeholder="{...}" />
-                <marker date="1261075269943" expanded="true" signature="951:993" placeholder="{...}" />
-                <marker date="1261075269943" expanded="false" signature="1045:1084" placeholder="{...}" />
-                <marker date="1261075269943" expanded="false" signature="1148:1199" placeholder="{...}" />
-                <marker date="1261075269943" expanded="false" signature="1238:1271" placeholder="{...}" />
-                <marker date="1261075269943" expanded="false" signature="1313:1348" placeholder="{...}" />
-              </folding>
+              <folding />
             </state>
           </provider>
         </entry>
@@ -497,28 +461,7 @@
         <entry file="file://$PROJECT_DIR$/src/net/virtualinfinity/atrobots/measures/AbsoluteAngle.java">
           <provider selected="true" editor-type-id="text-editor">
             <state line="13" column="15" selection-start="271" selection-end="271" vertical-scroll-proportion="0.0">
-              <folding>
-                <marker date="1261075269782" expanded="true" signature="186:225" placeholder="{...}" />
-                <marker date="1261075269782" expanded="true" signature="254:295" placeholder="{...}" />
-                <marker date="1261075269782" expanded="true" signature="322:363" placeholder="{...}" />
-                <marker date="1261075269782" expanded="true" signature="435:512" placeholder="{...}" />
-                <marker date="1261075269782" expanded="true" signature="574:624" placeholder="{...}" />
-                <marker date="1261075269782" expanded="true" signature="689:759" placeholder="{...}" />
-                <marker date="1261075269782" expanded="true" signature="792:823" placeholder="{...}" />
-                <marker date="1261075269782" expanded="true" signature="866:918" placeholder="{...}" />
-                <marker date="1261075269782" expanded="true" signature="964:1020" placeholder="{...}" />
-                <marker date="1261075269782" expanded="true" signature="1050:1128" placeholder="{...}" />
-                <marker date="1261075269782" expanded="true" signature="1186:1256" placeholder="{...}" />
-                <marker date="1261075269782" expanded="true" signature="1313:1379" placeholder="{...}" />
-                <marker date="1261075269782" expanded="true" signature="1416:1459" placeholder="{...}" />
-                <marker date="1261075269782" expanded="true" signature="1541:1719" placeholder="{...}" />
-                <marker date="1261075269782" expanded="true" signature="1796:2001" placeholder="{...}" />
-                <marker date="1261075269782" expanded="true" signature="2063:2154" placeholder="{...}" />
-                <marker date="1261075269782" expanded="true" signature="2221:2279" placeholder="{...}" />
-                <marker date="1261075269782" expanded="true" signature="2310:2378" placeholder="{...}" />
-                <marker date="1261075269782" expanded="true" signature="2442:2505" placeholder="{...}" />
-                <marker date="1261075269782" expanded="true" signature="2538:2590" placeholder="{...}" />
-              </folding>
+              <folding />
             </state>
           </provider>
         </entry>
@@ -696,7 +639,7 @@
       <showLibraryContents />
       <hideEmptyPackages ProjectPane="false" />
       <abbreviatePackageNames />
-      <showStructure ProjectPane="false" Scope="false" PackagesPane="false" Favorites="false" />
+      <showStructure Favorites="false" Scope="false" PackagesPane="false" ProjectPane="false" />
       <autoscrollToSource />
       <autoscrollFromSource />
       <sortByType />
@@ -722,13 +665,14 @@
       <recent name="net.virtualinfinity.atrobots.gui.renderers" />
       <recent name="net.virtualinfinity.atrobots" />
     </key>
-    <key name="MoveMembersDialog.RECENTS_KEY">
-      <recent name="net.virtualinfinity.atrobots.AngleBracket" />
-    </key>
     <key name="IntroduceConstantDialog.RECENTS_KEY">
+      <recent name="net.virtualinfinity.atrobots.Flags" />
       <recent name="" />
       <recent name="net.virtualinfinity.atrobots.RelativeAngle" />
       <recent name="net.virtualinfinity.atrobots.Duration" />
+    </key>
+    <key name="MoveMembersDialog.RECENTS_KEY">
+      <recent name="net.virtualinfinity.atrobots.AngleBracket" />
     </key>
     <key name="CreateClassDialog.RecentsKey">
       <recent name="net.virtualinfinity.atrobots.gui.renderers" />
@@ -741,7 +685,7 @@
       <recent name="net.virtualinfinity.atrobots" />
     </key>
   </component>
-  <component name="RunManager" selected="Application.Main">
+  <component name="RunManager" selected="JUnit.Tests">
     <configuration default="true" type="Remote" factoryName="Remote">
       <option name="USE_SOCKET_TRANSPORT" value="true" />
       <option name="SERVER_MODE" value="false" />
@@ -1008,10 +952,9 @@
     </todo-panel>
   </component>
   <component name="ToolWindowManager">
-    <frame x="-8" y="-8" width="1696" height="961" extended-state="6" />
+    <frame x="1" y="1" width="1678" height="943" extended-state="0" />
     <editor active="true" />
     <layout>
-      <window_info id="UI Designer" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.24165636" sideWeight="0.64421856" order="3" side_tool="false" />
       <window_info id="Data Sources" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" />
       <window_info id="Changes" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32820514" sideWeight="0.5" order="8" side_tool="false" />
       <window_info id="Palette" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32694685" sideWeight="0.64421856" order="6" side_tool="false" />
@@ -1022,17 +965,18 @@
       <window_info id="IDEtalk Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="13" side_tool="false" />
       <window_info id="IDEtalk" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32820514" sideWeight="0.5" order="9" side_tool="false" />
-      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.31304348" sideWeight="0.5" order="10" side_tool="false" />
+      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.31273177" sideWeight="0.5" order="10" side_tool="false" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25412962" sideWeight="0.5" order="7" side_tool="false" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.24982053" sideWeight="0.5" order="1" side_tool="false" />
       <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="0" side_tool="false" />
       <window_info id="Maven Projects" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" />
       <window_info id="JProfiler" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" />
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.28728607" sideWeight="0.67826086" order="0" side_tool="false" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.2867738" sideWeight="0.73189324" order="0" side_tool="false" />
       <window_info id="Dependency Viewer" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="11" side_tool="false" />
       <window_info id="Web Preview" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" />
       <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="6" side_tool="false" />
-      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25962734" sideWeight="0.5" order="2" side_tool="false" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.2592122" sideWeight="0.5" order="2" side_tool="false" />
+      <window_info id="UI Designer" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.24165636" sideWeight="0.64421856" order="3" side_tool="false" />
       <window_info id="Maven projects" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="4" side_tool="false" />
       <window_info id="File View" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" />
       <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.24982053" sideWeight="0.5" order="2" side_tool="false" />
@@ -1040,8 +984,8 @@
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="0" side_tool="false" />
       <window_info id="Web" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="2" side_tool="false" />
       <window_info id="EJB" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="4" side_tool="false" />
-      <window_info id="CVS" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="8" side_tool="false" />
       <window_info id="Module Dependencies" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="5" side_tool="false" />
+      <window_info id="CVS" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="8" side_tool="false" />
       <window_info id="Duplicates" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="12" side_tool="false" />
     </layout>
   </component>
@@ -1143,13 +1087,6 @@
     <option name="myLastEditedConfigurable" />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/src/net/virtualinfinity/atrobots/parser/EntrantLineVisitor.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="269" column="18" selection-start="9208" selection-end="9208" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/net/virtualinfinity/atrobots/Position.java">
       <provider selected="true" editor-type-id="text-editor">
         <state line="18" column="11" selection-start="362" selection-end="362" vertical-scroll-proportion="0.0">
@@ -1157,108 +1094,72 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/net/virtualinfinity/atrobots/ArenaObject.java">
+    <entry file="file://$PROJECT_DIR$/src/net/virtualinfinity/atrobots/EntrantFactory.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="24" column="41" selection-start="776" selection-end="776" vertical-scroll-proportion="0.0">
+        <state line="62" column="18" selection-start="1707" selection-end="1707" vertical-scroll-proportion="0.0">
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/net/virtualinfinity/atrobots/measures/AngleBracket.java">
+    <entry file="file://$PROJECT_DIR$/src/net/virtualinfinity/atrobots/parser/AtRobotLineLexer.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="20" column="28" selection-start="626" selection-end="626" vertical-scroll-proportion="0.0">
-          <folding>
-            <marker date="1261075269828" expanded="true" signature="372:530" placeholder="{...}" />
-            <marker date="1261075269828" expanded="true" signature="558:636" placeholder="{...}" />
-            <marker date="1261075269828" expanded="true" signature="719:807" placeholder="{...}" />
-            <marker date="1261075269828" expanded="true" signature="915:994" placeholder="{...}" />
-            <marker date="1261075269828" expanded="true" signature="1033:1561" placeholder="{...}" />
-            <marker date="1261075269828" expanded="true" signature="1069:1552" placeholder="{...}" />
-            <marker date="1261075269828" expanded="true" signature="1150:1194" placeholder="{...}" />
-            <marker date="1261075269828" expanded="true" signature="1293:1542" placeholder="{...}" />
-            <marker date="1261075269828" expanded="true" signature="1612:1719" placeholder="{...}" />
-            <marker date="1261075269828" expanded="true" signature="1771:1887" placeholder="{...}" />
-            <marker date="1261075269828" expanded="true" signature="1935:2058" placeholder="{...}" />
-          </folding>
+        <state line="12" column="18" selection-start="284" selection-end="284" vertical-scroll-proportion="0.0">
+          <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/net/virtualinfinity/atrobots/Shield.java">
+    <entry file="file://$PROJECT_DIR$/src/net/virtualinfinity/atrobots/parser/LineVisitor.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="57" column="84" selection-start="1480" selection-end="1480" vertical-scroll-proportion="0.0">
-          <folding>
-            <marker date="1261075269947" expanded="true" signature="335:420" placeholder="{...}" />
-            <marker date="1261075269947" expanded="true" signature="456:709" placeholder="{...}" />
-            <marker date="1261075269947" expanded="true" signature="491:702" placeholder="{...}" />
-            <marker date="1261075269947" expanded="true" signature="525:593" placeholder="{...}" />
-            <marker date="1261075269947" expanded="true" signature="638:692" placeholder="{...}" />
-            <marker date="1261075269947" expanded="false" signature="741:771" placeholder="{...}" />
-            <marker date="1261075269947" expanded="true" signature="815:895" placeholder="{...}" />
-            <marker date="1261075269947" expanded="true" signature="921:954" placeholder="{...}" />
-          </folding>
+        <state line="7" column="0" selection-start="102" selection-end="102" vertical-scroll-proportion="0.0">
+          <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/net/virtualinfinity/atrobots/Throttle.java">
+    <entry file="file://$PROJECT_DIR$/src/net/virtualinfinity/atrobots/parser/EntrantLineVisitor.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="19" column="69" selection-start="594" selection-end="594" vertical-scroll-proportion="0.0">
-          <folding>
-            <marker date="1261075269855" expanded="true" signature="523:600" placeholder="{...}" />
-            <marker date="1261075269855" expanded="true" signature="641:785" placeholder="{...}" />
-            <marker date="1261075269855" expanded="true" signature="676:778" placeholder="{...}" />
-            <marker date="1261075269855" expanded="true" signature="710:768" placeholder="{...}" />
-            <marker date="1261075269855" expanded="true" signature="824:1006" placeholder="{...}" />
-            <marker date="1261075269855" expanded="true" signature="859:999" placeholder="{...}" />
-            <marker date="1261075269855" expanded="true" signature="904:989" placeholder="{...}" />
-            <marker date="1261075269855" expanded="false" signature="1041:1077" placeholder="{...}" />
-            <marker date="1261075269855" expanded="false" signature="1129:1178" placeholder="{...}" />
-            <marker date="1261075269855" expanded="false" signature="1206:1235" placeholder="{...}" />
-            <marker date="1261075269855" expanded="true" signature="1273:1331" placeholder="{...}" />
-          </folding>
+        <state line="269" column="18" selection-start="9208" selection-end="9208" vertical-scroll-proportion="0.0">
+          <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/net/virtualinfinity/atrobots/measures/Distance.java">
+    <entry file="file://$PROJECT_DIR$/src/net/virtualinfinity/atrobots/gui/TestAccel.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="33" column="34" selection-start="816" selection-end="816" vertical-scroll-proportion="0.0">
-          <folding>
-            <marker date="1261075269669" expanded="true" signature="206:243" placeholder="{...}" />
-            <marker date="1261075269669" expanded="false" signature="275:305" placeholder="{...}" />
-            <marker date="1261075269669" expanded="true" signature="360:404" placeholder="{...}" />
-            <marker date="1261075269669" expanded="true" signature="447:503" placeholder="{...}" />
-            <marker date="1261075269669" expanded="true" signature="546:627" placeholder="{...}" />
-            <marker date="1261075269669" expanded="true" signature="673:743" placeholder="{...}" />
-            <marker date="1261075269669" expanded="true" signature="780:823" placeholder="{...}" />
-            <marker date="1261075269669" expanded="true" signature="870:940" placeholder="{...}" />
-            <marker date="1261075269669" expanded="true" signature="979:1074" placeholder="{...}" />
-            <marker date="1261075269669" expanded="true" signature="1114:1174" placeholder="{...}" />
-          </folding>
+        <state line="10" column="13" selection-start="199" selection-end="199" vertical-scroll-proportion="0.0">
+          <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/net/virtualinfinity/atrobots/measures/RelativeAngle.java">
+    <entry file="file://$PROJECT_DIR$/src/net/virtualinfinity/atrobots/gui/renderers/SnapshotRenderer.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="42" column="50" selection-start="1103" selection-end="1103" vertical-scroll-proportion="0.0">
-          <folding>
-            <marker date="1261075269825" expanded="true" signature="311:350" placeholder="{...}" />
-            <marker date="1261075269825" expanded="true" signature="380:421" placeholder="{...}" />
-            <marker date="1261075269825" expanded="true" signature="449:490" placeholder="{...}" />
-            <marker date="1261075269825" expanded="true" signature="552:602" placeholder="{...}" />
-            <marker date="1261075269825" expanded="true" signature="655:725" placeholder="{...}" />
-            <marker date="1261075269825" expanded="false" signature="758:789" placeholder="{...}" />
-            <marker date="1261075269825" expanded="true" signature="828:893" placeholder="{...}" />
-            <marker date="1261075269825" expanded="true" signature="923:994" placeholder="{...}" />
-            <marker date="1261075269825" expanded="true" signature="1051:1109" placeholder="{...}" />
-            <marker date="1261075269825" expanded="true" signature="1146:1189" placeholder="{...}" />
-            <marker date="1261075269825" expanded="true" signature="1220:1278" placeholder="{...}" />
-            <marker date="1261075269825" expanded="true" signature="1326:1408" placeholder="{...}" />
-          </folding>
+        <state line="10" column="0" selection-start="240" selection-end="240" vertical-scroll-proportion="0.0">
+          <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/net/virtualinfinity/atrobots/Robot.java">
+    <entry file="file://$PROJECT_DIR$/src/net/virtualinfinity/atrobots/gui/renderers/RobotRenderer.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="287" column="92" selection-start="7627" selection-end="7627" vertical-scroll-proportion="-0.68">
+        <state line="18" column="0" selection-start="542" selection-end="542" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/net/virtualinfinity/atrobots/snapshots/ArenaObjectSnapshot.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="19" column="0" selection-start="474" selection-end="474" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/net/virtualinfinity/atrobots/snapshots/RobotSnapshot.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="16" column="16" selection-start="492" selection-end="492" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/net/virtualinfinity/atrobots/snapshots/SnapshotVisitor.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="6" column="0" selection-start="116" selection-end="116" vertical-scroll-proportion="0.0">
           <folding />
         </state>
       </provider>
@@ -1273,80 +1174,31 @@
     <entry file="file://$PROJECT_DIR$/src/net/virtualinfinity/atrobots/measures/AbsoluteAngle.java">
       <provider selected="true" editor-type-id="text-editor">
         <state line="13" column="15" selection-start="271" selection-end="271" vertical-scroll-proportion="0.0">
-          <folding>
-            <marker date="1261075269782" expanded="true" signature="186:225" placeholder="{...}" />
-            <marker date="1261075269782" expanded="true" signature="254:295" placeholder="{...}" />
-            <marker date="1261075269782" expanded="true" signature="322:363" placeholder="{...}" />
-            <marker date="1261075269782" expanded="true" signature="435:512" placeholder="{...}" />
-            <marker date="1261075269782" expanded="true" signature="574:624" placeholder="{...}" />
-            <marker date="1261075269782" expanded="true" signature="689:759" placeholder="{...}" />
-            <marker date="1261075269782" expanded="true" signature="792:823" placeholder="{...}" />
-            <marker date="1261075269782" expanded="true" signature="866:918" placeholder="{...}" />
-            <marker date="1261075269782" expanded="true" signature="964:1020" placeholder="{...}" />
-            <marker date="1261075269782" expanded="true" signature="1050:1128" placeholder="{...}" />
-            <marker date="1261075269782" expanded="true" signature="1186:1256" placeholder="{...}" />
-            <marker date="1261075269782" expanded="true" signature="1313:1379" placeholder="{...}" />
-            <marker date="1261075269782" expanded="true" signature="1416:1459" placeholder="{...}" />
-            <marker date="1261075269782" expanded="true" signature="1541:1719" placeholder="{...}" />
-            <marker date="1261075269782" expanded="true" signature="1796:2001" placeholder="{...}" />
-            <marker date="1261075269782" expanded="true" signature="2063:2154" placeholder="{...}" />
-            <marker date="1261075269782" expanded="true" signature="2221:2279" placeholder="{...}" />
-            <marker date="1261075269782" expanded="true" signature="2310:2378" placeholder="{...}" />
-            <marker date="1261075269782" expanded="true" signature="2442:2505" placeholder="{...}" />
-            <marker date="1261075269782" expanded="true" signature="2538:2590" placeholder="{...}" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/net/virtualinfinity/atrobots/gui/Main.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="175" column="60" selection-start="6341" selection-end="6341" vertical-scroll-proportion="0.0">
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/net/virtualinfinity/atrobots/Arena.java">
+    <entry file="file://$PROJECT_DIR$/src/net/virtualinfinity/atrobots/MissileLauncher.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="39" column="38" selection-start="1271" selection-end="1271" vertical-scroll-proportion="0.0">
+        <state line="31" column="36" selection-start="754" selection-end="754" vertical-scroll-proportion="0.0">
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/net/virtualinfinity/atrobots/Explosion.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="23" column="8" selection-start="746" selection-end="746" vertical-scroll-proportion="0.0">
+        <state line="13" column="13" selection-start="424" selection-end="424" vertical-scroll-proportion="0.0">
+          <folding>
+            <marker date="1261076199969" expanded="true" signature="335:410" placeholder="/**...*/" />
+            <marker date="1261076199969" expanded="true" signature="511:669" placeholder="/**...*/" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/net/virtualinfinity/atrobots/Flags.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="5" column="25" selection-start="126" selection-end="126" vertical-scroll-proportion="0.17034069">
           <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/net/virtualinfinity/atrobots/Armor.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="8" column="12" selection-start="143" selection-end="143" vertical-scroll-proportion="0.0">
-          <folding>
-            <marker date="1261075269837" expanded="true" signature="197:347" placeholder="/**...*/" />
-            <marker date="1261075269837" expanded="true" signature="380:426" placeholder="{...}" />
-            <marker date="1261075269837" expanded="true" signature="432:571" placeholder="/**...*/" />
-            <marker date="1261075269837" expanded="true" signature="607:767" placeholder="{...}" />
-            <marker date="1261075269837" expanded="true" signature="642:760" placeholder="{...}" />
-            <marker date="1261075269837" expanded="true" signature="676:750" placeholder="{...}" />
-            <marker date="1261075269837" expanded="true" signature="773:874" placeholder="/**...*/" />
-            <marker date="1261075269837" expanded="true" signature="902:948" placeholder="{...}" />
-            <marker date="1261075269837" expanded="true" signature="979:1061" placeholder="{...}" />
-            <marker date="1261075269837" expanded="true" signature="1067:1164" placeholder="/**...*/" />
-            <marker date="1261075269837" expanded="false" signature="1198:1237" placeholder="{...}" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/net/virtualinfinity/atrobots/MissileLauncher.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="23" column="8" selection-start="593" selection-end="593" vertical-scroll-proportion="0.036247335">
-          <folding>
-            <element signature="method#setHeading#0;class#MissileLauncher#0" expanded="true" />
-            <element signature="method#setPower#0;class#MissileLauncher#0" expanded="true" />
-            <element signature="method#setPosition#0;class#MissileLauncher#0" expanded="true" />
-            <element signature="method#setRobot#0;class#MissileLauncher#0" expanded="true" />
-          </folding>
         </state>
       </provider>
     </entry>
