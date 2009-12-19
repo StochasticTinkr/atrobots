@@ -99,7 +99,7 @@ public class Missile extends ArenaObject {
         if (position.getY().getMeters() >= 1000) {
             return heading.getAngle().projectAngle(Vector.createCartesian(Distance.fromMeters(0), Distance.fromMeters(1000).plus(y)));
         }
-        throw new AssertionError("Should be outside arena.");
+        throw new IllegalStateException("Should be outside arena.");
 
     }
 
