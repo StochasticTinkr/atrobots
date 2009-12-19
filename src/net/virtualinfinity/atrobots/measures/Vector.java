@@ -42,10 +42,6 @@ public abstract class Vector {
         return getX().times(vector.getX()).plus(getY().times(vector.getY()));
     }
 
-    public Vector project(Vector vector) {
-        return times(dot(vector).divide(getMagnatudeSquared()));
-    }
-
     public Vector perpendicularIntersectionFrom(Vector lineStart, AbsoluteAngle lineAngle, Distance segmentLength) {
         final Vector intersectionVector = lineAngle.projectAngle(minus(lineStart));
         if (intersectionVector.getMagnatude().compareTo(segmentLength) < 0)
@@ -65,5 +61,9 @@ public abstract class Vector {
         }
         Vector vector = (Vector) o;
         return getX().equals(vector.getX()) && getY().equals(vector.getY());
+    }
+
+    public Vector projectOnto(Vector v) {
+        return v.times(v.dot(this).divide(v.getMagnatudeSquared()));
     }
 }

@@ -48,10 +48,10 @@ public class VectorTest extends TestCase {
         final Vector down75 = createCartesian(0, 75);
         final Vector diagnal5 = createCartesian(5, 5);
         final Vector diagnal37dot5 = createCartesian(37.5, 37.5);
-        assertEquals(down5.getX().getMeters(), down75.project(diagnal5).getX().getMeters(), DELTA);
-        assertEquals(down5.getY().getMeters(), down75.project(diagnal5).getY().getMeters(), DELTA);
-        assertEquals(diagnal37dot5.getX().getMeters(), diagnal5.project(down75).getX().getMeters(), DELTA);
-        assertEquals(diagnal37dot5.getY().getMeters(), diagnal5.project(down75).getY().getMeters(), DELTA);
+        assertEquals(down5.getX().getMeters(), diagnal5.projectOnto(down75).getX().getMeters(), DELTA);
+        assertEquals(down5.getY().getMeters(), diagnal5.projectOnto(down75).getY().getMeters(), DELTA);
+        assertEquals(diagnal37dot5.getX().getMeters(), down75.projectOnto(diagnal5).getX().getMeters(), DELTA);
+        assertEquals(diagnal37dot5.getY().getMeters(), down75.projectOnto(diagnal5).getY().getMeters(), DELTA);
     }
 
 
