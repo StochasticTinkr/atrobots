@@ -53,4 +53,12 @@ public class Distance implements Comparable<Distance> {
     public static Distance unit() {
         return fromMeters(1);
     }
+
+    public Distance negate() {
+        return fromMeters(-getMeters());
+    }
+
+    public double dividedBy(Distance x) {
+        return getMeters() / x.getMeters();
+    }
 }

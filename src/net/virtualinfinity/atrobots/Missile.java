@@ -85,19 +85,20 @@ public class Missile extends ArenaObject {
     }
 
     private Vector getWallIntersectionDelta() {
-        final Distance x = Distance.fromMeters(0).minus(position.getX());
-        final Distance y = Distance.fromMeters(0).minus(position.getY());
+        final Distance x = position.getX().negate();
+        final Distance y = position.getY().negate();
+        final Vector vector = heading.getAngle().toVector(Distance.unit());
         if (position.getX().getMeters() <= 0) {
-            return heading.getAngle().projectAngle(Vector.createCartesian(x, Distance.fromMeters(0)));
+            return vector.times(x.dividedBy(vector.getX()));
         }
         if (position.getX().getMeters() >= 1000) {
-            return heading.getAngle().projectAngle(Vector.createCartesian(Distance.fromMeters(1000).plus(x), Distance.fromMeters(0)));
+            return vector.times(Distance.fromMeters(1000).plus(x).dividedBy(vector.getX()));
         }
         if (position.getY().getMeters() <= 0) {
-            return heading.getAngle().projectAngle(Vector.createCartesian(Distance.fromMeters(0), y));
+            return vector.times(y.dividedBy(vector.getY()));
         }
         if (position.getY().getMeters() >= 1000) {
-            return heading.getAngle().projectAngle(Vector.createCartesian(Distance.fromMeters(0), Distance.fromMeters(1000).plus(y)));
+            return vector.times(Distance.fromMeters(1000).plus(y).dividedBy(vector.getY()));
         }
         throw new IllegalStateException("Should be outside arena.");
 
