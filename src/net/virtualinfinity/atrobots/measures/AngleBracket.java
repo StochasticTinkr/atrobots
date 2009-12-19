@@ -57,7 +57,7 @@ public class AngleBracket {
     }
 
     public AbsoluteAngle randomAngleBetween() {
-        return AbsoluteAngle.fromRadians(counterClockwiseBound.getNormalizedRadians() + Math.random() * rangeSize);
+        return AbsoluteAngle.fromRadians(counterClockwiseBound.getNormalizedRadians() - Math.random() * rangeSize);
     }
 
     public Shape toShape(Distance x, Distance y, Distance radius) {
