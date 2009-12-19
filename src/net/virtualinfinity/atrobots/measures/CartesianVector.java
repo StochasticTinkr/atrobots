@@ -1,6 +1,9 @@
 package net.virtualinfinity.atrobots.measures;
 
 /**
+ * A {@link net.virtualinfinity.atrobots.measures.Vector} which is implemented via a cartesian (rectangular)
+ * representation.
+ *
  * @author Daniel Pitts
  */
 class CartesianVector extends Vector {
