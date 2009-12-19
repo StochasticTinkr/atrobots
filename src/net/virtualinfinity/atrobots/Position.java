@@ -30,7 +30,7 @@ public class Position {
 
     public void move(Vector delta) {
         if (odometer != null) {
-            odometer.accumulate(delta.getMagnatude());
+            odometer.accumulate(delta.getMagnitude());
         }
         lastVector = vector;
         vector = vector.plus(delta);

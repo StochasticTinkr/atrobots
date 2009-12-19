@@ -256,7 +256,7 @@ public class Robot extends ArenaObject implements Resetable {
 
     @Override
     public void checkCollision(Robot robot) {
-        if (robot.getPosition().getVectorTo(position).getMagnatude().getMeters() < 8) {
+        if (robot.getPosition().getVectorTo(position).getMagnitude().getMeters() < 8) {
             collides();
             robot.collides();
         }

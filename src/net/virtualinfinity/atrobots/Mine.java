@@ -40,7 +40,7 @@ public class Mine extends ArenaObject {
         if (isDead() || layedBy(robot.getMineLayer())) {
             return;
         }
-        if (robot.getPosition().getVectorTo(position).getMagnatude().compareTo(triggerRadius) < 0) {
+        if (robot.getPosition().getVectorTo(position).getMagnitude().compareTo(triggerRadius) < 0) {
             explode();
         }
     }

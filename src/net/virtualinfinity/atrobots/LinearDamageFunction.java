@@ -18,7 +18,7 @@ public class LinearDamageFunction extends ExplosionFunction {
     }
 
     public double getDamageAmount(ArenaObject object) {
-        final Distance distance = object.getPosition().getVectorTo(position).getMagnatude();
+        final Distance distance = object.getPosition().getVectorTo(position).getMagnitude();
         return Math.max(0, (damageAtCenter - distance.getMeters()) * multiplier);
     }
 

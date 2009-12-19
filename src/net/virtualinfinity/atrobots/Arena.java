@@ -101,7 +101,7 @@ public class Arena {
                 continue;
             }
             final Vector vector = robot.getPosition().getVectorTo(position);
-            final Distance distance = vector.getMagnatude();
+            final Distance distance = vector.getMagnitude();
             if (closest == null || distance.compareTo(closestDistance) < 0) {
                 if (angleBracket.contains(vector.getAngle())) {
                     closest = robot;

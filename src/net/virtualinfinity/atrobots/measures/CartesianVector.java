@@ -12,11 +12,11 @@ class CartesianVector extends Vector {
         this.y = y;
     }
 
-    public Distance getMagnatude() {
-        return getMagnatudeSquared().squareRoot();
+    public Distance getMagnitude() {
+        return getMagnitudeSquared().squareRoot();
     }
 
-    public Area getMagnatudeSquared() {
+    public Area getMagnitudeSquared() {
         return x.times(x).plus(y.times(y));
     }
 

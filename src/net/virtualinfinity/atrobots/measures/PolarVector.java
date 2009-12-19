@@ -4,16 +4,16 @@ package net.virtualinfinity.atrobots.measures;
  * @author Daniel Pitts
  */
 class PolarVector extends Vector {
-    private final Distance magnatude;
+    private final Distance magnitude;
     private final AbsoluteAngle angle;
 
-    private PolarVector(Distance magnatude, AbsoluteAngle angle) {
-        this.magnatude = magnatude;
+    private PolarVector(Distance magnitude, AbsoluteAngle angle) {
+        this.magnitude = magnitude;
         this.angle = angle;
     }
 
-    public Distance getMagnatude() {
-        return magnatude;
+    public Distance getMagnitude() {
+        return magnitude;
     }
 
     public AbsoluteAngle getAngle() {
@@ -21,22 +21,22 @@ class PolarVector extends Vector {
     }
 
     public Distance getX() {
-        return magnatude.times(angle.cosine());
+        return magnitude.times(angle.cosine());
     }
 
     public Distance getY() {
-        return magnatude.times(angle.sine());
+        return magnitude.times(angle.sine());
     }
 
-    public static PolarVector createPolar(AbsoluteAngle angle, Distance magnatude) {
-        return new PolarVector(magnatude, angle);
+    public static PolarVector createPolar(AbsoluteAngle angle, Distance magnitude) {
+        return new PolarVector(magnitude, angle);
     }
 
-    public Area getMagnatudeSquared() {
-        return magnatude.times(magnatude);
+    public Area getMagnitudeSquared() {
+        return magnitude.times(magnitude);
     }
 
     public Vector times(double v) {
-        return createPolar(angle, magnatude.times(v));
+        return createPolar(angle, magnitude.times(v));
     }
 }
