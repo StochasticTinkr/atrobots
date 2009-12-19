@@ -31,11 +31,16 @@ public class Main implements Runnable {
     private boolean paused = true;
 
     private final Object pauseLock;
+    private volatile int frameDelay = 25;
+    private volatile boolean useDelay = true;
     private Thread gameThread = new Thread() {
         public void run() {
             while (!closed) {
                 try {
-                    Thread.sleep(25);
+                    if (useDelay) {
+                        frameDelay = 25;
+                        Thread.sleep(frameDelay);
+                    }
                     synchronized (pauseLock) {
                         while (paused && !closed) {
                             pauseLock.wait();
@@ -73,12 +78,19 @@ public class Main implements Runnable {
         menubar = new JMenuBar();
         mainFrame.setJMenuBar(menubar);
         menubar.add(createFileMenu());
-        menubar.add(new JMenuItem(new AbstractAction("Step") {
+        menubar.add(new JMenuItem(new AbstractAction("Run") {
             public void actionPerformed(ActionEvent e) {
                 synchronized (pauseLock) {
-                    paused = false;
+                    paused = !paused;
+                    this.putValue(Action.NAME, paused ? "Run" : "Pause");
                     pauseLock.notifyAll();
                 }
+            }
+        }));
+        menubar.add(new JMenuItem(new AbstractAction("Full Speed") {
+            public void actionPerformed(ActionEvent e) {
+                useDelay = !useDelay;
+                this.putValue(Action.NAME, useDelay ? "Full Speed" : "Slower");
             }
         }));
         arenaPane = new ArenaPane();
