@@ -6,15 +6,15 @@ package net.virtualinfinity.atrobots.measures;
  * @author Daniel Pitts
  */
 class PolarVector extends Vector {
-    private final Distance magnitude;
+    private final double magnitude;
     private final AbsoluteAngle angle;
 
-    private PolarVector(Distance magnitude, AbsoluteAngle angle) {
+    private PolarVector(double magnitude, AbsoluteAngle angle) {
         this.magnitude = magnitude;
         this.angle = angle;
     }
 
-    public Distance getMagnitude() {
+    public double getMagnitude() {
         return magnitude;
     }
 
@@ -22,23 +22,23 @@ class PolarVector extends Vector {
         return angle;
     }
 
-    public Distance getX() {
-        return magnitude.times(angle.cosine());
+    public double getX() {
+        return magnitude * angle.cosine();
     }
 
-    public Distance getY() {
-        return magnitude.times(angle.sine());
+    public double getY() {
+        return magnitude * angle.sine();
     }
 
-    public static PolarVector createPolar(AbsoluteAngle angle, Distance magnitude) {
+    public static PolarVector createPolar(AbsoluteAngle angle, double magnitude) {
         return new PolarVector(magnitude, angle);
     }
 
-    public Area getMagnitudeSquared() {
-        return magnitude.times(magnitude);
+    public double getMagnitudeSquared() {
+        return magnitude * (magnitude);
     }
 
     public Vector times(double v) {
-        return createPolar(angle, magnitude.times(v));
+        return createPolar(angle, magnitude * (v));
     }
 }

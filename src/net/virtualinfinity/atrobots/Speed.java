@@ -1,6 +1,6 @@
 package net.virtualinfinity.atrobots;
 
-import net.virtualinfinity.atrobots.measures.Distance;
+
 import net.virtualinfinity.atrobots.measures.DistanceOverTime;
 import net.virtualinfinity.atrobots.measures.Duration;
 
@@ -8,13 +8,13 @@ import net.virtualinfinity.atrobots.measures.Duration;
  * @author Daniel Pitts
  */
 public class Speed {
-    private DistanceOverTime distanceOverTime = new DistanceOverTime(Distance.fromMeters(0), Duration.ONE_CYCLE);
+    private DistanceOverTime distanceOverTime = new DistanceOverTime(0, Duration.ONE_CYCLE);
 
-    public Distance times(Duration duration) {
+    public double times(Duration duration) {
         return distanceOverTime.times(duration);
     }
 
-    public void setDistanceOverTime(Distance distance, Duration duration) {
+    public void setDistanceOverTime(double distance, Duration duration) {
         distanceOverTime = new DistanceOverTime(distance, duration);
     }
 

@@ -21,7 +21,7 @@ public class GetRobotInfoInterrupt extends InterruptHandler {
     }
 
     public void handleInterrupt() {
-        speed.set((short) Math.round(robot.getSpeed().times(Duration.ONE_CYCLE).getCentimeters()));
+        speed.set((short) Math.round(robot.getSpeed().times(Duration.ONE_CYCLE) * 100));
         lastDamageGiven.set((short) robot.getLastDamageGiven().getCycles());
         lastDamageTaken.set((short) robot.getLastDamageTaken().getCycles());
     }

@@ -1,14 +1,13 @@
 package net.virtualinfinity.atrobots.snapshots;
 
-import net.virtualinfinity.atrobots.measures.Distance;
 
 /**
  * @author Daniel Pitts
  */
 public class MineSnapshot extends ArenaObjectSnapshot {
-    private Distance triggerRadius;
+    private double triggerRadius;
 
-    public void setTriggerRadius(Distance triggerRadius) {
+    public void setTriggerRadius(double triggerRadius) {
         this.triggerRadius = triggerRadius;
     }
 
@@ -16,7 +15,7 @@ public class MineSnapshot extends ArenaObjectSnapshot {
         visitor.acceptMine(this);
     }
 
-    public Distance getTriggerRadius() {
+    public double getTriggerRadius() {
         return triggerRadius;
     }
 }

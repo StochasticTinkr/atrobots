@@ -122,7 +122,7 @@ public class HardwareBus {
         computer.getRegisters().getDesiredHeading().set((short) (desiredHeading.getAngle().getBygrees() & 255));
         computer.getRegisters().getTurretOffset().set((short) robot.getTurretShift());
         computer.getRegisters().getAccuracy().set((short) robot.getTurret().getScanner().getAccuracy());
-        computer.getRegisters().getMeters().set((short) Math.round(robot.getOdometer().getDistance().getMeters()));
+        computer.getRegisters().getMeters().set((short) Math.round(robot.getOdometer().getDistance()));
     }
 
 

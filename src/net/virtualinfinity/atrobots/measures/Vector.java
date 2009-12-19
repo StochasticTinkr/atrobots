@@ -3,8 +3,8 @@ package net.virtualinfinity.atrobots.measures;
 import java.awt.geom.Point2D;
 
 /**
- * This is a 2d vector class. Use {@link #createPolar(AbsoluteAngle, Distance)} or
- * {@link #createCartesian(Distance, Distance)} } to create an instance of this class.
+ * This is a 2d vector class. Use {@link #createPolar(AbsoluteAngle, double)} or
+ * {@link #createCartesian(double , double)} } to create an instance of this class.
  *
  * @author Daniel Pitts
  */
@@ -14,7 +14,7 @@ public abstract class Vector {
      *
      * @return the magnitude of this vector
      */
-    public abstract Distance getMagnitude();
+    public abstract double getMagnitude();
 
     /**
      * Get the direction of this vector.
@@ -28,14 +28,14 @@ public abstract class Vector {
      *
      * @return the x component.
      */
-    public abstract Distance getX();
+    public abstract double getX();
 
     /**
      * Get the Y component of this vector
      *
      * @return the y component.
      */
-    public abstract Distance getY();
+    public abstract double getY();
 
     /**
      * Create a new Vector instance based on polar coordinates
@@ -44,7 +44,7 @@ public abstract class Vector {
      * @param magnitude the magnitude of the vector
      * @return a vector with the given direction and magnitude
      */
-    public static Vector createPolar(AbsoluteAngle angle, Distance magnitude) {
+    public static Vector createPolar(AbsoluteAngle angle, double magnitude) {
         return PolarVector.createPolar(angle, magnitude);
     }
 
@@ -55,7 +55,7 @@ public abstract class Vector {
      * @param y the y component of the vector
      * @return a vector with the given <x,y> components
      */
-    public static Vector createCartesian(Distance x, Distance y) {
+    public static Vector createCartesian(double x, double y) {
         return CartesianVector.fromCartesian(x, y);
     }
 
@@ -66,7 +66,7 @@ public abstract class Vector {
      * @return a new vector which is the sum.
      */
     public Vector plus(Vector vector) {
-        return createCartesian(getX().plus(vector.getX()), getY().plus(vector.getY()));
+        return createCartesian(getX() + (vector.getX()), getY() + (vector.getY()));
     }
 
     public String toString() {
@@ -79,7 +79,7 @@ public abstract class Vector {
      * @return a point.
      */
     public Point2D toPoint2D() {
-        return new Point2D.Double(getX().getMeters(), getY().getMeters());
+        return new Point2D.Double(getX(), getY());
     }
 
     /**
@@ -89,7 +89,7 @@ public abstract class Vector {
      * @return the difference between the vectors.
      */
     public Vector minus(Vector vector) {
-        return createCartesian(getX().minus(vector.getX()), getY().minus(vector.getY()));
+        return createCartesian(getX() - (vector.getX()), getY() - (vector.getY()));
     }
 
     /**
@@ -98,8 +98,8 @@ public abstract class Vector {
      * @param vector the other vector.
      * @return the dot product.
      */
-    public Area dot(Vector vector) {
-        return getX().times(vector.getX()).plus(getY().times(vector.getY()));
+    public double dot(Vector vector) {
+        return getX() * (vector.getX()) + (getY() * (vector.getY()));
     }
 
     /**
@@ -111,9 +111,9 @@ public abstract class Vector {
      * @param segmentLength the length of the segment
      * @return the point where the segment intersects the line.
      */
-    public Vector perpendicularIntersectionFrom(Vector linePoint, AbsoluteAngle lineSlope, Distance segmentLength) {
+    public Vector perpendicularIntersectionFrom(Vector linePoint, AbsoluteAngle lineSlope, double segmentLength) {
         final Vector intersectionVector = lineSlope.projectAngle(minus(linePoint));
-        if (intersectionVector.getMagnitude().compareTo(segmentLength) < 0)
+        if (intersectionVector.getMagnitude() < (segmentLength))
             return intersectionVector.plus(linePoint);
         else {
             return null;
@@ -133,14 +133,14 @@ public abstract class Vector {
      *
      * @return the square of the magnitude.
      */
-    public abstract Area getMagnitudeSquared();
+    public abstract double getMagnitudeSquared();
 
     public boolean equals(Object o) {
         if (!(o instanceof Vector)) {
             return false;
         }
         Vector vector = (Vector) o;
-        return getX().equals(vector.getX()) && getY().equals(vector.getY());
+        return getX() == (vector.getX()) && getY() == (vector.getY());
     }
 
     /**
@@ -150,6 +150,6 @@ public abstract class Vector {
      * @return the vector projection.
      */
     public Vector projectOnto(Vector v) {
-        return v.times(v.dot(this).divide(v.getMagnitudeSquared()));
+        return v.times(v.dot(this) / (v.getMagnitudeSquared()));
     }
 }

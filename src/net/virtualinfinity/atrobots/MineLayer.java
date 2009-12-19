@@ -1,6 +1,5 @@
 package net.virtualinfinity.atrobots;
 
-import net.virtualinfinity.atrobots.measures.Distance;
 
 /**
  * @author Daniel Pitts
@@ -21,12 +20,12 @@ public class MineLayer {
             }
 
             public void write(short value) {
-                layMine(Distance.fromMeters(value));
+                layMine((value));
             }
         };
     }
 
-    private void layMine(Distance triggerRadius) {
+    private void layMine(double triggerRadius) {
         if (hasMines()) {
             final Mine mine = new Mine(this);
             mine.setTriggerRadius(triggerRadius);

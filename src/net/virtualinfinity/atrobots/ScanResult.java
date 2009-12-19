@@ -1,7 +1,6 @@
 package net.virtualinfinity.atrobots;
 
 import net.virtualinfinity.atrobots.measures.AbsoluteAngle;
-import net.virtualinfinity.atrobots.measures.Distance;
 import net.virtualinfinity.atrobots.measures.Vector;
 
 /**
@@ -9,12 +8,12 @@ import net.virtualinfinity.atrobots.measures.Vector;
  */
 public class ScanResult {
     private final Robot match;
-    private final Distance distance;
+    private final double distance;
     private final AbsoluteAngle angle;
-    private AbsoluteAngle heading;
-    private int throttle;
+    private final AbsoluteAngle heading;
+    private final int throttle;
 
-    public ScanResult(Robot match, Distance distance, AbsoluteAngle angle) {
+    public ScanResult(Robot match, double distance, AbsoluteAngle angle) {
         this.match = match;
         this.distance = distance;
         this.angle = angle;
@@ -23,16 +22,18 @@ public class ScanResult {
     }
 
     public ScanResult() {
+        distance = Double.POSITIVE_INFINITY;
         match = null;
-        distance = null;
         angle = null;
+        heading = null;
+        throttle = 0;
     }
 
     public Robot getMatch() {
         return match;
     }
 
-    public Distance getDistance() {
+    public double getDistance() {
         return distance;
     }
 

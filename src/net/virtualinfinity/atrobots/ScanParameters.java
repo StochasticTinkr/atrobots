@@ -1,7 +1,6 @@
 package net.virtualinfinity.atrobots;
 
 import net.virtualinfinity.atrobots.measures.AngleBracket;
-import net.virtualinfinity.atrobots.measures.Distance;
 import net.virtualinfinity.atrobots.measures.Duration;
 import net.virtualinfinity.atrobots.measures.Vector;
 import net.virtualinfinity.atrobots.snapshots.ArenaObjectSnapshot;
@@ -12,12 +11,12 @@ import net.virtualinfinity.atrobots.snapshots.ScanSnapshot;
  */
 public class ScanParameters extends ArenaObject {
     private AngleBracket angleBracket;
-    private Distance maxDistance;
+    private double maxDistance;
     private boolean successful;
     private Vector matchPositionVector;
     private int frame;
 
-    public ScanParameters(AngleBracket angleBracket, Distance maxDistance, boolean successful, Vector matchPositionVector) {
+    public ScanParameters(AngleBracket angleBracket, double maxDistance, boolean successful, Vector matchPositionVector) {
         this.angleBracket = angleBracket;
         this.maxDistance = maxDistance;
         this.successful = successful;

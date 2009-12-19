@@ -7,39 +7,39 @@ package net.virtualinfinity.atrobots.measures;
  * @author Daniel Pitts
  */
 class CartesianVector extends Vector {
-    private final Distance x;
-    private final Distance y;
+    private final double x;
+    private final double y;
 
-    private CartesianVector(Distance x, Distance y) {
+    private CartesianVector(double x, double y) {
         this.x = x;
         this.y = y;
     }
 
-    public Distance getMagnitude() {
-        return getMagnitudeSquared().squareRoot();
+    public double getMagnitude() {
+        return Math.hypot(x, y);
     }
 
-    public Area getMagnitudeSquared() {
-        return x.times(x).plus(y.times(y));
+    public double getMagnitudeSquared() {
+        return x * x + y * y;
     }
 
     public AbsoluteAngle getAngle() {
         return AbsoluteAngle.fromCartesian(x, y);
     }
 
-    public Distance getX() {
+    public double getX() {
         return x;
     }
 
-    public Distance getY() {
+    public double getY() {
         return y;
     }
 
     public Vector times(double v) {
-        return fromCartesian(x.times(v), y.times(v));
+        return fromCartesian(x * (v), y * (v));
     }
 
-    public static Vector fromCartesian(Distance x, Distance y) {
+    public static Vector fromCartesian(double x, double y) {
         return new CartesianVector(x, y);
     }
 }

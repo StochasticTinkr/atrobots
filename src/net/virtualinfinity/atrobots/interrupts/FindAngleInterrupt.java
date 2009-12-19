@@ -3,7 +3,7 @@ package net.virtualinfinity.atrobots.interrupts;
 import net.virtualinfinity.atrobots.ArenaObject;
 import net.virtualinfinity.atrobots.computer.MemoryCell;
 import net.virtualinfinity.atrobots.measures.AbsoluteAngle;
-import net.virtualinfinity.atrobots.measures.Distance;
+
 
 /**
  * @author Daniel Pitts
@@ -24,8 +24,8 @@ public class FindAngleInterrupt extends InterruptHandler {
     public void handleInterrupt() {
         destination.set(
                 (short) AbsoluteAngle.fromCartesian(
-                        Distance.fromMeters(x.signed()).minus(object.getPosition().getX()),
-                        Distance.fromMeters(y.signed()).minus(object.getPosition().getY())).getBygrees()
+                        (x.signed()) - (object.getPosition().getX()),
+                        (y.signed()) - (object.getPosition().getY())).getBygrees()
         );
     }
 }

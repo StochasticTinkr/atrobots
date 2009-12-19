@@ -18,8 +18,8 @@ public class AbsoluteAngle {
         return Math.sin(radians);
     }
 
-    public static AbsoluteAngle fromCartesian(Distance x, Distance y) {
-        return fromRadians(Math.atan2(y.getMeters(), x.getMeters()));
+    public static AbsoluteAngle fromCartesian(double x, double y) {
+        return fromRadians(Math.atan2(y, x));
     }
 
     public static AbsoluteAngle fromRadians(double radians) {
@@ -38,8 +38,12 @@ public class AbsoluteAngle {
         return Math.atan2(sine(), cosine());
     }
 
-    public Vector toVector(Distance length) {
-        return Vector.createPolar(this, length);
+    public Vector toUnitVector() {
+        return toVector(1);
+    }
+
+    public Vector toVector(double magnitude) {
+        return Vector.createPolar(this, magnitude);
     }
 
     public int getBygrees() {
@@ -91,7 +95,7 @@ public class AbsoluteAngle {
     }
 
     public Vector projectAngle(Vector vector) {
-        final Vector unit = toVector(Distance.unit());
-        return unit.times(unit.dot(vector).getSquareMeters());
+        final Vector unit = toVector(1);
+        return unit.times(unit.dot(vector));
     }
 }

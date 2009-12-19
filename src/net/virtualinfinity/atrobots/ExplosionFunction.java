@@ -1,6 +1,6 @@
 package net.virtualinfinity.atrobots;
 
-import net.virtualinfinity.atrobots.measures.Distance;
+
 import net.virtualinfinity.atrobots.measures.Vector;
 
 /**
@@ -18,5 +18,5 @@ public abstract class ExplosionFunction {
 
     public abstract Vector getCenter();
 
-    public abstract Distance getRadius();
+    public abstract double getRadius();
 }

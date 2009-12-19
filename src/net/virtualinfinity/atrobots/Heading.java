@@ -1,6 +1,9 @@
 package net.virtualinfinity.atrobots;
 
-import net.virtualinfinity.atrobots.measures.*;
+import net.virtualinfinity.atrobots.measures.AbsoluteAngle;
+import net.virtualinfinity.atrobots.measures.AngleBracket;
+import net.virtualinfinity.atrobots.measures.RelativeAngle;
+import net.virtualinfinity.atrobots.measures.Vector;
 
 /**
  * @author Daniel Pitts
@@ -11,7 +14,7 @@ public class Heading {
     private boolean absolute = true;
     private Heading relation;
 
-    public Vector times(Distance distance) {
+    public Vector times(double distance) {
         return getAngle().toVector(distance);
     }
 

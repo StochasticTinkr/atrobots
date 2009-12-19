@@ -1,7 +1,7 @@
 package net.virtualinfinity.atrobots;
 
 import net.virtualinfinity.atrobots.measures.AngleBracket;
-import net.virtualinfinity.atrobots.measures.Distance;
+
 
 /**
  * @author Daniel Pitts
@@ -13,18 +13,16 @@ public class Radar {
         return new PortHandler() {
             public short read() {
                 getComputer().consumeCycles(3);
-                final Distance distance = scan();
-                if (distance == null) {
+                final ScanResult scanResult = robot.scan(AngleBracket.all(), Double.POSITIVE_INFINITY);
+                if (!scanResult.successful()) {
                     return Short.MAX_VALUE;
                 }
-                return (short) Math.round(distance.getMeters());
+                return (short) Math.round(scanResult.getDistance());
             }
         };
     }
 
-    private Distance scan() {
-        robot.scan(AngleBracket.all(), Distance.infinity());
-        return null;
+    public void setRobot(Robot robot) {
+        this.robot = robot;
     }
-
 }

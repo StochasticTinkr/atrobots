@@ -2,7 +2,7 @@ package net.virtualinfinity.atrobots.interrupts;
 
 import net.virtualinfinity.atrobots.Robot;
 import net.virtualinfinity.atrobots.computer.MemoryCell;
-import net.virtualinfinity.atrobots.measures.Distance;
+
 
 /**
  * @author Daniel Pitts
@@ -17,7 +17,7 @@ public class ResetMetersInterrupt extends InterruptHandler {
     }
 
     public void handleInterrupt() {
-        robot.getOdometer().setDistance(Distance.fromMeters(0));
+        robot.getOdometer().setDistance((0));
         meters.set((short) 0);
     }
 }

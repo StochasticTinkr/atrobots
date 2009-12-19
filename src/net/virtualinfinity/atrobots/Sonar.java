@@ -2,7 +2,6 @@ package net.virtualinfinity.atrobots;
 
 import net.virtualinfinity.atrobots.measures.AbsoluteAngle;
 import net.virtualinfinity.atrobots.measures.AngleBracket;
-import net.virtualinfinity.atrobots.measures.Distance;
 import net.virtualinfinity.atrobots.measures.RelativeAngle;
 
 /**
@@ -10,10 +9,10 @@ import net.virtualinfinity.atrobots.measures.RelativeAngle;
  */
 public class Sonar {
     private Robot robot;
-    private Distance maxDistance;
+    private double maxDistance;
 
     public Sonar() {
-        maxDistance = Distance.fromMeters(250.0);
+        maxDistance = (250.0);
     }
 
     public PortHandler getScanPort() {

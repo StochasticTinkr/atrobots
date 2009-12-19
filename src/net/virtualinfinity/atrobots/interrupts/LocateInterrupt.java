@@ -18,7 +18,7 @@ public class LocateInterrupt extends InterruptHandler {
     }
 
     public void handleInterrupt() {
-        xHolder.set((short) Math.round(object.getPosition().getX().getMeters()));
-        yHolder.set((short) Math.round(object.getPosition().getY().getMeters()));
+        xHolder.set((short) Math.round(object.getPosition().getX()));
+        yHolder.set((short) Math.round(object.getPosition().getY()));
     }
 }

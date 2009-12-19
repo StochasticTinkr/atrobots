@@ -16,21 +16,21 @@ public class VectorTest extends TestCase {
     }
 
     private static Vector createCartesian(double cosine, double sine) {
-        return Vector.createCartesian(Distance.fromMeters(cosine), Distance.fromMeters(sine));
+        return Vector.createCartesian((cosine), (sine));
     }
 
     public void testPolar() {
-        assertEquals(0, Vector.createPolar(AbsoluteAngle.fromBygrees(0), Distance.fromMeters(1)).getX().getMeters(), DELTA);
-        assertEquals(-1, Vector.createPolar(AbsoluteAngle.fromBygrees(0), Distance.fromMeters(1)).getY().getMeters(), DELTA);
+        assertEquals(0, Vector.createPolar(AbsoluteAngle.fromBygrees(0), (1)).getX(), DELTA);
+        assertEquals(-1, Vector.createPolar(AbsoluteAngle.fromBygrees(0), (1)).getY(), DELTA);
 
-        assertEquals(1, Vector.createPolar(AbsoluteAngle.fromBygrees(64), Distance.fromMeters(1)).getX().getMeters(), DELTA);
-        assertEquals(0, Vector.createPolar(AbsoluteAngle.fromBygrees(64), Distance.fromMeters(1)).getY().getMeters(), DELTA);
+        assertEquals(1, Vector.createPolar(AbsoluteAngle.fromBygrees(64), (1)).getX(), DELTA);
+        assertEquals(0, Vector.createPolar(AbsoluteAngle.fromBygrees(64), (1)).getY(), DELTA);
 
-        assertEquals(0, Vector.createPolar(AbsoluteAngle.fromBygrees(128), Distance.fromMeters(1)).getX().getMeters(), DELTA);
-        assertEquals(1, Vector.createPolar(AbsoluteAngle.fromBygrees(128), Distance.fromMeters(1)).getY().getMeters(), DELTA);
+        assertEquals(0, Vector.createPolar(AbsoluteAngle.fromBygrees(128), (1)).getX(), DELTA);
+        assertEquals(1, Vector.createPolar(AbsoluteAngle.fromBygrees(128), (1)).getY(), DELTA);
 
-        assertEquals(-1, Vector.createPolar(AbsoluteAngle.fromBygrees(192), Distance.fromMeters(1)).getX().getMeters(), DELTA);
-        assertEquals(0, Vector.createPolar(AbsoluteAngle.fromBygrees(192), Distance.fromMeters(1)).getY().getMeters(), DELTA);
+        assertEquals(-1, Vector.createPolar(AbsoluteAngle.fromBygrees(192), (1)).getX(), DELTA);
+        assertEquals(0, Vector.createPolar(AbsoluteAngle.fromBygrees(192), (1)).getY(), DELTA);
 
     }
 
@@ -38,9 +38,9 @@ public class VectorTest extends TestCase {
         final Vector right5 = createCartesian(5, 0);
         final Vector down5 = createCartesian(0, 5);
         final Vector diagnal = createCartesian(5, 5);
-        assertEquals(0, right5.dot(down5).getSquareMeters(), DELTA);
-        assertEquals(25, right5.dot(right5).getSquareMeters(), DELTA);
-        assertEquals(25, right5.dot(diagnal).getSquareMeters(), DELTA);
+        assertEquals(0, right5.dot(down5), DELTA);
+        assertEquals(25, right5.dot(right5), DELTA);
+        assertEquals(25, right5.dot(diagnal), DELTA);
     }
 
     public void testProjection() {
@@ -48,10 +48,10 @@ public class VectorTest extends TestCase {
         final Vector down75 = createCartesian(0, 75);
         final Vector diagnal5 = createCartesian(5, 5);
         final Vector diagnal37dot5 = createCartesian(37.5, 37.5);
-        assertEquals(down5.getX().getMeters(), diagnal5.projectOnto(down75).getX().getMeters(), DELTA);
-        assertEquals(down5.getY().getMeters(), diagnal5.projectOnto(down75).getY().getMeters(), DELTA);
-        assertEquals(diagnal37dot5.getX().getMeters(), down75.projectOnto(diagnal5).getX().getMeters(), DELTA);
-        assertEquals(diagnal37dot5.getY().getMeters(), down75.projectOnto(diagnal5).getY().getMeters(), DELTA);
+        assertEquals(down5.getX(), diagnal5.projectOnto(down75).getX(), DELTA);
+        assertEquals(down5.getY(), diagnal5.projectOnto(down75).getY(), DELTA);
+        assertEquals(diagnal37dot5.getX(), down75.projectOnto(diagnal5).getX(), DELTA);
+        assertEquals(diagnal37dot5.getY(), down75.projectOnto(diagnal5).getY(), DELTA);
     }
 
 

@@ -20,19 +20,19 @@ public abstract class ArenaObjectSnapshot {
     public abstract void visit(SnapshotVisitor visitor);
 
     public double getY() {
-        return getPositionVector().getY().getMeters();
+        return getPositionVector().getY();
     }
 
     public double getX() {
-        return getPositionVector().getX().getMeters();
+        return getPositionVector().getX();
     }
 
     public double getVelocityX() {
-        return getVelocityVector().getX().getMeters();
+        return getVelocityVector().getX();
     }
 
     public double getVelocityY() {
-        return getVelocityVector().getY().getMeters();
+        return getVelocityVector().getY();
     }
 
     public Vector getPositionVector() {

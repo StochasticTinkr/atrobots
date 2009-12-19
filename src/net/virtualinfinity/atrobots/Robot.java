@@ -2,7 +2,6 @@ package net.virtualinfinity.atrobots;
 
 import net.virtualinfinity.atrobots.computer.Computer;
 import net.virtualinfinity.atrobots.measures.AngleBracket;
-import net.virtualinfinity.atrobots.measures.Distance;
 import net.virtualinfinity.atrobots.measures.Duration;
 import net.virtualinfinity.atrobots.measures.RelativeAngle;
 import net.virtualinfinity.atrobots.snapshots.ArenaObjectSnapshot;
@@ -233,7 +232,7 @@ public class Robot extends ArenaObject implements Resetable {
 
     }
 
-    public ScanResult scan(AngleBracket angleBracket, Distance maxDistance) {
+    public ScanResult scan(AngleBracket angleBracket, double maxDistance) {
         final ScanResult scanResult = getArena().scan(this, getPosition(), angleBracket, maxDistance);
         lastScanResult.set(scanResult);
         if (scanResult.successful()) {
@@ -256,7 +255,7 @@ public class Robot extends ArenaObject implements Resetable {
 
     @Override
     public void checkCollision(Robot robot) {
-        if (robot.getPosition().getVectorTo(position).getMagnitude().getMeters() < 8) {
+        if (robot.getPosition().getVectorTo(position).getMagnitudeSquared() < 64) {
             collides();
             robot.collides();
         }
@@ -264,7 +263,7 @@ public class Robot extends ArenaObject implements Resetable {
 
     private void collides() {
         position.copyFrom(oldPosition);
-        if (speed.times(Duration.ONE_CYCLE).compareTo(Distance.fromMeters(2)) > 0) {
+        if (speed.times(Duration.ONE_CYCLE) > 2) {
             armor.inflictDamage(1);
         }
         throttle.setPower(0);
@@ -309,8 +308,8 @@ public class Robot extends ArenaObject implements Resetable {
         }
         heat.cool(isOverburn() ? getCoolTemp(duration).times(0.66) : getCoolTemp(duration));
         shield.update(duration);
-        if (position.getX().getMeters() < 4 || position.getX().getMeters() > 1000 - 4 ||
-                position.getY().getMeters() < 4 || position.getY().getMeters() > 1000 - 4) {
+        if (position.getX() < 4 || position.getX() > 1000 - 4 ||
+                position.getY() < 4 || position.getY() > 1000 - 4) {
             collides();
         }
     }

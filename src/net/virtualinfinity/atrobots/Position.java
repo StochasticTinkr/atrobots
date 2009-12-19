@@ -1,6 +1,6 @@
 package net.virtualinfinity.atrobots;
 
-import net.virtualinfinity.atrobots.measures.Distance;
+
 import net.virtualinfinity.atrobots.measures.Vector;
 
 import java.util.Random;
@@ -20,17 +20,17 @@ public class Position {
         this.vector = vector;
     }
 
-    public Distance getX() {
+    public double getX() {
         return vector.getX();
     }
 
-    public Distance getY() {
+    public double getY() {
         return vector.getY();
     }
 
     public void move(Vector delta) {
         if (odometer != null) {
-            odometer.accumulate(delta.getMagnitude());
+            odometer.accumulate((delta.getMagnitude()));
         }
         lastVector = vector;
         vector = vector.plus(delta);
@@ -46,7 +46,7 @@ public class Position {
     }
 
     public Vector getVectorTo(Position position) {
-        return Vector.createCartesian(getX().minus(position.getX()), getY().minus(position.getY()));
+        return Vector.createCartesian(getX() - (position.getX()), getY() - (position.getY()));
     }
 
     Vector getVector() {
@@ -57,8 +57,8 @@ public class Position {
         final Position position = new Position();
         Random random = new Random();
         position.vector = Vector.createCartesian(
-                Distance.fromMeters(lowerX + random.nextDouble() * (higherX - lowerX)),
-                Distance.fromMeters(lowerY + random.nextDouble() * (higherY - lowerY)));
+                (lowerX + random.nextDouble() * (higherX - lowerX)),
+                (lowerY + random.nextDouble() * (higherY - lowerY)));
         position.lastVector = position.vector;
         return position;
     }

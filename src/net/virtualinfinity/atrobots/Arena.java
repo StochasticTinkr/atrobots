@@ -1,7 +1,6 @@
 package net.virtualinfinity.atrobots;
 
 import net.virtualinfinity.atrobots.measures.AngleBracket;
-import net.virtualinfinity.atrobots.measures.Distance;
 import net.virtualinfinity.atrobots.measures.Duration;
 import net.virtualinfinity.atrobots.measures.Vector;
 
@@ -84,7 +83,7 @@ public class Arena {
      * @param maxDistance  the radius of the scan arc.
      * @return the result of the scan.
      */
-    public ScanResult scan(Robot ignore, Position position, final AngleBracket angleBracket, final Distance maxDistance) {
+    public ScanResult scan(Robot ignore, Position position, final AngleBracket angleBracket, final double maxDistance) {
         final ScanResult scanResult = calculateResult(ignore, position, angleBracket, maxDistance);
         final ScanParameters object = new ScanParameters(angleBracket, maxDistance, scanResult.successful(), scanResult.getMatchPositionVector());
         others.add(object);
@@ -92,17 +91,17 @@ public class Arena {
         return scanResult;
     }
 
-    private ScanResult calculateResult(Robot ignore, Position position, AngleBracket angleBracket, Distance maxDistance) {
+    private ScanResult calculateResult(Robot ignore, Position position, AngleBracket angleBracket, double maxDistance) {
         Vector vectorToClosest = null;
-        Distance closestDistance = maxDistance;
+        double closestDistance = maxDistance;
         Robot closest = null;
         for (Robot robot : robots) {
             if (robot == ignore) {
                 continue;
             }
             final Vector vector = robot.getPosition().getVectorTo(position);
-            final Distance distance = vector.getMagnitude();
-            if (closest == null || distance.compareTo(closestDistance) < 0) {
+            final double distance = vector.getMagnitude();
+            if (closest == null || distance < closestDistance) {
                 if (angleBracket.contains(vector.getAngle())) {
                     closest = robot;
                     closestDistance = distance;
@@ -110,7 +109,7 @@ public class Arena {
                 }
             }
         }
-        if (closest != null && closestDistance.compareTo(maxDistance) <= 0) {
+        if (closest != null && closestDistance <= maxDistance) {
             return new ScanResult(closest, closestDistance, vectorToClosest.getAngle());
         }
         return new ScanResult();

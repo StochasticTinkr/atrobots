@@ -1,6 +1,6 @@
 package net.virtualinfinity.atrobots;
 
-import net.virtualinfinity.atrobots.measures.Distance;
+
 import net.virtualinfinity.atrobots.measures.Duration;
 
 /**
@@ -56,7 +56,7 @@ public class Throttle {
     private void updateSpeed() {
         double powerRatio = robot.isOverburn() ? this.powerRatio * 1.3 : this.powerRatio;
 
-        speed.setDistanceOverTime(Distance.fromMeters(power).times(powerRatio), Duration.ONE_CYCLE);
+        speed.setDistanceOverTime((power) * (powerRatio), Duration.ONE_CYCLE);
     }
 
     public void setSpeed(Speed speed) {

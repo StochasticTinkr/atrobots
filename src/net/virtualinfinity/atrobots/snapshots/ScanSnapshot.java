@@ -1,7 +1,6 @@
 package net.virtualinfinity.atrobots.snapshots;
 
 import net.virtualinfinity.atrobots.measures.AngleBracket;
-import net.virtualinfinity.atrobots.measures.Distance;
 import net.virtualinfinity.atrobots.measures.Vector;
 
 import java.awt.*;
@@ -11,11 +10,11 @@ import java.awt.*;
  */
 public class ScanSnapshot extends ArenaObjectSnapshot {
     private final AngleBracket angleBracket;
-    private final Distance maxDistance;
+    private final double maxDistance;
     private Vector matchVector;
     private boolean successful;
 
-    public ScanSnapshot(AngleBracket angleBracket, Distance maxDistance, boolean successful, Vector matchVector) {
+    public ScanSnapshot(AngleBracket angleBracket, double maxDistance, boolean successful, Vector matchVector) {
         this.angleBracket = angleBracket;
         this.maxDistance = maxDistance;
         this.setSuccessful(successful);
@@ -30,7 +29,7 @@ public class ScanSnapshot extends ArenaObjectSnapshot {
         return angleBracket;
     }
 
-    public Distance getMaxDistance() {
+    public double getMaxDistance() {
         return maxDistance;
     }
 

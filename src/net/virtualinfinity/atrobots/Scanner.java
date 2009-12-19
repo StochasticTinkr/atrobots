@@ -1,7 +1,6 @@
 package net.virtualinfinity.atrobots;
 
 import net.virtualinfinity.atrobots.measures.AngleBracket;
-import net.virtualinfinity.atrobots.measures.Distance;
 import net.virtualinfinity.atrobots.measures.RelativeAngle;
 
 /**
@@ -11,26 +10,26 @@ public class Scanner implements Resetable {
     private int accuracy;
     private RelativeAngle scanArc = RelativeAngle.fromBygrees(8);
     private Robot robot;
-    private Distance maxDistance = Distance.fromMeters(1500);
+    private double maxDistance = (1500);
 
     public Scanner(double maxDistance) {
-        this.maxDistance = Distance.fromMeters(maxDistance);
+        this.maxDistance = (maxDistance);
     }
 
     public PortHandler getScanPort() {
         return new PortHandler() {
             public short read() {
                 getComputer().consumeCycles(1);
-                final Distance distance = scan();
-                if (distance == null) {
+                final ScanResult result = scan();
+                if (!result.successful()) {
                     return Short.MAX_VALUE;
                 }
-                return (short) Math.round(distance.getMeters());
+                return (short) Math.round(result.getDistance());
             }
         };
     }
 
-    private Distance scan() {
+    private ScanResult scan() {
         AngleBracket angleBracket = getAngleBracket();
         ScanResult scanResult = robot.scan(angleBracket, maxDistance);
         if (scanResult.successful()) {
@@ -41,7 +40,7 @@ public class Scanner implements Resetable {
                 setAccuracy(roundAwayFromZero(v * 4));
             }
         }
-        return scanResult.getDistance();
+        return scanResult;
     }
 
     private int roundAwayFromZero(double value) {

@@ -1,7 +1,6 @@
 package net.virtualinfinity.atrobots;
 
 import net.virtualinfinity.atrobots.measures.AbsoluteAngle;
-import net.virtualinfinity.atrobots.measures.Distance;
 import net.virtualinfinity.atrobots.measures.Duration;
 import net.virtualinfinity.atrobots.measures.Vector;
 import net.virtualinfinity.atrobots.snapshots.ArenaObjectSnapshot;
@@ -23,7 +22,7 @@ public class Missile extends ArenaObject {
         this.position.copyFrom(position);
         this.heading.setAngle(angle);
         this.overburn = robot.isOverburn();
-        getSpeed().setDistanceOverTime(Distance.fromMeters(32).times(power), Duration.ONE_CYCLE);
+        getSpeed().setDistanceOverTime((32) * (power), Duration.ONE_CYCLE);
     }
 
     protected ArenaObjectSnapshot createSpecificSnapshot() {
@@ -52,7 +51,7 @@ public class Missile extends ArenaObject {
         }
         final Vector collisionPoint = getCollisionPoint(robot);
         if (collisionPoint != null) {
-            if (collisionPoint.minus(robot.getPosition().getVector()).getMagnitude().getMeters() < 8) {
+            if (collisionPoint.minus(robot.getPosition().getVector()).getMagnitude() < 8) {
                 position.copyFrom(new Position(collisionPoint));
                 explode();
             }
@@ -85,28 +84,28 @@ public class Missile extends ArenaObject {
     }
 
     private Vector getWallIntersectionDelta() {
-        final Distance x = position.getX().negate();
-        final Distance y = position.getY().negate();
-        final Vector vector = heading.getAngle().toVector(Distance.unit());
-        if (position.getX().getMeters() <= 0) {
-            return vector.times(x.dividedBy(vector.getX()));
+        final double x = -position.getX();
+        final double y = -position.getY();
+        final Vector vector = heading.getAngle().toUnitVector();
+        if (position.getX() <= 0) {
+            return vector.times(x / (vector.getX()));
         }
-        if (position.getX().getMeters() >= 1000) {
-            return vector.times(Distance.fromMeters(1000).plus(x).dividedBy(vector.getX()));
+        if (position.getX() >= 1000) {
+            return vector.times((1000 + x) / (vector.getX()));
         }
-        if (position.getY().getMeters() <= 0) {
-            return vector.times(y.dividedBy(vector.getY()));
+        if (position.getY() <= 0) {
+            return vector.times(y / (vector.getY()));
         }
-        if (position.getY().getMeters() >= 1000) {
-            return vector.times(Distance.fromMeters(1000).plus(y).dividedBy(vector.getY()));
+        if (position.getY() >= 1000) {
+            return vector.times((1000 + y) / (vector.getY()));
         }
         throw new IllegalStateException("Should be outside arena.");
 
     }
 
     private boolean isOutsideArena() {
-        return position.getX().getMeters() < 0 || position.getX().getMeters() > 1000
-                || position.getY().getMeters() < 0 || position.getY().getMeters() > 1000;
+        return position.getX() < 0 || position.getX() > 1000
+                || position.getY() < 0 || position.getY() > 1000;
     }
 
 }

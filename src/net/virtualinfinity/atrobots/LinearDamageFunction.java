@@ -1,6 +1,6 @@
 package net.virtualinfinity.atrobots;
 
-import net.virtualinfinity.atrobots.measures.Distance;
+
 import net.virtualinfinity.atrobots.measures.Vector;
 
 /**
@@ -18,16 +18,16 @@ public class LinearDamageFunction extends ExplosionFunction {
     }
 
     public double getDamageAmount(ArenaObject object) {
-        final Distance distance = object.getPosition().getVectorTo(position).getMagnitude();
-        return Math.max(0, (damageAtCenter - distance.getMeters()) * multiplier);
+        final double distance = object.getPosition().getVectorTo(position).getMagnitude();
+        return Math.max(0, (damageAtCenter - distance) * multiplier);
     }
 
     public Vector getCenter() {
         return position.getVector();
     }
 
-    public Distance getRadius() {
-        return Distance.fromMeters(damageAtCenter);
+    public double getRadius() {
+        return (damageAtCenter);
     }
 
 }

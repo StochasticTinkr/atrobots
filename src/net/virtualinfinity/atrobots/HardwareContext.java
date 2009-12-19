@@ -86,6 +86,7 @@ public class HardwareContext {
         wireRadar();
         wireShield();
         wireSonar();
+        wireRadar();
         final CommunicationsQueue commQueue = createCommQueue();
         wireTranceiver(commQueue);
         wireComputer(commQueue);
@@ -170,6 +171,7 @@ public class HardwareContext {
     }
 
     private void wireRadar() {
+        radar.setRobot(robot);
         robot.setRadar(radar);
     }
 

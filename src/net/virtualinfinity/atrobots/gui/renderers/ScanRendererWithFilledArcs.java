@@ -15,7 +15,7 @@ public class ScanRendererWithFilledArcs extends ScanRenderer {
                     new float[]{0f, 1f}, new Color[]{new Color(1f, 0f, 0f, 1f), new Color(1f, 0f, 0f, .25f)}));
         } else {
             g2d.setPaint(new RadialGradientPaint(scanSnapshot.getPositionVector().toPoint2D(),
-                    (float) scanSnapshot.getMaxDistance().getMeters(), new float[]{0, 1},
+                    (float) scanSnapshot.getMaxDistance(), new float[]{0, 1},
                     new Color[]{new Color(1f, 1f, 1f, .75f), new Color(0f, 0f, 0f, 0f)}));
         }
         g2d.fill(scanSnapshot.getScanArea());

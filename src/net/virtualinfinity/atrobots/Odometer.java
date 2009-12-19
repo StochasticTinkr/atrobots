@@ -1,26 +1,25 @@
 package net.virtualinfinity.atrobots;
 
-import net.virtualinfinity.atrobots.measures.Distance;
 
 /**
  * @author Daniel Pitts
  */
 public class Odometer implements Resetable {
-    private Distance distance = Distance.fromMeters(0);
+    private double distance = (0);
 
-    public void setDistance(Distance distance) {
+    public void setDistance(double distance) {
         this.distance = distance;
     }
 
-    public void accumulate(Distance distance) {
-        this.distance = distance.plus(distance);
+    public void accumulate(double distance) {
+        this.distance += distance;
     }
 
     public void reset() {
-        distance = Distance.fromMeters(0);
+        distance = (0);
     }
 
-    public Distance getDistance() {
+    public double getDistance() {
         return distance;
     }
 }

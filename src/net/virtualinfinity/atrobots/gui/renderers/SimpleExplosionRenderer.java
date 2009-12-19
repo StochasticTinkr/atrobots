@@ -13,7 +13,7 @@ public class SimpleExplosionRenderer implements SnapshotRenderer<ExplosionSnapsh
     public void render(Graphics2D g2d, ExplosionSnapshot explosionSnapshot) {
         g2d.setPaint(Color.yellow);
         final Ellipse2D.Double circle = new Ellipse2D.Double();
-        circle.setFrameFromCenter(explosionSnapshot.getPositionVector().toPoint2D(), new Point2D.Double(explosionSnapshot.getPositionVector().getX().plus(explosionSnapshot.getRadius()).getMeters() - explosionSnapshot.getFrame(), explosionSnapshot.getPositionVector().getY().plus(explosionSnapshot.getRadius()).getMeters() - explosionSnapshot.getFrame()));
+        circle.setFrameFromCenter(explosionSnapshot.getPositionVector().toPoint2D(), new Point2D.Double(explosionSnapshot.getPositionVector().getX() + (explosionSnapshot.getRadius()) - explosionSnapshot.getFrame(), explosionSnapshot.getPositionVector().getY() + (explosionSnapshot.getRadius()) - explosionSnapshot.getFrame()));
         g2d.draw(circle);
     }
 }
