@@ -73,10 +73,6 @@ public class AbsoluteAngle {
         return getAngleClockwiseTo(angle).compareTo(RelativeAngle.HALF_CIRCLE) > 0;
     }
 
-    public static RelativeAngle fromRelativeBygrees(int bygrees) {
-        return RelativeAngle.fromBygrees(bygrees);
-    }
-
     public String toString() {
         return getNormalizedRadians() + "r/" + getBygrees();
     }

@@ -1,6 +1,7 @@
 package net.virtualinfinity.atrobots.gui.renderers;
 
 import net.virtualinfinity.atrobots.measures.AbsoluteAngle;
+import net.virtualinfinity.atrobots.measures.RelativeAngle;
 import net.virtualinfinity.atrobots.snapshots.RobotSnapshot;
 
 import java.awt.*;
@@ -67,8 +68,8 @@ public class RobotRenderer implements SnapshotRenderer<RobotSnapshot> {
         g2d.setPaint(Color.red);
         final GeneralPath path = new GeneralPath();
         path.moveTo(robotSnapshot.getX() + robotSnapshot.getHeading().cosine() * 15, robotSnapshot.getY() + robotSnapshot.getHeading().sine() * 15);
-        AbsoluteAngle cc = robotSnapshot.getHeading().counterClockwise(AbsoluteAngle.fromRelativeBygrees(160));
-        AbsoluteAngle c = robotSnapshot.getHeading().clockwise(AbsoluteAngle.fromRelativeBygrees(160));
+        AbsoluteAngle cc = robotSnapshot.getHeading().counterClockwise(RelativeAngle.fromBygrees(160));
+        AbsoluteAngle c = robotSnapshot.getHeading().clockwise(RelativeAngle.fromBygrees(160));
         path.lineTo(robotSnapshot.getX() + cc.cosine() * 9, robotSnapshot.getY() + cc.sine() * 9);
         path.lineTo(robotSnapshot.getX(), robotSnapshot.getY());
         path.lineTo(robotSnapshot.getX() + c.cosine() * 9, robotSnapshot.getY() + c.sine() * 9);
