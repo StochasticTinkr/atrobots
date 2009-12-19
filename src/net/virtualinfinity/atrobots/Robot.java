@@ -111,7 +111,7 @@ public class Robot extends ArenaObject implements Resetable {
     }
 
     public int getTurretShift() {
-        return getTurret().getHeading().getAngle().getAngleClockwiseTo(getHeading().getAngle()).getBygrees();
+        return getTurret().getHeading().getAngle().getAngleCounterClockwiseTo(getHeading().getAngle()).getBygrees();
     }
 
     public Armor getArmor() {
