@@ -110,13 +110,13 @@ public class AbsoluteAngle {
     }
 
     private static class AbsoluateBygreeAngle extends AbsoluteAngle {
-
         private final double cosine;
-
         private final double sine;
         private final int bygrees;
         private final byte signedBygrees;
         private final double normalizedRadians;
+        private final double degrees;
+        private final RelativeAngle counterClockwiseFromStandardOrigin;
 
         public AbsoluateBygreeAngle(int bygrees, AbsoluteAngle template) {
             super(bygreeToRadians(bygrees));
@@ -125,7 +125,8 @@ public class AbsoluteAngle {
             this.bygrees = bygrees;
             this.signedBygrees = template.getSignedBygrees();
             this.normalizedRadians = template.getNormalizedRadians();
-
+            this.degrees = template.getDegrees();
+            counterClockwiseFromStandardOrigin = RelativeAngle.fromBygrees(64 - this.bygrees);
         }
 
         @Override
@@ -156,6 +157,41 @@ public class AbsoluteAngle {
         @Override
         public double getNormalizedRadians() {
             return normalizedRadians;
+        }
+
+        @Override
+        public AbsoluteAngle counterClockwise(RelativeAngle angle) {
+            if (angle.isExactBygrees()) {
+                return fromBygrees(getBygrees() + angle.getBygrees());
+            }
+            return super.counterClockwise(angle);
+        }
+
+        @Override
+        public AbsoluteAngle clockwise(RelativeAngle angle) {
+            if (angle.isExactBygrees()) {
+                return fromBygrees(getBygrees() - angle.getBygrees());
+            }
+            return super.clockwise(angle);
+        }
+
+        @Override
+        public double getDegrees() {
+            return degrees;
+        }
+
+        @Override
+        public RelativeAngle getAngleCounterClockwiseTo(AbsoluteAngle counterClockwiseValue) {
+            if (counterClockwiseValue.isExactBygrees()) {
+                final int difference = getBygrees() - counterClockwiseValue.getBygrees();
+                return RelativeAngle.fromBygrees(difference < 0 ? difference + 256 : difference);
+            }
+            return super.getAngleCounterClockwiseTo(counterClockwiseValue);
+        }
+
+        @Override
+        public RelativeAngle counterClockwiseFromStandardOrigin() {
+            return counterClockwiseFromStandardOrigin;
         }
     }
 }
