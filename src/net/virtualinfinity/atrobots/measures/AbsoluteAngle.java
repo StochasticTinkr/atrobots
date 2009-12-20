@@ -4,6 +4,19 @@ package net.virtualinfinity.atrobots.measures;
  * @author Daniel Pitts
  */
 public class AbsoluteAngle {
+    private static final AbsoluteAngle[] bygreeTable = new AbsoluteAngle[256];
+
+    static {
+        for (int bygrees = 0; bygrees < bygreeTable.length; ++bygrees) {
+            final AbsoluteAngle value = AbsoluteAngle.fromRadians(bygreeToRadians(bygrees));
+            bygreeTable[bygrees] = new AbsoluateBygreeAngle(bygrees, value);
+        }
+    }
+
+    protected boolean isExactBygrees() {
+        return false;
+    }
+
     private final double radians;
 
     private AbsoluteAngle(double radians) {
@@ -16,14 +29,6 @@ public class AbsoluteAngle {
 
     public double sine() {
         return Math.sin(radians);
-    }
-
-    public static AbsoluteAngle fromCartesian(double x, double y) {
-        return fromRadians(Math.atan2(y, x));
-    }
-
-    public static AbsoluteAngle fromRadians(double radians) {
-        return new AbsoluteAngle(radians);
     }
 
     public AbsoluteAngle counterClockwise(RelativeAngle angle) {
@@ -47,16 +52,11 @@ public class AbsoluteAngle {
     }
 
     public int getBygrees() {
-        return (int) Math.round(64 + (radians * 128 / Math.PI)) & 255;
+        return radiansToBygrees(getRadians());
     }
 
     public AbsoluteAngle clockwise(RelativeAngle angle) {
         return fromRadians(getRadians() - angle.getRadians());
-    }
-
-    public static AbsoluteAngle fromBygrees(int value) {
-
-        return fromRadians((value - 64) * Math.PI / 128);
     }
 
     public byte getSignedBygrees() {
@@ -97,5 +97,95 @@ public class AbsoluteAngle {
     public Vector projectAngle(Vector vector) {
         final Vector unit = toVector(1);
         return unit.times(unit.dot(vector));
+    }
+
+    public static AbsoluteAngle fromBygrees(int value) {
+        return bygreeTable[value & 255];
+    }
+
+    public static AbsoluteAngle fromCartesian(double x, double y) {
+        return fromRadians(Math.atan2(y, x));
+    }
+
+    public static AbsoluteAngle fromRadians(double radians) {
+        return new AbsoluteAngle(radians);
+    }
+
+    private static int radiansToBygrees(double radians) {
+        return (int) Math.round(64 + (radians * 128 / Math.PI)) & 255;
+    }
+
+    private static double bygreeToRadians(int bygrees) {
+        return (bygrees - 64) * Math.PI / 128;
+    }
+
+    private static class AbsoluateBygreeAngle extends AbsoluteAngle {
+
+        private final double cosine;
+
+        private final double sine;
+        private final int bygrees;
+        private final byte signedBygrees;
+        private final double normalizedRadians;
+
+        public AbsoluateBygreeAngle(int bygrees, AbsoluteAngle template) {
+            super(bygreeToRadians(bygrees));
+            this.cosine = template.cosine();
+            this.sine = template.sine();
+            this.bygrees = bygrees;
+            this.signedBygrees = template.getSignedBygrees();
+            this.normalizedRadians = template.getNormalizedRadians();
+
+        }
+
+        @Override
+        public double cosine() {
+            return cosine;
+        }
+
+        @Override
+        public double sine() {
+            return sine;
+        }
+
+        @Override
+        public AbsoluteAngle counterClockwise(RelativeAngle angle) {
+            return super.counterClockwise(angle);
+        }
+
+        @Override
+        public int getBygrees() {
+            return bygrees;
+        }
+
+        @Override
+        public byte getSignedBygrees() {
+            return signedBygrees;
+        }
+
+        @Override
+        public AbsoluteAngle clockwise(RelativeAngle angle) {
+            return super.clockwise(angle);
+        }
+
+        @Override
+        public RelativeAngle getAngleClockwiseTo(AbsoluteAngle clockwiseValue) {
+            return super.getAngleClockwiseTo(clockwiseValue);
+        }
+
+        @Override
+        public RelativeAngle getAngleCounterClockwiseTo(AbsoluteAngle counterClockwiseValue) {
+            return super.getAngleCounterClockwiseTo(counterClockwiseValue);
+        }
+
+        @Override
+        protected boolean isExactBygrees() {
+            return true;
+        }
+
+        @Override
+        public double getNormalizedRadians() {
+            return normalizedRadians;
+        }
     }
 }
