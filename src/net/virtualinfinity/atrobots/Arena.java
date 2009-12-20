@@ -93,24 +93,25 @@ public class Arena {
 
     private ScanResult calculateResult(Robot ignore, Position position, AngleBracket angleBracket, double maxDistance) {
         Vector vectorToClosest = null;
-        double closestDistance = maxDistance;
+        final double maxDistanceSquared = maxDistance * maxDistance;
+        double closestDistanceSquared = maxDistanceSquared;
         Robot closest = null;
         for (Robot robot : robots) {
             if (robot == ignore) {
                 continue;
             }
             final Vector vector = robot.getPosition().getVectorTo(position);
-            final double distance = vector.getMagnitude();
-            if (closest == null || distance < closestDistance) {
+            final double distanceSquared = vector.getMagnitudeSquared();
+            if (distanceSquared < closestDistanceSquared) {
                 if (angleBracket.contains(vector.getAngle())) {
                     closest = robot;
-                    closestDistance = distance;
+                    closestDistanceSquared = distanceSquared;
                     vectorToClosest = vector;
                 }
             }
         }
-        if (closest != null && closestDistance <= maxDistance) {
-            return new ScanResult(closest, closestDistance, vectorToClosest.getAngle());
+        if (closest != null && closestDistanceSquared <= maxDistance * maxDistance) {
+            return new ScanResult(closest, Math.sqrt(closestDistanceSquared), vectorToClosest.getAngle());
         }
         return new ScanResult();
     }
