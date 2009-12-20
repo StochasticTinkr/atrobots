@@ -63,18 +63,8 @@ public class AbsoluteAngle {
         return (byte) getBygrees();
     }
 
-    public double getNormalizedRadiansClockwiseTo(AbsoluteAngle clockwiseBound) {
-        final double difference = getNormalizedRadians() - clockwiseBound.getNormalizedRadians();
-        return difference < 0 ? difference + Math.PI * 2.0 : difference;
-    }
-
-    public RelativeAngle getAngleClockwiseTo(AbsoluteAngle clockwiseValue) {
-        final double difference = clockwiseValue.getNormalizedRadians() - getNormalizedRadians();
-        return RelativeAngle.fromRadians(difference < 0 ? difference + Math.PI * 2.0 : difference);
-    }
-
-    public boolean clockwiseIsCloserTo(AbsoluteAngle angle) {
-        return getAngleClockwiseTo(angle).compareTo(RelativeAngle.HALF_CIRCLE) > 0;
+    public boolean isClockwiseCloser(AbsoluteAngle angle) {
+        return getAngleCounterClockwiseTo(angle).compareTo(RelativeAngle.HALF_CIRCLE) < 0;
     }
 
     public String toString() {
@@ -149,11 +139,6 @@ public class AbsoluteAngle {
         }
 
         @Override
-        public AbsoluteAngle counterClockwise(RelativeAngle angle) {
-            return super.counterClockwise(angle);
-        }
-
-        @Override
         public int getBygrees() {
             return bygrees;
         }
@@ -161,21 +146,6 @@ public class AbsoluteAngle {
         @Override
         public byte getSignedBygrees() {
             return signedBygrees;
-        }
-
-        @Override
-        public AbsoluteAngle clockwise(RelativeAngle angle) {
-            return super.clockwise(angle);
-        }
-
-        @Override
-        public RelativeAngle getAngleClockwiseTo(AbsoluteAngle clockwiseValue) {
-            return super.getAngleClockwiseTo(clockwiseValue);
-        }
-
-        @Override
-        public RelativeAngle getAngleCounterClockwiseTo(AbsoluteAngle counterClockwiseValue) {
-            return super.getAngleCounterClockwiseTo(counterClockwiseValue);
         }
 
         @Override

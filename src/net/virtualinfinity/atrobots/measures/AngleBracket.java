@@ -9,16 +9,16 @@ import java.awt.geom.Ellipse2D;
  */
 public class AngleBracket {
     private final AbsoluteAngle counterClockwiseBound;
-    private final double rangeSize;
+    private final RelativeAngle rangeSize;
 
     private AngleBracket(AbsoluteAngle counterClockwiseBound, AbsoluteAngle clockwiseBound) {
         this.counterClockwiseBound = counterClockwiseBound;
-        rangeSize = counterClockwiseBound.getNormalizedRadiansClockwiseTo(clockwiseBound);
+        rangeSize = counterClockwiseBound.getAngleCounterClockwiseTo(clockwiseBound);
     }
 
     public AngleBracket() {
         counterClockwiseBound = null;
-        rangeSize = Math.PI * 2;
+        rangeSize = RelativeAngle.FULL_CIRCLE;
     }
 
     public static AngleBracket around(AbsoluteAngle center, RelativeAngle width) {
@@ -44,26 +44,24 @@ public class AngleBracket {
                 return ellipse2D;
             }
         };
-
-
     }
 
     public boolean contains(AbsoluteAngle angle) {
-        return Math.abs(counterClockwiseBound.getNormalizedRadiansClockwiseTo(angle)) <= rangeSize;
+        return counterClockwiseBound.getAngleCounterClockwiseTo(angle).compareTo(rangeSize) <= 0;
     }
 
     public double fractionTo(AbsoluteAngle angle) {
-        return counterClockwiseBound.getAngleCounterClockwiseTo(angle).normalize().getRadians() / rangeSize;
+        return counterClockwiseBound.getAngleCounterClockwiseTo(angle).normalize().dividedBy(rangeSize);
     }
 
     public AbsoluteAngle randomAngleBetween() {
-        return AbsoluteAngle.fromRadians(counterClockwiseBound.getNormalizedRadians() - Math.random() * rangeSize);
+        return AbsoluteAngle.fromRadians(counterClockwiseBound.getNormalizedRadians() - Math.random() * rangeSize.getRadians());
     }
 
     public Shape toShape(double x, double y, double radius) {
         final Arc2D.Double arc = new Arc2D.Double();
         arc.setArcByCenter(x, y, radius, -counterClockwiseBound.getDegrees(),
-                RelativeAngle.fromRadians(rangeSize).getDegrees(), Arc2D.PIE);
+                rangeSize.getDegrees(), Arc2D.PIE);
         return arc;
     }
 }

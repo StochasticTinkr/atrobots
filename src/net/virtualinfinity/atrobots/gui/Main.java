@@ -151,8 +151,8 @@ public class Main implements Runnable {
                 for (final File parent : new File[]{new File("."), new File("original")})
                     new EntrantLoader(parent.listFiles(new FilenameFilter() {
                         public boolean accept(File dir, String name) {
-                            return name.toLowerCase().equals("wallbomb.at2") ||
-                                    name.toLowerCase().endsWith("sduck.at2");
+                            return name.toLowerCase().matches("zitgun.at2") ||
+                                    name.toLowerCase().endsWith("sniper2.at2");
                         }
                     })).execute();
 

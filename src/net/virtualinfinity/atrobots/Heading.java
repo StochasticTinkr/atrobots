@@ -56,7 +56,7 @@ public class Heading {
     public void moveToward(Heading desiredHeading, RelativeAngle maxDelta) {
         if (AngleBracket.around(getAngle(), maxDelta).contains(desiredHeading.getAngle())) {
             setAngle(desiredHeading.getAngle());
-        } else if (getAngle().clockwiseIsCloserTo(desiredHeading.getAngle())) {
+        } else if (getAngle().isClockwiseCloser(desiredHeading.getAngle())) {
             setAngle(getAngle().clockwise(maxDelta));
         } else {
             setAngle(getAngle().counterClockwise(maxDelta));

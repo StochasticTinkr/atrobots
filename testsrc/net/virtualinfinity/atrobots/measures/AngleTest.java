@@ -57,4 +57,12 @@ public class AngleTest extends TestCase {
         assertEquals(WEST_COSINE, AbsoluteAngle.fromRadians(WEST_RADIANS).cosine(), 0.00001);
     }
 
+    public void testGetAngleClockwiseTo() {
+        assertEquals(RelativeAngle.fromBygrees(EAST_BYGREES).getBygrees(), AbsoluteAngle.fromBygrees(EAST_BYGREES).getAngleCounterClockwiseTo(AbsoluteAngle.fromBygrees(NORTH_BYGREES)).getBygrees());
+    }
+
+    public void testClockwiseIsCloserTo() {
+        assertTrue(AbsoluteAngle.fromBygrees(EAST_BYGREES).isClockwiseCloser(AbsoluteAngle.fromBygrees(NORTH_BYGREES)));
+    }
+
 }
