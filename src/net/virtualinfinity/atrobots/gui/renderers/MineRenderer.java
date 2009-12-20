@@ -12,10 +12,12 @@ public class MineRenderer implements SnapshotRenderer<MineSnapshot> {
     public void render(Graphics2D g2d, MineSnapshot mineSnapshot) {
         final Ellipse2D.Double ellipse = new Ellipse2D.Double();
         ellipse.setFrameFromCenter(mineSnapshot.getX(), mineSnapshot.getY(), mineSnapshot.getX() + mineSnapshot.getTriggerRadius(), mineSnapshot.getY() + mineSnapshot.getTriggerRadius());
-        g2d.setPaint(Color.green);
-        g2d.draw(ellipse);
-        g2d.setPaint(Color.yellow);
+        g2d.setPaint(new RadialGradientPaint(mineSnapshot.getPositionVector().toPoint2D(), (float) mineSnapshot.getTriggerRadius(),
+                new float[]{0f, 1f}, new Color[]{new Color(0, 0f, 0, .2f), new Color(.1f, 1f, .2f, .2f)}));
+        g2d.fill(ellipse);
+        g2d.setPaint(new RadialGradientPaint(mineSnapshot.getPositionVector().toPoint2D(), 3,
+                new float[]{0f, 1f}, new Color[]{new Color(.8f, .8f, .9f, 1f), new Color(.1f, .1f, .2f, 1f)}));
         ellipse.setFrameFromCenter(mineSnapshot.getX(), mineSnapshot.getY(), mineSnapshot.getX() + 3, mineSnapshot.getY() + 3);
-        g2d.draw(ellipse);
+        g2d.fill(ellipse);
     }
 }
