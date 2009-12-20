@@ -34,16 +34,16 @@ public class AtRobotLineLexer {
             line = line.substring(i);
             if (line.length() != 0) {
                 switch (line.charAt(0)) {
-                    case'#':
+                    case '#':
                         visitDirective(line);
                         break;
-                    case':':
+                    case ':':
                         visitNumberLabel(line);
                         break;
-                    case'*':
+                    case '*':
                         visitMachineCode(line);
                         break;
-                    case'!':
+                    case '!':
                         visitLabel(line);
                         break;
                     default:
@@ -108,16 +108,21 @@ public class AtRobotLineLexer {
     public static int parseNumber(String token) {
         int value = 0;
         final int radix;
-        final int end;
+        final boolean negative = token.charAt(0) == '-';
+        if (negative) {
+            token = token.substring(1);
+        }
         if (token.endsWith("h")) {
-            end = token.length() - 1;
+            token = token.substring(0, token.length() - 1);
+            radix = 16;
+        } else if (token.startsWith("0x") || token.startsWith("0X")) {
+            token = token.substring(2);
             radix = 16;
         } else {
-            end = token.length();
             radix = 10;
         }
-        final boolean negative = token.charAt(0) == '-';
-        for (int i = negative ? 1 : 0; i < end; ++i) {
+
+        for (int i = 0; i < token.length(); ++i) {
             final int digit = Character.digit(token.charAt(i), radix);
             if (digit < 0) {
                 return Integer.MIN_VALUE;
