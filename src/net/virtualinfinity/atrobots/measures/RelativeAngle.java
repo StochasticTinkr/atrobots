@@ -95,6 +95,10 @@ public class RelativeAngle implements Comparable<RelativeAngle> {
         return radians / relativeAngle.radians;
     }
 
+    boolean isExactBygrees() {
+        return false;
+    }
+
     private static class RelativeBygreeAngle extends RelativeAngle {
         private final int bygree;
         private final byte signedBygree;
@@ -125,6 +129,11 @@ public class RelativeAngle implements Comparable<RelativeAngle> {
         @Override
         public double getDegrees() {
             return degrees;
+        }
+
+        @Override
+        boolean isExactBygrees() {
+            return true;
         }
     }
 }
