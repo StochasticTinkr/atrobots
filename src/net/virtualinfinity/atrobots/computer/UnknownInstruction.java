@@ -9,6 +9,6 @@ public class UnknownInstruction extends Instruction {
     }
 
     protected void perform(Computer computer) {
-        computer.unknownInstructionError();
+        computer.unknownInstructionError(computer.getOperandValue(0));
     }
 }

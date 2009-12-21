@@ -25,7 +25,8 @@ public class Computer {
     private Map<Integer, Integer> jumpTable;
     private CommunicationsQueue commQueue;
     private int cyclesPerSimCycle = 5;
-    private final ErrorHandler errorHandler = new ErrorHandler();
+    private String lastMessage;
+    private ErrorHandler errorHandler = new ErrorHandler();
     private boolean shutDown;
     private int maxInstructionPointer;
 
@@ -278,12 +279,12 @@ public class Computer {
         errorHandler.genericError(operandValue);
     }
 
-    public void unknownInstructionError() {
-        errorHandler.unknownInstructionError();
+    public void unknownInstructionError(short operandValue) {
+        errorHandler.unknownInstructionError(operandValue);
     }
 
-    public void invalidInterruptError() {
-        errorHandler.invalidInterruptError();
+    public void invalidInterruptError(short operandValue) {
+        errorHandler.invalidInterruptError(operandValue);
     }
 
     public void invalidPortError() {
@@ -457,69 +458,56 @@ public class Computer {
         }
     }
 
-    private class ErrorHandler implements ComputerErrorHandler {
-        public void genericError(short operandValue) {
-            System.out.println("error " + operandValue);
-            // TODO: robot error
-//            System.out.println("Computer$ErrorHandler.genericError");
-        }
-
-        public void unknownInstructionError() {
-            // TODO: robot error
-            System.out.println("Computer$ErrorHandler.unknownInstructionError");
-        }
-
-        public void invalidInterruptError() {
-            // TODO: robot error
-            System.out.println("Computer$ErrorHandler.invalidInterruptError");
-        }
-
-        public void notAddressableError() {
-            // TODO: robot error
-            System.out.println("Computer$ErrorHandler.notAddressableError");
-        }
-
-        public void invalidMicrocodeError() {
-            // TODO: robot error
-            System.out.println("Computer$ErrorHandler.invalidMicrocodeError");
-        }
-
-        public void divideByZeroError() {
-            // TODO: robot error
-            System.out.println("Computer$ErrorHandler.divideByZeroError");
-        }
-
-        public void invalidPortError() {
-            // TODO: robot error
-            System.out.println("Computer$ErrorHandler.invalidPortError");
-
-        }
-
-        public void commQueueEmptyError() {
-            // TODO: robot error
-//            System.out.println("Computer$ErrorHandler.commQueueEmptyError");
-        }
-
-        boolean inMethod = false;
-
-        public void memoryBoundsError(int address) {
-            // TODO: robot error
-            if (inMethod) {
-                System.out.println("Computer$ErrorHandler.memoryBoundsError: @" + address);
-                return;
-            }
-            inMethod = true;
-            System.out.println("Computer$ErrorHandler.memoryBoundsError: @" + address + ":  " + Computer.this.getInstructionString());
-            inMethod = false;
-        }
-
-        public void writeToRomError() {
-            // TODO: robot error
-            System.out.println("Computer$ErrorHandler.writeToRomError");
-        }
+    public String getLastMessage() {
+        return lastMessage;
     }
 
     public StackMemory getStack() {
         return stack;
     }
+
+    private class ErrorHandler implements ComputerErrorHandler {
+        public void genericError(short operandValue) {
+            lastMessage = "ERR " + operandValue;
+        }
+
+        public void unknownInstructionError(short operandValue) {
+            lastMessage = "Unknown instruction: " + operandValue;
+        }
+
+        public void invalidInterruptError(short operandValue) {
+            lastMessage = "Invalid Interrupt: " + operandValue;
+        }
+
+        public void notAddressableError() {
+            lastMessage = "Not addressable error.";
+        }
+
+        public void invalidMicrocodeError() {
+            lastMessage = "Invalid microcode.";
+        }
+
+        public void divideByZeroError() {
+            lastMessage = "Divide by zero";
+        }
+
+        public void invalidPortError() {
+            lastMessage = "Invalid port.";
+
+        }
+
+        public void commQueueEmptyError() {
+            lastMessage = "Empty Comm Queue";
+        }
+
+        public void memoryBoundsError(int address) {
+            lastMessage = "OutOfBounds: @" + address;
+        }
+
+
+        public void writeToRomError() {
+            lastMessage = "Write to ROM.";
+        }
+    }
+
 }

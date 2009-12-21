@@ -329,7 +329,11 @@ public class InstructionTest extends AbstractCompilerTest {
         compile("MOV AX, " + v1 + "\n" + op + " AX, " + v2);
         executeInstruction();
         executeInstruction();
-        assertAX(result);
+        assertAX(v1 + op + v2, result);
+    }
+
+    private void assertAX(String message, int result) {
+        assertEquals(message, result, robot.getComputer().getRegisters().getAx().signed());
     }
 
     private void assertAX(int result) {

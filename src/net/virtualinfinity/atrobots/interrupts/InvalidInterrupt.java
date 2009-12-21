@@ -1,18 +1,18 @@
 package net.virtualinfinity.atrobots.interrupts;
 
-import net.virtualinfinity.atrobots.computer.ComputerErrorHandler;
+import net.virtualinfinity.atrobots.computer.Computer;
 
 /**
  * @author Daniel Pitts
  */
 public class InvalidInterrupt extends InterruptHandler {
-    private final ComputerErrorHandler computerErrorHandler;
+    private final Computer computer;
 
-    public InvalidInterrupt(ComputerErrorHandler computer) {
-        this.computerErrorHandler = computer;
+    public InvalidInterrupt(Computer computer) {
+        this.computer = computer;
     }
 
     public void handleInterrupt() {
-        computerErrorHandler.invalidInterruptError();
+        computer.invalidInterruptError(computer.getOperandValue(1));
     }
 }

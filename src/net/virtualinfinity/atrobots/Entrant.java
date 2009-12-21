@@ -36,6 +36,7 @@ public class Entrant {
         hardwareContext.setRobot(robot);
         hardwareSpecification.configureHardwareContext(hardwareContext);
         hardwareContext.wireRobotComponents();
+        roundKills = 0;
         return robot;
     }
 

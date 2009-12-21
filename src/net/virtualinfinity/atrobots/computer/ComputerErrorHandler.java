@@ -10,9 +10,9 @@ public interface ComputerErrorHandler {
 
     void genericError(short operandValue);
 
-    void unknownInstructionError();
+    void unknownInstructionError(short operandValue);
 
-    void invalidInterruptError();
+    void invalidInterruptError(short operandValue);
 
     void invalidPortError();
 

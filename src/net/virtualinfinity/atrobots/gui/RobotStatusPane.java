@@ -38,6 +38,7 @@ public class RobotStatusPane extends JPanel implements SimulationObserver {
             }
         }
         robotList.addElement(robotSnapshot);
+        revalidate();
     }
 
     public static RobotStatusPane createRobotStatusPane() {
@@ -61,7 +62,7 @@ public class RobotStatusPane extends JPanel implements SimulationObserver {
             add(lastMessage);
             final RobotSnapshot robotSnapshot = (RobotSnapshot) value;
             name.setText(robotSnapshot.getName());
-            roundKills.setText(robotSnapshot.getRoundKills() + (robotSnapshot.getRoundKills() == 1 ? " kill" : " kills"));
+            roundKills.setText("Kills (round/total): " + robotSnapshot.getRoundKills() + "/" + robotSnapshot.getTotalKills());
             armor.setValue((int) Math.round(Math.min(100, robotSnapshot.getArmor())));
             heat.setValue((int) Math.round(Math.min(100, robotSnapshot.getTemperature().getLogScale() * .2)));
             lastMessage.setText(robotSnapshot.getLastMessage() == null ? "" : robotSnapshot.getLastMessage());

@@ -243,18 +243,18 @@ public class Robot extends ArenaObject implements Resetable {
 
     protected ArenaObjectSnapshot createSpecificSnapshot() {
         final RobotSnapshot robotSnapshot = new RobotSnapshot();
-        robotSnapshot.setTemperature(heat.getTemperature());
-        robotSnapshot.setArmor(armor.getRemaining());
-        robotSnapshot.setOverburn(overburn);
-        robotSnapshot.setActiveShield(shield.isActive());
-        robotSnapshot.setHeading(heading.getAngle());
-        robotSnapshot.setTurretHeading(turret.getHeading().getAngle());
+        robotSnapshot.setTemperature(getHeat().getTemperature());
+        robotSnapshot.setArmor(getArmor().getRemaining());
+        robotSnapshot.setOverburn(isOverburn());
+        robotSnapshot.setActiveShield(getShield().isActive());
+        robotSnapshot.setHeading(getHeading().getAngle());
+        robotSnapshot.setTurretHeading(getTurret().getHeading().getAngle());
         robotSnapshot.setName(getEntrant().getName());
         robotSnapshot.setId(getEntrant().getId());
         robotSnapshot.setRoundKills(getEntrant().getRoundKills());
         robotSnapshot.setTotalKills(getEntrant().getTotalKills());
         robotSnapshot.setTotalDeaths(getEntrant().getTotalDeaths());
-//        robotSnapshot.setLastMessage();
+        robotSnapshot.setLastMessage(getComputer().getLastMessage());
         return robotSnapshot;
     }
 

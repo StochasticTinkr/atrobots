@@ -71,7 +71,11 @@ public class Scanner implements Resetable {
             }
 
             public void write(short value) {
-                setScanArc(RelativeAngle.fromBygrees(Math.max(0, Math.min(64, value))));
+                if (value == 0) {
+                    setScanArc(RelativeAngle.fromRadians(Math.PI / 1024));
+                } else {
+                    setScanArc(RelativeAngle.fromBygrees(Math.max(0, Math.min(64, value))));
+                }
             }
         };
     }

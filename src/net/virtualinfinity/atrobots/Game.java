@@ -46,7 +46,7 @@ public class Game {
      * Start the next round. This ends the current round.
      */
     public synchronized void nextRound() {
-        round = new Round(++roundNumber);
+        round = new Round(++roundNumber, this);
         round.getArena().setSimulationFrameBuffer(frameBuffer);
         for (Entrant entrant : entrants) {
             round.getArena().addRobot(createRobotFor(entrant));
@@ -99,5 +99,10 @@ public class Game {
      */
     public synchronized void stepRound() {
         getRound().step();
+
+    }
+
+    public void roundOver() {
+        nextRound();
     }
 }

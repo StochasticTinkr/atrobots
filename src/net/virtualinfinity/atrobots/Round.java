@@ -7,11 +7,15 @@ import net.virtualinfinity.atrobots.measures.Duration;
  */
 public class Round {
     private Duration time = Duration.fromCycles(0);
+    private Duration roundEnd = Duration.fromCycles(10);
+    private Duration maxCycles = Duration.fromCycles(25000);
     private Arena arena = new Arena();
     private int number;
+    private Game game;
 
-    public Round(int number) {
+    public Round(int number, Game game) {
         this.number = number;
+        this.game = game;
     }
 
     public Duration getTime() {
@@ -27,6 +31,15 @@ public class Round {
     }
 
     public void step() {
-        arena.simulate(Duration.ONE_CYCLE);
+        if (arena.countActiveRobots() == 1) {
+            roundEnd = roundEnd.minus(Duration.ONE_CYCLE);
+        }
+        if (roundEnd.getCycles() == 0 || arena.countActiveRobots() == 0 || time.compareTo(maxCycles) > 0) {
+            game.roundOver();
+            return;
+        }
+        arena.simulate();
+        time = time.plus(Duration.ONE_CYCLE);
+
     }
 }

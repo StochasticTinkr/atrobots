@@ -3,7 +3,7 @@ package net.virtualinfinity.atrobots.measures;
 /**
  * @author Daniel Pitts
  */
-public final class Duration {
+public final class Duration implements Comparable<Duration> {
     private final int cycles;
     public static final Duration ONE_CYCLE = Duration.fromCycles(1);
 
@@ -29,5 +29,13 @@ public final class Duration {
 
     public String toString() {
         return cycles + "s";
+    }
+
+    public int compareTo(Duration duration) {
+        return getCycles() < duration.getCycles() ? -1 : getCycles() == duration.getCycles() ? 0 : 1;
+    }
+
+    public Duration plus(Duration duration) {
+        return fromCycles(getCycles() + duration.getCycles());
     }
 }

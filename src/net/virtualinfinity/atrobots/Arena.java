@@ -118,11 +118,9 @@ public class Arena {
 
     /**
      * Simulate a certain amount of time elapsing.
-     *
-     * @param time the amount of time.
      */
-    public void simulate(Duration time) {
-        updateSimulation(time);
+    public void simulate() {
+        updateSimulation();
         buildFrame();
     }
 
@@ -139,17 +137,14 @@ public class Arena {
         simulationFrameBuffer.endFrame();
     }
 
-    private void updateSimulation(Duration time) {
-        while (time.getCycles() > 0) {
-            time = time.minus(Duration.ONE_CYCLE);
-            for (Collection<? extends ArenaObject> objectCollection : allArenaObjectCollections) {
-                for (ArenaObject object : objectCollection) {
-                    object.update(Duration.ONE_CYCLE);
-                }
+    private void updateSimulation() {
+        for (Collection<? extends ArenaObject> objectCollection : allArenaObjectCollections) {
+            for (ArenaObject object : objectCollection) {
+                object.update(Duration.ONE_CYCLE);
             }
-            checkCollissions();
-            removeDead();
         }
+        checkCollissions();
+        removeDead();
     }
 
     private void removeDead() {

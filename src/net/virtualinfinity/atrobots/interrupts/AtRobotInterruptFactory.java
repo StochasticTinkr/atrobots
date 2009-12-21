@@ -121,7 +121,7 @@ public class AtRobotInterruptFactory {
     }
 
     InvalidInterrupt createInvalidInterrupt(Robot robot) {
-        return new InvalidInterrupt(robot.getComputer().getErrorHandler());
+        return new InvalidInterrupt(robot.getComputer());
     }
 
     public Map<Integer, InterruptHandler> createInterruptTable(Robot robot) {
