@@ -250,6 +250,11 @@ public class Robot extends ArenaObject implements Resetable {
         robotSnapshot.setHeading(heading.getAngle());
         robotSnapshot.setTurretHeading(turret.getHeading().getAngle());
         robotSnapshot.setName(getEntrant().getName());
+        robotSnapshot.setId(getEntrant().getId());
+        robotSnapshot.setRoundKills(getEntrant().getRoundKills());
+        robotSnapshot.setTotalKills(getEntrant().getTotalKills());
+        robotSnapshot.setTotalDeaths(getEntrant().getTotalDeaths());
+//        robotSnapshot.setLastMessage();
         return robotSnapshot;
     }
 

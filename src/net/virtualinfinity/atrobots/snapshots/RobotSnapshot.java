@@ -16,6 +16,9 @@ public class RobotSnapshot extends ArenaObjectSnapshot {
     private String name;
     private int id;
     private String lastMessage;
+    private int roundKills;
+    private int totalKills;
+    private int totalDeaths;
 
     public void setTemperature(Temperature temperature) {
         this.temperature = temperature;
@@ -91,5 +94,29 @@ public class RobotSnapshot extends ArenaObjectSnapshot {
 
     public void setLastMessage(String lastMessage) {
         this.lastMessage = lastMessage;
+    }
+
+    public int getRoundKills() {
+        return roundKills;
+    }
+
+    public void setRoundKills(int roundKills) {
+        this.roundKills = roundKills;
+    }
+
+    public int getTotalKills() {
+        return totalKills;
+    }
+
+    public void setTotalKills(int totalKills) {
+        this.totalKills = totalKills;
+    }
+
+    public int getTotalDeaths() {
+        return totalDeaths;
+    }
+
+    public void setTotalDeaths(int totalDeaths) {
+        this.totalDeaths = totalDeaths;
     }
 }

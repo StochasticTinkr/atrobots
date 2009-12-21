@@ -54,6 +54,7 @@ public class Main implements Runnable {
         }
     };
     private volatile boolean closed;
+    private RobotStatusPane robotStatusPane;
 
     public Main() {
         pauseLock = new Object();
@@ -93,6 +94,8 @@ public class Main implements Runnable {
                 this.putValue(Action.NAME, useDelay ? "Full Speed" : "Slower");
             }
         }));
+        robotStatusPane = RobotStatusPane.createRobotStatusPane();
+        mainFrame.getContentPane().add(robotStatusPane, BorderLayout.EAST);
         arenaPane = new ArenaPane();
         mainFrame.getContentPane().add(arenaPane, BorderLayout.CENTER);
         arenaPane.setBackground(Color.black);
@@ -101,6 +104,7 @@ public class Main implements Runnable {
         arenaPane.setPreferredSize(new Dimension(500, 500));
         game = new Game(1000);
         game.addSimulationObserver(arenaPane);
+        game.addSimulationObserver(robotStatusPane);
         mainFrame.setLocationRelativeTo(null);
         mainFrame.setLocationByPlatform(true);
         mainFrame.pack();

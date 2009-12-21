@@ -80,7 +80,7 @@ public class Computer {
 //            System.out.println(getInstructionString() + " ** " + registers);
 //            System.out.println(getSourceLine());
 //        }
-        getInstruction().execute(Computer.this);
+        getInstruction().execute(this);
     }
 
     private String getSourceLine() {
