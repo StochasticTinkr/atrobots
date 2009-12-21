@@ -61,10 +61,10 @@ public class RobotStatusPane extends JPanel implements SimulationObserver {
             add(lastMessage);
             final RobotSnapshot robotSnapshot = (RobotSnapshot) value;
             name.setText(robotSnapshot.getName());
-            roundKills.setText(String.valueOf(robotSnapshot.getRoundKills()));
+            roundKills.setText(robotSnapshot.getRoundKills() + (robotSnapshot.getRoundKills() == 1 ? " kill" : " kills"));
             armor.setValue((int) Math.round(Math.min(100, robotSnapshot.getArmor())));
-            heat.setValue((int) Math.round(Math.min(100, robotSnapshot.getTemperature().getLogScale())));
-            lastMessage.setText(String.valueOf(robotSnapshot.getLastMessage()));
+            heat.setValue((int) Math.round(Math.min(100, robotSnapshot.getTemperature().getLogScale() * .2)));
+            lastMessage.setText(robotSnapshot.getLastMessage() == null ? "" : robotSnapshot.getLastMessage());
             return this;
         }
     }
