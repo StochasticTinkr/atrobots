@@ -95,7 +95,7 @@ public class Main implements Runnable {
             }
         }));
         robotStatusPane = RobotStatusPane.createRobotStatusPane();
-        mainFrame.getContentPane().add(robotStatusPane, BorderLayout.EAST);
+        mainFrame.getContentPane().add(new JScrollPane(robotStatusPane), BorderLayout.EAST);
         arenaPane = new ArenaPane();
         mainFrame.getContentPane().add(arenaPane, BorderLayout.CENTER);
         arenaPane.setBackground(Color.black);
@@ -105,6 +105,7 @@ public class Main implements Runnable {
         game = new Game(1000);
         game.addSimulationObserver(arenaPane);
         game.addSimulationObserver(robotStatusPane);
+        arenaPane.setRobotStatusPane(robotStatusPane);
         mainFrame.setLocationRelativeTo(null);
         mainFrame.setLocationByPlatform(true);
         mainFrame.pack();

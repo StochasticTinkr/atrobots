@@ -9,6 +9,7 @@ import java.awt.geom.Ellipse2D;
 import java.awt.geom.GeneralPath;
 import java.awt.geom.Line2D;
 import java.awt.geom.Rectangle2D;
+import java.util.Set;
 
 /**
  * @author Daniel Pitts
@@ -16,7 +17,7 @@ import java.awt.geom.Rectangle2D;
 public class RobotRenderer implements SnapshotRenderer<RobotSnapshot> {
     private boolean showStatusBars = true;
 
-    public void render(Graphics2D g2d, RobotSnapshot robotSnapshot) {
+    public void render(Graphics2D g2d, RobotSnapshot robotSnapshot, Set<Integer> selectedRobotIds) {
         paintBody(g2d, robotSnapshot);
         paintShield(g2d, robotSnapshot);
         paintTurret(g2d, robotSnapshot);
@@ -25,8 +26,19 @@ public class RobotRenderer implements SnapshotRenderer<RobotSnapshot> {
             paintHeat(g2d, robotSnapshot);
         }
         paintName(g2d, robotSnapshot);
+        if (selectedRobotIds.contains(robotSnapshot.getId())) {
+            paintSelection(g2d, robotSnapshot);
+        }
 
     }
+
+    private void paintSelection(Graphics2D g2d, RobotSnapshot robotSnapshot) {
+        g2d.setPaint(new Color(1f, 1f, 0f, .25f));
+        final Ellipse2D.Double s = new Ellipse2D.Double();
+        s.setFrameFromCenter(robotSnapshot.getX(), robotSnapshot.getY(), robotSnapshot.getX() + 30, robotSnapshot.getY() + 30);
+        g2d.fill(s);
+    }
+
 
     private void paintShield(Graphics2D g2d, RobotSnapshot robotSnapshot) {
         if (robotSnapshot.isActiveShield()) {

@@ -5,12 +5,13 @@ import net.virtualinfinity.atrobots.snapshots.ExplosionSnapshot;
 import java.awt.*;
 import java.awt.geom.Ellipse2D;
 import java.awt.geom.Point2D;
+import java.util.Set;
 
 /**
  * @author Daniel Pitts
  */
 public class GradientExplosionRenderer implements SnapshotRenderer<ExplosionSnapshot> {
-    public void render(Graphics2D g2d, ExplosionSnapshot explosionSnapshot) {
+    public void render(Graphics2D g2d, ExplosionSnapshot explosionSnapshot, Set<Integer> selectedRobotIds) {
         g2d.setPaint(new RadialGradientPaint(explosionSnapshot.getPositionVector().toPoint2D(), (float) explosionSnapshot.getRadius(), new float[]{0, 1}, new Color[]{Color.yellow, Color.red}));
         final Ellipse2D.Double circle = new Ellipse2D.Double();
         final Point2D.Double corner = new Point2D.Double(explosionSnapshot.getPositionVector().getX() + (explosionSnapshot.getRadius()) - explosionSnapshot.getFrame(), explosionSnapshot.getPositionVector().getY() + (explosionSnapshot.getRadius()) - explosionSnapshot.getFrame());

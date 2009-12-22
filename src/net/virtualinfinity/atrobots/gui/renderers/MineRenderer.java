@@ -4,12 +4,13 @@ import net.virtualinfinity.atrobots.snapshots.MineSnapshot;
 
 import java.awt.*;
 import java.awt.geom.Ellipse2D;
+import java.util.Set;
 
 /**
  * @author Daniel Pitts
  */
 public class MineRenderer implements SnapshotRenderer<MineSnapshot> {
-    public void render(Graphics2D g2d, MineSnapshot mineSnapshot) {
+    public void render(Graphics2D g2d, MineSnapshot mineSnapshot, Set<Integer> selectedRobotIds) {
         final Ellipse2D.Double ellipse = new Ellipse2D.Double();
         ellipse.setFrameFromCenter(mineSnapshot.getX(), mineSnapshot.getY(), mineSnapshot.getX() + mineSnapshot.getTriggerRadius(), mineSnapshot.getY() + mineSnapshot.getTriggerRadius());
         g2d.setPaint(new RadialGradientPaint(mineSnapshot.getPositionVector().toPoint2D(), (float) mineSnapshot.getTriggerRadius(),
