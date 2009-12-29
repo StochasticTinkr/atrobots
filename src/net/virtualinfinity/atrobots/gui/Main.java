@@ -113,7 +113,8 @@ public class Main implements Runnable {
             }
         }));
         robotStatusPane = RobotStatusPane.createRobotStatusPane();
-        mainFrame.getContentPane().add(new JScrollPane(robotStatusPane), BorderLayout.EAST);
+        final JScrollPane robotStatusScroller = new JScrollPane(robotStatusPane, ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS, ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
+        mainFrame.getContentPane().add(robotStatusScroller, BorderLayout.EAST);
         arenaPane = new ArenaPane();
         mainFrame.getContentPane().add(arenaPane, BorderLayout.CENTER);
         arenaPane.setBackground(Color.black);

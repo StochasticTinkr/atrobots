@@ -26,6 +26,11 @@ public class RobotStatusPane extends JList implements SimulationObserver {
         robotList = new DefaultListModel();
         setModel(robotList);
         this.setCellRenderer(new RobotStatusRenderer());
+        final RobotSnapshot robotSnapshot = new RobotSnapshot();
+        robotSnapshot.setName("SUPER DUPER LONG NAME!");
+        robotSnapshot.setLastMessage("VERY LONG ERROR MESSAGE FOR THIS ROBOT");
+        robotSnapshot.setTotalKills(10000000);
+        this.setPrototypeCellValue(new RobotItem(robotSnapshot));
     }
 
     public void frameAvailable(final SimulationFrameBuffer frameBuffer) {
