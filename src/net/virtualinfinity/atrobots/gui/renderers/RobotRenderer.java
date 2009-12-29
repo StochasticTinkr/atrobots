@@ -19,13 +19,15 @@ public class RobotRenderer implements SnapshotRenderer<RobotSnapshot> {
 
     public void render(Graphics2D g2d, RobotSnapshot robotSnapshot, Set<Integer> selectedRobotIds) {
         paintBody(g2d, robotSnapshot);
-        paintShield(g2d, robotSnapshot);
-        paintTurret(g2d, robotSnapshot);
-        if (showStatusBars) {
-            paintArmor(g2d, robotSnapshot);
-            paintHeat(g2d, robotSnapshot);
+        if (!robotSnapshot.isDead()) {
+            paintShield(g2d, robotSnapshot);
+            paintTurret(g2d, robotSnapshot);
+            if (showStatusBars) {
+                paintArmor(g2d, robotSnapshot);
+                paintHeat(g2d, robotSnapshot);
+            }
+            paintName(g2d, robotSnapshot);
         }
-        paintName(g2d, robotSnapshot);
         if (selectedRobotIds.contains(robotSnapshot.getId())) {
             paintSelection(g2d, robotSnapshot);
         }
@@ -77,7 +79,14 @@ public class RobotRenderer implements SnapshotRenderer<RobotSnapshot> {
     }
 
     private void paintBody(Graphics2D g2d, RobotSnapshot robotSnapshot) {
-        g2d.setPaint(Color.red);
+        final Stroke stroke = g2d.getStroke();
+        if (robotSnapshot.isDead()) {
+            final BasicStroke basicStroke = new BasicStroke(1, BasicStroke.CAP_ROUND, BasicStroke.JOIN_MITER, 10, new float[]{5f, 5f}, 0f);
+            g2d.setStroke(basicStroke);
+            g2d.setPaint(Color.orange.darker().darker());
+        } else {
+            g2d.setPaint(Color.red);
+        }
         final GeneralPath path = new GeneralPath();
         path.moveTo(robotSnapshot.getX() + robotSnapshot.getHeading().cosine() * 15, robotSnapshot.getY() + robotSnapshot.getHeading().sine() * 15);
         AbsoluteAngle cc = robotSnapshot.getHeading().counterClockwise(RelativeAngle.fromBygrees(160));
@@ -86,6 +95,12 @@ public class RobotRenderer implements SnapshotRenderer<RobotSnapshot> {
         path.lineTo(robotSnapshot.getX(), robotSnapshot.getY());
         path.lineTo(robotSnapshot.getX() + c.cosine() * 9, robotSnapshot.getY() + c.sine() * 9);
         path.closePath();
-        g2d.fill(path);
+        if (robotSnapshot.isDead()) {
+            g2d.draw(path);
+        } else {
+            g2d.fill(path);
+        }
+        g2d.setStroke(stroke);
+
     }
 }

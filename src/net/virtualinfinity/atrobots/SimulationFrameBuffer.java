@@ -2,7 +2,6 @@ package net.virtualinfinity.atrobots;
 
 import net.virtualinfinity.atrobots.snapshots.ArenaObjectSnapshot;
 import net.virtualinfinity.atrobots.snapshots.RobotSnapshot;
-import net.virtualinfinity.atrobots.snapshots.SnapshotAdaptor;
 import net.virtualinfinity.atrobots.snapshots.SnapshotVisitor;
 
 import java.awt.*;
@@ -38,18 +37,16 @@ public class SimulationFrameBuffer {
 
         void add(ArenaObjectSnapshot snapshot) {
             allObjects.add(snapshot);
-            snapshot.visit(new RobotSegregator());
         }
 
         public Collection<ArenaObjectSnapshot> getAllObjects() {
             return allObjects;
         }
 
-        private class RobotSegregator extends SnapshotAdaptor {
-            @Override
-            public void acceptRobot(RobotSnapshot robotSnapshot) {
-                robots.add(robotSnapshot);
-            }
+        public void addRobot(RobotSnapshot snapshot) {
+            robots.add(snapshot);
+            add(snapshot);
+
         }
     }
 
@@ -62,6 +59,10 @@ public class SimulationFrameBuffer {
 
     public void addObject(ArenaObjectSnapshot snapshot) {
         frameToBuild.add(snapshot);
+    }
+
+    public void addRobot(RobotSnapshot snapshot) {
+        frameToBuild.addRobot(snapshot);
     }
 
     public void endFrame() {

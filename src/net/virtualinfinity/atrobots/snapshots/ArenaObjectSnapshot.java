@@ -8,6 +8,7 @@ import net.virtualinfinity.atrobots.measures.Vector;
 public abstract class ArenaObjectSnapshot {
     private Vector positionVector;
     private Vector velocityVector;
+    private boolean dead;
 
     public void setPositionVector(Vector positionVector) {
         this.positionVector = positionVector;
@@ -41,5 +42,13 @@ public abstract class ArenaObjectSnapshot {
 
     public Vector getVelocityVector() {
         return velocityVector;
+    }
+
+    public void setDead(boolean dead) {
+        this.dead = dead;
+    }
+
+    public boolean isDead() {
+        return dead;
     }
 }

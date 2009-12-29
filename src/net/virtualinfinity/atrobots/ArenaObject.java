@@ -75,6 +75,7 @@ public abstract class ArenaObject {
         final ArenaObjectSnapshot objectSnapshot = createSpecificSnapshot();
         objectSnapshot.setPositionVector(position.getVector());
         objectSnapshot.setVelocityVector(velocity.times(Duration.ONE_CYCLE));
+        objectSnapshot.setDead(isDead());
         return objectSnapshot;
     }
 

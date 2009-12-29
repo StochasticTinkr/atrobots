@@ -3,6 +3,7 @@ package net.virtualinfinity.atrobots;
 import net.virtualinfinity.atrobots.measures.AngleBracket;
 import net.virtualinfinity.atrobots.measures.Duration;
 import net.virtualinfinity.atrobots.measures.Vector;
+import net.virtualinfinity.atrobots.snapshots.RobotSnapshot;
 
 import java.util.*;
 
@@ -13,6 +14,7 @@ import java.util.*;
  */
 public class Arena {
     private final List<Robot> robots = new LinkedList<Robot>();
+    private final List<Robot> allRobots = new LinkedList<Robot>();
     private final List<Mine> mines = new LinkedList<Mine>();
     private final List<Missile> missiles = new LinkedList<Missile>();
     private final Collection<ArenaObject> others = new LinkedList<ArenaObject>();
@@ -20,6 +22,12 @@ public class Arena {
             missiles,
             mines,
             robots,
+            others
+    );
+
+    final Collection<Collection<? extends ArenaObject>> nonRobots = Arrays.asList(
+            missiles,
+            mines,
             others
     );
 
@@ -129,10 +137,13 @@ public class Arena {
      */
     public void buildFrame() {
         simulationFrameBuffer.beginFrame();
-        for (Collection<? extends ArenaObject> objectCollection : allArenaObjectCollections) {
+        for (Collection<? extends ArenaObject> objectCollection : nonRobots) {
             for (ArenaObject object : objectCollection) {
                 simulationFrameBuffer.addObject(object.getSnapshot());
             }
+        }
+        for (Robot robot : allRobots) {
+            simulationFrameBuffer.addRobot((RobotSnapshot) robot.getSnapshot());
         }
         simulationFrameBuffer.endFrame();
     }
@@ -190,6 +201,7 @@ public class Arena {
         robot.getPosition().copyFrom(Position.random(0.0, 0.0, 1000.0, 1000.0));
         connectArena(robot);
         robots.add(robot);
+        allRobots.add(robot);
     }
 
     /**
