@@ -3,6 +3,10 @@ package net.virtualinfinity.atrobots.gui;
 import net.virtualinfinity.atrobots.Entrant;
 import net.virtualinfinity.atrobots.EntrantFactory;
 import net.virtualinfinity.atrobots.Game;
+import net.virtualinfinity.atrobots.gui.renderers.GradientExplosionRenderer;
+import net.virtualinfinity.atrobots.gui.renderers.ScanRenderer;
+import net.virtualinfinity.atrobots.gui.renderers.ScanRendererWithFilledArcs;
+import net.virtualinfinity.atrobots.gui.renderers.SimpleExplosionRenderer;
 import net.virtualinfinity.atrobots.parser.Errors;
 
 import javax.swing.*;
@@ -58,12 +62,12 @@ public class Main implements Runnable {
 
     public Main() {
         pauseLock = new Object();
-        gameThread.setDaemon(true);
-        gameThread.start();
     }
 
     public void run() {
         initializeSystemLookAndFeel();
+        gameThread.setDaemon(true);
+        gameThread.start();
         mainFrame = new JFrame("AT-Robots 2 Clone 0.0.01");
         mainFrame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         mainFrame.addWindowListener(new WindowAdapter() {
@@ -79,6 +83,8 @@ public class Main implements Runnable {
         menubar = new JMenuBar();
         mainFrame.setJMenuBar(menubar);
         menubar.add(createFileMenu());
+        final JMenu viewMenu = new JMenu("View");
+        menubar.add(viewMenu);
         menubar.add(new JMenuItem(new AbstractAction("Run") {
             public void actionPerformed(ActionEvent e) {
                 synchronized (pauseLock) {
@@ -92,6 +98,20 @@ public class Main implements Runnable {
             public void actionPerformed(ActionEvent e) {
                 useDelay = !useDelay;
                 this.putValue(Action.NAME, useDelay ? "Full Speed" : "Slower");
+            }
+        }));
+        viewMenu.add(new JCheckBoxMenuItem(new AbstractAction("Gradiant Explosions") {
+            public void actionPerformed(ActionEvent e) {
+                AbstractButton aButton = (AbstractButton) e.getSource();
+                boolean selected = aButton.getModel().isSelected();
+                arenaPane.getArenaRenderer().setExplosionRenderer(selected ? new GradientExplosionRenderer() : new SimpleExplosionRenderer());
+            }
+        }));
+        viewMenu.add(new JCheckBoxMenuItem(new AbstractAction("Filled Scan Arcs") {
+            public void actionPerformed(ActionEvent e) {
+                AbstractButton aButton = (AbstractButton) e.getSource();
+                boolean selected = aButton.getModel().isSelected();
+                arenaPane.getArenaRenderer().setScanRenderer(selected ? new ScanRendererWithFilledArcs() : new ScanRenderer());
             }
         }));
         robotStatusPane = RobotStatusPane.createRobotStatusPane();

@@ -14,11 +14,16 @@ import java.util.Set;
  *
  * @author <a href="mailto:daniel.pitts@cbs.com">Daniel Pitts</a>
  */
-class ArenaRenderer {
+public class ArenaRenderer {
     private RenderingHints hints = new RenderingHints(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
     private Collection<ArenaObjectSnapshot> toPaint;
     private RobotStatusPane robotStatusPane;
     private static final Rectangle2D.Double ARENA_SIZE = new Rectangle2D.Double(0, 0, 1000, 1000);
+    private SnapshotRenderer<? super RobotSnapshot> robotRenderer = new RobotRenderer();
+    private SnapshotRenderer<? super MissileSnapshot> missileRenderer = new MissileRenderer();
+    private SnapshotRenderer<? super MineSnapshot> mineRenderer = new MineRenderer();
+    private SnapshotRenderer<? super ExplosionSnapshot> explosionRenderer = new SimpleExplosionRenderer();
+    private SnapshotRenderer<? super ScanSnapshot> scanRenderer = new ScanRenderer();
 
     void innerPaint(final Graphics2D g2d) {
         if (!hasFullFrame()) {
@@ -37,6 +42,54 @@ class ArenaRenderer {
             g2d.setStroke(stroke);
         }
         g2d.setRenderingHints(originalRenderingHints);
+    }
+
+    public RenderingHints getHints() {
+        return hints;
+    }
+
+    public void setHints(RenderingHints hints) {
+        this.hints = hints;
+    }
+
+    public SnapshotRenderer<? super RobotSnapshot> getRobotRenderer() {
+        return robotRenderer;
+    }
+
+    public void setRobotRenderer(SnapshotRenderer<? super RobotSnapshot> robotRenderer) {
+        this.robotRenderer = robotRenderer;
+    }
+
+    public SnapshotRenderer<? super MissileSnapshot> getMissileRenderer() {
+        return missileRenderer;
+    }
+
+    public void setMissileRenderer(SnapshotRenderer<? super MissileSnapshot> missileRenderer) {
+        this.missileRenderer = missileRenderer;
+    }
+
+    public SnapshotRenderer<? super MineSnapshot> getMineRenderer() {
+        return mineRenderer;
+    }
+
+    public void setMineRenderer(SnapshotRenderer<? super MineSnapshot> mineRenderer) {
+        this.mineRenderer = mineRenderer;
+    }
+
+    public SnapshotRenderer<? super ExplosionSnapshot> getExplosionRenderer() {
+        return explosionRenderer;
+    }
+
+    public void setExplosionRenderer(SnapshotRenderer<? super ExplosionSnapshot> explosionRenderer) {
+        this.explosionRenderer = explosionRenderer;
+    }
+
+    public SnapshotRenderer<? super ScanSnapshot> getScanRenderer() {
+        return scanRenderer;
+    }
+
+    public void setScanRenderer(SnapshotRenderer<? super ScanSnapshot> scanRenderer) {
+        this.scanRenderer = scanRenderer;
     }
 
     private boolean hasFullFrame() {
@@ -59,23 +112,13 @@ class ArenaRenderer {
         g2d.setRenderingHints(originalRenderingHints);
     }
 
-    private static class SnapshotPainter implements SnapshotVisitor {
+    private class SnapshotPainter implements SnapshotVisitor {
         private final Graphics2D g2d;
-        private final SnapshotRenderer<RobotSnapshot> robotRenderer;
-        private final SnapshotRenderer<MissileSnapshot> missileRenderer;
-        private final SnapshotRenderer<MineSnapshot> mineRenderer;
-        private final SnapshotRenderer<ExplosionSnapshot> explosionRenderer;
-        private final SnapshotRenderer<ScanSnapshot> scanRenderer;
         private final Set<Integer> selectedRobotIds;
 
         public SnapshotPainter(Graphics2D g2d, Set<Integer> selectedRobotIds) {
             this.g2d = g2d;
             this.selectedRobotIds = selectedRobotIds;
-            robotRenderer = new RobotRenderer();
-            missileRenderer = new MissileRenderer();
-            mineRenderer = new MineRenderer();
-            explosionRenderer = new GradientExplosionRenderer();
-            scanRenderer = new ScanRendererWithFilledArcs();
         }
 
         public void acceptRobot(RobotSnapshot robotSnapshot) {

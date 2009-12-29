@@ -21,7 +21,11 @@ public class ArenaPane extends JComponent implements SimulationObserver {
     private static final double BORDER_HEIGHT = 50.0;
 
     public ArenaPane() {
-        setDoubleBuffered(false);
+    }
+
+
+    public ArenaRenderer getArenaRenderer() {
+        return arenaRenderer;
     }
 
     public void frameAvailable(SimulationFrameBuffer buffer) {
