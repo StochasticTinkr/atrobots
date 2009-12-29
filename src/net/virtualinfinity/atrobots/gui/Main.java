@@ -19,6 +19,8 @@ import java.awt.event.WindowEvent;
 import java.io.File;
 import java.io.FilenameFilter;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.concurrent.ExecutionException;
 
 /**
@@ -59,6 +61,8 @@ public class Main implements Runnable {
     };
     private volatile boolean closed;
     private RobotStatusPane robotStatusPane;
+    private boolean debugMode;
+    private java.util.List<String> initialRobots;
 
     public Main() {
         pauseLock = new Object();
@@ -94,12 +98,6 @@ public class Main implements Runnable {
                 }
             }
         }));
-        menubar.add(new JMenuItem(new AbstractAction("Full Speed") {
-            public void actionPerformed(ActionEvent e) {
-                useDelay = !useDelay;
-                this.putValue(Action.NAME, useDelay ? "Full Speed" : "Slower");
-            }
-        }));
         viewMenu.add(new JCheckBoxMenuItem(new AbstractAction("Gradiant Explosions") {
             public void actionPerformed(ActionEvent e) {
                 AbstractButton aButton = (AbstractButton) e.getSource();
@@ -130,6 +128,9 @@ public class Main implements Runnable {
         mainFrame.setLocationByPlatform(true);
         mainFrame.pack();
         mainFrame.setVisible(true);
+        if (!initialRobots.isEmpty()) {
+            new EntrantLoader(initialRobots).execute();
+        }
     }
 
     private JMenu createFileMenu() {
@@ -161,6 +162,13 @@ public class Main implements Runnable {
                 }
             }
         });
+        if (isDebugMode()) {
+            addDebugMenuItems();
+        }
+        return menu;
+    }
+
+    private void addDebugMenuItems() {
         menubar.add(new JMenuItem(new AbstractAction("Add all original") {
             public void actionPerformed(ActionEvent e) {
                 new EntrantLoader(new File("original").listFiles(new FilenameFilter() {
@@ -183,7 +191,12 @@ public class Main implements Runnable {
 
             }
         }));
-        return menu;
+        menubar.add(new JMenuItem(new AbstractAction("Full Speed") {
+            public void actionPerformed(ActionEvent e) {
+                useDelay = !useDelay;
+                this.putValue(Action.NAME, useDelay ? "Full Speed" : "Slower");
+            }
+        }));
     }
 
     private void initializeSystemLookAndFeel() {
@@ -197,7 +210,31 @@ public class Main implements Runnable {
     }
 
     public static void main(String[] args) {
-        EventQueue.invokeLater(new Main());
+        final Main main = new Main();
+        java.util.List<String> initialRobots = new ArrayList<String>(Arrays.asList(args));
+        main.setDebugMode(initialRobots.remove("--debug"));
+        main.setInitialRobots(initialRobots);
+        EventQueue.invokeLater(main);
+    }
+
+    private void setInitialRobots(java.util.List<String> initialRobots) {
+        this.initialRobots = initialRobots;
+    }
+
+    public boolean isDebugMode() {
+        return debugMode;
+    }
+
+    public void setDebugMode(boolean debugMode) {
+        this.debugMode = debugMode;
+    }
+
+    private static File[] getFiles(java.util.List<String> initialRobots) {
+        final File[] files = new File[initialRobots.size()];
+        for (int i = 0; i < initialRobots.size(); ++i) {
+            files[i] = new File(initialRobots.get(i));
+        }
+        return files;
     }
 
     private class EntrantLoader extends SwingWorker<Errors, Entrant> {
@@ -206,6 +243,11 @@ public class Main implements Runnable {
         public EntrantLoader(File[] selectedFiles) {
             this.selectedFiles = selectedFiles;
         }
+
+        public EntrantLoader(java.util.List<String> initialRobots) {
+            this(getFiles(initialRobots));
+        }
+
 
         protected Errors doInBackground() throws Exception {
             Errors errors = new Errors();
