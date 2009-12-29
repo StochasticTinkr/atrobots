@@ -58,6 +58,11 @@ public class AngleBracket {
         return AbsoluteAngle.fromRadians(counterClockwiseBound.getNormalizedRadians() - Math.random() * rangeSize.getRadians());
     }
 
+    public AngleBracket subrange(double from, double to) {
+        return between(counterClockwiseBound.clockwise(getRangeSize().times(from)), counterClockwiseBound.clockwise(getRangeSize().times(to)));
+    }
+
+
     public Shape toShape(double x, double y, double radius) {
         final Arc2D.Double arc = new Arc2D.Double();
         arc.setArcByCenter(x, y, radius, -counterClockwiseBound.getDegrees(),

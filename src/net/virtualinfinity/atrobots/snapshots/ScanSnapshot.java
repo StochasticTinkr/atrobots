@@ -11,14 +11,18 @@ import java.awt.*;
 public class ScanSnapshot extends ArenaObjectSnapshot {
     private final AngleBracket angleBracket;
     private final double maxDistance;
-    private Vector matchVector;
-    private boolean successful;
+    private final Vector matchVector;
+    private final boolean accuracyAvailable;
+    private final int accuracy;
+    private final boolean successful;
 
-    public ScanSnapshot(AngleBracket angleBracket, double maxDistance, boolean successful, Vector matchVector) {
+    public ScanSnapshot(AngleBracket angleBracket, double maxDistance, boolean successful, Vector matchVector, boolean accuracyAvailable, int accuracy) {
         this.angleBracket = angleBracket;
         this.maxDistance = maxDistance;
-        this.setSuccessful(successful);
-        this.setMatchVector(matchVector);
+        this.successful = successful;
+        this.matchVector = matchVector;
+        this.accuracyAvailable = accuracyAvailable;
+        this.accuracy = accuracy;
     }
 
     public void visit(SnapshotVisitor visitor) {
@@ -37,23 +41,30 @@ public class ScanSnapshot extends ArenaObjectSnapshot {
         return matchVector;
     }
 
-    public void setMatchVector(Vector matchVector) {
-        this.matchVector = matchVector;
-    }
-
     public boolean isSuccessful() {
         return successful;
     }
 
-    public void setSuccessful(boolean successful) {
-        this.successful = successful;
+    public Shape getScanArea() {
+        return shapeFor(getAngleBracket());
     }
 
-    public Shape getScanArea() {
-        return getAngleBracket().toShape(getPositionVector().getX(), getPositionVector().getY(), getMaxDistance());
+    private Shape shapeFor(AngleBracket bracket) {
+        return bracket.toShape(getPositionVector().getX(), getPositionVector().getY(), getMaxDistance());
     }
 
     public Shape getAccuracyArea() {
-        return null;
+        if (!accuracyAvailable) {
+            return getScanArea();
+        }
+        return shapeFor(getAngleBracket().subrange(Math.max(0, .5 - (accuracy * .25 + .125)), Math.min(1, .5 - (accuracy * .25 - .125))));
+    }
+
+    public boolean isAccuracyAvailable() {
+        return accuracyAvailable;
+    }
+
+    public int getAccuracy() {
+        return accuracy;
     }
 }

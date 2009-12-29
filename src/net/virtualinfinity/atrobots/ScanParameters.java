@@ -10,13 +10,17 @@ import net.virtualinfinity.atrobots.snapshots.ScanSnapshot;
  * @author Daniel Pitts
  */
 public class ScanParameters extends ArenaObject {
-    private AngleBracket angleBracket;
-    private double maxDistance;
-    private boolean successful;
-    private Vector matchPositionVector;
+    private final AngleBracket angleBracket;
+    private final double maxDistance;
+    private final boolean successful;
+    private final Vector matchPositionVector;
+    private final boolean accuracyAvailable;
+    private final int accuracy;
     private int frame;
 
-    public ScanParameters(AngleBracket angleBracket, double maxDistance, boolean successful, Vector matchPositionVector) {
+    public ScanParameters(AngleBracket angleBracket, double maxDistance, boolean successful, Vector matchPositionVector, boolean accuracyAvailable, int accuracy) {
+        this.accuracyAvailable = accuracyAvailable;
+        this.accuracy = accuracy;
         this.angleBracket = angleBracket;
         this.maxDistance = maxDistance;
         this.successful = successful;
@@ -24,11 +28,11 @@ public class ScanParameters extends ArenaObject {
     }
 
     protected ArenaObjectSnapshot createSpecificSnapshot() {
-        ScanSnapshot objectSnapshot = new ScanSnapshot(angleBracket, maxDistance, successful,
-                matchPositionVector);
+        ScanSnapshot objectSnapshot = new ScanSnapshot(angleBracket, maxDistance, successful, matchPositionVector, accuracyAvailable, accuracy);
         objectSnapshot.setPositionVector(position.getVector());
         return objectSnapshot;
     }
+
 
     public void checkCollision(Robot robot) {
     }

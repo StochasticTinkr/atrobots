@@ -99,6 +99,14 @@ public class RelativeAngle implements Comparable<RelativeAngle> {
         return false;
     }
 
+    public RelativeAngle dividedBy(double scale) {
+        return fromRadians(radians / scale);
+    }
+
+    public RelativeAngle times(double scale) {
+        return fromRadians(radians * scale);
+    }
+
     private static class RelativeBygreeAngle extends RelativeAngle {
         private final int bygree;
         private final byte signedBygree;

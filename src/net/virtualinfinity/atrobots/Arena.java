@@ -95,7 +95,7 @@ public class Arena {
      */
     public ScanResult scan(Robot ignore, Position position, final AngleBracket angleBracket, final double maxDistance, boolean calculateAccuracy) {
         final ScanResult scanResult = calculateResult(ignore, position, angleBracket, maxDistance, calculateAccuracy);
-        final ScanParameters object = new ScanParameters(angleBracket, maxDistance, scanResult.successful(), scanResult.getMatchPositionVector());
+        final ScanParameters object = new ScanParameters(angleBracket, maxDistance, scanResult.successful(), scanResult.getMatchPositionVector(), calculateAccuracy && scanResult.successful(), scanResult.getAccuracy());
         others.add(object);
         object.getPosition().copyFrom(position);
         return scanResult;
@@ -124,7 +124,7 @@ public class Arena {
                 }
             }
         }
-        if (closest != null && closestDistanceSquared <= maxDistance * maxDistance) {
+        if (closest != null && closestDistanceSquared <= maxDistanceSquared) {
             final AbsoluteAngle angleToClosest = vectorToClosest.getAngle();
             final int accuracy;
             if (calculateAccuracy) {

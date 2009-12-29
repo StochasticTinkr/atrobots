@@ -25,6 +25,12 @@ public class ScanRenderer implements SnapshotRenderer<ScanSnapshot> {
         if (fillArcs) {
             g2d.setPaint(getFillPaint(scanSnapshot));
             g2d.fill(scanArea);
+            if (scanSnapshot.isAccuracyAvailable()) {
+                g2d.setPaint(new Color(.1f, 0f, .5f, .20f));
+                g2d.fill(scanSnapshot.getAccuracyArea());
+                g2d.setPaint(new Color(.4f, .4f, .5f, .5f));
+                g2d.draw(scanSnapshot.getAccuracyArea());
+            }
         }
     }
 
