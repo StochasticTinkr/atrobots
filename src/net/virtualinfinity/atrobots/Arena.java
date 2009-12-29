@@ -90,7 +90,7 @@ public class Arena {
      * @param position          the vertex of the arc.
      * @param angleBracket      the bracket which defines the scan arc.
      * @param maxDistance       the radius of the scan arc.
-     * @param calculateAccuracy
+     * @param calculateAccuracy whether the accuracy should be calculated or not.
      * @return the result of the scan.
      */
     public ScanResult scan(Robot ignore, Position position, final AngleBracket angleBracket, final double maxDistance, boolean calculateAccuracy) {
