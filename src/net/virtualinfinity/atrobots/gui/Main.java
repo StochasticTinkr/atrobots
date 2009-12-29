@@ -3,10 +3,7 @@ package net.virtualinfinity.atrobots.gui;
 import net.virtualinfinity.atrobots.Entrant;
 import net.virtualinfinity.atrobots.EntrantFactory;
 import net.virtualinfinity.atrobots.Game;
-import net.virtualinfinity.atrobots.gui.renderers.GradientExplosionRenderer;
-import net.virtualinfinity.atrobots.gui.renderers.ScanRenderer;
-import net.virtualinfinity.atrobots.gui.renderers.ScanRendererWithFilledArcs;
-import net.virtualinfinity.atrobots.gui.renderers.SimpleExplosionRenderer;
+import net.virtualinfinity.atrobots.gui.renderers.*;
 import net.virtualinfinity.atrobots.parser.Errors;
 
 import javax.swing.*;
@@ -31,7 +28,6 @@ import java.util.concurrent.ExecutionException;
 public class Main implements Runnable {
     private JFrame mainFrame;
     private JMenuBar menubar;
-    private JMenu menu;
     private Game game;
     private ArenaPane arenaPane;
     private boolean paused = true;
@@ -63,9 +59,32 @@ public class Main implements Runnable {
     private RobotStatusPane robotStatusPane;
     private boolean debugMode;
     private java.util.List<String> initialRobots;
+    private RobotRenderer robotRenderer;
+    private ScanRenderer scanRenderer;
+    private final ToggleProperty toggleRobotStatusBars;
+    private final ToggleProperty toggleRenderDeadRobots;
+    private final ToggleProperty toggleFillScanArc;
+    private final AbstractAction runAction = new AbstractAction("Run") {
+        public void actionPerformed(ActionEvent e) {
+            synchronized (pauseLock) {
+                paused = !paused;
+                this.putValue(Action.NAME, paused ? "Run" : "Pause");
+                pauseLock.notifyAll();
+            }
+        }
+    };
+    private final AbstractAction speedToggleAction = new AbstractAction("Full Speed") {
+        public void actionPerformed(ActionEvent e) {
+            useDelay = !useDelay;
+            this.putValue(Action.NAME, useDelay ? "Full Speed" : "Slower");
+        }
+    };
 
     public Main() {
         pauseLock = new Object();
+        toggleRobotStatusBars = new ToggleProperty("Robot Status Bars", new ShowStatusBarsAccessor());
+        toggleRenderDeadRobots = new ToggleProperty("Dead Robots", new ShowDeadRobotsAccessor());
+        toggleFillScanArc = new ToggleProperty("Filled Scans", new ShowFilledScansAccessor());
     }
 
     public void run() {
@@ -87,31 +106,11 @@ public class Main implements Runnable {
         menubar = new JMenuBar();
         mainFrame.setJMenuBar(menubar);
         menubar.add(createFileMenu());
-        final JMenu viewMenu = new JMenu("View");
-        menubar.add(viewMenu);
-        menubar.add(new JMenuItem(new AbstractAction("Run") {
-            public void actionPerformed(ActionEvent e) {
-                synchronized (pauseLock) {
-                    paused = !paused;
-                    this.putValue(Action.NAME, paused ? "Run" : "Pause");
-                    pauseLock.notifyAll();
-                }
-            }
-        }));
-        viewMenu.add(new JCheckBoxMenuItem(new AbstractAction("Gradiant Explosions") {
-            public void actionPerformed(ActionEvent e) {
-                AbstractButton aButton = (AbstractButton) e.getSource();
-                boolean selected = aButton.getModel().isSelected();
-                arenaPane.getArenaRenderer().setExplosionRenderer(selected ? new GradientExplosionRenderer() : new SimpleExplosionRenderer());
-            }
-        }));
-        viewMenu.add(new JCheckBoxMenuItem(new AbstractAction("Filled Scan Arcs") {
-            public void actionPerformed(ActionEvent e) {
-                AbstractButton aButton = (AbstractButton) e.getSource();
-                boolean selected = aButton.getModel().isSelected();
-                arenaPane.getArenaRenderer().setScanRenderer(selected ? new ScanRendererWithFilledArcs() : new ScanRenderer());
-            }
-        }));
+        menubar.add(createViewMenu());
+        menubar.add(new JButton(runAction));
+        if (isDebugMode()) {
+            addDebugMenuItems();
+        }
         robotStatusPane = RobotStatusPane.createRobotStatusPane();
         final JScrollPane robotStatusScroller = new JScrollPane(robotStatusPane, ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS, ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
         mainFrame.getContentPane().add(robotStatusScroller, BorderLayout.EAST);
@@ -121,10 +120,13 @@ public class Main implements Runnable {
         arenaPane.setOpaque(true);
         arenaPane.setBorder(BorderFactory.createBevelBorder(BevelBorder.LOWERED, Color.gray, Color.darkGray));
         arenaPane.setPreferredSize(new Dimension(500, 500));
-        game = new Game(1000);
-        game.addSimulationObserver(arenaPane);
-        game.addSimulationObserver(robotStatusPane);
+        setGame(new Game(1000));
         arenaPane.setRobotStatusPane(robotStatusPane);
+        robotRenderer = new RobotRenderer();
+        scanRenderer = new ScanRenderer();
+        arenaPane.getArenaRenderer().setRobotRenderer(robotRenderer);
+        arenaPane.getArenaRenderer().setScanRenderer(scanRenderer);
+
         mainFrame.setLocationRelativeTo(null);
         mainFrame.setLocationByPlatform(true);
         mainFrame.pack();
@@ -134,8 +136,24 @@ public class Main implements Runnable {
         }
     }
 
+    private JMenu createViewMenu() {
+        final JMenu viewMenu = new JMenu("View");
+        viewMenu.add(new JCheckBoxMenuItem(new AbstractAction("Gradiant Explosions") {
+            public void actionPerformed(ActionEvent e) {
+                AbstractButton aButton = (AbstractButton) e.getSource();
+                boolean selected = aButton.getModel().isSelected();
+                arenaPane.getArenaRenderer().setExplosionRenderer(selected ? new GradientExplosionRenderer() : new SimpleExplosionRenderer());
+            }
+        }));
+
+        viewMenu.add(toggleRobotStatusBars.configure(new JCheckBoxMenuItem()));
+        viewMenu.add(toggleRenderDeadRobots.configure(new JCheckBoxMenuItem()));
+        viewMenu.add(toggleFillScanArc.configure(new JCheckBoxMenuItem()));
+        return viewMenu;
+    }
+
     private JMenu createFileMenu() {
-        menu = new JMenu("Game");
+        JMenu menu = new JMenu("Game");
         menu.add(new AbstractAction("New Game") {
             public void actionPerformed(ActionEvent e) {
                 final NewGameDialog dialog = new NewGameDialog();
@@ -147,8 +165,7 @@ public class Main implements Runnable {
 //                    if (game != null) {
 //                        game.dispose();
 //                    }
-                    game = newGame;
-                    game.addSimulationObserver(arenaPane);
+                    setGame(newGame);
                 }
                 game.nextRound();
             }
@@ -163,14 +180,19 @@ public class Main implements Runnable {
                 }
             }
         });
-        if (isDebugMode()) {
-            addDebugMenuItems();
-        }
         return menu;
     }
 
+    private void setGame(Game newGame) {
+        game = newGame;
+        game.addSimulationObserver(arenaPane);
+        game.addSimulationObserver(robotStatusPane);
+        arenaPane.reset();
+        robotStatusPane.reset();
+    }
+
     private void addDebugMenuItems() {
-        menubar.add(new JMenuItem(new AbstractAction("Add all original") {
+        menubar.add(new JButton(new AbstractAction("Add all original") {
             public void actionPerformed(ActionEvent e) {
                 new EntrantLoader(new File("original").listFiles(new FilenameFilter() {
                     public boolean accept(File dir, String name) {
@@ -180,7 +202,7 @@ public class Main implements Runnable {
 
             }
         }));
-        menubar.add(new JMenuItem(new AbstractAction("Add single") {
+        menubar.add(new JButton(new AbstractAction("Add single") {
             public void actionPerformed(ActionEvent e) {
                 for (final File parent : new File[]{new File("."), new File("original")})
                     new EntrantLoader(parent.listFiles(new FilenameFilter() {
@@ -192,12 +214,7 @@ public class Main implements Runnable {
 
             }
         }));
-        menubar.add(new JMenuItem(new AbstractAction("Full Speed") {
-            public void actionPerformed(ActionEvent e) {
-                useDelay = !useDelay;
-                this.putValue(Action.NAME, useDelay ? "Full Speed" : "Slower");
-            }
-        }));
+        menubar.add(new JButton(speedToggleAction));
     }
 
     private void initializeSystemLookAndFeel() {
@@ -285,6 +302,39 @@ public class Main implements Runnable {
             } catch (ExecutionException e1) {
                 e1.printStackTrace();
             }
+        }
+    }
+
+    private class ShowStatusBarsAccessor implements BooleanAccessor {
+        public boolean get() {
+            return robotRenderer.isShowStatusBars();
+        }
+
+        public void set(boolean value) {
+            robotRenderer.setShowStatusBars(value);
+            arenaPane.repaint();
+        }
+    }
+
+    private class ShowDeadRobotsAccessor implements BooleanAccessor {
+        public boolean get() {
+            return robotRenderer.isRenderDead();
+        }
+
+        public void set(boolean value) {
+            robotRenderer.setRenderDead(value);
+            arenaPane.repaint();
+        }
+    }
+
+    private class ShowFilledScansAccessor implements BooleanAccessor {
+        public boolean get() {
+            return scanRenderer.isFillArcs();
+        }
+
+        public void set(boolean value) {
+            scanRenderer.setFillArcs(value);
+            arenaPane.repaint();
         }
     }
 }

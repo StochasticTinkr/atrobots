@@ -67,6 +67,12 @@ public class ArenaPane extends JComponent implements SimulationObserver {
         arenaRenderer.setRobotStatusPane(robotStatusPane);
     }
 
+    public void reset() {
+        currentFrame = null;
+        arenaRenderer.setToPaint(null);
+        repaint();
+    }
+
     private class UpdateFrame implements Runnable {
         private final SimulationFrameBuffer buffer;
 

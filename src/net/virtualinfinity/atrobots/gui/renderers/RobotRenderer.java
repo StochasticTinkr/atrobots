@@ -16,13 +16,20 @@ import java.util.Set;
  */
 public class RobotRenderer implements SnapshotRenderer<RobotSnapshot> {
     private boolean showStatusBars = true;
+    private boolean renderDead = true;
+    private static final Color HEAT_COLOR1 = new Color(1f, 0f, 0f, 0.1f);
+    private static final Color HEAT_COLOR2 = Color.yellow;
 
     public void render(Graphics2D g2d, RobotSnapshot robotSnapshot, Set<Integer> selectedRobotIds) {
+        if (!isRenderDead() && robotSnapshot.isDead()) {
+            return;
+        }
+
         paintBody(g2d, robotSnapshot);
         if (!robotSnapshot.isDead()) {
             paintShield(g2d, robotSnapshot);
             paintTurret(g2d, robotSnapshot);
-            if (showStatusBars) {
+            if (isShowStatusBars()) {
                 paintArmor(g2d, robotSnapshot);
                 paintHeat(g2d, robotSnapshot);
             }
@@ -31,7 +38,22 @@ public class RobotRenderer implements SnapshotRenderer<RobotSnapshot> {
         if (selectedRobotIds.contains(robotSnapshot.getId())) {
             paintSelection(g2d, robotSnapshot);
         }
+    }
 
+    public boolean isRenderDead() {
+        return renderDead;
+    }
+
+    public void setRenderDead(boolean renderDead) {
+        this.renderDead = renderDead;
+    }
+
+    public boolean isShowStatusBars() {
+        return showStatusBars;
+    }
+
+    public void setShowStatusBars(boolean showStatusBars) {
+        this.showStatusBars = showStatusBars;
     }
 
     private void paintSelection(Graphics2D g2d, RobotSnapshot robotSnapshot) {
@@ -60,9 +82,11 @@ public class RobotRenderer implements SnapshotRenderer<RobotSnapshot> {
 
     private void paintHeat(Graphics2D g2d, RobotSnapshot robotSnapshot) {
         final Rectangle2D.Double rect = new Rectangle2D.Double(robotSnapshot.getX() - 50, robotSnapshot.getY() + 35, 100, 10);
-        g2d.setPaint(new GradientPaint((float) rect.getMinX(), (float) rect.getMinY(), new Color(1f, 0f, 0f, 0.1f),
-                (float) rect.getMaxX(), (float) rect.getMinY(), new Color(1f, 1f, 0f, 1f)));
-        g2d.fill(new Rectangle2D.Double(robotSnapshot.getX() - 50, robotSnapshot.getY() + 35, robotSnapshot.getTemperature().getLogScale() * .2, 10));
+        g2d.setPaint(new GradientPaint((float) rect.getMinX(), (float) rect.getMinY(), HEAT_COLOR1,
+                (float) rect.getMaxX(), (float) rect.getMinY(), HEAT_COLOR2));
+        if (!robotSnapshot.isDead()) {
+            g2d.fill(new Rectangle2D.Double(robotSnapshot.getX() - 50, robotSnapshot.getY() + 35, robotSnapshot.getTemperature().getLogScale() * .2, 10));
+        }
         g2d.draw(rect);
     }
 

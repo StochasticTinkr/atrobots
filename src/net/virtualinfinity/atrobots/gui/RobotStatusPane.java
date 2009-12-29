@@ -63,6 +63,10 @@ public class RobotStatusPane extends JList implements SimulationObserver {
         return selectedIds;
     }
 
+    public void reset() {
+        robotList.removeAllElements();
+    }
+
     private static class Bar extends JComponent {
         private BoundedRangeModel model;
         private final ChangeListener changeListener = new ChangeListener() {
