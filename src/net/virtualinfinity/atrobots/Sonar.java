@@ -29,7 +29,7 @@ public class Sonar {
     }
 
     private AbsoluteAngle scan() {
-        final ScanResult scanResult = robot.scan(AngleBracket.all(), maxDistance);
+        final ScanResult scanResult = robot.scan(AngleBracket.all(), maxDistance, false);
         return scanResult.getAngle();
     }
 

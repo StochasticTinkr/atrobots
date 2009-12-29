@@ -31,20 +31,11 @@ public class Scanner implements Resetable {
 
     private ScanResult scan() {
         AngleBracket angleBracket = getAngleBracket();
-        ScanResult scanResult = robot.scan(angleBracket, maxDistance);
+        ScanResult scanResult = robot.scan(angleBracket, maxDistance, true);
         if (scanResult.successful()) {
-            final double v = 0.5d - angleBracket.fractionTo(scanResult.getAngle());
-            if (scanArc.getBygrees() < 2) {
-                setAccuracy(roundAwayFromZero(v * 2) * 2);
-            } else {
-                setAccuracy(roundAwayFromZero(v * 4));
-            }
+            setAccuracy(scanResult.getAccuracy());
         }
         return scanResult;
-    }
-
-    private int roundAwayFromZero(double value) {
-        return (int) (value < 0 ? Math.ceil(value - 0.5d) : Math.floor(value + 0.5d));
     }
 
     private AngleBracket getAngleBracket() {

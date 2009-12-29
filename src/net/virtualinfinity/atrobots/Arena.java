@@ -1,5 +1,6 @@
 package net.virtualinfinity.atrobots;
 
+import net.virtualinfinity.atrobots.measures.AbsoluteAngle;
 import net.virtualinfinity.atrobots.measures.AngleBracket;
 import net.virtualinfinity.atrobots.measures.Duration;
 import net.virtualinfinity.atrobots.measures.Vector;
@@ -85,21 +86,26 @@ public class Arena {
     /**
      * Scan for the closest robot which is in the given arc.
      *
-     * @param ignore       the source robot, which should be ignored.
-     * @param position     the vertex of the arc.
-     * @param angleBracket the bracket which defines the scan arc.
-     * @param maxDistance  the radius of the scan arc.
+     * @param ignore            the source robot, which should be ignored.
+     * @param position          the vertex of the arc.
+     * @param angleBracket      the bracket which defines the scan arc.
+     * @param maxDistance       the radius of the scan arc.
+     * @param calculateAccuracy
      * @return the result of the scan.
      */
-    public ScanResult scan(Robot ignore, Position position, final AngleBracket angleBracket, final double maxDistance) {
-        final ScanResult scanResult = calculateResult(ignore, position, angleBracket, maxDistance);
+    public ScanResult scan(Robot ignore, Position position, final AngleBracket angleBracket, final double maxDistance, boolean calculateAccuracy) {
+        final ScanResult scanResult = calculateResult(ignore, position, angleBracket, maxDistance, calculateAccuracy);
         final ScanParameters object = new ScanParameters(angleBracket, maxDistance, scanResult.successful(), scanResult.getMatchPositionVector());
         others.add(object);
         object.getPosition().copyFrom(position);
         return scanResult;
     }
 
-    private ScanResult calculateResult(Robot ignore, Position position, AngleBracket angleBracket, double maxDistance) {
+    private int roundAwayFromZero(double value) {
+        return (int) (value < 0 ? Math.ceil(value - 0.5d) : Math.floor(value + 0.5d));
+    }
+
+    private ScanResult calculateResult(Robot ignore, Position position, AngleBracket angleBracket, double maxDistance, boolean calculateAccuracy) {
         Vector vectorToClosest = null;
         final double maxDistanceSquared = maxDistance * maxDistance;
         double closestDistanceSquared = maxDistanceSquared;
@@ -119,7 +125,19 @@ public class Arena {
             }
         }
         if (closest != null && closestDistanceSquared <= maxDistance * maxDistance) {
-            return new ScanResult(closest, Math.sqrt(closestDistanceSquared), vectorToClosest.getAngle());
+            final AbsoluteAngle angleToClosest = vectorToClosest.getAngle();
+            final int accuracy;
+            if (calculateAccuracy) {
+                final double v = 0.5d - angleBracket.fractionTo(angleToClosest);
+                if (angleBracket.getRangeSize().getBygrees() < 2) {
+                    accuracy = roundAwayFromZero(v * 2) * 2;
+                } else {
+                    accuracy = roundAwayFromZero(v * 4);
+                }
+            } else {
+                accuracy = 0;
+            }
+            return new ScanResult(closest, Math.sqrt(closestDistanceSquared), angleToClosest, accuracy);
         }
         return new ScanResult();
     }

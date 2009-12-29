@@ -232,8 +232,8 @@ public class Robot extends ArenaObject implements Resetable {
 
     }
 
-    public ScanResult scan(AngleBracket angleBracket, double maxDistance) {
-        final ScanResult scanResult = getArena().scan(this, getPosition(), angleBracket, maxDistance);
+    public ScanResult scan(AngleBracket angleBracket, double maxDistance, boolean calculateAccuracy) {
+        final ScanResult scanResult = getArena().scan(this, getPosition(), angleBracket, maxDistance, calculateAccuracy);
         lastScanResult.set(scanResult);
         if (scanResult.successful()) {
             getComputer().getRegisters().getTargetId().set((short) scanResult.getMatch().getTransponder().getId());

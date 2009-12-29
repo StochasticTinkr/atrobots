@@ -64,4 +64,8 @@ public class AngleBracket {
                 rangeSize.getDegrees(), Arc2D.PIE);
         return arc;
     }
+
+    public RelativeAngle getRangeSize() {
+        return rangeSize;
+    }
 }

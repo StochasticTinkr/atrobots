@@ -52,4 +52,8 @@ public class ScanSnapshot extends ArenaObjectSnapshot {
     public Shape getScanArea() {
         return getAngleBracket().toShape(getPositionVector().getX(), getPositionVector().getY(), getMaxDistance());
     }
+
+    public Shape getAccuracyArea() {
+        return null;
+    }
 }

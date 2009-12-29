@@ -12,11 +12,13 @@ public class ScanResult {
     private final AbsoluteAngle angle;
     private final AbsoluteAngle heading;
     private final int throttle;
+    private final int accuracy;
 
-    public ScanResult(Robot match, double distance, AbsoluteAngle angle) {
+    public ScanResult(Robot match, double distance, AbsoluteAngle angle, int accuracy) {
         this.match = match;
         this.distance = distance;
         this.angle = angle;
+        this.accuracy = accuracy;
         heading = match.getHeading().getAngle();
         throttle = match.getThrottle().getDesiredPower();
     }
@@ -27,7 +29,9 @@ public class ScanResult {
         angle = null;
         heading = null;
         throttle = 0;
+        accuracy = 0;
     }
+
 
     public Robot getMatch() {
         return match;
@@ -51,6 +55,10 @@ public class ScanResult {
 
     public boolean successful() {
         return match != null;
+    }
+
+    public int getAccuracy() {
+        return accuracy;
     }
 
     Vector getMatchPositionVector() {
