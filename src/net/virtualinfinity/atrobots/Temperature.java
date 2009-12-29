@@ -69,4 +69,22 @@ public class Temperature implements Comparable<Temperature> {
     public Temperature times(double multiplier) {
         return fromLogScale(getLogScale() * multiplier);
     }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        Temperature that = (Temperature) o;
+
+        if (Double.compare(that.logScale, logScale) != 0) return false;
+
+        return true;
+    }
+
+    @Override
+    public int hashCode() {
+        long temp = logScale != +0.0d ? Double.doubleToLongBits(logScale) : 0L;
+        return (int) (temp ^ (temp >>> 32));
+    }
 }

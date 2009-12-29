@@ -119,4 +119,47 @@ public class RobotSnapshot extends ArenaObjectSnapshot {
     public void setTotalDeaths(int totalDeaths) {
         this.totalDeaths = totalDeaths;
     }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        RobotSnapshot that = (RobotSnapshot) o;
+
+        if (activeShield != that.activeShield) return false;
+        if (Double.compare(that.armor, armor) != 0) return false;
+        if (id != that.id) return false;
+        if (overburn != that.overburn) return false;
+        if (roundKills != that.roundKills) return false;
+        if (totalDeaths != that.totalDeaths) return false;
+        if (totalKills != that.totalKills) return false;
+        if (!heading.equals(that.heading)) return false;
+        if (lastMessage != null ? !lastMessage.equals(that.lastMessage) : that.lastMessage != null) return false;
+        if (!name.equals(that.name)) return false;
+        if (!temperature.equals(that.temperature)) return false;
+        if (!turretHeading.equals(that.turretHeading)) return false;
+
+        return true;
+    }
+
+    @Override
+    public int hashCode() {
+        int result;
+        long temp;
+        result = temperature.hashCode();
+        temp = armor != +0.0d ? Double.doubleToLongBits(armor) : 0L;
+        result = 31 * result + (int) (temp ^ (temp >>> 32));
+        result = 31 * result + (overburn ? 1 : 0);
+        result = 31 * result + (activeShield ? 1 : 0);
+        result = 31 * result + heading.hashCode();
+        result = 31 * result + turretHeading.hashCode();
+        result = 31 * result + name.hashCode();
+        result = 31 * result + id;
+        result = 31 * result + (lastMessage != null ? lastMessage.hashCode() : 0);
+        result = 31 * result + roundKills;
+        result = 31 * result + totalKills;
+        result = 31 * result + totalDeaths;
+        return result;
+    }
 }

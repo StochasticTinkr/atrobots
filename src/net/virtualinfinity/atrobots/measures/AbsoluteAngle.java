@@ -194,4 +194,22 @@ public class AbsoluteAngle {
             return counterClockwiseFromStandardOrigin;
         }
     }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        AbsoluteAngle angle = (AbsoluteAngle) o;
+
+        if (Double.compare(angle.radians, radians) != 0) return false;
+
+        return true;
+    }
+
+    @Override
+    public int hashCode() {
+        long temp = radians != +0.0d ? Double.doubleToLongBits(radians) : 0L;
+        return (int) (temp ^ (temp >>> 32));
+    }
 }

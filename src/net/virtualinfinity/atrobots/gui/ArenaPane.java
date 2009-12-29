@@ -20,7 +20,7 @@ import java.util.Set;
  * @author Daniel Pitts
  */
 public class ArenaPane extends JComponent implements SimulationObserver {
-    private Collection<ArenaObjectSnapshot> currentFrame;
+    private SimulationFrameBuffer.SimulationFrame currentFrame;
     private Collection<ArenaObjectSnapshot> toPaint;
     private static final Rectangle2D.Double ARENA_SIZE = new Rectangle2D.Double(0, 0, 1000, 1000);
     private RobotStatusPane robotStatusPane;
@@ -75,7 +75,7 @@ public class ArenaPane extends JComponent implements SimulationObserver {
     }
 
     private void makeNewFrameCurrentFrame() {
-        toPaint = currentFrame;
+        toPaint = currentFrame.getAllObjects();
         currentFrame = null;
     }
 
