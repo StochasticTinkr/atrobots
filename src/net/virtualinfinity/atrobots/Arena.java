@@ -1,9 +1,7 @@
 package net.virtualinfinity.atrobots;
 
-import net.virtualinfinity.atrobots.measures.AbsoluteAngle;
 import net.virtualinfinity.atrobots.measures.AngleBracket;
 import net.virtualinfinity.atrobots.measures.Duration;
-import net.virtualinfinity.atrobots.measures.Vector;
 import net.virtualinfinity.atrobots.snapshots.RobotSnapshot;
 
 import java.util.*;
@@ -101,45 +99,14 @@ public class Arena {
         return scanResult;
     }
 
-    private int roundAwayFromZero(double value) {
-        return (int) (value < 0 ? Math.ceil(value - 0.5d) : Math.floor(value + 0.5d));
-    }
-
     private ScanResult calculateResult(Robot ignore, Position position, AngleBracket angleBracket, double maxDistance, boolean calculateAccuracy) {
-        Vector vectorToClosest = null;
-        final double maxDistanceSquared = maxDistance * maxDistance;
-        double closestDistanceSquared = maxDistanceSquared;
-        Robot closest = null;
+        ScanWork scanWork = new ScanWork(position, angleBracket, maxDistance, calculateAccuracy);
         for (Robot robot : robots) {
-            if (robot == ignore) {
-                continue;
-            }
-            final Vector vector = robot.getPosition().getVectorTo(position);
-            final double distanceSquared = vector.getMagnitudeSquared();
-            if (distanceSquared < closestDistanceSquared) {
-                if (angleBracket.contains(vector.getAngle())) {
-                    closest = robot;
-                    closestDistanceSquared = distanceSquared;
-                    vectorToClosest = vector;
-                }
+            if (robot != ignore) {
+                scanWork.visit(robot);
             }
         }
-        if (closest != null && closestDistanceSquared <= maxDistanceSquared) {
-            final AbsoluteAngle angleToClosest = vectorToClosest.getAngle();
-            final int accuracy;
-            if (calculateAccuracy) {
-                final double v = 0.5d - angleBracket.fractionTo(angleToClosest);
-                if (angleBracket.getRangeSize().getBygrees() < 2) {
-                    accuracy = roundAwayFromZero(v * 2) * 2;
-                } else {
-                    accuracy = roundAwayFromZero(v * 4);
-                }
-            } else {
-                accuracy = 0;
-            }
-            return new ScanResult(closest, Math.sqrt(closestDistanceSquared), angleToClosest, accuracy);
-        }
-        return new ScanResult();
+        return scanWork.toScanResult();
     }
 
     /**
