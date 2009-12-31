@@ -24,17 +24,18 @@ public class Computer {
     private HardwareBus hardwareBus;
     private Map<Integer, Integer> jumpTable;
     private CommunicationsQueue commQueue;
-    private int cyclesPerSimCycle = 5;
+    private final int cyclesPerSimCycle;
     private String lastMessage;
-    private ErrorHandler errorHandler = new ErrorHandler();
+    private ComputerErrorHandler errorHandler = new ErrorHandler();
     private boolean shutDown;
     private int maxInstructionPointer;
 
-    public Computer(Memory memory, int stackSize) {
+    public Computer(Memory memory, int stackSize, int maxProcessorSpeed) {
         this.memory = memory;
         this.registers = new Registers(memory);
         this.stack = new StackMemory(registers.getStackPointerCell(), stackSize);
         this.program = new MemoryRegion(memory, 1024, 4096);
+        this.cyclesPerSimCycle = maxProcessorSpeed;
         instructionTable = new InstructionTable();
         Map<Integer, Integer> jumpTable = new HashMap<Integer, Integer>();
         maxInstructionPointer = program.size() / 4;
@@ -234,7 +235,7 @@ public class Computer {
         return new MemoryRegion(memory, 512, 256);
     }
 
-    public ErrorHandler getErrorHandler() {
+    public ComputerErrorHandler getErrorHandler() {
         return errorHandler;
     }
 
@@ -291,14 +292,6 @@ public class Computer {
         errorHandler.invalidPortError();
     }
 
-    public void commQueueEmptyError() {
-        errorHandler.commQueueEmptyError();
-    }
-
-    public void writeToRomError() {
-        errorHandler.writeToRomError();
-    }
-
     public void notAddressableError() {
         errorHandler.notAddressableError();
     }
@@ -319,16 +312,8 @@ public class Computer {
         return cycles;
     }
 
-    public int getInstructionPointer() {
-        return instructionPointer;
-    }
-
     public int getNextInstructionPointer() {
         return nextInstructionPointer;
-    }
-
-    public Entrant getEntrant() {
-        return entrant;
     }
 
     public void setEntrant(Entrant entrant) {

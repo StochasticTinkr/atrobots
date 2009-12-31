@@ -17,6 +17,7 @@ public class EntrantFactory {
     private DebugInfo debugInfo;
     private Program program;
     private String name;
+    private int maxProcessorSpeed;
 
     public EntrantFactory() {
     }
@@ -65,6 +66,7 @@ public class EntrantFactory {
         lexer.visitAllLines();
         entrantLineVisitor.resolve();
         program = entrantLineVisitor.createProgram();
+        maxProcessorSpeed = entrantLineVisitor.getMaxProcessorSpeed();
         hardwareSpecification = entrantLineVisitor.createHardwareSpecification();
         debugInfo = entrantLineVisitor.getDebugInfo();
 //        entrantLineVisitor.getLines();
@@ -77,6 +79,7 @@ public class EntrantFactory {
         entrant.setName(getName());
         entrant.setHardwareSpecification(getHardwareSpecification());
         entrant.setDebugInfo(debugInfo);
+        entrant.setMaxProcessorSpeed(maxProcessorSpeed);
         return entrant;
     }
 

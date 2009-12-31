@@ -64,16 +64,6 @@ public class Armor {
     }
 
     /**
-     * Get the robot which this armor protects.
-     *
-     * @return the robot.
-     */
-    public Robot getRobot() {
-        return robot;
-    }
-
-
-    /**
      * Set the armor which this robot protects.
      *
      * @param robot the robot.

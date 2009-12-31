@@ -20,6 +20,7 @@ public class Entrant {
     private int roundKills;
     private int totalDeaths;
     private DebugInfo debugInfo;
+    private int maxProcessorSpeed = 5;
 
 
     /**
@@ -44,7 +45,7 @@ public class Entrant {
         final Memory memory = new Memory();
         memory.addMemoryArray(new RandomAccessMemoryArray(1024));
         memory.addMemoryArray(program.createProgramMemory());
-        Computer computer = new Computer(memory, 256);
+        Computer computer = new Computer(memory, 256, maxProcessorSpeed);
         computer.setEntrant(this);
         return computer;
     }
@@ -162,5 +163,13 @@ public class Entrant {
 
     void setDebugInfo(DebugInfo debugInfo) {
         this.debugInfo = debugInfo;
+    }
+
+    public int getMaxProcessorSpeed() {
+        return maxProcessorSpeed;
+    }
+
+    public void setMaxProcessorSpeed(int maxProcessorSpeed) {
+        this.maxProcessorSpeed = maxProcessorSpeed;
     }
 }

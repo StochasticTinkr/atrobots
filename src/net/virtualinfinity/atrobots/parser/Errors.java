@@ -20,7 +20,7 @@ public class Errors {
     }
 
     public void add(String error, int lineNumber, int column) {
-        add(error, lineNumber);
+        messages.add("Line " + lineNumber + " (column " + column + "): " + error);
     }
 
     public void showErrorDialog(String name, Object parent) {

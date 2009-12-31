@@ -17,7 +17,7 @@ public class EntrantLineVisitor implements LineVisitor {
     private Map<Integer, Token> unresolved = new LinkedHashMap<Integer, Token>();
     private AtRobotLineLexer lexer;
     private String message;
-    private int speed;
+    private int maxProcessorSpeed;
     private Map<String, Integer> configs = new HashMap<String, Integer>();
     private List<String> lines = new ArrayList<String>();
     private List<Integer> instructionLineNumber = new ArrayList<Integer>();
@@ -148,7 +148,11 @@ public class EntrantLineVisitor implements LineVisitor {
     }
 
     public void maxProcessorSpeed(int speed) {
-        this.speed = speed;
+        this.maxProcessorSpeed = speed;
+    }
+
+    public int getMaxProcessorSpeed() {
+        return maxProcessorSpeed;
     }
 
     public void setMessage(String message) {
