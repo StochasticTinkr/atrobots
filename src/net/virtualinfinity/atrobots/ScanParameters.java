@@ -34,9 +34,6 @@ public class ScanParameters extends ArenaObject {
     }
 
 
-    public void checkCollision(Robot robot) {
-    }
-
     public void update(Duration duration) {
         if (frame++ > 1) {
             die();

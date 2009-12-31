@@ -31,10 +31,6 @@ public class Explosion extends ArenaObject {
     }
 
     @Override
-    public void checkCollision(Robot robot) {
-    }
-
-    @Override
     public void update(Duration duration) {
         if (!isDead()) {
             frame += duration.getCycles();

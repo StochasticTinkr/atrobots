@@ -87,13 +87,6 @@ public abstract class ArenaObject {
     protected abstract ArenaObjectSnapshot createSpecificSnapshot();
 
     /**
-     * Check if this object is currently colliding with the given robot.
-     *
-     * @param robot the robot to check collision against.
-     */
-    public abstract void checkCollision(Robot robot);
-
-    /**
      * Get the arena that this object is in.
      *
      * @return the arena.
