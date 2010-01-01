@@ -35,7 +35,6 @@ public class Mine extends ArenaObject {
         return snapshot;
     }
 
-    @Override
     public void checkCollision(Robot robot) {
         if (isDead() || layedBy(robot.getMineLayer())) {
             return;

@@ -44,7 +44,6 @@ public class Missile extends ArenaObject {
      *
      * @param robot the robot to check collision against.
      */
-    @Override
     public void checkCollision(Robot robot) {
         if (robot == this.robot || isDead()) {
             return;

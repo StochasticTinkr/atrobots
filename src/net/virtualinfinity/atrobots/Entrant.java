@@ -20,7 +20,7 @@ public class Entrant {
     private int roundKills;
     private int totalDeaths;
     private DebugInfo debugInfo;
-    private int maxProcessorSpeed = 5;
+    private int maxProcessorSpeed = Integer.MAX_VALUE;
 
 
     /**
@@ -45,7 +45,7 @@ public class Entrant {
         final Memory memory = new Memory();
         memory.addMemoryArray(new RandomAccessMemoryArray(1024));
         memory.addMemoryArray(program.createProgramMemory());
-        Computer computer = new Computer(memory, 256, maxProcessorSpeed);
+        Computer computer = new Computer(memory, 256, Math.max(maxProcessorSpeed, game.getMaxProcessorSpeed()));
         computer.setEntrant(this);
         return computer;
     }

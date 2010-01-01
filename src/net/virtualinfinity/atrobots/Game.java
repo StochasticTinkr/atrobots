@@ -13,6 +13,7 @@ public class Game {
     private Round round;
     private int roundNumber = 0;
     private int totalRounds;
+    private int maxProcessorSpeed = 5;
     private SimulationFrameBuffer frameBuffer = new SimulationFrameBuffer();
     private final List<Entrant> entrants = Collections.synchronizedList(new ArrayList<Entrant>());
     private int nextEntrantId;
@@ -104,5 +105,13 @@ public class Game {
 
     public void roundOver() {
         nextRound();
+    }
+
+    public int getMaxProcessorSpeed() {
+        return maxProcessorSpeed;
+    }
+
+    public void setMaxProcessorSpeed(int maxProcessorSpeed) {
+        this.maxProcessorSpeed = maxProcessorSpeed;
     }
 }

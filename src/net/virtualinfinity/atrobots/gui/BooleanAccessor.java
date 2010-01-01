@@ -1,4 +1,4 @@
-package net.virtualinfinity.atrobots.gui.renderers;
+package net.virtualinfinity.atrobots.gui;
 
 /**
  * TODO: Describe this class.

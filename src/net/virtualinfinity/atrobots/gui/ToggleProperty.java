@@ -1,4 +1,4 @@
-package net.virtualinfinity.atrobots.gui.renderers;
+package net.virtualinfinity.atrobots.gui;
 
 import javax.swing.*;
 import java.awt.event.ActionEvent;

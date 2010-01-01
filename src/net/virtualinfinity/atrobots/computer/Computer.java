@@ -24,7 +24,7 @@ public class Computer {
     private HardwareBus hardwareBus;
     private Map<Integer, Integer> jumpTable;
     private CommunicationsQueue commQueue;
-    private final int cyclesPerSimCycle;
+    private int cyclesPerSimCycle;
     private String lastMessage;
     private ComputerErrorHandler errorHandler = new ErrorHandler();
     private boolean shutDown;
