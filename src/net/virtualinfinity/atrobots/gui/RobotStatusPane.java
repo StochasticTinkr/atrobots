@@ -16,7 +16,7 @@ import java.util.Set;
 /**
  * TODO: Describe this class.
  *
- * @author <a href="mailto:daniel.pitts@cbs.com">Daniel Pitts</a>
+ * @author Daniel Pitts
  */
 public class RobotStatusPane extends JList implements SimulationObserver {
     private final DefaultListModel robotList;

@@ -7,7 +7,7 @@ import net.virtualinfinity.atrobots.measures.Vector;
 /**
  * TODO: Describe this class.
  *
- * @author <a href="mailto:daniel.pitts@cbs.com">Daniel Pitts</a>
+ * @author Daniel Pitts
  */
 public class ScanWork {
     private final double maxDistanceSquared;

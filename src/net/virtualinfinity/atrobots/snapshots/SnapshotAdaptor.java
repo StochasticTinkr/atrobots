@@ -3,7 +3,7 @@ package net.virtualinfinity.atrobots.snapshots;
 /**
  * TODO: Describe this class.
  *
- * @author <a href="mailto:daniel.pitts@cbs.com">Daniel Pitts</a>
+ * @author Daniel Pitts
  */
 public class SnapshotAdaptor implements SnapshotVisitor {
     public void acceptRobot(RobotSnapshot robotSnapshot) {

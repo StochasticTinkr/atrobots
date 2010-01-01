@@ -3,7 +3,7 @@ package net.virtualinfinity.atrobots.gui;
 /**
  * TODO: Describe this class.
  *
- * @author <a href="mailto:daniel.pitts@cbs.com">Daniel Pitts</a>
+ * @author Daniel Pitts
  */
 public interface BooleanAccessor {
     boolean get();

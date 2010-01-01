@@ -7,7 +7,7 @@ import java.beans.PropertyChangeListener;
 /**
  * TODO: Describe this class.
  *
- * @author <a href="mailto:daniel.pitts@cbs.com">Daniel Pitts</a>
+ * @author Daniel Pitts
  */
 public class ToggleProperty {
     private final Action action;
