@@ -90,11 +90,14 @@ public class NewGameDialog extends JDialog {
                 entrantsModel.remove(entrants.getSelectedIndices());
             }
         });
+        maxCpu.setModel(new SpinnerNumberModel(5, 1, 1000, 5));
+        numberOfRounds.setModel(new SpinnerNumberModel(1, 1, Integer.MAX_VALUE, 1));
     }
 
     private void onOK() {
 // add your code here
         game = new Game(((Number) numberOfRounds.getValue()).intValue());
+        game.setMaxProcessorSpeed(((Number) maxCpu.getValue()).intValue());
         for (EntrantFactory factory : entrantsModel.getList()) {
             game.addEntrant(factory.createEntrant());
         }

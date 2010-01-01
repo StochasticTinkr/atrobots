@@ -62,6 +62,7 @@
               <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="4" fill="0" indent="0" use-parent-layout="false"/>
             </constraints>
             <properties>
+              <labelFor value="4b29a"/>
               <text value="Number Of Rounds"/>
             </properties>
           </component>
@@ -84,6 +85,7 @@
               <grid row="1" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="4" fill="0" indent="0" use-parent-layout="false"/>
             </constraints>
             <properties>
+              <labelFor value="ff7c0"/>
               <text value="Maximum CPU speed"/>
             </properties>
           </component>
