@@ -31,6 +31,9 @@ class PolarVector extends Vector {
     }
 
     public static PolarVector createPolar(AbsoluteAngle angle, double magnitude) {
+        if (magnitude < 0) {
+            return new PolarVector(-magnitude, angle.getSupplementary());
+        }
         return new PolarVector(magnitude, angle);
     }
 

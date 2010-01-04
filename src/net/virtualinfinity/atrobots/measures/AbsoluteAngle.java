@@ -109,6 +109,10 @@ public class AbsoluteAngle {
         return (bygrees - 64) * Math.PI / 128;
     }
 
+    public AbsoluteAngle getSupplementary() {
+        return fromRadians(Math.PI + getRadians());
+    }
+
     private static class AbsoluateBygreeAngle extends AbsoluteAngle {
         private final double cosine;
         private final double sine;
@@ -192,6 +196,11 @@ public class AbsoluteAngle {
         @Override
         public RelativeAngle counterClockwiseFromStandardOrigin() {
             return counterClockwiseFromStandardOrigin;
+        }
+
+        @Override
+        public AbsoluteAngle getSupplementary() {
+            return fromBygrees(bygrees + 128);
         }
     }
 
