@@ -3,7 +3,10 @@ package net.virtualinfinity.atrobots.gui;
 import net.virtualinfinity.atrobots.Entrant;
 import net.virtualinfinity.atrobots.EntrantFactory;
 import net.virtualinfinity.atrobots.Game;
-import net.virtualinfinity.atrobots.gui.renderers.*;
+import net.virtualinfinity.atrobots.gui.renderers.GradientExplosionRenderer;
+import net.virtualinfinity.atrobots.gui.renderers.RobotRenderer;
+import net.virtualinfinity.atrobots.gui.renderers.ScanRenderer;
+import net.virtualinfinity.atrobots.gui.renderers.SimpleExplosionRenderer;
 import net.virtualinfinity.atrobots.parser.Errors;
 
 import javax.swing.*;
@@ -28,7 +31,7 @@ import java.util.concurrent.ExecutionException;
 public class Main implements Runnable {
     private JFrame mainFrame;
     private JMenuBar menubar;
-    private Game game;
+    private volatile Game game;
     private ArenaPane arenaPane;
     private boolean paused = true;
 
@@ -39,7 +42,8 @@ public class Main implements Runnable {
         public void run() {
             while (!closed) {
                 try {
-                    if (useDelay) {
+                    final Game game = Main.this.game;
+                    if (useDelay || game == null) {
                         frameDelay = 25;
                         Thread.sleep(frameDelay);
                     }
@@ -48,7 +52,9 @@ public class Main implements Runnable {
                             pauseLock.wait();
                         }
                     }
-                    game.stepRound();
+                    if (game != null) {
+                        game.stepRound();
+                    }
                 } catch (Throwable e) {
                     e.printStackTrace();
                 }
