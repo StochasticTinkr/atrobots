@@ -249,7 +249,12 @@ public class Computer {
     }
 
     private void jumpToNumberedLabel(short value) {
-        setInstructionPointer(jumpTable.get((int) value));
+        final Integer location = jumpTable.get((int) value);
+        if (location == null) {
+            errorHandler.labelNotFound(value);
+        } else {
+            setInstructionPointer(location);
+        }
     }
 
     public void jumpToLine() {
@@ -466,6 +471,10 @@ public class Computer {
 
         public void notAddressableError() {
             lastMessage = "Not addressable error.";
+        }
+
+        public void labelNotFound(short value) {
+            lastMessage = "Label not found: " + value;
         }
 
         public void invalidMicrocodeError() {

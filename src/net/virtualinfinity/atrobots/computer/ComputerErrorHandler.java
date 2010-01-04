@@ -23,4 +23,6 @@ public interface ComputerErrorHandler {
     void writeToRomError();
 
     void notAddressableError();
+
+    void labelNotFound(short value);
 }
