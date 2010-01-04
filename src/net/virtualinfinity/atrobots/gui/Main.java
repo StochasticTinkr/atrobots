@@ -35,32 +35,10 @@ public class Main implements Runnable {
     private ArenaPane arenaPane;
     private boolean paused = true;
 
-    private final Object pauseLock;
+    private final Object gameLock;
     private volatile int frameDelay = 25;
     private volatile boolean useDelay = true;
-    private Thread gameThread = new Thread() {
-        public void run() {
-            while (!closed) {
-                try {
-                    final Game game = Main.this.game;
-                    if (useDelay || game == null) {
-                        frameDelay = 25;
-                        Thread.sleep(frameDelay);
-                    }
-                    synchronized (pauseLock) {
-                        while (paused && !closed) {
-                            pauseLock.wait();
-                        }
-                        if (!closed && game != null) {
-                            game.stepRound();
-                        }
-                    }
-                } catch (Throwable e) {
-                    e.printStackTrace();
-                }
-            }
-        }
-    };
+    private Thread gameThread = new GameThread();
 
     private volatile boolean closed;
     private RobotStatusPane robotStatusPane;
@@ -79,15 +57,15 @@ public class Main implements Runnable {
     };
 
     public boolean isPaused() {
-        synchronized (pauseLock) {
+        synchronized (gameLock) {
             return paused;
         }
     }
 
-    public void setPaused(boolean newState) {
-        synchronized (pauseLock) {
-            paused = newState;
-            pauseLock.notifyAll();
+    public void setPaused(boolean paused) {
+        synchronized (gameLock) {
+            this.paused = paused;
+            gameLock.notifyAll();
         }
     }
 
@@ -99,7 +77,7 @@ public class Main implements Runnable {
     };
 
     public Main() {
-        pauseLock = new Object();
+        gameLock = new Object();
         toggleRobotStatusBars = new ToggleProperty("Robot Status Bars", new ShowStatusBarsAccessor());
         toggleRenderDeadRobots = new ToggleProperty("Dead Robots", new ShowDeadRobotsAccessor());
         toggleFillScanArc = new ToggleProperty("Filled Scans", new ShowFilledScansAccessor());
@@ -113,10 +91,10 @@ public class Main implements Runnable {
         mainFrame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         mainFrame.addWindowListener(new WindowAdapter() {
             public void windowClosed(WindowEvent e) {
-                synchronized (pauseLock) {
+                synchronized (gameLock) {
                     closed = true;
                     paused = false;
-                    pauseLock.notifyAll();
+                    gameLock.notifyAll();
                 }
 
             }
@@ -354,6 +332,30 @@ public class Main implements Runnable {
         public void set(boolean value) {
             scanRenderer.setFillArcs(value);
             arenaPane.repaint();
+        }
+    }
+
+    private class GameThread extends Thread {
+        public void run() {
+            while (!closed) {
+                try {
+                    synchronized (gameLock) {
+                        while (paused && !closed) {
+                            gameLock.wait();
+                        }
+                    }
+                    if (useDelay) {
+                        Thread.sleep(frameDelay);
+                    }
+                    synchronized (gameLock) {
+                        if (!closed && game != null) {
+                            game.stepRound();
+                        }
+                    }
+                } catch (Throwable e) {
+                    e.printStackTrace();
+                }
+            }
         }
     }
 }
