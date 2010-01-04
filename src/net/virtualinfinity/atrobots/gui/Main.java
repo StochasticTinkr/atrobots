@@ -49,6 +49,8 @@ public class Main implements Runnable {
     private final ToggleProperty toggleRobotStatusBars;
     private final ToggleProperty toggleRenderDeadRobots;
     private final ToggleProperty toggleFillScanArc;
+    private final ToggleProperty toggleFillShields;
+    private final ToggleProperty toggleShowNames;
     private final AbstractAction runAction = new AbstractAction("Run") {
         public void actionPerformed(ActionEvent e) {
             setPaused(!paused);
@@ -81,6 +83,8 @@ public class Main implements Runnable {
         toggleRobotStatusBars = new ToggleProperty("Robot Status Bars", new ShowStatusBarsAccessor());
         toggleRenderDeadRobots = new ToggleProperty("Dead Robots", new ShowDeadRobotsAccessor());
         toggleFillScanArc = new ToggleProperty("Filled Scans", new ShowFilledScansAccessor());
+        toggleFillShields = new ToggleProperty("Filled Shields", new ShowFillShieldAccessor());
+        toggleShowNames = new ToggleProperty("Label Robots", new ShowRobotNameAccessor());
     }
 
     public void run() {
@@ -134,6 +138,12 @@ public class Main implements Runnable {
 
     private JMenu createViewMenu() {
         final JMenu viewMenu = new JMenu("View");
+        viewMenu.add(toggleShowNames.configure(new JCheckBoxMenuItem()));
+        viewMenu.add(toggleRobotStatusBars.configure(new JCheckBoxMenuItem()));
+        viewMenu.add(toggleFillShields.configure(new JCheckBoxMenuItem()));
+        viewMenu.add(toggleRenderDeadRobots.configure(new JCheckBoxMenuItem()));
+        viewMenu.addSeparator();
+        viewMenu.add(toggleFillScanArc.configure(new JCheckBoxMenuItem()));
         viewMenu.add(new JCheckBoxMenuItem(new AbstractAction("Gradiant Explosions") {
             public void actionPerformed(ActionEvent e) {
                 AbstractButton aButton = (AbstractButton) e.getSource();
@@ -141,10 +151,6 @@ public class Main implements Runnable {
                 arenaPane.getArenaRenderer().setExplosionRenderer(selected ? new GradientExplosionRenderer() : new SimpleExplosionRenderer());
             }
         }));
-
-        viewMenu.add(toggleRobotStatusBars.configure(new JCheckBoxMenuItem()));
-        viewMenu.add(toggleRenderDeadRobots.configure(new JCheckBoxMenuItem()));
-        viewMenu.add(toggleFillScanArc.configure(new JCheckBoxMenuItem()));
         return viewMenu;
     }
 
@@ -302,36 +308,63 @@ public class Main implements Runnable {
         }
     }
 
-    private class ShowStatusBarsAccessor implements BooleanAccessor {
+    private abstract class RepaintArenaAfterSetBooleanAccessor implements BooleanAccessor {
+        public final void set(boolean value) {
+            doSet(value);
+            arenaPane.repaint();
+        }
+
+        protected abstract void doSet(boolean value);
+    }
+
+    private class ShowStatusBarsAccessor extends RepaintArenaAfterSetBooleanAccessor {
         public boolean get() {
             return robotRenderer.isShowStatusBars();
         }
 
-        public void set(boolean value) {
+        public void doSet(boolean value) {
             robotRenderer.setShowStatusBars(value);
-            arenaPane.repaint();
         }
     }
 
-    private class ShowDeadRobotsAccessor implements BooleanAccessor {
+    private class ShowFillShieldAccessor extends RepaintArenaAfterSetBooleanAccessor {
+        public boolean get() {
+            return robotRenderer.isFillShield();
+        }
+
+        public void doSet(boolean value) {
+            robotRenderer.setFillShield(value);
+        }
+    }
+
+    private class ShowRobotNameAccessor extends RepaintArenaAfterSetBooleanAccessor {
+        public boolean get() {
+            return robotRenderer.isShowName();
+        }
+
+        public void doSet(boolean value) {
+            robotRenderer.setShowName(value);
+        }
+    }
+
+
+    private class ShowDeadRobotsAccessor extends RepaintArenaAfterSetBooleanAccessor {
         public boolean get() {
             return robotRenderer.isRenderDead();
         }
 
-        public void set(boolean value) {
+        public void doSet(boolean value) {
             robotRenderer.setRenderDead(value);
-            arenaPane.repaint();
         }
     }
 
-    private class ShowFilledScansAccessor implements BooleanAccessor {
+    private class ShowFilledScansAccessor extends RepaintArenaAfterSetBooleanAccessor {
         public boolean get() {
             return scanRenderer.isFillArcs();
         }
 
-        public void set(boolean value) {
+        public void doSet(boolean value) {
             scanRenderer.setFillArcs(value);
-            arenaPane.repaint();
         }
     }
 
@@ -346,6 +379,8 @@ public class Main implements Runnable {
                     }
                     if (useDelay) {
                         Thread.sleep(frameDelay);
+                    } else {
+                        Thread.yield();
                     }
                     synchronized (gameLock) {
                         if (!closed && game != null) {

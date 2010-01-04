@@ -17,6 +17,9 @@ import java.util.Set;
 public class RobotRenderer implements SnapshotRenderer<RobotSnapshot> {
     private boolean showStatusBars = true;
     private boolean renderDead = true;
+    private boolean showName = true;
+    private boolean fillShield = true;
+
     private static final Color HEAT_COLOR1 = new Color(1f, 0f, 0f, 0.1f);
     private static final Color HEAT_COLOR2 = Color.yellow;
 
@@ -33,7 +36,9 @@ public class RobotRenderer implements SnapshotRenderer<RobotSnapshot> {
                 paintArmor(g2d, robotSnapshot);
                 paintHeat(g2d, robotSnapshot);
             }
-            paintName(g2d, robotSnapshot);
+            if (isShowName()) {
+                paintName(g2d, robotSnapshot);
+            }
         }
         if (selectedRobotIds.contains(robotSnapshot.getId())) {
             paintSelection(g2d, robotSnapshot);
@@ -56,6 +61,22 @@ public class RobotRenderer implements SnapshotRenderer<RobotSnapshot> {
         this.showStatusBars = showStatusBars;
     }
 
+    public boolean isShowName() {
+        return showName;
+    }
+
+    public void setShowName(boolean showName) {
+        this.showName = showName;
+    }
+
+    public boolean isFillShield() {
+        return fillShield;
+    }
+
+    public void setFillShield(boolean fillShield) {
+        this.fillShield = fillShield;
+    }
+
     private void paintSelection(Graphics2D g2d, RobotSnapshot robotSnapshot) {
         g2d.setPaint(new Color(1f, 1f, 0f, .25f));
         final Ellipse2D.Double s = new Ellipse2D.Double();
@@ -63,15 +84,19 @@ public class RobotRenderer implements SnapshotRenderer<RobotSnapshot> {
         g2d.fill(s);
     }
 
-
     private void paintShield(Graphics2D g2d, RobotSnapshot robotSnapshot) {
         if (robotSnapshot.isActiveShield()) {
-            g2d.setPaint(new RadialGradientPaint(robotSnapshot.getPositionVector().toPoint2D(), 15, new float[]{0, .75f, 1f},
-                    new Color[]{new Color(.5f, .5f, 0f, .8f), new Color(0, 0, .5f, .1f), new Color(1f, 1f, 1f, 1f)}));
             final Ellipse2D.Double s = new Ellipse2D.Double();
             s.setFrameFromCenter(robotSnapshot.getX(), robotSnapshot.getY(), robotSnapshot.getX() + 15, robotSnapshot.getY() + 15);
-            g2d.fill(s);
-            g2d.fill(s);
+            if (isFillShield()) {
+                g2d.setPaint(new RadialGradientPaint(robotSnapshot.getPositionVector().toPoint2D(), 15, new float[]{0, .75f, 1f},
+                        new Color[]{new Color(.5f, .5f, 0f, .8f), new Color(0, 0, .5f, .1f), Color.white}));
+                g2d.fill(s);
+                g2d.fill(s);
+            } else {
+                g2d.setPaint(new Color(.8f, .6f, 1f));
+                g2d.draw(s);
+            }
         }
     }
 
@@ -125,6 +150,5 @@ public class RobotRenderer implements SnapshotRenderer<RobotSnapshot> {
             g2d.fill(path);
         }
         g2d.setStroke(stroke);
-
     }
 }
