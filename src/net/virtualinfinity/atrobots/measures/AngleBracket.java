@@ -16,7 +16,7 @@ public class AngleBracket {
         rangeSize = counterClockwiseBound.getAngleCounterClockwiseTo(clockwiseBound);
     }
 
-    public AngleBracket() {
+    private AngleBracket() {
         counterClockwiseBound = null;
         rangeSize = RelativeAngle.FULL_CIRCLE;
     }
@@ -69,6 +69,16 @@ public class AngleBracket {
                 rangeSize.getDegrees(), Arc2D.PIE);
         return arc;
     }
+
+    public AbsoluteAngle getCounterClockwiseBound() {
+        return counterClockwiseBound;
+    }
+
+
+    public AbsoluteAngle getClockwiseBound() {
+        return counterClockwiseBound == null ? null : counterClockwiseBound.clockwise(getRangeSize());
+    }
+
 
     public RelativeAngle getRangeSize() {
         return rangeSize;
