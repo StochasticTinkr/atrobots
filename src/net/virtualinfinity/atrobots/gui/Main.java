@@ -51,9 +51,9 @@ public class Main implements Runnable {
                         while (paused && !closed) {
                             pauseLock.wait();
                         }
-                    }
-                    if (game != null) {
-                        game.stepRound();
+                        if (!closed && game != null) {
+                            game.stepRound();
+                        }
                     }
                 } catch (Throwable e) {
                     e.printStackTrace();
@@ -61,6 +61,7 @@ public class Main implements Runnable {
             }
         }
     };
+
     private volatile boolean closed;
     private RobotStatusPane robotStatusPane;
     private boolean debugMode;
@@ -72,13 +73,24 @@ public class Main implements Runnable {
     private final ToggleProperty toggleFillScanArc;
     private final AbstractAction runAction = new AbstractAction("Run") {
         public void actionPerformed(ActionEvent e) {
-            synchronized (pauseLock) {
-                paused = !paused;
-                this.putValue(Action.NAME, paused ? "Run" : "Pause");
-                pauseLock.notifyAll();
-            }
+            setPaused(!paused);
+            this.putValue(Action.NAME, paused ? "Run" : "Pause");
         }
     };
+
+    public boolean isPaused() {
+        synchronized (pauseLock) {
+            return paused;
+        }
+    }
+
+    public void setPaused(boolean newState) {
+        synchronized (pauseLock) {
+            paused = newState;
+            pauseLock.notifyAll();
+        }
+    }
+
     private final AbstractAction speedToggleAction = new AbstractAction("Full Speed") {
         public void actionPerformed(ActionEvent e) {
             useDelay = !useDelay;
@@ -190,11 +202,12 @@ public class Main implements Runnable {
     }
 
     private void setGame(Game newGame) {
+        setPaused(true);
+        arenaPane.reset();
+        robotStatusPane.reset();
         game = newGame;
         game.addSimulationObserver(arenaPane);
         game.addSimulationObserver(robotStatusPane);
-        arenaPane.reset();
-        robotStatusPane.reset();
     }
 
     private void addDebugMenuItems() {
