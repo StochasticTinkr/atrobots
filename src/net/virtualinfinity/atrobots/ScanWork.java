@@ -18,23 +18,44 @@ public class ScanWork {
     private Vector vectorToClosest = null;
     private double closestDistanceSquared;
     private Robot closest = null;
+    private Vector counterClockwiseBound;
+    private Vector clockwiseBound;
+    private static final int ROBOT_RADIUS_SQUARED = 16;
 
     public ScanWork(Position position, AngleBracket angleBracket, double maxDistance, boolean calculateAccuracy) {
         this.position = position;
         this.angleBracket = angleBracket;
         this.calculateAccuracy = calculateAccuracy;
-        maxDistanceSquared = maxDistance * maxDistance;
-        closestDistanceSquared = maxDistanceSquared;
+        this.counterClockwiseBound = getUnit(angleBracket.getCounterClockwiseBound());
+        this.clockwiseBound = getUnit(angleBracket.getClockwiseBound());
+        this.maxDistanceSquared = maxDistance * maxDistance;
+        this.closestDistanceSquared = maxDistanceSquared;
+    }
+
+    private static Vector getUnit(AbsoluteAngle absoluteAngle) {
+        if (absoluteAngle == null) {
+            return null;
+        }
+        return absoluteAngle.toUnitVector();
     }
 
     public void visit(Robot arenaObject) {
-        final Vector vector = arenaObject.getPosition().getVectorTo(position);
-        final double distanceSquared = vector.getMagnitudeSquared();
-        if (distanceSquared < closestDistanceSquared && angleBracket.contains(vector.getAngle())) {
+        final Vector position = arenaObject.getPosition().getVectorTo(this.position);
+        final double distanceSquared = position.getMagnitudeSquared();
+        if (distanceSquared < closestDistanceSquared && withinArc(position, distanceSquared)) {
             closest = arenaObject;
             closestDistanceSquared = distanceSquared;
-            vectorToClosest = vector;
+            vectorToClosest = position;
         }
+    }
+
+    private boolean withinArc(Vector position, double distanceSquared) {
+        return angleBracket.contains(position.getAngle()) || rayIntersection(position, distanceSquared, counterClockwiseBound) || rayIntersection(position, distanceSquared, clockwiseBound);
+    }
+
+    private boolean rayIntersection(Vector circleCenter, double distanceSquared, Vector direction) {
+        final double a = direction.dot(circleCenter);
+        return a > 0 && a * a > distanceSquared - ROBOT_RADIUS_SQUARED;
     }
 
     public ScanResult toScanResult() {
@@ -51,7 +72,7 @@ public class ScanWork {
             } else {
                 accuracy = 0;
             }
-            return new ScanResult(closest, Math.sqrt(closestDistanceSquared), angleToClosest, accuracy);
+            return new ScanResult(closest, Math.sqrt(closestDistanceSquared), angleToClosest, Math.min(2, Math.max(-2, accuracy)));
         }
         return new ScanResult();
     }
