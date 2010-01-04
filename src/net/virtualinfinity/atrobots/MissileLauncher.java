@@ -42,18 +42,26 @@ public class MissileLauncher {
         return new PortHandler() {
             public void write(short value) {
                 getComputer().consumeCycles(3);
-                fireMissile(RelativeAngle.fromBygrees(value));
+                fireMissile(RelativeAngle.fromBygrees(Math.max(-4, Math.min(value, 4))));
             }
         };
     }
 
     private void fireMissile(RelativeAngle shift) {
-        final byte value = shift.getSignedBygrees();
-        int bygrees = Math.max(-4, Math.min(value, 4));
-        AbsoluteAngle angle = heading.getAngle().counterClockwise(RelativeAngle.fromBygrees(bygrees));
-        final Missile missile = new Missile(robot, position, angle, getPower());
-        getArena().fireMissile(missile);
-        robot.getHeat().warm(Temperature.fromLogScale(robot.isOverburn() ? 20 : 30));
+        getArena().fireMissile(createMissile(shift));
+        robot.getHeat().warm(getFiringTempurature());
+    }
+
+    private AbsoluteAngle getMissileHeading(RelativeAngle shift) {
+        return heading.getAngle().counterClockwise(shift);
+    }
+
+    private Temperature getFiringTempurature() {
+        return Temperature.fromLogScale(robot.isOverburn() ? 20 : 30);
+    }
+
+    private Missile createMissile(RelativeAngle shift) {
+        return new Missile(robot, position, getMissileHeading(shift), getPower());
     }
 
     private double getPower() {
