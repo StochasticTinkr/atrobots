@@ -50,7 +50,7 @@ public class Missile extends ArenaObject {
         }
         final Vector collisionPoint = getCollisionPoint(robot);
         if (collisionPoint != null) {
-            if (collisionPoint.minus(robot.getPosition().getVector()).getMagnitudeSquared() < 64) {
+            if (collisionPoint.minus(robot.getPosition().getVector()).getMagnitudeSquared() < 196) {
                 position.copyFrom(new Position(collisionPoint));
                 explode();
             }
