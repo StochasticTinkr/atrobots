@@ -10,7 +10,9 @@ import javax.swing.border.EtchedBorder;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 import java.awt.*;
+import java.util.HashMap;
 import java.util.HashSet;
+import java.util.Map;
 import java.util.Set;
 
 /**
@@ -20,7 +22,7 @@ import java.util.Set;
  */
 public class RobotStatusPane extends JList implements SimulationObserver {
     private final DefaultListModel robotList;
-
+    private final Map<Integer, RobotItem> items = new HashMap<Integer, RobotItem>();
 
     private RobotStatusPane() {
         robotList = new DefaultListModel();
@@ -38,14 +40,15 @@ public class RobotStatusPane extends JList implements SimulationObserver {
     }
 
     private void updateRobotStatus(RobotSnapshot robotSnapshot) {
-        for (int i = 0; i < robotList.getSize(); ++i) {
-            final RobotItem robotItem = (RobotItem) robotList.get(i);
-            if (robotItem.getId() == robotSnapshot.getId()) {
-                robotItem.setRobotSnapshot(robotSnapshot);
-                return;
-            }
+        RobotItem robotItem = items.get(robotSnapshot.getId());
+        if (robotItem == null) {
+            robotItem = new RobotItem(robotSnapshot);
+            items.put(robotSnapshot.getId(), robotItem);
+            robotList.addElement(robotItem);
+        } else {
+            robotItem.setRobotSnapshot(robotSnapshot);
+
         }
-        robotList.addElement(new RobotItem(robotSnapshot));
         revalidate();
     }
 
@@ -193,11 +196,11 @@ public class RobotStatusPane extends JList implements SimulationObserver {
             add(lastMessage);
             RobotItem item = (RobotItem) value;
             final RobotSnapshot robotSnapshot = item.getRobotSnapshot();
+            roundKills.setText("Kills (round/total): " + robotSnapshot.getRoundKills() + "/" + robotSnapshot.getTotalKills());
             if (!item.isDead()) {
-                name.setText(robotSnapshot.getName());
-                roundKills.setText("Kills (round/total): " + robotSnapshot.getRoundKills() + "/" + robotSnapshot.getTotalKills());
                 armor.setValue((int) Math.round(Math.min(100, robotSnapshot.getArmor())));
                 heat.setValue((int) Math.round(Math.min(100, robotSnapshot.getTemperature().getLogScale() * .2)));
+                name.setText(robotSnapshot.getName());
             } else {
                 armor.setValue(0);
                 heat.setValue(0);
@@ -216,10 +219,6 @@ public class RobotStatusPane extends JList implements SimulationObserver {
         }
 
         public void run() {
-            for (int i = 0; i < robotList.getSize(); ++i) {
-                final RobotItem robotItem = (RobotItem) robotList.get(i);
-                robotItem.clearUpdated();
-            }
             frameBuffer.getCurrentFrame().visitRobots(new SnapshotAdaptor() {
                 @Override
                 public void acceptRobot(RobotSnapshot robotSnapshot) {
@@ -229,10 +228,6 @@ public class RobotStatusPane extends JList implements SimulationObserver {
             for (int i = 0; i < robotList.getSize(); ++i) {
                 final RobotItem robotItem = (RobotItem) robotList.get(i);
                 if (robotItem.isChanged()) {
-                    robotList.set(i, robotItem);
-                }
-                if (!robotItem.isUpdated() && !robotItem.isDead()) {
-                    robotItem.died();
                     robotList.set(i, robotItem);
                 }
             }
