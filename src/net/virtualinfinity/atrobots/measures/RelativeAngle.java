@@ -103,6 +103,10 @@ public class RelativeAngle implements Comparable<RelativeAngle> {
         return fromRadians(radians / scale);
     }
 
+    public RelativeAngle times(int scale) {
+        return fromRadians(radians * scale);
+    }
+
     public RelativeAngle times(double scale) {
         return fromRadians(radians * scale);
     }
@@ -142,6 +146,11 @@ public class RelativeAngle implements Comparable<RelativeAngle> {
         @Override
         boolean isExactBygrees() {
             return true;
+        }
+
+        @Override
+        public RelativeAngle times(int scale) {
+            return fromBygrees(bygree * scale);
         }
     }
 }
