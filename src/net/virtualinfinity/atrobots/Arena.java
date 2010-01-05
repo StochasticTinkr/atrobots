@@ -154,16 +154,18 @@ public class Arena {
     }
 
     private void checkCollissions() {
-        for (int i = 0; i < robots.size(); ++i) {
-            final Robot robot = robots.get(i);
-            for (int j = 0; j < i; ++j) {
-                robots.get(j).checkCollision(robot);
+        for (final Robot collisionTarget : robots) {
+            for (Robot robot : robots) {
+                if (robot == collisionTarget) {
+                    break;
+                }
+                robot.checkCollision(collisionTarget);
             }
             for (Mine mine : mines) {
-                mine.checkCollision(robot);
+                mine.checkCollision(collisionTarget);
             }
             for (Missile missile : missiles) {
-                missile.checkCollision(robot);
+                missile.checkCollision(collisionTarget);
             }
         }
     }
