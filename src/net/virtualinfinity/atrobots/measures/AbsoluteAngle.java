@@ -20,6 +20,11 @@ public class AbsoluteAngle {
     private final double radians;
 
     private AbsoluteAngle(double radians) {
+        if (radians < 0) {
+            radians += Math.PI * 2;
+        } else if (radians >= Math.PI * 2) {
+            radians -= Math.PI * 2;
+        }
         this.radians = radians;
     }
 
