@@ -1,13 +1,22 @@
 package net.virtualinfinity.atrobots.computer;
 
+import java.util.HashMap;
+import java.util.Map;
+
 /**
  * @author Daniel Pitts
  */
 public abstract class MemoryArray {
     private ComputerErrorHandler errorHandler;
+    private final Map<Integer, SpecialRegister> specialRegisters;
     protected final short[] cells;
 
     public MemoryArray(int blockSize) {
+        this(blockSize, new HashMap<Integer, SpecialRegister>());
+    }
+
+    public MemoryArray(int blockSize, Map<Integer, SpecialRegister> specialRegisters) {
+        this.specialRegisters = specialRegisters;
         cells = new short[blockSize];
     }
 
@@ -16,11 +25,11 @@ public abstract class MemoryArray {
     }
 
     public final short get(int index) {
-        if (inRange(index)) {
-            // TODO: Error
-            return 0;
-        } else
-            return cells[index];
+        SpecialRegister register = specialRegisters.get(index);
+        if (register != null) {
+            return register.get();
+        }
+        return cells[index];
     }
 
     public abstract void put(int index, short value);
@@ -43,7 +52,7 @@ public abstract class MemoryArray {
         this.errorHandler = errorHandler;
     }
 
-    protected boolean inRange(int index) {
-        return index < 0 || index > size();
+    public void addSpecialRegister(int index, SpecialRegister specialRegister) {
+        specialRegisters.put(index, specialRegister);
     }
 }

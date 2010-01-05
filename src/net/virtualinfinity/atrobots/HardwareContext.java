@@ -1,6 +1,8 @@
 package net.virtualinfinity.atrobots;
 
 import net.virtualinfinity.atrobots.computer.CommunicationsQueue;
+import net.virtualinfinity.atrobots.computer.MemoryArray;
+import net.virtualinfinity.atrobots.computer.SpecialRegister;
 import net.virtualinfinity.atrobots.interrupts.AtRobotInterruptFactory;
 import net.virtualinfinity.atrobots.interrupts.InterruptHandler;
 
@@ -25,6 +27,7 @@ public class HardwareContext {
     private Scanner scanner;
     private Robot robot;
     private HardwareBus hardwareBus;
+    private MemoryArray lowerMemoryArray;
 
     public void setThrottle(Throttle throttle) {
         this.throttle = throttle;
@@ -95,6 +98,35 @@ public class HardwareContext {
         wireMissileLauncher();
         wireScanner();
         wireHardwareBus();
+        connectSpecialRegisters();
+    }
+
+    private void connectSpecialRegisters() {
+        lowerMemoryArray.addSpecialRegister(0, new SpecialRegister() {
+            public short get() {
+                return (short) robot.getThrottle().getDesiredPower();
+            }
+        });
+        lowerMemoryArray.addSpecialRegister(1, new SpecialRegister() {
+            public short get() {
+                return (short) (hardwareBus.getDesiredHeading().getAngle().getBygrees() & 255);
+            }
+        });
+        lowerMemoryArray.addSpecialRegister(2, new SpecialRegister() {
+            public short get() {
+                return (short) robot.getTurretShift();
+            }
+        });
+        lowerMemoryArray.addSpecialRegister(3, new SpecialRegister() {
+            public short get() {
+                return (short) robot.getTurret().getScanner().getAccuracy();
+            }
+        });
+        lowerMemoryArray.addSpecialRegister(9, new SpecialRegister() {
+            public short get() {
+                return (short) Math.round(robot.getOdometer().getDistance());
+            }
+        });
     }
 
     private void wireHardwareBus() {
@@ -205,5 +237,9 @@ public class HardwareContext {
 
     public void setHardwareBus(HardwareBus hardwareBus) {
         this.hardwareBus = hardwareBus;
+    }
+
+    public void setLowerMemoryArray(MemoryArray lowerMemoryArray) {
+        this.lowerMemoryArray = lowerMemoryArray;
     }
 }

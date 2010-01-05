@@ -1,5 +1,7 @@
 package net.virtualinfinity.atrobots.computer;
 
+import java.util.Map;
+
 /**
  * @author Daniel Pitts
  */
@@ -7,6 +9,10 @@ public class ReadOnlyMemoryArray extends MemoryArray {
 
     public ReadOnlyMemoryArray(int blockSize) {
         super(blockSize);
+    }
+
+    public ReadOnlyMemoryArray(int blockSize, Map<Integer, SpecialRegister> specialRegisters) {
+        super(blockSize, specialRegisters);
     }
 
     public void put(int index, short value) {

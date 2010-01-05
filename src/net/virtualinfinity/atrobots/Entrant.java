@@ -32,18 +32,21 @@ public class Entrant {
         final Robot robot = new Robot();
         robot.setEntrant(this);
         robot.setArena(game.getRound().getArena());
-        robot.setComputer(createComputer());
+        final RandomAccessMemoryArray lowerMemoryBlock = new RandomAccessMemoryArray(1024);
+        robot.setComputer(createComputer(lowerMemoryBlock));
         HardwareContext hardwareContext = new HardwareContext();
         hardwareContext.setRobot(robot);
         hardwareSpecification.configureHardwareContext(hardwareContext);
+        hardwareContext.setLowerMemoryArray(lowerMemoryBlock);
         hardwareContext.wireRobotComponents();
+
         roundKills = 0;
         return robot;
     }
 
-    private Computer createComputer() {
+    private Computer createComputer(RandomAccessMemoryArray lowerMemoryBlock) {
         final Memory memory = new Memory();
-        memory.addMemoryArray(new RandomAccessMemoryArray(1024));
+        memory.addMemoryArray(lowerMemoryBlock);
         memory.addMemoryArray(program.createProgramMemory());
         Computer computer = new Computer(memory, 256, Math.max(maxProcessorSpeed, game.getMaxProcessorSpeed()));
         computer.setEntrant(this);
