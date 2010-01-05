@@ -40,7 +40,10 @@ public class AbsoluteAngle {
     }
 
     public double getNormalizedRadians() {
-        return Math.atan2(sine(), cosine());
+        if (radians >= Math.PI * 2 || radians < 0) {
+            return Math.atan2(sine(), cosine());
+        }
+        return radians;
     }
 
     public Vector toUnitVector() {

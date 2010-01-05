@@ -44,7 +44,10 @@ public class RelativeAngle implements Comparable<RelativeAngle> {
     }
 
     public RelativeAngle normalize() {
-        return fromRadians(Math.atan2(sine(), cosine()));
+        if (radians >= Math.PI * 2 || radians < 0) {
+            return fromRadians(Math.atan2(sine(), cosine()));
+        }
+        return this;
     }
 
     public int getBygrees() {
