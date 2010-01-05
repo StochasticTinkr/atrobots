@@ -64,7 +64,7 @@ public class ScanWork {
             final int accuracy;
             if (calculateAccuracy) {
                 final double v = 0.5d - angleBracket.fractionTo(angleToClosest);
-                if (angleBracket.getRangeSize().getBygrees() < 2) {
+                if (angleBracket.getRangeSize().getBygrees() <= 4) {
                     accuracy = roundAwayFromZero(v * 2) * 2;
                 } else {
                     accuracy = roundAwayFromZero(v * 4);
