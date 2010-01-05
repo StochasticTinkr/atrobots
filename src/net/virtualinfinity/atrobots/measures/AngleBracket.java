@@ -16,13 +16,18 @@ public class AngleBracket {
         rangeSize = counterClockwiseBound.getAngleCounterClockwiseTo(clockwiseBound);
     }
 
+    private AngleBracket(AbsoluteAngle counterClockwiseBound, RelativeAngle rangeSize) {
+        this.counterClockwiseBound = counterClockwiseBound;
+        this.rangeSize = rangeSize;
+    }
+
     private AngleBracket() {
         counterClockwiseBound = null;
         rangeSize = RelativeAngle.FULL_CIRCLE;
     }
 
     public static AngleBracket around(AbsoluteAngle center, RelativeAngle width) {
-        return between(center.counterClockwise(width), center.clockwise(width));
+        return new AngleBracket(center.counterClockwise(width), width.times(2));
     }
 
     public static AngleBracket between(AbsoluteAngle counterClockwiseBound, AbsoluteAngle clockwiseBound) {
