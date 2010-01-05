@@ -12,6 +12,7 @@ import net.virtualinfinity.atrobots.snapshots.MineSnapshot;
 public class Mine extends ArenaObject {
     private double triggerRadius;
     private final MineLayer owner;
+    private double triggerRadiusSquared;
 
     public Mine(MineLayer owner) {
         this.owner = owner;
@@ -19,6 +20,7 @@ public class Mine extends ArenaObject {
 
     public void setTriggerRadius(double triggerRadius) {
         this.triggerRadius = triggerRadius;
+        this.triggerRadiusSquared = triggerRadius * triggerRadius;
     }
 
     public void setPosition(Position source) {
@@ -39,7 +41,7 @@ public class Mine extends ArenaObject {
         if (isDead() || layedBy(robot.getMineLayer())) {
             return;
         }
-        if (robot.getPosition().getVectorTo(position).getMagnitude() < triggerRadius) {
+        if (robot.getPosition().getVectorTo(position).getMagnitudeSquared() < triggerRadiusSquared) {
             explode();
         }
     }
