@@ -2,6 +2,9 @@ package net.virtualinfinity.atrobots;
 
 import net.virtualinfinity.atrobots.measures.Duration;
 
+import java.util.HashMap;
+import java.util.Map;
+
 /**
  * @author Daniel Pitts
  */
@@ -12,6 +15,7 @@ public class Round {
     private Arena arena = new Arena();
     private int number;
     private Game game;
+    private Map<Entrant, Robot> robots = new HashMap<Entrant, Robot>();
 
     public Round(int number, Game game) {
         this.number = number;
@@ -41,5 +45,13 @@ public class Round {
         arena.simulate();
         time = time.plus(Duration.ONE_CYCLE);
 
+    }
+
+    public void putRobot(Entrant entrant, Robot robot) {
+        robots.put(entrant, robot);
+    }
+
+    public Robot getRobot(Entrant entrant) {
+        return robots.get(entrant);
     }
 }

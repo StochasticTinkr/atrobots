@@ -41,6 +41,7 @@ public class Entrant {
         hardwareContext.wireRobotComponents();
 
         roundKills = 0;
+
         return robot;
     }
 
@@ -174,5 +175,9 @@ public class Entrant {
 
     public void setMaxProcessorSpeed(int maxProcessorSpeed) {
         this.maxProcessorSpeed = maxProcessorSpeed;
+    }
+
+    public Robot getCurrentRobot() {
+        return getGame().getRound().getRobot(this);
     }
 }

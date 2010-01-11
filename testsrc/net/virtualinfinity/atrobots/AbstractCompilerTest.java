@@ -14,14 +14,14 @@ public class AbstractCompilerTest extends TestCase {
     protected EntrantFactory entrantFactory;
     protected PrintStream source;
     private ByteArrayOutputStream out;
-    private MockGame game;
+    private Game game;
     protected Robot robot;
 
     public void setUp() throws IOException {
         entrantFactory = new EntrantFactory("test");
         out = new ByteArrayOutputStream(1024);
         source = new PrintStream(out);
-        game = new MockGame();
+        game = new Game(1);
     }
 
     public void tearDown() throws IOException {
@@ -40,28 +40,15 @@ public class AbstractCompilerTest extends TestCase {
             final ByteArrayInputStream stream = new ByteArrayInputStream(out.toByteArray());
             try {
                 entrantFactory.compile(stream).dumpErrors();
-                game.addEntrant(entrantFactory.createEntrant());
+                final Entrant entrant = entrantFactory.createEntrant();
+                game.addEntrant(entrant);
                 game.nextRound();
-                robot = game.lastRobotCreated;
+                robot = game.getRound().getRobot(entrant);
             } finally {
                 stream.close();
             }
         } catch (IOException e) {
             throw new RuntimeException(e);
-        }
-    }
-
-    private static class MockGame extends Game {
-        private Robot lastRobotCreated;
-
-        public MockGame() {
-            super(1);
-        }
-
-        @Override
-        protected Robot createRobotFor(Entrant entrant) {
-            lastRobotCreated = super.createRobotFor(entrant);
-            return lastRobotCreated;
         }
     }
 }

@@ -29,6 +29,7 @@ public class Computer {
     private ComputerErrorHandler errorHandler = new ErrorHandler();
     private boolean shutDown;
     private int maxInstructionPointer;
+    private DebugListener debugListener = new EmptyDebugListener();
 
     public Computer(Memory memory, int stackSize, int maxProcessorSpeed) {
         this.memory = memory;
@@ -71,22 +72,26 @@ public class Computer {
     }
 
     void executeInstruction() {
-        hardwareBus.preInstruction();
+        debugListener.beforeInstruction(this);
         if (nextInstructionPointer >= maxInstructionPointer) {
             nextInstructionPointer = 0;
         }
         instructionPointer = nextInstructionPointer;
         nextInstructionPointer++;
-//        if (entrant.getName().contains("RANDMAN4")) {
-////            System.out.println(entrant.getId() + " "+entrant.getName() + ": ");
-//            System.out.println(getInstructionString() + " ** " + registers);
-//            System.out.println(getSourceLine());
-//        }
         getInstruction().execute(this);
+        debugListener.afterInstruction(this);
+    }
+
+    public int getInstructionPointer() {
+        return instructionPointer;
     }
 
     private String getSourceLine() {
         return entrant.getDebugInfo().getLineForInstructionPointer(instructionPointer);
+    }
+
+    public Entrant getEntrant() {
+        return entrant;
     }
 
     public String getInstructionString() {
@@ -497,7 +502,6 @@ public class Computer {
         public void memoryBoundsError(int address) {
             lastMessage = "OutOfBounds: @" + address;
         }
-
 
         public void writeToRomError() {
             lastMessage = "Write to ROM.";

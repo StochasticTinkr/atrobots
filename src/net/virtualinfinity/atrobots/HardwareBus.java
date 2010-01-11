@@ -115,18 +115,6 @@ public class HardwareBus {
     }
 
     /**
-     * Update registers before executing an instruction.
-     */
-    public void preInstruction() {
-//        computer.getRegisters().getDesiredSpeed().set((short) robot.getThrottle().getDesiredPower());
-//        computer.getRegisters().getDesiredHeading().set((short) (desiredHeading.getAngle().getBygrees() & 255));
-//        computer.getRegisters().getTurretOffset().set((short) robot.getTurretShift());
-//        computer.getRegisters().getAccuracy().set((short) robot.getTurret().getScanner().getAccuracy());
-//        computer.getRegisters().getMeters().set((short) Math.round(robot.getOdometer().getDistance()));
-    }
-
-
-    /**
      * Connect a computer.
      *
      * @param computer the computer
@@ -134,7 +122,6 @@ public class HardwareBus {
     public void connectComputer(Computer computer) {
         this.computer = computer;
         computer.setHardwareBus(this);
-
     }
 
     /**

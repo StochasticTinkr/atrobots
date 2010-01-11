@@ -63,7 +63,9 @@ public class Game {
      * @return the robot.
      */
     protected Robot createRobotFor(Entrant entrant) {
-        return entrant.createRobot();
+        final Robot robot = entrant.createRobot();
+        round.putRobot(entrant, robot);
+        return robot;
     }
 
     /**
