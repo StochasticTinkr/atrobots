@@ -107,7 +107,7 @@ public class Computer {
                 + getOperandString(0) + "  "
                 + getOperandString(1) + ", "
                 + getOperandString(2) + ":  "
-//                + getInstruction().getClass().getSimpleName()
+                + getInstruction().getClass().getSimpleName()
                 ;
     }
 
