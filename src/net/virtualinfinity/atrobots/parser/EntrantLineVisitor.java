@@ -5,6 +5,7 @@ import net.virtualinfinity.atrobots.HardwareSpecification;
 import net.virtualinfinity.atrobots.atsetup.AtRobotInstruction;
 import net.virtualinfinity.atrobots.atsetup.AtRobotInterrupt;
 import net.virtualinfinity.atrobots.atsetup.AtRobotPort;
+import net.virtualinfinity.atrobots.atsetup.AtRobotRegister;
 import net.virtualinfinity.atrobots.computer.Program;
 
 import java.util.*;
@@ -37,18 +38,9 @@ public class EntrantLineVisitor implements LineVisitor {
     }
 
     {
-        addReference(8, "COLCNT");
-        addReference(9, "METERS");
-        addReference(10, "COMBASE");
-        addReference(11, "COMEND");
-        addReference(64, "FLAGS");
-        addReference(65, "AX");
-        addReference(66, "BX");
-        addReference(67, "CX");
-        addReference(68, "DX");
-        addReference(69, "EX");
-        addReference(70, "FX");
-        addReference(71, "SP");
+        for (AtRobotRegister register : AtRobotRegister.values()) {
+            addReference(register.address, register.name());
+        }
         addConstant(Short.MAX_VALUE, "MAXINT");
         addConstant(Short.MIN_VALUE, "MININT");
         for (AtRobotPort port : AtRobotPort.values()) {
@@ -106,6 +98,7 @@ public class EntrantLineVisitor implements LineVisitor {
     }
 
     private void addReference(int value, String variableName) {
+        debugInfo.addVariable(value, variableName);
         symbols.put(variableName.toLowerCase(), new Symbol((short) 1, (short) value));
     }
 

@@ -258,6 +258,7 @@ public class Main implements Runnable {
                 debug = true;
             } else {
                 files.add(new EntrantFile(debug, robotFile(file)));
+                debug = false;
             }
         }
         return files.toArray(new EntrantFile[files.size()]);

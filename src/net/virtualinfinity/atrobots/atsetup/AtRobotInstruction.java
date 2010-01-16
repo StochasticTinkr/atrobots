@@ -21,7 +21,7 @@ public enum AtRobotInstruction {
     DIV(8),
     MOD(9),
     RET(10),
-    GSB(11, "CALL"),
+    CALL(11, "GSB"),
     JMP(12, "GOTO"),
     JLS(13, "JB"),
     JGR(14, "JA"),
@@ -32,7 +32,7 @@ public enum AtRobotInstruction {
     LOOP(19),
     CMP(20),
     TEST(21),
-    SET(22, "MOV"),
+    MOV(22, "SET"),
     LOC(23),
     GET(24),
     PUT(25),
@@ -51,12 +51,24 @@ public enum AtRobotInstruction {
     ROR(38),
     JZ(39),
     JNZ(40),
-    JAE(41, "JGE"),
-    JBE(42, "JLE"),
+    JGE(41, "JAE"),
+    JLE(42, "JBE"),
     SAL(43),
     SAR(44),
     NEG(45),
     JTL(46),;
+
+    private static AtRobotInstruction[] byValue = new AtRobotInstruction[values().length];
+
+    static {
+        for (AtRobotInstruction instruction : values()) {
+            if (byValue[instruction.value] != null) {
+                throw new IllegalStateException();
+            }
+            byValue[instruction.value] = instruction;
+        }
+    }
+
     public final int value;
     public final Collection<String> names;
 
@@ -68,5 +80,12 @@ public enum AtRobotInstruction {
     private AtRobotInstruction(int value, String alternate) {
         this.value = value;
         this.names = Collections.unmodifiableCollection(Arrays.asList(name(), alternate));
+    }
+
+    public static String nameOf(short value) {
+        if (value >= 0 && value < byValue.length) {
+            return byValue[value].name();
+        }
+        return "<unknown>";
     }
 }

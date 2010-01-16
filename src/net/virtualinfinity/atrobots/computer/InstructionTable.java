@@ -23,7 +23,7 @@ public class InstructionTable {
         mapInstruction(DIV, new DivideInstruction(10));
         mapInstruction(MOD, new ModuloInstruction(10));
         mapInstruction(RET, new PopInstructionPointerInstruction(1));
-        mapInstruction(GSB, new CallInstruction(1));
+        mapInstruction(CALL, new CallInstruction(1));
         mapInstruction(JMP, new JumpInstruction(1));
         mapInstruction(JLS, new JumpWhenLessInstruction(0));
         mapInstruction(JGR, new JumpWhenGreaterInstruction(0));
@@ -34,7 +34,7 @@ public class InstructionTable {
         mapInstruction(LOOP, new LoopInstruction(1));
         mapInstruction(CMP, new CompareInstruction(1));
         mapInstruction(TEST, new TestInstruction(2));
-        mapInstruction(SET, new MoveInstruction(1));
+        mapInstruction(MOV, new MoveInstruction(1));
         mapInstruction(LOC, new AddressInstruction(2));
         mapInstruction(GET, new GetInstruction(2));
         mapInstruction(PUT, new PutInstruction(2));
@@ -53,8 +53,8 @@ public class InstructionTable {
         mapInstruction(ROR, new BitRotateRightInstruction(1));
         mapInstruction(JZ, new JumpWhenZeroInstruction(0));
         mapInstruction(JNZ, new JumpWhenNotZeroInstruction(0));
-        mapInstruction(JAE, new JumpWhenGreaterOrEqualInstruction(0));
-        mapInstruction(JBE, new JumpWhenLessOrEqualInstruction(0));
+        mapInstruction(JGE, new JumpWhenGreaterOrEqualInstruction(0));
+        mapInstruction(JLE, new JumpWhenLessOrEqualInstruction(0));
         mapInstruction(SAL, new BitShiftLeftInstruction(1));
         mapInstruction(SAR, new SignedBitShiftRightInstruction(1));
         mapInstruction(NEG, new NegateInstruction(1));

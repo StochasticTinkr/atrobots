@@ -1,12 +1,14 @@
 package net.virtualinfinity.atrobots.computer;
 
 import net.virtualinfinity.atrobots.Flags;
+import net.virtualinfinity.atrobots.atsetup.AtRobotRegister;
+import static net.virtualinfinity.atrobots.atsetup.AtRobotRegister.*;
+import static net.virtualinfinity.atrobots.atsetup.AtRobotRegisterAddresses.*;
 
 /**
  * @author Daniel Pitts
  */
 public class Registers {
-    private final MemoryCell flagsCell;
     private final Flags flags;
     private final MemoryCell ax;
     private final MemoryCell bx;
@@ -30,28 +32,31 @@ public class Registers {
     private final MemoryCell targetVelocity;
 
     public Registers(Memory memory) {
-        flagsCell = memory.getCell(64);
-        flags = new Flags(flagsCell);
-        ax = memory.getCell(65);
-        bx = memory.getCell(66);
-        cx = memory.getCell(67);
-        dx = memory.getCell(68);
-        ex = memory.getCell(69);
-        fx = memory.getCell(70);
-        sp = memory.getCell(71);
-        desiredSpeed = memory.getCell(0);
-        desiredHeading = memory.getCell(1);
-        turretOffset = memory.getCell(2);
-        accuracy = memory.getCell(3);
-        swap = memory.getCell(4);
-        targetId = memory.getCell(5);
-        targetHeading = memory.getCell(6);
-        targetThrottle = memory.getCell(7);
-        collisionCount = memory.getCell(8);
-        meters = memory.getCell(9);
-        communicationQueueHead = memory.getCell(10);
-        communicationQueueTail = memory.getCell(11);
-        targetVelocity = memory.getCell(13);
+        flags = new Flags(getCell(memory, FLAGS));
+        ax = getCell(memory, AX);
+        bx = getCell(memory, BX);
+        cx = getCell(memory, CX);
+        dx = getCell(memory, DX);
+        ex = getCell(memory, EX);
+        fx = getCell(memory, FX);
+        sp = getCell(memory, SP);
+        desiredSpeed = memory.getCell(DESIRED_SPEED_ADDRESS);
+        desiredHeading = memory.getCell(DESIRED_HEADING_ADDRESS);
+        turretOffset = memory.getCell(TURRET_OFFSET_ADDRESS);
+        accuracy = memory.getCell(ACCURACY_ADDRESS);
+        swap = memory.getCell(SWAP_ADDRESS);
+        targetId = memory.getCell(TARGET_ID_ADDRESS);
+        targetHeading = memory.getCell(TARGET_HEADING_ADDRESS);
+        targetThrottle = memory.getCell(TARGET_THROTTLE_ADDRESS);
+        collisionCount = memory.getCell(COLLISION_COUNT_ADDRESS);
+        meters = memory.getCell(METERS_ADDRESS);
+        communicationQueueHead = memory.getCell(COMMUNICATION_QUEUE_HEAD_ADDRESS);
+        communicationQueueTail = memory.getCell(COMMUNICATION_QUEUE_TAIL_ADDRESS);
+        targetVelocity = memory.getCell(TARGET_VELOCITY_ADDRESS);
+    }
+
+    private static MemoryCell getCell(Memory memory, AtRobotRegister register) {
+        return memory.getCell(register.address);
     }
 
     public MemoryCell getStackPointerCell() {

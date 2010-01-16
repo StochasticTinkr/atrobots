@@ -3,7 +3,6 @@ package net.virtualinfinity.atrobots.computer;
 import net.virtualinfinity.atrobots.*;
 import net.virtualinfinity.atrobots.measures.Duration;
 
-import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
@@ -72,11 +71,11 @@ public class Computer {
     }
 
     void executeInstruction() {
-        debugListener.beforeInstruction(this);
         if (nextInstructionPointer >= maxInstructionPointer) {
             nextInstructionPointer = 0;
         }
         instructionPointer = nextInstructionPointer;
+        debugListener.beforeInstruction(this);
         nextInstructionPointer++;
         getInstruction().execute(this);
         debugListener.afterInstruction(this);
@@ -94,32 +93,15 @@ public class Computer {
         return instructionPointer;
     }
 
-    private String getSourceLine() {
-        return entrant.getDebugInfo().getLineForInstructionPointer(instructionPointer);
-    }
-
     public Entrant getEntrant() {
         return entrant;
-    }
-
-    public String getInstructionString() {
-        return instructionPointer + ": "
-                + getOperandString(0) + "  "
-                + getOperandString(1) + ", "
-                + getOperandString(2) + ":  "
-                + getInstruction().getClass().getSimpleName()
-                ;
-    }
-
-    private String getOperandString(int opnumber) {
-        return getMicrocode(opnumber).formatValue(this, opnumber);
     }
 
     public short getOperandValue(int opnumber) {
         return getMicrocode(opnumber).getValue(Computer.this, opnumber);
     }
 
-    private Microcode getMicrocode(int opnumber) {
+    public Microcode getMicrocode(int opnumber) {
         return Microcode.get(getConstant(3) >> (4 * opnumber));
     }
 
@@ -127,7 +109,7 @@ public class Computer {
         return Microcode.get(getConstantAt(3, pointer) >> (4 * opnumber));
     }
 
-    private short getConstant(int opnumber) {
+    public short getConstant(int opnumber) {
         return getConstantAt(opnumber, instructionPointer);
     }
 
@@ -135,23 +117,23 @@ public class Computer {
         return program.get(pointer * 4 + opnumber);
     }
 
-    private short getUnresolvedLabelValue(int opnumber) {
+    public short getUnresolvedLabelValue(int opnumber) {
         return getConstant(opnumber);
     }
 
-    private short getLabelValue(int opnumber) {
+    public short getLabelValue(int opnumber) {
         return getConstant(opnumber);
     }
 
-    private short getNumberedLabelValue(int opnumber) {
+    public short getNumberedLabelValue(int opnumber) {
         return getConstant(opnumber);
     }
 
-    private short getDoubleDereferencedValue(int opnumber) {
+    public short getDoubleDereferencedValue(int opnumber) {
         return memory.get(Microcode.Dereference.getValue(Computer.this, opnumber));
     }
 
-    private short getDeferencedValue(int opnumber) {
+    public short getDeferencedValue(int opnumber) {
         return memory.get(Microcode.Constant.getValue(Computer.this, opnumber));
     }
 
@@ -188,7 +170,11 @@ public class Computer {
 
     public void jump() {
         final Microcode microcode = getMicrocode(1);
-        microcode.setNextInstructionPointerFromLabel(Computer.this, 1);
+        if (microcode == Microcode.ResolvedLabel) {
+            setInstructionPointer(getLabelValue(1));
+        } else if (microcode.isValid()) {
+            jumpToNumberedLabel(microcode.getValue(this, 1));
+        }
     }
 
     public Flags getFlags() {
@@ -336,129 +322,6 @@ public class Computer {
 
     public void setEntrant(Entrant entrant) {
         this.entrant = entrant;
-    }
-
-    enum Microcode {
-        Constant {
-            public short getValue(Computer computer, int opnumber) {
-                return computer.getConstant(opnumber);
-            }
-            public int getAddress(Computer computer, int opnumber) {
-                computer.notAddressableError();
-                return 0;
-            }},
-        Dereference {
-            public short getValue(Computer computer, int opnumber) {
-                return computer.getDeferencedValue(opnumber);
-            }
-            public int getAddress(Computer computer, int opnumber) {
-                return computer.getConstant(opnumber);
-            }},
-        DoubleDereference {
-            public short getValue(Computer computer, int opnumber) {
-                return computer.getDoubleDereferencedValue(opnumber);
-            }
-            public int getAddress(Computer computer, int opnumber) {
-                return computer.getDeferencedValue(opnumber);
-            }},
-        NumberedLabel {
-            public short getValue(Computer computer, int opnumber) {
-                return computer.getNumberedLabelValue(opnumber);
-            }
-            public int getAddress(Computer computer, int opnumber) {
-                computer.notAddressableError();
-                return 0;
-            }},
-        ResolvedLabel {
-            public short getValue(Computer computer, int opnumber) {
-                return computer.getLabelValue(opnumber);
-            }
-            public int getAddress(Computer computer, int opnumber) {
-                computer.notAddressableError();
-                return 0;
-            }},
-        UnresolvedLabel {
-            public short getValue(Computer computer, int opnumber) {
-                return computer.getUnresolvedLabelValue(opnumber);
-            }
-            public int getAddress(Computer computer, int opnumber) {
-                computer.notAddressableError();
-                return 0;
-            }},
-        Invalid {
-            public short getValue(Computer computer, int opnumber) {
-                computer.invalidMicrocodeError();
-                return computer.getConstant(opnumber);
-            }
-            public int getAddress(Computer computer, int opnumber) {
-                computer.notAddressableError();
-                return 0;
-            }};
-
-        private static final Microcode[] codes = new Microcode[15];
-
-        static {
-            Arrays.fill(codes, Invalid);
-            codes[0] = Constant;
-            codes[1] = Dereference;
-            codes[2] = NumberedLabel;
-            codes[3] = UnresolvedLabel;
-            codes[4] = ResolvedLabel;
-            codes[8] = Dereference;
-            codes[9] = DoubleDereference;
-        }
-
-        public static Microcode get(int microcode) {
-            return codes[microcode & 15];
-        }
-
-        public abstract short getValue(Computer computer, int opnumber);
-
-        public boolean isValid() {
-            return this != Invalid && this != UnresolvedLabel;
-        }
-
-        public boolean isAddressible() {
-            return this == Dereference || this == DoubleDereference;
-        }
-
-        public boolean hasValue() {
-            return isAddressible() || this == Constant;
-        }
-
-        public abstract int getAddress(Computer computer, int opnumber);
-
-        public void setNextInstructionPointerFromLabel(Computer computer, int opnumber) {
-            if (isValid()) {
-                if (this == ResolvedLabel) {
-                    computer.setInstructionPointer(getValue(computer, opnumber));
-                } else {
-                    computer.jumpToNumberedLabel(getValue(computer, opnumber));
-                }
-            }
-        }
-
-        public String formatValue(Computer computer, int opnumber) {
-            switch (this) {
-                case DoubleDereference:
-                    return "[@" + computer.getConstant(opnumber) +
-                            "]=[" + computer.getDeferencedValue(opnumber) + "]=" +
-                            computer.getDoubleDereferencedValue(opnumber);
-                case Dereference:
-                    return "@" + computer.getConstant(opnumber) + "=" + computer.getDeferencedValue(opnumber);
-                case NumberedLabel:
-                    return ":" + computer.getConstant(opnumber);
-                case ResolvedLabel:
-                    return "!" + computer.getConstant(opnumber);
-                case UnresolvedLabel:
-                    return "!?";
-                case Constant:
-                    return String.valueOf(computer.getConstant(opnumber));
-                default:
-                case Invalid:
-                    return "??";
-            }
-        }
     }
 
     public String getLastMessage() {

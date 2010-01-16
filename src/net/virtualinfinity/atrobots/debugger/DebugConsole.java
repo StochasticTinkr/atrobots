@@ -1,6 +1,8 @@
 package net.virtualinfinity.atrobots.debugger;
 
+import net.virtualinfinity.atrobots.atsetup.AtRobotInstruction;
 import net.virtualinfinity.atrobots.computer.Computer;
+import net.virtualinfinity.atrobots.computer.Microcode;
 
 import java.io.IOException;
 
@@ -77,13 +79,55 @@ public class DebugConsole {
             }
         } else if (tokens[0].equalsIgnoreCase("unbreak")) {
         } else {
-            println("Unknown command.");
+            println(null, "Unknown command.");
         }
     }
 
     private void printState(Computer computer) {
-        println("[" + computer.getFlags() + "] " + computer.getRegisters());
-        println(computer.getInstructionString());
+        println(computer, "[" + computer.getFlags() + "] " + computer.getRegisters());
+        println(computer, computer.getInstructionPointer() + ": " + operatorString(computer) + " " + operandString(computer, 1) + ", " + operandString(computer, 2));
+    }
+
+    private String operandString(Computer computer, int operand) {
+        Microcode microcode = computer.getMicrocode(operand);
+        switch (microcode) {
+            case DoubleDereference:
+                return "[" + variableString(computer, operand) + "]=[" + computer.getDeferencedValue(operand) + "]=" +
+                        computer.getDoubleDereferencedValue(operand);
+            case Dereference:
+                return variableString(computer, operand) + "=" + computer.getDeferencedValue(operand);
+            case NumberedLabel:
+                return ":" + computer.getConstant(operand);
+            case ResolvedLabel:
+                return labelString(computer, operand);
+            case UnresolvedLabel:
+                return "!<unknown>";
+            case Constant:
+                return String.valueOf(computer.getConstant(operand));
+            default:
+            case Invalid:
+                return "<invalid>";
+        }
+    }
+
+    private String labelString(Computer computer, int operand) {
+        return "!" + computer.getConstant(operand);
+    }
+
+    private String variableString(Computer computer, int operand) {
+        return computer.getEntrant().getDebugInfo().getVariableName(computer.getConstant(operand));
+    }
+
+    private String operatorString(Computer computer) {
+        Microcode microcode = computer.getMicrocode(0);
+        if (!microcode.isValid()) {
+            return "<invalid>";
+        }
+        final short value = microcode.getValue(computer, 0);
+        if (microcode == Microcode.NumberedLabel) {
+            return ":" + value;
+        }
+        return AtRobotInstruction.nameOf(value);
     }
 
 
@@ -113,8 +157,12 @@ public class DebugConsole {
         }
     }
 
-    public void println(Object o) {
-        console.println(o);
+    public void println(Computer computer, Object o) {
+        if (computer != null) {
+            console.println("#" + computer.getEntrant().getId() + ": " + computer.getEntrant().getName() + "} " + o);
+        } else {
+            console.println(" } " + o);
+        }
     }
 
     public String readline() throws IOException {

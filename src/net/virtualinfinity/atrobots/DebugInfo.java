@@ -9,7 +9,9 @@ import java.util.Map;
  * @author Daniel Pitts
  */
 public class DebugInfo {
-    Map<Integer, String> lineByInstructionPointer = new HashMap<Integer, String>();
+    private final Map<Integer, String> lineByInstructionPointer = new HashMap<Integer, String>();
+    private final Map<Integer, String> variableNamesByAddress = new HashMap<Integer, String>();
+    private final Map<String, Integer> addressesByVariableName = new HashMap<String, Integer>();
 
     public String getLineForInstructionPointer(int instructionPointer) {
         return lineByInstructionPointer.get(instructionPointer);
@@ -17,5 +19,18 @@ public class DebugInfo {
 
     public void setLineForInstructionPointer(int instructionPointer, String line) {
         lineByInstructionPointer.put(instructionPointer, line);
+    }
+
+    public void addVariable(int value, String variableName) {
+        variableNamesByAddress.put(value, variableName);
+        addressesByVariableName.put(variableName, value);
+    }
+
+    public String getVariableName(int address) {
+        if (variableNamesByAddress.get(address) != null) {
+            return variableNamesByAddress.get(address);
+        } else {
+            return "@" + address;
+        }
     }
 }
