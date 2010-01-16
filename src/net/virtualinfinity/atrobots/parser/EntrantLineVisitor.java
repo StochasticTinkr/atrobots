@@ -2,6 +2,9 @@ package net.virtualinfinity.atrobots.parser;
 
 import net.virtualinfinity.atrobots.DebugInfo;
 import net.virtualinfinity.atrobots.HardwareSpecification;
+import net.virtualinfinity.atrobots.atsetup.AtRobotInstruction;
+import net.virtualinfinity.atrobots.atsetup.AtRobotInterrupt;
+import net.virtualinfinity.atrobots.atsetup.AtRobotPort;
 import net.virtualinfinity.atrobots.computer.Program;
 
 import java.util.*;
@@ -46,61 +49,27 @@ public class EntrantLineVisitor implements LineVisitor {
         addReference(69, "EX");
         addReference(70, "FX");
         addReference(71, "SP");
-        addConstants(Short.MAX_VALUE, "MAXINT");
-        addConstants(Short.MIN_VALUE, "MININT");
-        addConstants(0, "NOP", "I_DESTRUCT");
-        addConstants(1, "ADD", "P_SPEDOMETER", "I_RESET");
-        addConstants(2, "SUB", "P_HEAT", "I_LOCATE");
-        addConstants(3, "OR", "P_COMPASS", "I_KEEPSHIFT");
-        addConstants(4, "AND", "P_TURRET_OFS", "I_OVERBURN");
-        addConstants(5, "XOR", "P_TURRET_ABS", "I_ID");
-        addConstants(6, "NOT", "P_DAMAGE", "P_ARMOR", "I_TIMER");
-        addConstants(7, "MPY", "P_SCAN", "I_ANGLE");
-        addConstants(8, "DIV", "P_ACCURACY", "I_TID", "I_TARGETID");
-        addConstants(9, "MOD", "P_RADAR", "I_TINFO", "I_TARGETINFO");
-        addConstants(10, "RET", "P_RANDOM", "P_RAND", "I_GINFO", "I_GAMEINFO");
-        addConstants(11, "GSB", "CALL", "P_THROTTLE", "I_RINFO", "I_ROBOTINFO");
-        addConstants(12, "JMP", "GOTO", "P_OFS_TURRET", "P_TROTATE", "I_COLLISIONS");
-        addConstants(13, "JLS", "JB", "P_ABS_TURRET", "P_TAIM", "I_RESETCOLCNT");
-        addConstants(14, "JGR", "JA", "P_STEERING", "I_TRANSMIT");
-        addConstants(15, "JNE", "P_WEAP", "P_WEAPON", "P_FIRE", "I_RECEIVE");
-        addConstants(16, "JEQ", "JE", "P_SONAR", "I_DATAREADY");
-        addConstants(17, "XCHG", "SWAP", "P_ARC", "P_SCANARC", "I_CLEARCOM");
-        addConstants(18, "DO", "P_OVERBURN", "I_KILLS", "I_DEATHS");
-        addConstants(19, "LOOP", "P_TRANSPONDER", "I_CLEARMETERS");
-        addConstants(20, "CMP", "P_SHUTDOWN");
-        addConstants(21, "TEST", "P_CHANNEL");
-        addConstants(22, "SET", "MOV", "P_MINELAYER");
-        addConstants(23, "LOC", "P_MINETRIGGER");
-        addConstants(24, "GET", "P_SHIELD", "P_SHIELDS");
-        addConstants(25, "PUT");
-        addConstants(26, "INT");
-        addConstants(27, "IPO", "IN");
-        addConstants(28, "OPO", "OUT");
-        addConstants(29, "DEL", "DELAY");
-        addConstants(30, "PUSH");
-        addConstants(31, "POP");
-        addConstants(32, "ERR", "ERROR");
-        addConstants(33, "INC");
-        addConstants(34, "DEC");
-        addConstants(35, "SHL");
-        addConstants(36, "SHR");
-        addConstants(37, "ROL");
-        addConstants(38, "ROR");
-        addConstants(39, "JZ");
-        addConstants(40, "JNZ");
-        addConstants(41, "JAE", "JGE");
-        addConstants(42, "JBE", "JLE");
-        addConstants(43, "SAL");
-        addConstants(44, "SAR");
-        addConstants(45, "NEG");
-        addConstants(46, "JTL");
+        addConstant(Short.MAX_VALUE, "MAXINT");
+        addConstant(Short.MIN_VALUE, "MININT");
+        for (AtRobotPort port : AtRobotPort.values()) {
+            addConstants(port.value, port.names);
+        }
+        for (AtRobotInstruction instruction : AtRobotInstruction.values()) {
+            addConstants(instruction.value, instruction.names);
+        }
+        for (AtRobotInterrupt interrupt : AtRobotInterrupt.values()) {
+            addConstants(interrupt.value, interrupt.names);
+        }
     }
 
-    private void addConstants(int value, String... names) {
-        for (String n : names) {
-            symbols.put(n.toLowerCase(), new Symbol((short) 0, (short) value));
+    private void addConstants(int value, Collection<String> names) {
+        for (String name : names) {
+            addConstant(value, name);
         }
+    }
+
+    private void addConstant(int value, String name) {
+        symbols.put(name.toLowerCase(), new Symbol((short) 0, (short) value));
     }
 
     public void expectedDigit(int column) {

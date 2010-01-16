@@ -1,5 +1,8 @@
 package net.virtualinfinity.atrobots.computer;
 
+import net.virtualinfinity.atrobots.atsetup.AtRobotInstruction;
+import static net.virtualinfinity.atrobots.atsetup.AtRobotInstruction.*;
+
 /**
  * @author Daniel Pitts
  */
@@ -9,53 +12,57 @@ public class InstructionTable {
     private final Instruction numberedLabelInstruction = new NoOperationInstruction(0);
 
     {
-        instructions[0] = new NoOperationInstruction(1);
-        instructions[1] = new AddInstruction(1);
-        instructions[2] = new SubtractInstruction(1);
-        instructions[3] = new BitwiseOrInstruction(1);
-        instructions[4] = new BitwiseAndInstruction(1);
-        instructions[5] = new BitwiseExclusiveOrInstruction(1);
-        instructions[6] = new BitwiseNegationInstruction(1);
-        instructions[7] = new MultiplyInstruction(10);
-        instructions[8] = new DivideInstruction(10);
-        instructions[9] = new ModuloInstruction(10);
-        instructions[10] = new PopInstructionPointerInstruction(1);
-        instructions[11] = new CallInstruction(1);
-        instructions[12] = new JumpInstruction(1);
-        instructions[13] = new JumpWhenLessInstruction(0);
-        instructions[14] = new JumpWhenGreaterInstruction(0);
-        instructions[15] = new JumpWhenNotEqualInstruction(0);
-        instructions[16] = new JumpWhenEqualInstruction(0);
-        instructions[17] = new SwapInstruction(3);
-        instructions[18] = new SetCXInstruction(1);
-        instructions[19] = new LoopInstruction(1);
-        instructions[20] = new CompareInstruction(1);
-        instructions[21] = new TestInstruction(2);
-        instructions[22] = new MoveInstruction(1);
-        instructions[23] = new AddressInstruction(2);
-        instructions[24] = new GetInstruction(2);
-        instructions[25] = new PutInstruction(2);
-        instructions[26] = new CallInterruptInstruction(0);
-        instructions[27] = new ReadPortInstruction(4);
-        instructions[28] = new WritePortInstruction(4);
-        instructions[29] = new DelayInstruction(0);
-        instructions[30] = new PushInstruction(1);
-        instructions[31] = new PopInstruction(1);
-        instructions[32] = new ErrorInstruction(0);
-        instructions[33] = new IncrementInstruction(1);
-        instructions[34] = new DecrementInstruction(1);
-        instructions[35] = new BitShiftLeftInstruction(1);
-        instructions[36] = new BitShiftRightInstruction(1);
-        instructions[37] = new BitRotateLeftInstruction(1);
-        instructions[38] = new BitRotateRightInstruction(1);
-        instructions[39] = new JumpWhenZeroInstruction(0);
-        instructions[40] = new JumpWhenNotZeroInstruction(0);
-        instructions[41] = new JumpWhenGreaterOrEqualInstruction(0);
-        instructions[42] = new JumpWhenLessOrEqualInstruction(0);
-        instructions[43] = new BitShiftLeftInstruction(1);
-        instructions[44] = new SignedBitShiftRightInstruction(1);
-        instructions[45] = new NegateInstruction(1);
-        instructions[46] = new SetInstructionPointerInstruction(1);
+        mapInstruction(NOP, new NoOperationInstruction(1));
+        mapInstruction(ADD, new AddInstruction(1));
+        mapInstruction(SUB, new SubtractInstruction(1));
+        mapInstruction(OR, new BitwiseOrInstruction(1));
+        mapInstruction(AND, new BitwiseAndInstruction(1));
+        mapInstruction(XOR, new BitwiseExclusiveOrInstruction(1));
+        mapInstruction(NOT, new BitwiseNegationInstruction(1));
+        mapInstruction(MPY, new MultiplyInstruction(10));
+        mapInstruction(DIV, new DivideInstruction(10));
+        mapInstruction(MOD, new ModuloInstruction(10));
+        mapInstruction(RET, new PopInstructionPointerInstruction(1));
+        mapInstruction(GSB, new CallInstruction(1));
+        mapInstruction(JMP, new JumpInstruction(1));
+        mapInstruction(JLS, new JumpWhenLessInstruction(0));
+        mapInstruction(JGR, new JumpWhenGreaterInstruction(0));
+        mapInstruction(JNE, new JumpWhenNotEqualInstruction(0));
+        mapInstruction(JEQ, new JumpWhenEqualInstruction(0));
+        mapInstruction(XCHG, new SwapInstruction(3));
+        mapInstruction(DO, new SetCXInstruction(1));
+        mapInstruction(LOOP, new LoopInstruction(1));
+        mapInstruction(CMP, new CompareInstruction(1));
+        mapInstruction(TEST, new TestInstruction(2));
+        mapInstruction(SET, new MoveInstruction(1));
+        mapInstruction(LOC, new AddressInstruction(2));
+        mapInstruction(GET, new GetInstruction(2));
+        mapInstruction(PUT, new PutInstruction(2));
+        mapInstruction(INT, new CallInterruptInstruction(0));
+        mapInstruction(IPO, new ReadPortInstruction(4));
+        mapInstruction(OPO, new WritePortInstruction(4));
+        mapInstruction(DEL, new DelayInstruction(0));
+        mapInstruction(PUSH, new PushInstruction(1));
+        mapInstruction(POP, new PopInstruction(1));
+        mapInstruction(ERR, new ErrorInstruction(0));
+        mapInstruction(INC, new IncrementInstruction(1));
+        mapInstruction(DEC, new DecrementInstruction(1));
+        mapInstruction(SHL, new BitShiftLeftInstruction(1));
+        mapInstruction(SHR, new BitShiftRightInstruction(1));
+        mapInstruction(ROL, new BitRotateLeftInstruction(1));
+        mapInstruction(ROR, new BitRotateRightInstruction(1));
+        mapInstruction(JZ, new JumpWhenZeroInstruction(0));
+        mapInstruction(JNZ, new JumpWhenNotZeroInstruction(0));
+        mapInstruction(JAE, new JumpWhenGreaterOrEqualInstruction(0));
+        mapInstruction(JBE, new JumpWhenLessOrEqualInstruction(0));
+        mapInstruction(SAL, new BitShiftLeftInstruction(1));
+        mapInstruction(SAR, new SignedBitShiftRightInstruction(1));
+        mapInstruction(NEG, new NegateInstruction(1));
+        mapInstruction(JTL, new SetInstructionPointerInstruction(1));
+    }
+
+    private void mapInstruction(AtRobotInstruction instructionName, Instruction instructionHandler) {
+        instructions[instructionName.value] = instructionHandler;
     }
 
     public Instruction getInvalidMicrocodeInstruction() {

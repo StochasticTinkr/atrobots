@@ -1,10 +1,13 @@
 package net.virtualinfinity.atrobots.interrupts;
 
 import net.virtualinfinity.atrobots.Robot;
+import net.virtualinfinity.atrobots.atsetup.AtRobotInterrupt;
+import static net.virtualinfinity.atrobots.atsetup.AtRobotInterrupt.*;
 import net.virtualinfinity.atrobots.computer.MemoryCell;
 import net.virtualinfinity.atrobots.computer.Registers;
 import net.virtualinfinity.atrobots.util.MapWithDefaultValue;
 
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -127,29 +130,37 @@ public class AtRobotInterruptFactory {
     public Map<Integer, InterruptHandler> createInterruptTable(Robot robot) {
         Map<Integer, InterruptHandler> interrupts = new HashMap<Integer, InterruptHandler>();
 
-        interrupts.put(0, createDestructInterrupt(robot));
-        interrupts.put(1, createResetInterrupt(robot).costs(10));
-        interrupts.put(2, createLocateInterrupt(robot).costs(5));
-        interrupts.put(3, createSetKeepshiftInterrupt(robot).costs(2));
-        interrupts.put(4, createOverburnInterrupt(robot).costs(1));
-        interrupts.put(5, createGetTransponderIdInterrupt(robot).costs(2));
-        interrupts.put(6, createGetTimerInterrupt(robot).costs(2));
-        interrupts.put(7, createFindAngleInterrupt(robot).costs(32));
-        interrupts.put(8, createGetTargetIdInterrupt(robot).costs(1));
-        interrupts.put(9, createGetTargetInfoInterrupt(robot).costs(2));
-        interrupts.put(10, createGetGameInfoInterrupt(robot).costs(4));
-        interrupts.put(11, createGetRobotInfoInterrupt(robot).costs(5));
-        interrupts.put(12, createGetCollisionsInterrupt(robot).costs(1));
-        interrupts.put(13, createResetCollisionCountInterrupt(robot).costs(1));
-        interrupts.put(14, createTransmitInterrupt(robot).costs(1));
-        interrupts.put(15, createRecieveInterrupt(robot).costs(1));
-        interrupts.put(16, createGetQueueSizeInterrupt(robot).costs(1));
-        interrupts.put(17, createResetQueueInterrupt(robot).costs(1));
-        interrupts.put(18, createGetRobotStatisticsInterrupt(robot).costs(3));
-        interrupts.put(19, createResetMetersInterrupt(robot).costs(1));
-        for (InterruptHandler handler : interrupts.values()) {
+        mapHandler(interrupts, DESTRUCT, createDestructInterrupt(robot));
+        mapHandler(interrupts, RESET, createResetInterrupt(robot).costs(10));
+        mapHandler(interrupts, LOCATE, createLocateInterrupt(robot).costs(5));
+        mapHandler(interrupts, KEEPSHIFT, createSetKeepshiftInterrupt(robot).costs(2));
+        mapHandler(interrupts, OVERBURN, createOverburnInterrupt(robot).costs(1));
+        mapHandler(interrupts, ID, createGetTransponderIdInterrupt(robot).costs(2));
+        mapHandler(interrupts, TIMER, createGetTimerInterrupt(robot).costs(2));
+        mapHandler(interrupts, ANGLE, createFindAngleInterrupt(robot).costs(32));
+        mapHandler(interrupts, TARGETID, createGetTargetIdInterrupt(robot).costs(1));
+        mapHandler(interrupts, TARGETINFO, createGetTargetInfoInterrupt(robot).costs(2));
+        mapHandler(interrupts, GAMEINFO, createGetGameInfoInterrupt(robot).costs(4));
+        mapHandler(interrupts, ROBOTINFO, createGetRobotInfoInterrupt(robot).costs(5));
+        mapHandler(interrupts, COLLISIONS, createGetCollisionsInterrupt(robot).costs(1));
+        mapHandler(interrupts, RESETCOLCNT, createResetCollisionCountInterrupt(robot).costs(1));
+        mapHandler(interrupts, TRANSMIT, createTransmitInterrupt(robot).costs(1));
+        mapHandler(interrupts, RECEIVE, createRecieveInterrupt(robot).costs(1));
+        mapHandler(interrupts, DATAREADY, createGetQueueSizeInterrupt(robot).costs(1));
+        mapHandler(interrupts, CLEARCOM, createResetQueueInterrupt(robot).costs(1));
+        mapHandler(interrupts, KILLS, createGetRobotStatisticsInterrupt(robot).costs(3));
+        mapHandler(interrupts, CLEARMETERS, createResetMetersInterrupt(robot).costs(1));
+        connectHandlers(robot, interrupts.values());
+        return new MapWithDefaultValue<Integer, InterruptHandler>(interrupts, createInvalidInterrupt(robot));
+    }
+
+    private void mapHandler(Map<Integer, InterruptHandler> interrupts, AtRobotInterrupt interrupt, InterruptHandler handler) {
+        interrupts.put(interrupt.value, handler);
+    }
+
+    private void connectHandlers(Robot robot, Collection<InterruptHandler> interruptHandlers) {
+        for (InterruptHandler handler : interruptHandlers) {
             handler.setComputer(robot.getComputer());
         }
-        return new MapWithDefaultValue<Integer, InterruptHandler>(interrupts, createInvalidInterrupt(robot));
     }
 }
