@@ -130,6 +130,7 @@
         je      2015
         jne     2015
 :2013
+        err     arc
         mov     ax      arc     ; ax = arc
         shr     ax      1       ; ax = arc/2
         opo     12      ax      ; turn turret right

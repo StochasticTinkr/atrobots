@@ -1,6 +1,8 @@
 package net.virtualinfinity.atrobots.debugger;
 
 import net.virtualinfinity.atrobots.atsetup.AtRobotInstruction;
+import net.virtualinfinity.atrobots.atsetup.AtRobotInterrupt;
+import net.virtualinfinity.atrobots.atsetup.AtRobotPort;
 import net.virtualinfinity.atrobots.computer.Computer;
 import net.virtualinfinity.atrobots.computer.Microcode;
 
@@ -84,11 +86,37 @@ public class DebugConsole {
     }
 
     private void printState(Computer computer) {
-        println(computer, "[" + computer.getFlags() + "] " + computer.getRegisters());
-        println(computer, computer.getInstructionPointer() + ": " + operatorString(computer) + " " + operandString(computer, 1) + ", " + operandString(computer, 2));
+        println(computer, computer.getRegisters());
+        println(computer, computer.getInstructionPointer() + ": " + instructionString(computer));
     }
 
-    private String operandString(Computer computer, int operand) {
+    private String instructionString(Computer computer) {
+        if (isInterruptInstruction(computer.getOperandValue(0))) {
+            return operatorString(computer) + " " + interruptString(computer);
+        }
+        if (isPortInstruction(computer.getOperandValue(0))) {
+            return operatorString(computer) + " " + portString(computer) + ", " + operandString(computer, 2);
+        }
+        return operatorString(computer) + " " + operandString(computer, 1) + ", " + operandString(computer, 2);
+    }
+
+    private String portString(Computer computer) {
+        return AtRobotPort.nameOf(computer.getOperandValue(1)) + "(" + operandString(computer, 1) + ")";
+    }
+
+    private String interruptString(Computer computer) {
+        return AtRobotInterrupt.nameOf(computer.getOperandValue(1)) + "(" + operandString(computer, 1) + ")";
+    }
+
+    private boolean isInterruptInstruction(short operandValue) {
+        return AtRobotInstruction.INT.value == operandValue;
+    }
+
+    private boolean isPortInstruction(short operandValue) {
+        return AtRobotInstruction.IPO.value == operandValue || AtRobotInstruction.OPO.value == operandValue;
+    }
+
+    private static String operandString(Computer computer, int operand) {
         Microcode microcode = computer.getMicrocode(operand);
         switch (microcode) {
             case DoubleDereference:
@@ -110,15 +138,15 @@ public class DebugConsole {
         }
     }
 
-    private String labelString(Computer computer, int operand) {
+    private static String labelString(Computer computer, int operand) {
         return "!" + computer.getConstant(operand);
     }
 
-    private String variableString(Computer computer, int operand) {
+    private static String variableString(Computer computer, int operand) {
         return computer.getEntrant().getDebugInfo().getVariableName(computer.getConstant(operand));
     }
 
-    private String operatorString(Computer computer) {
+    private static String operatorString(Computer computer) {
         Microcode microcode = computer.getMicrocode(0);
         if (!microcode.isValid()) {
             return "<invalid>";
@@ -144,7 +172,7 @@ public class DebugConsole {
         };
         thread.setDaemon(true);
         thread.start();
-        return DebugConsole.this;
+        return this;
     }
 
     public Debugger getDebugger() {

@@ -52,5 +52,14 @@ public enum AtRobotPort {
         this.value = value;
         names = Collections.unmodifiableCollection(Arrays.asList(PORT_SYMBOL_PREFIX + name(), PORT_SYMBOL_PREFIX + alternateName1, PORT_SYMBOL_PREFIX + alternateName2));
     }
+
+    public static String nameOf(short operandValue) {
+        for (AtRobotPort port : values()) {
+            if (port.value == operandValue) {
+                return PORT_SYMBOL_PREFIX + port.name();
+            }
+        }
+        return "<unknown>";
+    }
 }
 

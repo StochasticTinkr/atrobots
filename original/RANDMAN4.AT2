@@ -177,7 +177,7 @@ ret
         and     ax      0xFF    ; now it is 0-255.
 
        ;Get location
-        int     5               ; EX,FX = X,Y
+        int     2               ; EX,FX = X,Y
 
        ;Scenario 1
         cmp     ex      950     ; X>950?
@@ -205,7 +205,7 @@ ret
 ;Scenario 1
 :4001
         ipo     10,     ax      ; random number
-        and     ax      0x40    ; now it is 0-63.
+        and     ax      0x3F    ; now it is 0-63.
         add     ax      0xA0    ; now it is 160-223
         err 4001
         err ax
@@ -214,7 +214,7 @@ ret
 ;Scenario 2
 :4002
         ipo     10,     ax      ; random number
-        and     ax      0x40    ; now it is 0-63.
+        and     ax      0x3F    ; now it is 0-63.
         add     ax,     0x20    ; now it is 32-95.
         err 4002
         err ax
@@ -223,7 +223,7 @@ ret
 ;Scenario 3
 :4003
         ipo     10,     ax      ; random number
-        and     ax      0x40    ; now it is 0-63.
+        and     ax      0x3F    ; now it is 0-63.
         add     ax,     0E0h    ; now it is 224-287.
         and     ax,     255     ; now it is 224-255 or 0-31.
         err 4003
@@ -233,7 +233,7 @@ ret
 ;Scenario 4
 :4004
         ipo     10,     ax      ; random number
-        and     ax      0x40    ; now it is 0-63.
+        and     ax      0x3F    ; now it is 0-63.
         add     ax,     60h     ; now it is 96-159.
         err 4004
         err ax

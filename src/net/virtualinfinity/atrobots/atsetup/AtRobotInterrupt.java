@@ -33,6 +33,16 @@ public enum AtRobotInterrupt {
     public final int value;
     public final Collection<String> names;
     private static final String INTERRUPT_PREFIX = "I_";
+    private static AtRobotInterrupt[] byValue = new AtRobotInterrupt[values().length];
+
+    static {
+        for (AtRobotInterrupt instruction : values()) {
+            if (byValue[instruction.value] != null) {
+                throw new IllegalStateException();
+            }
+            byValue[instruction.value] = instruction;
+        }
+    }
 
     private AtRobotInterrupt(int value) {
         this.value = value;
@@ -42,5 +52,12 @@ public enum AtRobotInterrupt {
     private AtRobotInterrupt(int value, String alternate) {
         this.value = value;
         this.names = Collections.unmodifiableCollection(Arrays.asList(INTERRUPT_PREFIX + name(), INTERRUPT_PREFIX + alternate));
+    }
+
+    public static String nameOf(short value) {
+        if (value >= 0 && value < byValue.length) {
+            return INTERRUPT_PREFIX + byValue[value].name();
+        }
+        return "<unknown>";
     }
 }

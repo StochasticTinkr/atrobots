@@ -23,14 +23,20 @@ public class DebugInfo {
 
     public void addVariable(int value, String variableName) {
         variableNamesByAddress.put(value, variableName);
-        addressesByVariableName.put(variableName, value);
+        addressesByVariableName.put(variableName.toLowerCase(), value);
     }
 
     public String getVariableName(int address) {
         if (variableNamesByAddress.get(address) != null) {
-            return variableNamesByAddress.get(address);
+            return variableNamesByAddress.get(address) + "@" + address;
         } else {
             return "@" + address;
         }
     }
+
+    public Integer getVariableAddress(String name) {
+        return addressesByVariableName.get(name.toLowerCase());
+    }
+
+
 }
