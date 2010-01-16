@@ -4,6 +4,11 @@ import net.virtualinfinity.atrobots.computer.Computer;
 import net.virtualinfinity.atrobots.computer.Memory;
 import net.virtualinfinity.atrobots.computer.Program;
 import net.virtualinfinity.atrobots.computer.RandomAccessMemoryArray;
+import net.virtualinfinity.atrobots.debugger.ConsoleDebugListener;
+
+import java.io.BufferedReader;
+import java.io.InputStreamReader;
+import java.io.PrintWriter;
 
 /**
  * Represents an entrant in a game.
@@ -21,6 +26,8 @@ public class Entrant {
     private int totalDeaths;
     private DebugInfo debugInfo;
     private int maxProcessorSpeed = Integer.MAX_VALUE;
+    private boolean debug;
+    private static final ConsoleDebugListener CONSOLE_DEBUG_LISTENER = ConsoleDebugListener.create(new BufferedReader(new InputStreamReader(System.in)), new PrintWriter(System.out));
 
 
     /**
@@ -39,7 +46,9 @@ public class Entrant {
         hardwareSpecification.configureHardwareContext(hardwareContext);
         hardwareContext.setLowerMemoryArray(lowerMemoryBlock);
         hardwareContext.wireRobotComponents();
-
+        if (debug) {
+            robot.getComputer().setDebugListener(CONSOLE_DEBUG_LISTENER);
+        }
         roundKills = 0;
 
         return robot;
@@ -179,5 +188,9 @@ public class Entrant {
 
     public Robot getCurrentRobot() {
         return getGame().getRound().getRobot(this);
+    }
+
+    public void setDebug(boolean debug) {
+        this.debug = debug;
     }
 }

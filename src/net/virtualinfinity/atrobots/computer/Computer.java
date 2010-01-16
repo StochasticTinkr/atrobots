@@ -82,6 +82,14 @@ public class Computer {
         debugListener.afterInstruction(this);
     }
 
+    public DebugListener getDebugListener() {
+        return debugListener;
+    }
+
+    public void setDebugListener(DebugListener debugListener) {
+        this.debugListener = debugListener;
+    }
+
     public int getInstructionPointer() {
         return instructionPointer;
     }

@@ -250,30 +250,70 @@ public class Main implements Runnable {
         this.debugMode = debugMode;
     }
 
-    private static File[] getFiles(java.util.List<String> initialRobots) {
-        final File[] files = new File[initialRobots.size()];
-        for (int i = 0; i < initialRobots.size(); ++i) {
-            files[i] = new File(initialRobots.get(i));
+    private static EntrantFile[] getFilesByName(java.util.List<String> initialRobots) {
+        final java.util.List<EntrantFile> files = new ArrayList<EntrantFile>();
+        boolean debug = false;
+        for (String file : initialRobots) {
+            if (!debug && "-d".equals(file)) {
+                debug = true;
+            } else {
+                files.add(new EntrantFile(debug, robotFile(file)));
+            }
         }
-        return files;
+        return files.toArray(new EntrantFile[files.size()]);
+    }
+
+    private static EntrantFile[] getEntrantFiles(File[] initialRobots) {
+        final java.util.List<EntrantFile> files = new ArrayList<EntrantFile>();
+        for (File file : initialRobots) {
+            files.add(new EntrantFile(false, file));
+        }
+        return files.toArray(new EntrantFile[files.size()]);
+    }
+
+    private static File robotFile(String robotName) {
+        final File file = new File(robotName);
+        if (file.exists()) {
+            return file;
+        }
+        for (File f : file.getParentFile().listFiles(new FilenameAt2Filter(robotName))) {
+            return f;
+        }
+        return file;
+    }
+
+    static class EntrantFile {
+        final boolean debug;
+        final File file;
+
+        EntrantFile(boolean debug, File file) {
+            this.debug = debug;
+            this.file = file;
+        }
     }
 
     private class EntrantLoader extends SwingWorker<Errors, Entrant> {
-        private final File[] selectedFiles;
+        private final EntrantFile[] selectedFiles;
 
         public EntrantLoader(File[] selectedFiles) {
+            this(getEntrantFiles(selectedFiles));
+        }
+
+        public EntrantLoader(EntrantFile[] selectedFiles) {
             this.selectedFiles = selectedFiles;
         }
 
         public EntrantLoader(java.util.List<String> initialRobots) {
-            this(getFiles(initialRobots));
+            this(getFilesByName(initialRobots));
         }
 
 
         protected Errors doInBackground() throws Exception {
             Errors errors = new Errors();
-            for (File file : selectedFiles) {
+            for (EntrantFile entrantFile : selectedFiles) {
+                final File file = entrantFile.file;
                 EntrantFactory factory = new EntrantFactory();
+                factory.setDebug(entrantFile.debug);
                 try {
                     System.out.println("Loading " + file);
                     final Errors result = factory.compile(file);
@@ -391,6 +431,18 @@ public class Main implements Runnable {
                     e.printStackTrace();
                 }
             }
+        }
+    }
+
+    private static class FilenameAt2Filter implements FilenameFilter {
+        private final String robotName;
+
+        public FilenameAt2Filter(String robotName) {
+            this.robotName = robotName;
+        }
+
+        public boolean accept(File dir, String name) {
+            return name.toLowerCase().equals(robotName + ".at2");
         }
     }
 }

@@ -6,7 +6,9 @@ import net.virtualinfinity.atrobots.Robot;
 import net.virtualinfinity.atrobots.computer.Computer;
 import net.virtualinfinity.atrobots.computer.DebugListener;
 
+import java.util.HashMap;
 import java.util.HashSet;
+import java.util.Map;
 import java.util.Set;
 
 /**
@@ -15,7 +17,31 @@ import java.util.Set;
  * @author Daniel Pitts
  */
 public abstract class BaseDebugListener implements DebugListener {
-    private final Set<Integer> breakpoints = new HashSet<Integer>();
+    private volatile boolean allPaused;
+
+    protected void pauseAll() {
+        allPaused = true;
+    }
+
+    private final Map<Integer, EntrantState> entrantStates = new HashMap<Integer, EntrantState>();
+
+    protected EntrantState getEntrantState(Computer computer) {
+        return getEntrantState(getEntrant(computer).getId());
+    }
+
+    private EntrantState getEntrantState(int id) {
+        EntrantState state = entrantStates.get(id);
+        if (state == null) {
+            state = createEntrantState();
+            entrantStates.put(id, state);
+        }
+        return state;
+    }
+
+    protected EntrantState createEntrantState() {
+        return new EntrantState();
+    }
+
 
     protected Entrant getEntrant(Computer computer) {
         return computer.getEntrant();
@@ -31,27 +57,69 @@ public abstract class BaseDebugListener implements DebugListener {
 
 
     public void beforeInstruction(Computer computer) {
-        if (isBreakpoint(computer)) {
+        if (isBreakpoint(computer) || isPaused(computer)) {
+            clearPaused(computer);
             handleBreakpoint(computer);
         }
     }
 
-    protected void handleBreakpoint(Computer computer) {
+    protected boolean isPaused(Computer computer) {
+        return allPaused || getEntrantState(computer).isPaused();
+    }
+
+    protected boolean pause(Computer computer) {
+        return getEntrantState(computer).isPaused();
+    }
+
+    protected boolean pause(Integer computer) {
+        return getEntrantState(computer).isPaused();
     }
 
 
-    public boolean isBreakpoint(Computer computer) {
-        return breakpoints.contains(computer.getInstructionPointer());
+    protected void clearPaused(Computer computer) {
+        if (getEntrantState(computer).isPaused()) {
+            getEntrantState(computer).clearPaused();
+        } else {
+            allPaused = false;
+        }
     }
+
+    private boolean isBreakpoint(Computer computer) {
+        return getEntrantState(computer).isBreakpoint(computer);
+    }
+
+    protected abstract void handleBreakpoint(Computer computer);
 
     public void afterInstruction(Computer computer) {
     }
 
-    public void setBreakpoint(int breakpoint) {
-        breakpoints.add(breakpoint);
+    public boolean isAllPaused() {
+        return allPaused;
     }
 
-    public void removeBreakpoint(int breakpoint) {
-        breakpoints.remove(breakpoint);
+    protected static class EntrantState {
+        private Set<Integer> breakpoints = new HashSet<Integer>();
+        private boolean paused;
+
+        public boolean isBreakpoint(Computer computer) {
+            return breakpoints.contains(computer.getInstructionPointer());
+        }
+
+        public void setBreakpoint(int breakpoint) {
+            breakpoints.add(breakpoint);
+        }
+
+        public void removeBreakpoint(int breakpoint) {
+            breakpoints.remove(breakpoint);
+        }
+
+        public boolean isPaused() {
+            return paused;
+        }
+
+        public void clearPaused() {
+            paused = false;
+        }
     }
+
 }

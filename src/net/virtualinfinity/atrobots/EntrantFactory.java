@@ -18,6 +18,7 @@ public class EntrantFactory {
     private Program program;
     private String name;
     private int maxProcessorSpeed;
+    private boolean debug;
 
     public EntrantFactory() {
     }
@@ -80,6 +81,7 @@ public class EntrantFactory {
         entrant.setHardwareSpecification(getHardwareSpecification());
         entrant.setDebugInfo(debugInfo);
         entrant.setMaxProcessorSpeed(maxProcessorSpeed);
+        entrant.setDebug(debug);
         return entrant;
     }
 
@@ -93,5 +95,9 @@ public class EntrantFactory {
 
     public HardwareSpecification getHardwareSpecification() {
         return hardwareSpecification;
+    }
+
+    public void setDebug(boolean debug) {
+        this.debug = debug;
     }
 }
