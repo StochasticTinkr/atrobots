@@ -27,13 +27,13 @@ public class EntrantLineVisitor implements LineVisitor {
     private final DebugInfo debugInfo = new DebugInfo();
 
     {
-        setConfig("scanner", 5);
-        setConfig("weapon", 2);
-        setConfig("armor", 2);
-        setConfig("engine", 2);
-        setConfig("heatsinks", 1);
-        setConfig("mines", 0);
-        setConfig("shield", 0);
+        setConfig(HardwareSpecification.SCANNER, 5);
+        setConfig(HardwareSpecification.WEAPON, 2);
+        setConfig(HardwareSpecification.ARMOR, 2);
+        setConfig(HardwareSpecification.ENGINE, 2);
+        setConfig(HardwareSpecification.HEATSINKS, 1);
+        setConfig(HardwareSpecification.MINES, 0);
+        setConfig(HardwareSpecification.SHIELD, 0);
     }
 
     {
