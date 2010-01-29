@@ -17,18 +17,22 @@ public class Arena {
     private final List<Mine> mines = new LinkedList<Mine>();
     private final List<Missile> missiles = new LinkedList<Missile>();
     private final Collection<ArenaObject> others = new LinkedList<ArenaObject>();
-    final Collection<Collection<? extends ArenaObject>> allArenaObjectCollections = Arrays.asList(
-            missiles,
-            mines,
-            robots,
-            others
-    );
+    final Collection<Collection<? extends ArenaObject>> allArenaObjectCollections = new ArrayList<Collection<? extends ArenaObject>>();
 
-    final Collection<Collection<? extends ArenaObject>> nonRobots = Arrays.asList(
-            missiles,
-            mines,
-            others
-    );
+    {
+        allArenaObjectCollections.add(missiles);
+        allArenaObjectCollections.add(mines);
+        allArenaObjectCollections.add(robots);
+        allArenaObjectCollections.add(others);
+    }
+
+    final Collection<Collection<? extends ArenaObject>> nonRobots = new ArrayList<Collection<? extends ArenaObject>>();
+
+    {
+        nonRobots.add(missiles);
+        nonRobots.add(mines);
+        nonRobots.add(others);
+    }
 
     private final RadioDispatcher radioDispatcher = new RadioDispatcher();
     private SimulationFrameBuffer simulationFrameBuffer;
