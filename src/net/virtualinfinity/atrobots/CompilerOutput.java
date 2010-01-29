@@ -14,17 +14,19 @@ public class CompilerOutput {
     private final HardwareSpecification hardwareSpecification;
     private final int maxProcessorSpeed;
     private final DebugInfo debugInfo;
+    private final String message;
 
-    public CompilerOutput(Errors errors, Program program, HardwareSpecification hardwareSpecification, int maxProcessorSpeed, DebugInfo debugInfo) {
+    public CompilerOutput(Errors errors, Program program, HardwareSpecification hardwareSpecification, int maxProcessorSpeed, DebugInfo debugInfo, String message) {
         this.errors = errors;
         this.program = program;
         this.hardwareSpecification = hardwareSpecification;
         this.maxProcessorSpeed = maxProcessorSpeed;
         this.debugInfo = debugInfo;
+        this.message = message;
     }
 
     public CompilerOutput(Errors errors) {
-        this(errors, null, null, -1, null);
+        this(errors, null, null, -1, null, null);
     }
 
     public Entrant createEntrant(String name) {
@@ -34,6 +36,7 @@ public class CompilerOutput {
         entrant.setHardwareSpecification(hardwareSpecification);
         entrant.setDebugInfo(debugInfo);
         entrant.setMaxProcessorSpeed(maxProcessorSpeed);
+        entrant.setMessage(message);
         return entrant;
     }
 
@@ -47,5 +50,9 @@ public class CompilerOutput {
 
     public Program getProgram() {
         return program;
+    }
+
+    public String getMessage() {
+        return message;
     }
 }

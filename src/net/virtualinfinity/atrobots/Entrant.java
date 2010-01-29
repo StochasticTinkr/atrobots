@@ -24,6 +24,7 @@ public class Entrant {
     private int maxProcessorSpeed = Integer.MAX_VALUE;
     private boolean debug;
     private static final Debugger DEBUGGER = DebugConsole.create(getSystemConsole()).getDebugger();
+    private String message = "";
 
     private static Console getSystemConsole() {
         return new ConsoleImpl(new ReaderConsoleInput(System.in), new PrintStreamConsoleOutput(System.out), new PrintStreamConsoleOutput(System.err));
@@ -193,4 +194,7 @@ public class Entrant {
         this.debug = debug;
     }
 
+    public void setMessage(String message) {
+        this.message = message;
+    }
 }

@@ -12,17 +12,17 @@ import java.util.*;
  * @author Daniel Pitts
  */
 public class EntrantLineVisitor implements LineVisitor {
-    private Errors errors = new Errors();
-    private int variables;
-    private List<Short> programCode = new ArrayList<Short>();
-    private Map<String, Symbol> symbols = new HashMap<String, Symbol>();
-    private Map<Integer, Token> unresolved = new LinkedHashMap<Integer, Token>();
-    private String message;
-    private int maxProcessorSpeed;
-    private Map<String, Integer> configs = new HashMap<String, Integer>();
-    private List<String> lines = new ArrayList<String>();
-    private List<Integer> instructionLineNumber = new ArrayList<Integer>();
+    private final Errors errors = new Errors();
+    private final List<Short> programCode = new ArrayList<Short>();
+    private final Map<String, Symbol> symbols = new HashMap<String, Symbol>();
+    private final Collection<UnresolvedToken> unresolved = new ArrayList<UnresolvedToken>();
+    private final Map<String, Integer> configs = new HashMap<String, Integer>();
+    private final List<String> lines = new ArrayList<String>();
+    private final List<Integer> instructionLineNumber = new ArrayList<Integer>();
     private final DebugInfo debugInfo = new DebugInfo();
+    private int variables;
+    private String message = "";
+    private int maxProcessorSpeed;
 
     {
         setConfig(HardwareSpecification.SCANNER, 5);
@@ -173,7 +173,7 @@ public class EntrantLineVisitor implements LineVisitor {
     private void addTokenToProgram(Token token) {
         programCode.add(token.getValue(symbols));
         if (token.isUnresolved(symbols)) {
-            unresolved.put(programCode.size() - 1, token);
+            unresolved.add(new UnresolvedToken(programCode.size() - 1, token));
         }
     }
 
@@ -193,11 +193,11 @@ public class EntrantLineVisitor implements LineVisitor {
         if (sum > 12) {
             errors.info("Config points too high. " + sum + " out of a max of 12.");
         }
-        for (Map.Entry<Integer, Token> entry : unresolved.entrySet()) {
-            if (entry.getValue().isUnresolved(symbols)) {
-                errors.add("Unresolved symbol: " + entry.getValue().toString(), entry.getValue().getLineNumber());
+        for (UnresolvedToken entry : unresolved) {
+            if (!entry.getToken().isUnresolved(symbols)) {
+                resolve(entry.getAddress(), entry.getToken());
             } else {
-                resolve(entry.getKey(), entry.getValue());
+                errors.add("Unresolved symbol: " + entry.getToken().toString(), entry.getToken().getLineNumber());
             }
         }
     }
@@ -213,9 +213,11 @@ public class EntrantLineVisitor implements LineVisitor {
 
     private void adjustMicrocode(int address, Token token) {
         final int microcodeIndex = address | 3;
-        final int opOffset = address & 3;
-        final short oldMicrocode = programCode.get(microcodeIndex);
-        programCode.set(microcodeIndex, (short) ((oldMicrocode & (0x0FFF >> ((3 - opOffset) * 4))) | (token.getMicrocode(symbols) << (opOffset * 4))));
+        programCode.set(microcodeIndex, replaceMicrocdeNibble(address & 3, programCode.get(microcodeIndex), token.getMicrocode(symbols)));
+    }
+
+    private short replaceMicrocdeNibble(int opNumber, short oldMicrocode, short nibble) {
+        return (short) ((oldMicrocode & (0x0FFF >> ((3 - opNumber) << 2))) | ((nibble & 0xF) << (opNumber << 2)));
     }
 
     public short[] getProgramCode() {
@@ -260,10 +262,14 @@ public class EntrantLineVisitor implements LineVisitor {
     }
 
     public CompilerOutput createCompilerOutput() {
-        return new CompilerOutput(getErrors(), createProgram(), createHardwareSpecification(), getMaxProcessorSpeed(), getDebugInfo());
+        return new CompilerOutput(getErrors(), createProgram(), createHardwareSpecification(), getMaxProcessorSpeed(), getDebugInfo(), getMessage());
     }
 
-    public class Symbol {
+    public String getMessage() {
+        return message;
+    }
+
+    public static class Symbol {
         private final short microcode;
         private final short value;
 
@@ -278,6 +284,24 @@ public class EntrantLineVisitor implements LineVisitor {
 
         public short getMicrocode() {
             return microcode;
+        }
+    }
+
+    private static class UnresolvedToken {
+        private final int address;
+        private final Token token;
+
+        private UnresolvedToken(int address, Token token) {
+            this.address = address;
+            this.token = token;
+        }
+
+        public int getAddress() {
+            return address;
+        }
+
+        public Token getToken() {
+            return token;
         }
     }
 }
