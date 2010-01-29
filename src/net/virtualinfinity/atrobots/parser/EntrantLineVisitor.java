@@ -41,13 +41,13 @@ public class EntrantLineVisitor implements LineVisitor {
         addConstant(Short.MAX_VALUE, "MAXINT");
         addConstant(Short.MIN_VALUE, "MININT");
         for (AtRobotPort port : AtRobotPort.values()) {
-            addConstants(port.value, port.names);
+            addConstants(port.portNumber, port.names);
         }
         for (AtRobotInstruction instruction : AtRobotInstruction.values()) {
             addConstants(instruction.value, instruction.names);
         }
         for (AtRobotInterrupt interrupt : AtRobotInterrupt.values()) {
-            addConstants(interrupt.value, interrupt.names);
+            addConstants(interrupt.interruptNumber, interrupt.names);
         }
     }
 

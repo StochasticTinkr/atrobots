@@ -4,12 +4,15 @@ import net.virtualinfinity.atrobots.atsetup.AtRobotInstruction;
 import static net.virtualinfinity.atrobots.atsetup.AtRobotInstruction.*;
 
 /**
+ * Provides a mapping between instruction values and implementations.
+ *
  * @author Daniel Pitts
  */
 public class InstructionTable {
     private final Instruction invalidMicrocodeInstruction = new InvalidMicrocodeInstruction(1);
     private final Instruction[] instructions = new Instruction[47];
     private final Instruction numberedLabelInstruction = new NoOperationInstruction(0);
+    private static final Instruction UNKNOWN_INSTRUCTION = new UnknownInstruction(1);
 
     {
         mapInstruction(NOP, new NoOperationInstruction(1));
@@ -70,8 +73,7 @@ public class InstructionTable {
     }
 
     public Instruction getInstruction(short value) {
-        return value >= 0 && value < instructions.length ? instructions[value] :
-                new UnknownInstruction(1);
+        return value >= 0 && value < instructions.length ? instructions[value] : UNKNOWN_INSTRUCTION;
     }
 
     public Instruction getNumberedLabelInstruction() {

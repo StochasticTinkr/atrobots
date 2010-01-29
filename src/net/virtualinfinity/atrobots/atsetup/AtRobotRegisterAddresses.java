@@ -1,7 +1,7 @@
 package net.virtualinfinity.atrobots.atsetup;
 
 /**
- * TODO: Describe this class.
+ * Register addresses which don't have related symbols.
  *
  * @author Daniel Pitts
  */

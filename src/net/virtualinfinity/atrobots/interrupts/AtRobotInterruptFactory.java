@@ -155,7 +155,7 @@ public class AtRobotInterruptFactory {
     }
 
     private void mapHandler(Map<Integer, InterruptHandler> interrupts, AtRobotInterrupt interrupt, InterruptHandler handler) {
-        interrupts.put(interrupt.value, handler);
+        interrupts.put(interrupt.interruptNumber, handler);
     }
 
     private void connectHandlers(Robot robot, Collection<InterruptHandler> interruptHandlers) {

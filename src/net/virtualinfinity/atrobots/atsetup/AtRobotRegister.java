@@ -1,7 +1,7 @@
 package net.virtualinfinity.atrobots.atsetup;
 
 /**
- * TODO: Describe this class.
+ * A mapping between register symbol names and addresses.
  *
  * @author Daniel Pitts
  */
@@ -18,10 +18,12 @@ public enum AtRobotRegister {
     EX(69),
     FX(70),
     SP(71),;
+    /**
+     * The address of this register.
+     */
     public final int address;
 
     private AtRobotRegister(int address) {
         this.address = address;
     }
-
 }

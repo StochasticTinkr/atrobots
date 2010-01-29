@@ -5,7 +5,7 @@ import java.util.Collection;
 import java.util.Collections;
 
 /**
- * TODO: Describe this class.
+ * Mapping between instruction symbol names and instruction codes for AT-Robot compilers.
  *
  * @author Daniel Pitts
  */
@@ -69,7 +69,14 @@ public enum AtRobotInstruction {
         }
     }
 
+    /**
+     * The constant value of this instruction
+     */
     public final int value;
+
+    /**
+     * The symbol names which represent this instruction.
+     */
     public final Collection<String> names;
 
     private AtRobotInstruction(int value) {
@@ -82,6 +89,12 @@ public enum AtRobotInstruction {
         this.names = Collections.unmodifiableCollection(Arrays.asList(name(), alternate));
     }
 
+    /**
+     * Get the name of the instruction by the value.
+     *
+     * @param value the value
+     * @return the name() of the corresponding instruction, or "&lt;unknown>" if there is none.
+     */
     public static String nameOf(short value) {
         if (value >= 0 && value < byValue.length) {
             return byValue[value].name();

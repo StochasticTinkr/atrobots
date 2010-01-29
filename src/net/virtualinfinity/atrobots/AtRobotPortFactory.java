@@ -50,7 +50,7 @@ public class AtRobotPortFactory {
     }
 
     private void mapPort(Map<Integer, PortHandler> ports, AtRobotPort port, PortHandler portHandler) {
-        ports.put(port.value, portHandler);
+        ports.put(port.portNumber, portHandler);
     }
 
     private PortHandler createRandomNumberGenerator() {

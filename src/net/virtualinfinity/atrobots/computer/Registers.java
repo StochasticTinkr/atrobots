@@ -40,23 +40,27 @@ public class Registers {
         ex = getCell(memory, EX);
         fx = getCell(memory, FX);
         sp = getCell(memory, SP);
-        desiredSpeed = memory.getCell(DESIRED_SPEED_ADDRESS);
-        desiredHeading = memory.getCell(DESIRED_HEADING_ADDRESS);
-        turretOffset = memory.getCell(TURRET_OFFSET_ADDRESS);
-        accuracy = memory.getCell(ACCURACY_ADDRESS);
-        swap = memory.getCell(SWAP_ADDRESS);
-        targetId = memory.getCell(TARGET_ID_ADDRESS);
-        targetHeading = memory.getCell(TARGET_HEADING_ADDRESS);
-        targetThrottle = memory.getCell(TARGET_THROTTLE_ADDRESS);
-        collisionCount = memory.getCell(COLLISION_COUNT_ADDRESS);
-        meters = memory.getCell(METERS_ADDRESS);
-        communicationQueueHead = memory.getCell(COMMUNICATION_QUEUE_HEAD_ADDRESS);
-        communicationQueueTail = memory.getCell(COMMUNICATION_QUEUE_TAIL_ADDRESS);
-        targetVelocity = memory.getCell(TARGET_VELOCITY_ADDRESS);
+        desiredSpeed = getCell(memory, DESIRED_SPEED_ADDRESS);
+        desiredHeading = getCell(memory, DESIRED_HEADING_ADDRESS);
+        turretOffset = getCell(memory, TURRET_OFFSET_ADDRESS);
+        accuracy = getCell(memory, ACCURACY_ADDRESS);
+        swap = getCell(memory, SWAP_ADDRESS);
+        targetId = getCell(memory, TARGET_ID_ADDRESS);
+        targetHeading = getCell(memory, TARGET_HEADING_ADDRESS);
+        targetThrottle = getCell(memory, TARGET_THROTTLE_ADDRESS);
+        collisionCount = getCell(memory, COLLISION_COUNT_ADDRESS);
+        meters = getCell(memory, METERS_ADDRESS);
+        communicationQueueHead = getCell(memory, COMMUNICATION_QUEUE_HEAD_ADDRESS);
+        communicationQueueTail = getCell(memory, COMMUNICATION_QUEUE_TAIL_ADDRESS);
+        targetVelocity = getCell(memory, TARGET_VELOCITY_ADDRESS);
+    }
+
+    private static MemoryCell getCell(Memory memory, int address) {
+        return memory.getCell(address);
     }
 
     private static MemoryCell getCell(Memory memory, AtRobotRegister register) {
-        return memory.getCell(register.address);
+        return getCell(memory, register.address);
     }
 
     public MemoryCell getStackPointerCell() {
