@@ -18,7 +18,7 @@ public abstract class Token {
 
     private static Token getToken(int lineNumber, String token) {
         if (token.startsWith("[") && token.endsWith("]")) {
-            return new Indirect(parse(lineNumber, token.substring(1, token.length() - 2)));
+            return new Indirect(parse(lineNumber, token.substring(1, token.length() - 1)));
         }
         if (token.startsWith("@")) {
             return new Reference(AtRobotLineLexer.parseNumber(token.substring(1)));

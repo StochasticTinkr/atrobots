@@ -217,7 +217,7 @@ public class EntrantLineVisitor implements LineVisitor {
     }
 
     private short replaceMicrocdeNibble(int opNumber, short oldMicrocode, short nibble) {
-        return (short) ((oldMicrocode & (0x0FFF >> ((3 - opNumber) << 2))) | ((nibble & 0xF) << (opNumber << 2)));
+        return (short) ((oldMicrocode & (0xFF0FFF >> ((3 - opNumber) << 2))) | ((nibble & 0xF) << (opNumber << 2)));
     }
 
     public short[] getProgramCode() {
