@@ -1,11 +1,9 @@
 package net.virtualinfinity.atrobots.parser;
 
+import net.virtualinfinity.atrobots.CompilerOutput;
 import net.virtualinfinity.atrobots.DebugInfo;
 import net.virtualinfinity.atrobots.HardwareSpecification;
-import net.virtualinfinity.atrobots.atsetup.AtRobotInstruction;
-import net.virtualinfinity.atrobots.atsetup.AtRobotInterrupt;
-import net.virtualinfinity.atrobots.atsetup.AtRobotPort;
-import net.virtualinfinity.atrobots.atsetup.AtRobotRegister;
+import net.virtualinfinity.atrobots.atsetup.*;
 import net.virtualinfinity.atrobots.computer.Program;
 
 import java.util.*;
@@ -19,7 +17,6 @@ public class EntrantLineVisitor implements LineVisitor {
     private List<Short> programCode = new ArrayList<Short>();
     private Map<String, Symbol> symbols = new HashMap<String, Symbol>();
     private Map<Integer, Token> unresolved = new LinkedHashMap<Integer, Token>();
-    private AtRobotLineLexer lexer;
     private String message;
     private int maxProcessorSpeed;
     private Map<String, Integer> configs = new HashMap<String, Integer>();
@@ -61,35 +58,35 @@ public class EntrantLineVisitor implements LineVisitor {
     }
 
     private void addConstant(int value, String name) {
-        symbols.put(name.toLowerCase(), new Symbol((short) 0, (short) value));
+        symbols.put(name.toLowerCase(), new Symbol(AtRobotMicrocodes.CONSTANT, (short) value));
     }
 
-    public void expectedDigit(int column) {
-        errors.add("Expected digit.", lexer.getLineNumber(), column);
+    public void expectedDigit(int column, int lineNumber) {
+        errors.add("Expected digit.", lineNumber, column);
     }
 
-    public void expectedDirectiveName(int column) {
-        errors.add("Expected directive.", lexer.getLineNumber(), column);
+    public void expectedDirectiveName(int column, int lineNumber) {
+        errors.add("Expected directive.", lineNumber, column);
     }
 
-    public void unexpectedCharacter(int column) {
-        errors.add("Unexpected character", lexer.getLineNumber(), column);
+    public void unexpectedCharacter(int column, int lineNumber) {
+        errors.add("Unexpected character", lineNumber, column);
     }
 
-    public void invalidVariableNameChar(int column) {
-        errors.add("Invalid character in variable name", lexer.getLineNumber(), column);
+    public void invalidVariableNameChar(int column, int lineNumber) {
+        errors.add("Invalid character in variable name", lineNumber, column);
     }
 
-    public void expectedDeviceName(int column) {
-        errors.add("Expected device name", lexer.getLineNumber(), column);
+    public void expectedDeviceName(int column, int lineNumber) {
+        errors.add("Expected device name", lineNumber, column);
     }
 
-    public void expectedMoreTokens() {
-        errors.add("Expected more tokens on line", lexer.getLineNumber());
+    public void expectedMoreTokens(int lineNumber) {
+        errors.add("Expected more tokens on line", lineNumber);
     }
 
-    public void invalidNumber() {
-        errors.add("Not a valid number", lexer.getLineNumber());
+    public void invalidNumber(int lineNumber) {
+        errors.add("Not a valid number", lineNumber);
     }
 
     public void defineVariable(String variableName) {
@@ -99,14 +96,14 @@ public class EntrantLineVisitor implements LineVisitor {
 
     private void addReference(int value, String variableName) {
         debugInfo.addVariable(value, variableName);
-        symbols.put(variableName.toLowerCase(), new Symbol((short) 1, (short) value));
+        symbols.put(variableName.toLowerCase(), new Symbol(AtRobotMicrocodes.REFERENCE, (short) value));
     }
 
-    public void numberedLabel(int value) {
+    public void numberedLabel(int value, int lineNumber) {
         programCode.add((short) value);
         alignProgram();
-        programCode.set(programCode.size() - 1, (short) 2);
-        markLineNumber();
+        programCode.set(programCode.size() - 1, AtRobotMicrocodes.NUMBERED_LABEL);
+        markLineNumber(lineNumber);
     }
 
     public void maxProcessorSpeed(int speed) {
@@ -125,12 +122,12 @@ public class EntrantLineVisitor implements LineVisitor {
         configs.put(name.toLowerCase(), value);
     }
 
-    public void machineCode(int[] values) {
+    public void machineCode(int[] values, int lineNumber) {
         for (int value : values) {
             programCode.add((short) value);
         }
         alignProgram();
-        markLineNumber();
+        markLineNumber(lineNumber);
     }
 
     private void alignProgram() {
@@ -139,24 +136,24 @@ public class EntrantLineVisitor implements LineVisitor {
         }
     }
 
-    private void markLineNumber() {
-        debugInfo.setLineForInstructionPointer(instructionLineNumber.size(), lexer.getLineNumber() + ": " + lines.get(lines.size() - 1));
-        instructionLineNumber.add(lexer.getLineNumber());
+    private void markLineNumber(int lineNumber) {
+        debugInfo.setLineForInstructionPointer(instructionLineNumber.size(), lineNumber + ": " + lines.get(lines.size() - 1));
+        instructionLineNumber.add(lineNumber);
     }
 
     public void label(String line) {
-        symbols.put(line, new Symbol((short) 4, (short) (programCode.size() / 4)));
+        symbols.put(line, new Symbol(AtRobotMicrocodes.RESOLVED_LABEL, (short) (programCode.size() / 4)));
     }
 
-    public void tokenizedLine(List<Token> tokens) {
+    public void tokenizedLine(List<Token> tokens, int lineNumber) {
         addTokensToProgram(tokens);
         alignProgram();
         addMicrocodeToProgram(tokens);
-        markLineNumber();
+        markLineNumber(lineNumber);
     }
 
-    public void unknownDirective(String directive) {
-        errors.add("Unknown directive: #" + directive, lexer.getLineNumber());
+    public void unknownDirective(String directive, int lineNumber) {
+        errors.add("Unknown directive: #" + directive, lineNumber);
     }
 
     public void appendRawLine(String line) {
@@ -199,9 +196,26 @@ public class EntrantLineVisitor implements LineVisitor {
         for (Map.Entry<Integer, Token> entry : unresolved.entrySet()) {
             if (entry.getValue().isUnresolved(symbols)) {
                 errors.add("Unresolved symbol: " + entry.getValue().toString(), entry.getValue().getLineNumber());
+            } else {
+                resolve(entry.getKey(), entry.getValue());
             }
-            programCode.set(entry.getKey(), entry.getValue().getValue(symbols));
         }
+    }
+
+    private void resolve(int address, Token token) {
+        adjustValue(address, token);
+        adjustMicrocode(address, token);
+    }
+
+    private void adjustValue(int address, Token token) {
+        programCode.set(address, token.getValue(symbols));
+    }
+
+    private void adjustMicrocode(int address, Token token) {
+        final int microcodeIndex = address | 3;
+        final int opOffset = address & 3;
+        final short oldMicrocode = programCode.get(microcodeIndex);
+        programCode.set(microcodeIndex, (short) ((oldMicrocode & (0x0FFF >> ((3 - opOffset) * 4))) | (token.getMicrocode(symbols) << (opOffset * 4))));
     }
 
     public short[] getProgramCode() {
@@ -237,16 +251,16 @@ public class EntrantLineVisitor implements LineVisitor {
         return errors;
     }
 
-    public void setLexer(AtRobotLineLexer lexer) {
-        this.lexer = lexer;
-    }
-
     public List<String> getLines() {
         return lines;
     }
 
     public DebugInfo getDebugInfo() {
         return debugInfo;
+    }
+
+    public CompilerOutput createCompilerOutput() {
+        return new CompilerOutput(getErrors(), createProgram(), createHardwareSpecification(), getMaxProcessorSpeed(), getDebugInfo());
     }
 
     public class Symbol {

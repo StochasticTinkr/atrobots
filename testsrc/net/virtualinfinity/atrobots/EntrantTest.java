@@ -11,9 +11,7 @@ import java.io.IOException;
 public class EntrantTest extends TestCase {
 
     public void testSittingDuck() throws IOException {
-        final EntrantFactory entrantFactory = new EntrantFactory();
-        entrantFactory.compile(new File("original/SDUCK.AT2"));
-        final Entrant entrant = entrantFactory.createEntrant();
+        final Entrant entrant = new Compiler().compile(new File("original/SDUCK.AT2")).createEntrant("sduck");
         final Game game = new Game(1);
         entrant.setGame(game);
         game.nextRound();

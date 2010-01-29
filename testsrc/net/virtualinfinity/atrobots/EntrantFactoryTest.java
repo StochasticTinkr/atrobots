@@ -1,5 +1,7 @@
 package net.virtualinfinity.atrobots;
 
+import net.virtualinfinity.atrobots.atsetup.AtRobotInstruction;
+import net.virtualinfinity.atrobots.atsetup.AtRobotRegister;
 import net.virtualinfinity.atrobots.computer.MemoryArray;
 import net.virtualinfinity.atrobots.parser.Errors;
 
@@ -15,25 +17,32 @@ public class EntrantFactoryTest extends AbstractCompilerTest {
     public void testNumberLabel() throws IOException {
         source.println(":3");
         compile();
-        assertEquals(3, getMemoryArray().get(0));
-        assertEquals(0, getMemoryArray().get(1));
-        assertEquals(0, getMemoryArray().get(2));
-        assertEquals(2, getMemoryArray().get(3));
+        assertFalse(compilerOutput.hasErrors());
+        assertFirstInstructionIs(3, 0, 0, 2);
+    }
+
+    private void assertFirstInstructionIs(int instruction, int op0, int op1, int microcode) {
+        assertEquals(instruction, getMemoryArray().get(0));
+        assertEquals(op0, getMemoryArray().get(1));
+        assertEquals(op1, getMemoryArray().get(2));
+        assertEquals(microcode, getMemoryArray().get(3));
     }
 
     public void testTokenTranslation() throws IOException {
         source.println("MOV ax, bx");
         compile();
-        assertEquals(22, getMemoryArray().get(0));
-        assertEquals(65, getMemoryArray().get(1));
-        assertEquals(66, getMemoryArray().get(2));
-        assertEquals(0x110, getMemoryArray().get(3));
+        assertFirstInstructionIs(AtRobotInstruction.MOV.value,
+                AtRobotRegister.AX.address,
+                AtRobotRegister.BX.address,
+                0x110);
+        assertFalse(compilerOutput.hasErrors());
     }
 
     public void testNormalLabel() throws IOException {
         source.println("!Test");
         source.println("jmp !Test");
         compile();
+        assertFalse(compilerOutput.hasErrors());
         assertEquals(0, getMemoryArray().get(1));
         assertEquals(0x40, getMemoryArray().get(3));
     }
@@ -45,11 +54,12 @@ public class EntrantFactoryTest extends AbstractCompilerTest {
             }
         });
         Errors errors = new Errors();
+        Compiler compiler = new Compiler();
         for (File file : files) {
-            EntrantFactory factory = new EntrantFactory();
             try {
                 System.out.println("Loading " + file);
-                final Errors result = factory.compile(file);
+                compilerOutput = compiler.compile(file);
+                final Errors result = compilerOutput.getErrors();
                 if (result.hasErrors()) {
                     errors.info("Errors in " + file.getName());
                     errors.addAll(result);
@@ -69,7 +79,7 @@ public class EntrantFactoryTest extends AbstractCompilerTest {
 
 
     private MemoryArray getMemoryArray() {
-        return entrantFactory.getProgram().createProgramMemory();
+        return compilerOutput.getProgram().createProgramMemory();
     }
 
 }

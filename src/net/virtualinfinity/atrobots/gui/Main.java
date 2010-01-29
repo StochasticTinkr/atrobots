@@ -1,7 +1,8 @@
 package net.virtualinfinity.atrobots.gui;
 
+import net.virtualinfinity.atrobots.Compiler;
+import net.virtualinfinity.atrobots.CompilerOutput;
 import net.virtualinfinity.atrobots.Entrant;
-import net.virtualinfinity.atrobots.EntrantFactory;
 import net.virtualinfinity.atrobots.Game;
 import net.virtualinfinity.atrobots.gui.renderers.GradientExplosionRenderer;
 import net.virtualinfinity.atrobots.gui.renderers.RobotRenderer;
@@ -313,17 +314,16 @@ public class Main implements Runnable {
             Errors errors = new Errors();
             for (EntrantFile entrantFile : selectedFiles) {
                 final File file = entrantFile.file;
-                EntrantFactory factory = new EntrantFactory();
-                factory.setDebug(entrantFile.debug);
+                Compiler compiler = new net.virtualinfinity.atrobots.Compiler();
                 try {
                     System.out.println("Loading " + file);
-                    final Errors result = factory.compile(file);
+                    final CompilerOutput result = compiler.compile(file);
                     if (result.hasErrors()) {
                         errors.info("Errors in " + file.getName());
-                        errors.addAll(result);
+                        errors.addAll(result.getErrors());
                     }
                     if (game != null) {
-                        game.addEntrant(factory.createEntrant());
+                        game.addEntrant(result.createEntrant(file.getName()));
                     }
                 } catch (IOException e1) {
                     errors.info("Errors in " + file.getName());

@@ -10,15 +10,16 @@ import java.io.PrintStream;
 /**
  * @author Daniel Pitts
  */
-public class AbstractCompilerTest extends TestCase {
-    protected EntrantFactory entrantFactory;
+public abstract class AbstractCompilerTest extends TestCase {
+    protected Compiler compiler;
     protected PrintStream source;
     private ByteArrayOutputStream out;
     private Game game;
     protected Robot robot;
+    protected CompilerOutput compilerOutput;
 
     public void setUp() throws IOException {
-        entrantFactory = new EntrantFactory("test");
+        compiler = new Compiler();
         out = new ByteArrayOutputStream(1024);
         source = new PrintStream(out);
         game = new Game(1);
@@ -30,17 +31,14 @@ public class AbstractCompilerTest extends TestCase {
 
     }
 
-    public void testNothing() {
-        assertTrue(true);
-    }
-
     protected void compile() {
         try {
             out.flush();
             final ByteArrayInputStream stream = new ByteArrayInputStream(out.toByteArray());
             try {
-                entrantFactory.compile(stream).dumpErrors();
-                final Entrant entrant = entrantFactory.createEntrant();
+                compilerOutput = compiler.compile(stream);
+                compilerOutput.getErrors().dumpErrors();
+                final Entrant entrant = compilerOutput.createEntrant("test");
                 game.addEntrant(entrant);
                 game.nextRound();
                 robot = game.getRound().getRobot(entrant);

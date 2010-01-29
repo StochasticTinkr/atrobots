@@ -1,5 +1,7 @@
 package net.virtualinfinity.atrobots;
 
+import net.virtualinfinity.atrobots.config.Entrants;
+
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -115,5 +117,11 @@ public class Game {
 
     public void setMaxProcessorSpeed(int maxProcessorSpeed) {
         this.maxProcessorSpeed = maxProcessorSpeed;
+    }
+
+    public void addAll(Entrants entrants) {
+        for (Entrant entrant : entrants.getEntrants()) {
+            addEntrant(entrant);
+        }
     }
 }

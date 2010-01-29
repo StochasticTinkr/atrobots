@@ -81,7 +81,7 @@ public class AtRobotLineLexer {
                 tokens.add(Token.parse(getLineNumber(), line.substring(last, i).toLowerCase()));
             }
         }
-        lineVisitor.tokenizedLine(tokens);
+        lineVisitor.tokenizedLine(tokens, getLineNumber());
     }
 
     private static boolean isSeperator(char c) {
@@ -91,18 +91,18 @@ public class AtRobotLineLexer {
     private void visitMachineCode(String line) {
         String[] tokens = line.toLowerCase().split("[^0-9h]+");
         if (tokens.length != 4) {
-            lineVisitor.expectedMoreTokens();
+            lineVisitor.expectedMoreTokens(getLineNumber());
             return;
         }
         int[] values = new int[4];
         for (int i = 0; i < 4; ++i) {
             values[i] = parseNumber(tokens[i]);
             if (values[i] == Integer.MIN_VALUE) {
-                lineVisitor.invalidNumber();
+                lineVisitor.invalidNumber(getLineNumber());
                 return;
             }
         }
-        lineVisitor.machineCode(values);
+        lineVisitor.machineCode(values, getLineNumber());
     }
 
     public static int parseNumber(String token) {
@@ -140,12 +140,12 @@ public class AtRobotLineLexer {
                 break;
             }
             if (!Character.isDigit(number.charAt(i))) {
-                lineVisitor.expectedDigit(i + 1);
+                lineVisitor.expectedDigit(i + 1, getLineNumber());
                 return;
             }
             value = value * 10 + Character.digit(number.charAt(i), 10);
         }
-        lineVisitor.numberedLabel(value);
+        lineVisitor.numberedLabel(value, getLineNumber());
     }
 
     private void visitDirective(String line) throws IOException {
@@ -162,11 +162,11 @@ public class AtRobotLineLexer {
     private void handleDirective(String line, int i) throws IOException {
         String directive = line.substring(1, i).toLowerCase();
         if (directive.length() == 0) {
-            lineVisitor.expectedDirectiveName(i);
+            lineVisitor.expectedDirectiveName(i, getLineNumber());
             return;
         }
         if (i < line.length() && !isSeperator(line.charAt(i))) {
-            lineVisitor.unexpectedCharacter(i);
+            lineVisitor.unexpectedCharacter(i, getLineNumber());
         }
         while (i < line.length() && isSeperator(line.charAt(i))) {
             ++i;
@@ -176,7 +176,7 @@ public class AtRobotLineLexer {
 
             while (i < line.length()) {
                 if (!isValidVariableNameChar(line.charAt(i))) {
-                    lineVisitor.invalidVariableNameChar(i);
+                    lineVisitor.invalidVariableNameChar(i, getLineNumber());
                     return;
                 }
                 i++;
@@ -187,7 +187,7 @@ public class AtRobotLineLexer {
         if (directive.equals("time")) {
             while (i < line.length()) {
                 if (!Character.isDigit(line.charAt(i))) {
-                    lineVisitor.expectedDigit(i);
+                    lineVisitor.expectedDigit(i, getLineNumber());
                     return;
                 }
                 ++i;
@@ -206,7 +206,7 @@ public class AtRobotLineLexer {
                     int valueStart = ++i;
                     while (i < line.length() && !isSeperator(line.charAt(i))) {
                         if (!Character.isDigit(line.charAt(i))) {
-                            lineVisitor.expectedDigit(i);
+                            lineVisitor.expectedDigit(i, getLineNumber());
                             return;
                         }
                         ++i;
@@ -215,7 +215,7 @@ public class AtRobotLineLexer {
                     return;
                 }
                 if (!Character.isLetter(line.charAt(i))) {
-                    lineVisitor.expectedDeviceName(i);
+                    lineVisitor.expectedDeviceName(i, getLineNumber());
                     return;
                 }
                 ++i;
@@ -226,7 +226,7 @@ public class AtRobotLineLexer {
             stopProcessing();
             return;
         }
-        lineVisitor.unknownDirective(directive);
+        lineVisitor.unknownDirective(directive, getLineNumber());
     }
 
     private void stopProcessing() {

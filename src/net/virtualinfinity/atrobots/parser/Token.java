@@ -1,5 +1,7 @@
 package net.virtualinfinity.atrobots.parser;
 
+import net.virtualinfinity.atrobots.atsetup.AtRobotMicrocodes;
+
 import java.util.Map;
 
 /**
@@ -19,7 +21,7 @@ public abstract class Token {
             return new Indirect(parse(lineNumber, token.substring(1, token.length() - 2)));
         }
         if (token.startsWith("@")) {
-            return new Indirect(new Constant(AtRobotLineLexer.parseNumber(token.substring(1))));
+            return new Reference(AtRobotLineLexer.parseNumber(token.substring(1)));
         }
         if (Character.isDigit(token.charAt(0)) ||
                 (token.charAt(0) == '-' && token.length() > 1 && Character.isDigit(token.charAt(1)))) {
@@ -59,7 +61,7 @@ public abstract class Token {
         }
 
         public short getMicrocode(Map<String, EntrantLineVisitor.Symbol> symbols) {
-            return (short) (8 | inner.getMicrocode(symbols));
+            return (short) (AtRobotMicrocodes.INDIRECT_REFERENCE_MASK | inner.getMicrocode(symbols));
         }
     }
 
@@ -75,60 +77,67 @@ public abstract class Token {
         }
 
         public short getMicrocode(Map<String, EntrantLineVisitor.Symbol> symbols) {
-            return 0;
+            return AtRobotMicrocodes.CONSTANT;
         }
     }
 
-    private static class Name extends Token {
-        private final String name;
+    private static abstract class Resolvable extends Token {
+        protected final String name;
 
+        private Resolvable(String token) {
+            name = token;
+        }
+
+        public short getValue(Map<String, EntrantLineVisitor.Symbol> symbols) {
+            return isUnresolved(symbols) ? 0 : symbols.get(name).getValue();
+        }
+
+        public short getMicrocode(Map<String, EntrantLineVisitor.Symbol> symbols) {
+            return isUnresolved(symbols) ? getUnresolvedMicrocode() : symbols.get(name).getMicrocode();
+        }
+
+        protected abstract short getUnresolvedMicrocode();
+
+        public boolean isUnresolved(Map<String, EntrantLineVisitor.Symbol> symbols) {
+            return !symbols.containsKey(name);
+        }
+
+        public String toString() {
+            return name;
+        }
+    }
+
+    private static class Name extends Resolvable {
         public Name(String token) {
-            name = token;
+            super(token);
         }
 
-        public short getValue(Map<String, EntrantLineVisitor.Symbol> symbols) {
-            return isUnresolved(symbols) ? 0 : symbols.get(name).getValue();
-        }
-
-        public short getMicrocode(Map<String, EntrantLineVisitor.Symbol> symbols) {
-            return isUnresolved(symbols) ? 1 : symbols.get(name).getMicrocode();
-        }
-
-        public boolean isUnresolved(Map<String, EntrantLineVisitor.Symbol> symbols) {
-            return !symbols.containsKey(name);
-        }
-
-        public String toString() {
-            return name;
+        protected short getUnresolvedMicrocode() {
+            return AtRobotMicrocodes.CONSTANT;
         }
     }
 
-    private static class Label extends Token {
-        private final String name;
-
-        public Label(String token) {
-            super();
-            name = token;
+    private static class Label extends Resolvable {
+        private Label(String token) {
+            super(token);
         }
 
-        public short getValue(Map<String, EntrantLineVisitor.Symbol> symbols) {
-            return isUnresolved(symbols) ? 0 : symbols.get(name).getValue();
-        }
-
-        public short getMicrocode(Map<String, EntrantLineVisitor.Symbol> symbols) {
-            return 4;
-        }
-
-        public boolean isUnresolved(Map<String, EntrantLineVisitor.Symbol> symbols) {
-            return !symbols.containsKey(name);
-        }
-
-        public String toString() {
-            return name;
+        protected short getUnresolvedMicrocode() {
+            return AtRobotMicrocodes.UNRESOLVED_LABEL;
         }
     }
 
     public String toString() {
         return "<token>";
+    }
+
+    private static class Reference extends Constant {
+        public Reference(int value) {
+            super(value);
+        }
+
+        public short getMicrocode(Map<String, EntrantLineVisitor.Symbol> symbols) {
+            return AtRobotMicrocodes.REFERENCE;
+        }
     }
 }
