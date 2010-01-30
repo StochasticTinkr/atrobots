@@ -1,6 +1,8 @@
 package net.virtualinfinity.atrobots.measures;
 
 /**
+ * Represents a particular speed.
+ *
  * @author Daniel Pitts
  */
 public final class DistanceOverTime {

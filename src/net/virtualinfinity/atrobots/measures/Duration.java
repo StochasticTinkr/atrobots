@@ -1,6 +1,8 @@
 package net.virtualinfinity.atrobots.measures;
 
 /**
+ * Represents a particular amount of time.
+ *
  * @author Daniel Pitts
  */
 public final class Duration implements Comparable<Duration> {

@@ -5,6 +5,8 @@ import java.awt.geom.Arc2D;
 import java.awt.geom.Ellipse2D;
 
 /**
+ * Represents a range of angles.
+ *
  * @author Daniel Pitts
  */
 public class AngleBracket {

@@ -1,6 +1,8 @@
 package net.virtualinfinity.atrobots.measures;
 
 /**
+ * Represents an amount of rotation.
+ *
  * @author Daniel Pitts
  */
 public class RelativeAngle implements Comparable<RelativeAngle> {

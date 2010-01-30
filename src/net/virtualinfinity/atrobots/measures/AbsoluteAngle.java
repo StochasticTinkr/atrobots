@@ -1,7 +1,10 @@
 package net.virtualinfinity.atrobots.measures;
 
 /**
+ * Represents an exact angle.
+ *
  * @author Daniel Pitts
+ * @see net.virtualinfinity.atrobots.measures.RelativeAngle
  */
 public class AbsoluteAngle {
     private static final AbsoluteAngle[] bygreeTable = new AbsoluteAngle[256];
