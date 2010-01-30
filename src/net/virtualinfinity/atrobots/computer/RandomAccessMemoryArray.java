@@ -4,6 +4,8 @@ import java.util.Arrays;
 import java.util.Map;
 
 /**
+ * A Memory Array which can be both read from and written to.
+ *
  * @author Daniel Pitts
  */
 public class RandomAccessMemoryArray extends MemoryArray {

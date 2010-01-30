@@ -6,6 +6,8 @@ import static net.virtualinfinity.atrobots.atsetup.AtRobotRegister.*;
 import static net.virtualinfinity.atrobots.atsetup.AtRobotRegisterAddresses.*;
 
 /**
+ * Holds pointers to all the registers of the AT-Robot virtual machine.
+ *
  * @author Daniel Pitts
  */
 public class Registers {

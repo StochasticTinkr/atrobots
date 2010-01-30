@@ -1,6 +1,8 @@
 package net.virtualinfinity.atrobots.computer;
 
 /**
+ * An instruction which sets the first operand to its twos-complement negation.
+ *
  * @author Daniel Pitts
  */
 public class BitwiseNegationInstruction extends Instruction {

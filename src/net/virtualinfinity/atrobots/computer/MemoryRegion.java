@@ -1,6 +1,8 @@
 package net.virtualinfinity.atrobots.computer;
 
 /**
+ * Represents a contiguous region of memory.
+ *
  * @author Daniel Pitts
  */
 public class MemoryRegion {

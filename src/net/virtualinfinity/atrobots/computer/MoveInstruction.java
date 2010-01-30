@@ -1,6 +1,8 @@
 package net.virtualinfinity.atrobots.computer;
 
 /**
+ * An instruction which copies the second operand value into the first
+ *
  * @author Daniel Pitts
  */
 public class MoveInstruction extends Instruction {

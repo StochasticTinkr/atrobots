@@ -1,46 +1,48 @@
 package net.virtualinfinity.atrobots.computer;
 
 /**
+ * Represents one cell in a memory.
+ *
  * @author Daniel Pitts
  */
 public class MemoryCell {
     private final Memory memory;
-    private final int index;
+    private final int address;
 
-    public MemoryCell(Memory memory, int index) {
+    public MemoryCell(Memory memory, int address) {
         this.memory = memory;
-        this.index = index;
+        this.address = address;
     }
 
     public short signed() {
-        return memory.get(index);
+        return memory.get(address);
     }
 
     public int unsigned() {
-        return memory.unsigned(index);
+        return memory.unsigned(address);
     }
 
     public void set(short value) {
-        memory.set(index, value);
+        memory.set(address, value);
     }
 
     public void decrement() {
-        memory.decrement(index);
+        memory.decrement(address);
     }
 
     public void increment() {
-        memory.increment(index);
+        memory.increment(address);
     }
 
     public void or(short value) {
-        memory.or(index, value);
+        memory.or(address, value);
     }
 
     public void and(short value) {
-        memory.and(index, value);
+        memory.and(address, value);
     }
 
     public String toString() {
-        return "@" + index + "=" + this.signed();
+        return "@" + address + "=" + this.signed();
     }
 }

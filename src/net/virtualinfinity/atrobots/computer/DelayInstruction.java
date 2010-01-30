@@ -1,6 +1,8 @@
 package net.virtualinfinity.atrobots.computer;
 
 /**
+ * An instruction which consumes the number of CPU cycles equal to the first operand.
+ *
  * @author Daniel Pitts
  */
 public class DelayInstruction extends Instruction {

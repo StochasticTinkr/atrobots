@@ -1,6 +1,8 @@
 package net.virtualinfinity.atrobots.computer;
 
 /**
+ * An instruction which reports invalid microcode on the computer bus.
+ *
  * @author Daniel Pitts
  */
 public class InvalidMicrocodeInstruction extends Instruction {

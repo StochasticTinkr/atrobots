@@ -1,6 +1,8 @@
 package net.virtualinfinity.atrobots.computer;
 
 /**
+ * An instruction which sets the flags register based on the comparison of the two operands.
+ *
  * @author Daniel Pitts
  */
 public class CompareInstruction extends Instruction {

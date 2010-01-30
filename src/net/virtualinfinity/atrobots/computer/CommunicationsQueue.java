@@ -1,6 +1,8 @@
 package net.virtualinfinity.atrobots.computer;
 
 /**
+ * A communications queue wrapper.
+ *
  * @author Daniel Pitts
  */
 public class CommunicationsQueue {

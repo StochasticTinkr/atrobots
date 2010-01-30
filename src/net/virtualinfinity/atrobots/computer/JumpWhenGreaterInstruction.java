@@ -5,7 +5,7 @@ import net.virtualinfinity.atrobots.Flags;
 /**
  * @author Daniel Pitts
  */
-public class JumpWhenGreaterInstruction extends ConditionalJump {
+public class JumpWhenGreaterInstruction extends AbstractConditionalJumpInstruction {
     protected JumpWhenGreaterInstruction(int baseExecutionCost) {
         super(baseExecutionCost);
     }

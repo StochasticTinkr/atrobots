@@ -1,6 +1,8 @@
 package net.virtualinfinity.atrobots.computer;
 
 /**
+ * An instruction which will decrement CX and jump if the signed value of CX > 0
+ *
  * @author Daniel Pitts
  */
 public class LoopInstruction extends Instruction {

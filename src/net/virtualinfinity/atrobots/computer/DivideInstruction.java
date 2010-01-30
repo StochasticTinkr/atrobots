@@ -1,6 +1,8 @@
 package net.virtualinfinity.atrobots.computer;
 
 /**
+ * An instruction which divides the first operand by the second, storing the result in the first.
+ *
  * @author Daniel Pitts
  */
 public class DivideInstruction extends Instruction {

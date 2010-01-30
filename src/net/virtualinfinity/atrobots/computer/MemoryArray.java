@@ -4,6 +4,8 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
+ * Represents a block of memory of some type (RAM or ROM).
+ *
  * @author Daniel Pitts
  */
 public abstract class MemoryArray {
@@ -52,7 +54,14 @@ public abstract class MemoryArray {
         this.errorHandler = errorHandler;
     }
 
-    public void addSpecialRegister(int index, SpecialRegister specialRegister) {
-        specialRegisters.put(index, specialRegister);
+    /**
+     * Use a special register for the given address.  A special register isn't read from memory,
+     * but from some external system.  Generially these are read-only, but writing is not an error.
+     *
+     * @param address         the address which will be read specially.
+     * @param specialRegister the handler which returns the special value.
+     */
+    public void addSpecialRegister(int address, SpecialRegister specialRegister) {
+        specialRegisters.put(address, specialRegister);
     }
 }

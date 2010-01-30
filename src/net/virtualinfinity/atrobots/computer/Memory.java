@@ -4,36 +4,57 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
+ * Represents the entire memory (RAM and ROM) of a {@link net.virtualinfinity.atrobots.computer.Computer}.
+ *
  * @author Daniel Pitts
  */
 public class Memory {
     private final List<MemoryArray> arrays = new ArrayList<MemoryArray>();
     private ComputerErrorHandler errorHandler;
 
-    public void or(int index, short value) {
+    /**
+     * Bitwise-or the value at the given location with the given value.
+     *
+     * @param address the address
+     * @param value   the value to or.
+     */
+    public void or(int address, short value) {
         for (MemoryArray array : arrays) {
-            if (index < array.size()) {
-                array.or(index, value);
+            if (address < array.size()) {
+                array.or(address, value);
                 return;
             }
-            index -= array.size();
+            address -= array.size();
         }
+        errorHandler.memoryBoundsError(address);
     }
 
-    public void and(int index, short value) {
+    /**
+     * Bitwise-and the value at the given location with the given value.
+     *
+     * @param address the address
+     * @param value   the value to or.
+     */
+    public void and(int address, short value) {
         for (MemoryArray array : arrays) {
-            if (index < array.size()) {
-                array.and(index, value);
+            if (address < array.size()) {
+                array.and(address, value);
                 return;
             }
-            index -= array.size();
+            address -= array.size();
         }
+        errorHandler.memoryBoundsError(address);
     }
 
     public ComputerErrorHandler getErrorHandler() {
         return errorHandler;
     }
 
+    /**
+     * Get the total size of this memory.
+     *
+     * @return the size.
+     */
     public int size() {
         int size = 0;
         for (MemoryArray array : arrays) {
@@ -42,18 +63,30 @@ public class Memory {
         return size;
     }
 
+    /**
+     * Add the next section of memory.
+     *
+     * @param array a section of memory.
+     */
     public void addMemoryArray(MemoryArray array) {
         arrays.add(array);
         array.setErrorHandler(errorHandler);
     }
 
-    public short get(int index) {
+    /**
+     * Read the value at the specific address
+     *
+     * @param address the address to read.
+     * @return the value at that address, or 0 if invalid.
+     */
+    public short get(int address) {
         for (MemoryArray array : arrays) {
-            if (index < array.size()) {
-                return array.get(index);
+            if (address < array.size()) {
+                return array.get(address);
             }
-            index -= array.size();
+            address -= array.size();
         }
+        errorHandler.memoryBoundsError(address);
         return 0;
     }
 
@@ -61,38 +94,47 @@ public class Memory {
         return get(index) & 0xFFFF;
     }
 
-    public void set(int index, short value) {
+    /**
+     * writes the value at the specific address
+     *
+     * @param address the address to write.
+     * @param value   the value to write at that address.
+     */
+    public void set(int address, short value) {
         for (MemoryArray array : arrays) {
-            if (index < array.size()) {
-                array.put(index, value);
+            if (address < array.size()) {
+                array.put(address, value);
                 return;
             }
-            index -= array.size();
+            address -= array.size();
         }
+        errorHandler.memoryBoundsError(address);
     }
 
     public MemoryCell getCell(int index) {
         return new MemoryCell(this, index);
     }
 
-    public void decrement(int index) {
+    public void decrement(int address) {
         for (MemoryArray array : arrays) {
-            if (index < array.size()) {
-                array.decrement(index);
+            if (address < array.size()) {
+                array.decrement(address);
                 return;
             }
-            index -= array.size();
+            address -= array.size();
         }
+        errorHandler.memoryBoundsError(address);
     }
 
-    public void increment(int index) {
+    public void increment(int address) {
         for (MemoryArray array : arrays) {
-            if (index < array.size()) {
-                array.increment(index);
+            if (address < array.size()) {
+                array.increment(address);
                 return;
             }
-            index -= array.size();
+            address -= array.size();
         }
+        errorHandler.memoryBoundsError(address);
     }
 
     public void setErrorHandler(ComputerErrorHandler errorHandler) {

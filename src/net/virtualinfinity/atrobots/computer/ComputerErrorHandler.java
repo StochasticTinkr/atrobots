@@ -1,6 +1,8 @@
 package net.virtualinfinity.atrobots.computer;
 
 /**
+ * A handler interface for the AT-Robots virtual machine errors.
+ *
  * @author Daniel Pitts
  */
 public interface ComputerErrorHandler {

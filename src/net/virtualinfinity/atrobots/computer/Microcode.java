@@ -3,7 +3,7 @@ package net.virtualinfinity.atrobots.computer;
 import java.util.Arrays;
 
 /**
- * TODO: Describe this class.
+ * Microcode handlers.
  *
  * @author Daniel Pitts
  */

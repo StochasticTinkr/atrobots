@@ -1,6 +1,8 @@
 package net.virtualinfinity.atrobots.computer;
 
 /**
+ * An instruction which invokes the interrupt specified by the first operand.
+ *
  * @author Daniel Pitts
  */
 public class CallInterruptInstruction extends Instruction {

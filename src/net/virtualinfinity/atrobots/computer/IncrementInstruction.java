@@ -1,6 +1,8 @@
 package net.virtualinfinity.atrobots.computer;
 
 /**
+ * An instruction which increments the value of the first operand.
+ *
  * @author Daniel Pitts
  */
 public class IncrementInstruction extends Instruction {

@@ -2,6 +2,8 @@ package net.virtualinfinity.atrobots.computer;
 
 
 /**
+ * An {@link net.virtualinfinity.atrobots.computer.AbstractCombiningInstruction} which performs a bitwise or on the operands.
+ *
  * @author Daniel Pitts
  */
 public class BitwiseOrInstruction extends AbstractCombiningInstruction {

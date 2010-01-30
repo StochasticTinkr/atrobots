@@ -1,6 +1,8 @@
 package net.virtualinfinity.atrobots.computer;
 
 /**
+ * An instruction which does nothing.
+ *
  * @author Daniel Pitts
  */
 public class NoOperationInstruction extends Instruction {

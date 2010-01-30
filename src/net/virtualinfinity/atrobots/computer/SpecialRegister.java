@@ -1,7 +1,8 @@
 package net.virtualinfinity.atrobots.computer;
 
 /**
- * TODO: Describe this class.
+ * A special register is a memory location which isn't actually connected to memory, but instead connected to a special
+ * hardware input.
  *
  * @author Daniel Pitts
  */

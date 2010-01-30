@@ -3,6 +3,8 @@ package net.virtualinfinity.atrobots.computer;
 import java.util.Map;
 
 /**
+ * A Memory Array which can only be read from.
+ *
  * @author Daniel Pitts
  */
 public class ReadOnlyMemoryArray extends MemoryArray {

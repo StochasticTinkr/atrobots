@@ -1,6 +1,9 @@
 package net.virtualinfinity.atrobots.computer;
 
 /**
+ * An instruction which sets the equal and zero flags according to the bitwise-and of the two operands.
+ * The flags are set true if the result is the second operand and zero respectively.
+ *
  * @author Daniel Pitts
  */
 public class TestInstruction extends Instruction {

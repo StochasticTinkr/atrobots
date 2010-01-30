@@ -1,6 +1,8 @@
 package net.virtualinfinity.atrobots.computer;
 
 /**
+ * An instruction which causes an unknown instruction signal on the computer bus.
+ *
  * @author Daniel Pitts
  */
 public class UnknownInstruction extends Instruction {

@@ -1,6 +1,8 @@
 package net.virtualinfinity.atrobots.computer;
 
 /**
+ * An {@link net.virtualinfinity.atrobots.computer.AbstractCombiningInstruction} which subtracts the second operand from the first.
+ *
  * @author Daniel Pitts
  */
 public class SubtractInstruction extends AbstractCombiningInstruction {

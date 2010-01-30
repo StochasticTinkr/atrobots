@@ -1,6 +1,8 @@
 package net.virtualinfinity.atrobots.computer;
 
 /**
+ * An instruction which computes the value of the first operand modulo the second.
+ *
  * @author Daniel Pitts
  */
 public class ModuloInstruction extends Instruction {

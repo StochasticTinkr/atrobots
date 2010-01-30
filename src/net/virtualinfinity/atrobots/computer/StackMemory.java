@@ -1,6 +1,8 @@
 package net.virtualinfinity.atrobots.computer;
 
 /**
+ * Memory, which is separate from main memory, and used as a stack.
+ *
  * @author Daniel Pitts
  */
 public class StackMemory {

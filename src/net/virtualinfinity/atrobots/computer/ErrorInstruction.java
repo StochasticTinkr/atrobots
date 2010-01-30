@@ -1,6 +1,8 @@
 package net.virtualinfinity.atrobots.computer;
 
 /**
+ * An instruction which reports a generic numbered error to the CPU bus.
+ *
  * @author Daniel Pitts
  */
 public class ErrorInstruction extends Instruction {

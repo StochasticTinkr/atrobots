@@ -1,6 +1,8 @@
 package net.virtualinfinity.atrobots.computer;
 
 /**
+ * This instruction sets the first operands value to the addres of the second operand.
+ *
  * @author Daniel Pitts
  */
 public class AddressInstruction extends Instruction {

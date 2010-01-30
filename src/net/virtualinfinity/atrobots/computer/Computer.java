@@ -8,6 +8,8 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
+ * An AT-Robots 2 virtual machine.
+ *
  * @author Daniel Pitts
  */
 public class Computer {
@@ -149,7 +151,9 @@ public class Computer {
     }
 
     public void consumeCycles(int cost) {
-        cycles -= cost;
+        if (cost > 0) {
+            cycles -= cost;
+        }
     }
 
     public void setOperandValue(int opnumber, short value) {
@@ -261,7 +265,7 @@ public class Computer {
     }
 
     private void setInstructionPointer(int instructionPointer) {
-        Computer.this.nextInstructionPointer = instructionPointer;
+        this.nextInstructionPointer = instructionPointer;
     }
 
     public void setCommQueue(CommunicationsQueue commQueue) {
