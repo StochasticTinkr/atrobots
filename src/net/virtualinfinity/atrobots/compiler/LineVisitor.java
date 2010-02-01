@@ -1,4 +1,4 @@
-package net.virtualinfinity.atrobots.parser;
+package net.virtualinfinity.atrobots.compiler;
 
 import java.util.List;
 
@@ -6,15 +6,15 @@ import java.util.List;
  * @author Daniel Pitts
  */
 public interface LineVisitor {
-    void expectedDigit(int column);
+    void expectedDigit(int column, int lineNumber);
 
-    void numberedLabel(int value);
+    void numberedLabel(int value, int lineNumber);
 
-    void expectedDirectiveName(int column);
+    void expectedDirectiveName(int column, int lineNumber);
 
-    void unexpectedCharacter(int column);
+    void unexpectedCharacter(int column, int lineNumber);
 
-    void invalidVariableNameChar(int column);
+    void invalidVariableNameChar(int column, int lineNumber);
 
     void defineVariable(String variableName);
 
@@ -24,19 +24,19 @@ public interface LineVisitor {
 
     void setConfig(String name, int value);
 
-    void expectedDeviceName(int column);
+    void expectedDeviceName(int column, int lineNumber);
 
-    void expectedMoreTokens();
+    void expectedMoreTokens(int lineNumber);
 
-    void invalidNumber();
+    void invalidNumber(int lineNumber);
 
-    void machineCode(int[] values);
+    void machineCode(int[] values, int lineNumber);
 
     void label(String line);
 
-    void tokenizedLine(List<Token> tokens);
+    void tokenizedLine(List<Token> tokens, int lineNumber);
 
-    void unknownDirective(String directive);
+    void unknownDirective(String directive, int lineNumber);
 
     void appendRawLine(String line);
 }

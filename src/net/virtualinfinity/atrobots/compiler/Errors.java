@@ -1,4 +1,4 @@
-package net.virtualinfinity.atrobots.parser;
+package net.virtualinfinity.atrobots.compiler;
 
 import javax.swing.*;
 import java.awt.*;
