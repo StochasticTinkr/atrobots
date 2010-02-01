@@ -1,7 +1,7 @@
 package net.virtualinfinity.atrobots.config;
 
-import net.virtualinfinity.atrobots.CompilerOutput;
 import net.virtualinfinity.atrobots.Entrant;
+import net.virtualinfinity.atrobots.compiler.CompilerOutput;
 
 import java.util.Collection;
 import java.util.Collections;

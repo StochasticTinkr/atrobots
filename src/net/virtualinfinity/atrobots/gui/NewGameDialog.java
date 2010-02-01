@@ -1,9 +1,9 @@
 package net.virtualinfinity.atrobots.gui;
 
 import net.virtualinfinity.atrobots.Game;
+import net.virtualinfinity.atrobots.compiler.Errors;
 import net.virtualinfinity.atrobots.config.EntrantFile;
 import net.virtualinfinity.atrobots.config.EntrantSource;
-import net.virtualinfinity.atrobots.parser.Errors;
 
 import javax.swing.*;
 import javax.swing.filechooser.FileNameExtensionFilter;

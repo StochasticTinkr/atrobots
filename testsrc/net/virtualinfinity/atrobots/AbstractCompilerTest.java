@@ -1,6 +1,8 @@
 package net.virtualinfinity.atrobots;
 
 import junit.framework.TestCase;
+import net.virtualinfinity.atrobots.compiler.Compiler;
+import net.virtualinfinity.atrobots.compiler.CompilerOutput;
 
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
@@ -19,7 +21,7 @@ public abstract class AbstractCompilerTest extends TestCase {
     protected CompilerOutput compilerOutput;
 
     public void setUp() throws IOException {
-        compiler = new Compiler();
+        compiler = new net.virtualinfinity.atrobots.compiler.Compiler();
         out = new ByteArrayOutputStream(1024);
         source = new PrintStream(out);
         game = new Game(1);

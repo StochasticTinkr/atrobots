@@ -174,7 +174,7 @@ public class Entrant {
         return debugInfo;
     }
 
-    void setDebugInfo(DebugInfo debugInfo) {
+    public void setDebugInfo(DebugInfo debugInfo) {
         this.debugInfo = debugInfo;
     }
 

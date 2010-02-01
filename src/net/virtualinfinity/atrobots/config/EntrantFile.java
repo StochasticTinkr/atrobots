@@ -1,7 +1,6 @@
 package net.virtualinfinity.atrobots.config;
 
-import net.virtualinfinity.atrobots.Compiler;
-import net.virtualinfinity.atrobots.CompilerOutput;
+import net.virtualinfinity.atrobots.compiler.CompilerOutput;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -51,7 +50,7 @@ public class EntrantFile extends EntrantSource {
         return defaultName;
     }
 
-    protected CompilerOutput compile(Compiler compiler) throws IOException {
+    protected CompilerOutput compile(net.virtualinfinity.atrobots.compiler.Compiler compiler) throws IOException {
         return compiler.compile(file);
     }
 }

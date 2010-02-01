@@ -1,8 +1,8 @@
 package net.virtualinfinity.atrobots.config;
 
-import net.virtualinfinity.atrobots.Compiler;
-import net.virtualinfinity.atrobots.CompilerOutput;
 import net.virtualinfinity.atrobots.Entrant;
+import net.virtualinfinity.atrobots.compiler.Compiler;
+import net.virtualinfinity.atrobots.compiler.CompilerOutput;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -59,7 +59,7 @@ public abstract class EntrantSource {
         return new Entrants(factory, entrants);
     }
 
-    protected abstract CompilerOutput compile(Compiler compiler) throws IOException;
+    protected abstract CompilerOutput compile(net.virtualinfinity.atrobots.compiler.Compiler compiler) throws IOException;
 
     public Compiler getCompiler() {
         return compiler;

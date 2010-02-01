@@ -1,9 +1,9 @@
-package net.virtualinfinity.atrobots;
+package net.virtualinfinity.atrobots.compiler;
 
+import net.virtualinfinity.atrobots.AbstractCompilerTest;
 import net.virtualinfinity.atrobots.atsetup.AtRobotInstruction;
 import net.virtualinfinity.atrobots.atsetup.AtRobotRegister;
 import net.virtualinfinity.atrobots.computer.MemoryArray;
-import net.virtualinfinity.atrobots.parser.Errors;
 
 import java.io.File;
 import java.io.FilenameFilter;
@@ -70,7 +70,7 @@ public class CompilerTest extends AbstractCompilerTest {
             }
         });
         Errors errors = new Errors();
-        Compiler compiler = new Compiler();
+        Compiler compiler = new net.virtualinfinity.atrobots.compiler.Compiler();
         for (File file : files) {
             try {
                 System.out.println("Loading " + file);
