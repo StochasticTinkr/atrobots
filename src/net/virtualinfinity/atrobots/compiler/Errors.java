@@ -6,11 +6,19 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
+ * Keeps track of compiler errors.
+ *
  * @author Daniel Pitts
  */
 public class Errors {
     List<String> messages = new ArrayList<String>();
 
+    /**
+     * Add an error message on the given line number.
+     *
+     * @param error      the message.
+     * @param lineNumber the line number.
+     */
     public void add(String error, int lineNumber) {
         messages.add("Line " + lineNumber + ": " + error);
     }
@@ -19,10 +27,23 @@ public class Errors {
         return !messages.isEmpty();
     }
 
+    /**
+     * Add an error message on the given line number and column.
+     *
+     * @param error      the message.
+     * @param lineNumber the line number.
+     * @param column     the column
+     */
     public void add(String error, int lineNumber, int column) {
-        add(error, lineNumber);
+        messages.add("Line " + lineNumber + "," + column + ": " + error);
     }
 
+    /**
+     * Display the errors in a JDialog, if there are any.
+     *
+     * @param name   the dialog name.
+     * @param parent the parent frame or dialog.
+     */
     public void showErrorDialog(String name, Object parent) {
         if (!hasErrors()) {
             return;
@@ -39,19 +60,41 @@ public class Errors {
         dialog.setVisible(true);
     }
 
+    /**
+     * Add information not associated with a line.
+     *
+     * @param info the information.
+     */
     public void info(String info) {
         messages.add(info);
     }
 
-    public void addAll(Errors result) {
-        messages.addAll(result.messages);
+    /**
+     * Add a copy of the messages in another errors object into this one.
+     *
+     * @param errors the errors to add from.
+     */
+    public void addAll(Errors errors) {
+        messages.addAll(errors.messages);
     }
 
+    /**
+     * Dump the errors to System.out.
+     */
     public void dumpErrors() {
         if (hasErrors()) {
             for (String m : messages) {
                 System.out.println(m);
             }
         }
+    }
+
+    /**
+     * Get a copy of the messages.
+     *
+     * @return a copy of the messages.
+     */
+    public List<String> getMessages() {
+        return new ArrayList<String>(messages);
     }
 }

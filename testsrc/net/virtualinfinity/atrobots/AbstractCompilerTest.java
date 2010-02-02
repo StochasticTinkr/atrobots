@@ -40,6 +40,9 @@ public abstract class AbstractCompilerTest extends TestCase {
             try {
                 compilerOutput = compiler.compile(stream);
                 compilerOutput.getErrors().dumpErrors();
+                if (compilerOutput.hasErrors()) {
+                    return;
+                }
                 final Entrant entrant = compilerOutput.createEntrant("test");
                 game.addEntrant(entrant);
                 game.nextRound();

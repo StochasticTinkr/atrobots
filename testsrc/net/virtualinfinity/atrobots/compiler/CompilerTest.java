@@ -21,6 +21,33 @@ public class CompilerTest extends AbstractCompilerTest {
         assertInstructionEquals(0, 3, 0, 0, 2);
     }
 
+    public void testDuplicateLabels() throws IOException {
+        source.println("!test");
+        source.println("!test");
+        source.println("NOP");
+        compile();
+        assertTrue(compilerOutput.hasErrors());
+        assertTrue(compilerOutput.getErrors().getMessages().get(0).contains("!test"));
+    }
+
+    public void testDuplicateVariables() throws IOException {
+        source.println("#def Foo");
+        source.println("#def FOO");
+        source.println("NOP");
+        compile();
+        assertTrue(compilerOutput.hasErrors());
+        assertTrue(compilerOutput.getErrors().getMessages().get(0).contains("foo"));
+    }
+
+    public void testVariableShadowsOpcode() throws IOException {
+        source.println("#def MOV");
+        source.println("NOP");
+        compile();
+        assertTrue(compilerOutput.hasErrors());
+        assertTrue(compilerOutput.getErrors().getMessages().get(0).contains("mov"));
+    }
+
+
     private void assertInstructionEquals(int instructionPointer, int instruction, int op0, int op1, int microcode) {
         final int address = instructionPointer * 4;
         assertEquals(instruction, getMemoryArray().get(address));

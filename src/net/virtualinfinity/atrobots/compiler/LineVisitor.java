@@ -16,7 +16,7 @@ public interface LineVisitor {
 
     void invalidVariableNameChar(int column, int lineNumber);
 
-    void defineVariable(String variableName);
+    void defineVariable(String variableName, int lineNumber);
 
     void maxProcessorSpeed(int speed);
 
@@ -32,7 +32,7 @@ public interface LineVisitor {
 
     void machineCode(int[] values, int lineNumber);
 
-    void label(String line);
+    void label(String line, int lineNumber);
 
     void tokenizedLine(List<Token> tokens, int lineNumber);
 

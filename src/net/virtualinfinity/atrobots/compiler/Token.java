@@ -5,11 +5,20 @@ import net.virtualinfinity.atrobots.atsetup.AtRobotMicrocodes;
 import java.util.Map;
 
 /**
+ * A parsed expression.
+ *
  * @author Daniel Pitts
  */
 public abstract class Token {
     private int lineNumber;
 
+    /**
+     * Parse the expression and return a token.
+     *
+     * @param lineNumber the line number, for error reporting.
+     * @param token      the string.
+     * @return a token.
+     */
     public static Token parse(int lineNumber, String token) {
         final Token t = getToken(lineNumber, token);
         t.setLineNumber(lineNumber);
@@ -33,11 +42,11 @@ public abstract class Token {
         return new Name(token);
     }
 
-    abstract public short getValue(Map<String, CompilingLineVisitor.Symbol> symbols);
+    abstract public short getValue(Map<String, Symbol> symbols);
 
-    abstract public short getMicrocode(Map<String, CompilingLineVisitor.Symbol> symbols);
+    abstract public short getMicrocode(Map<String, Symbol> symbols);
 
-    public boolean isUnresolved(Map<String, CompilingLineVisitor.Symbol> symbols) {
+    public boolean isUnresolved(Map<String, Symbol> symbols) {
         return false;
     }
 
@@ -56,11 +65,11 @@ public abstract class Token {
             this.inner = inner;
         }
 
-        public short getValue(Map<String, CompilingLineVisitor.Symbol> symbols) {
+        public short getValue(Map<String, Symbol> symbols) {
             return inner.getValue(symbols);
         }
 
-        public short getMicrocode(Map<String, CompilingLineVisitor.Symbol> symbols) {
+        public short getMicrocode(Map<String, Symbol> symbols) {
             return (short) (8 | inner.getMicrocode(symbols));
         }
     }
@@ -72,11 +81,11 @@ public abstract class Token {
             this.value = value;
         }
 
-        public short getValue(Map<String, CompilingLineVisitor.Symbol> symbols) {
+        public short getValue(Map<String, Symbol> symbols) {
             return (short) value;
         }
 
-        public short getMicrocode(Map<String, CompilingLineVisitor.Symbol> symbols) {
+        public short getMicrocode(Map<String, Symbol> symbols) {
             return 0;
         }
     }
@@ -88,21 +97,21 @@ public abstract class Token {
             this.name = name;
         }
 
-        public short getValue(Map<String, CompilingLineVisitor.Symbol> symbols) {
+        public short getValue(Map<String, Symbol> symbols) {
             return isUnresolved(symbols) ? 0 : get(symbols).getValue();
         }
 
-        public short getMicrocode(Map<String, CompilingLineVisitor.Symbol> symbols) {
+        public short getMicrocode(Map<String, Symbol> symbols) {
             return isUnresolved(symbols) ? getUnresolvedMicrocode() : get(symbols).getMicrocode();
         }
 
         protected abstract short getUnresolvedMicrocode();
 
-        private CompilingLineVisitor.Symbol get(Map<String, CompilingLineVisitor.Symbol> symbols) {
+        private Symbol get(Map<String, Symbol> symbols) {
             return symbols.get(name);
         }
 
-        public boolean isUnresolved(Map<String, CompilingLineVisitor.Symbol> symbols) {
+        public boolean isUnresolved(Map<String, Symbol> symbols) {
             int old = 0x481;
             int n = 0x488;
             return !symbols.containsKey(name);
@@ -146,7 +155,7 @@ public abstract class Token {
             super(value);
         }
 
-        public short getMicrocode(Map<String, CompilingLineVisitor.Symbol> symbols) {
+        public short getMicrocode(Map<String, Symbol> symbols) {
             return AtRobotMicrocodes.REFERENCE;
         }
     }

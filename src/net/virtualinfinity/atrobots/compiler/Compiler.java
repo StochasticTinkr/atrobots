@@ -71,10 +71,7 @@ public class Compiler {
      * @throws IOException if there is a problem reading from the reader.
      */
     public CompilerOutput compile(LineNumberReader reader) throws IOException {
-        final CompilingLineVisitor compilingLineVisitor = new CompilingLineVisitor();
-        new AtRobotLineLexer(reader, compilingLineVisitor).visitAllLines();
-        compilingLineVisitor.resolve();
-        return compilingLineVisitor.createCompilerOutput();
+        return new LineNumberReaderCompiler().compile(reader);
     }
 
 }

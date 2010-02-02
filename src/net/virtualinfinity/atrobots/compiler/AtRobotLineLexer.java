@@ -69,7 +69,7 @@ public class AtRobotLineLexer {
             }
             ++i;
         }
-        lineVisitor.label(line.toLowerCase());
+        lineVisitor.label(line, getLineNumber());
     }
 
     private void visitNormalLine(String line) {
@@ -187,7 +187,7 @@ public class AtRobotLineLexer {
                 }
                 i++;
             }
-            lineVisitor.defineVariable(line.substring(start).toLowerCase());
+            lineVisitor.defineVariable(line.substring(start).toLowerCase(), getLineNumber());
             return;
         }
         if (directive.equals("time")) {
