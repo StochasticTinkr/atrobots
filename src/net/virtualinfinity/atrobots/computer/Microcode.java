@@ -1,5 +1,7 @@
 package net.virtualinfinity.atrobots.computer;
 
+import net.virtualinfinity.atrobots.atsetup.AtRobotMicrocodes;
+
 import java.util.Arrays;
 
 /**
@@ -12,69 +14,83 @@ public enum Microcode {
         public short getValue(Computer computer, int opnumber) {
             return computer.getConstant(opnumber);
         }
+
         public int getAddress(Computer computer, int opnumber) {
             computer.notAddressableError();
             return 0;
-        }},
+        }
+    },
     Dereference {
         public short getValue(Computer computer, int opnumber) {
             return computer.getDeferencedValue(opnumber);
         }
+
         public int getAddress(Computer computer, int opnumber) {
             return computer.getConstant(opnumber);
-        }},
+        }
+    },
     DoubleDereference {
         public short getValue(Computer computer, int opnumber) {
             return computer.getDoubleDereferencedValue(opnumber);
         }
+
         public int getAddress(Computer computer, int opnumber) {
             return computer.getDeferencedValue(opnumber);
-        }},
+        }
+    },
     NumberedLabel {
         public short getValue(Computer computer, int opnumber) {
             return computer.getNumberedLabelValue(opnumber);
         }
+
         public int getAddress(Computer computer, int opnumber) {
             computer.notAddressableError();
             return 0;
-        }},
+        }
+    },
     ResolvedLabel {
         public short getValue(Computer computer, int opnumber) {
             return computer.getLabelValue(opnumber);
         }
+
         public int getAddress(Computer computer, int opnumber) {
             computer.notAddressableError();
             return 0;
-        }},
+        }
+    },
     UnresolvedLabel {
         public short getValue(Computer computer, int opnumber) {
             return computer.getUnresolvedLabelValue(opnumber);
         }
+
         public int getAddress(Computer computer, int opnumber) {
             computer.notAddressableError();
             return 0;
-        }},
+        }
+    },
     Invalid {
         public short getValue(Computer computer, int opnumber) {
             computer.invalidMicrocodeError();
             return computer.getConstant(opnumber);
         }
+
         public int getAddress(Computer computer, int opnumber) {
             computer.notAddressableError();
             return 0;
-        }};
+        }
+    };
 
     private static final Microcode[] codes = new Microcode[15];
 
     static {
         Arrays.fill(codes, Invalid);
-        codes[0] = Constant;
-        codes[1] = Dereference;
-        codes[2] = NumberedLabel;
-        codes[3] = UnresolvedLabel;
-        codes[4] = ResolvedLabel;
-        codes[8] = Dereference;
-        codes[9] = DoubleDereference;
+        codes[AtRobotMicrocodes.CONSTANT] = Constant;
+        codes[AtRobotMicrocodes.REFERENCE] = Dereference;
+        codes[AtRobotMicrocodes.NUMBERED_LABEL] = NumberedLabel;
+        codes[AtRobotMicrocodes.UNRESOLVED_LABEL] = UnresolvedLabel;
+        codes[AtRobotMicrocodes.RESOLVED_LABEL] = ResolvedLabel;
+        codes[AtRobotMicrocodes.INDIRECT_REFERENCE_MASK | AtRobotMicrocodes.CONSTANT] = Dereference;
+        codes[AtRobotMicrocodes.INDIRECT_REFERENCE_MASK | AtRobotMicrocodes.REFERENCE] = DoubleDereference;
     }
 
     public static Microcode get(int microcode) {
