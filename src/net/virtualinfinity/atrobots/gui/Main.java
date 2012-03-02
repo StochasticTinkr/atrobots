@@ -12,7 +12,6 @@ import net.virtualinfinity.atrobots.gui.renderers.SimpleExplosionRenderer;
 
 import javax.swing.*;
 import javax.swing.border.BevelBorder;
-import javax.swing.filechooser.FileNameExtensionFilter;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.WindowAdapter;
@@ -176,7 +175,7 @@ public class Main implements Runnable {
         menu.add(new AbstractAction("Add Entrant") {
             public void actionPerformed(ActionEvent e) {
                 final JFileChooser chooser = new JFileChooser();
-                chooser.setFileFilter(new FileNameExtensionFilter("AT-Robots files", ".at2", ".ats"));
+                chooser.setFileFilter(RobotFileUtils.getAtRobotsFileNameFilter());
                 chooser.setMultiSelectionEnabled(true);
                 if (chooser.showOpenDialog(mainFrame) == JFileChooser.APPROVE_OPTION) {
                     new EntrantLoader(chooser.getSelectedFiles()).execute();
@@ -251,68 +250,25 @@ public class Main implements Runnable {
         this.debugMode = debugMode;
     }
 
-    private static EntrantFile[] getFilesByName(java.util.List<String> initialRobots) {
-        final java.util.List<EntrantFile> files = new ArrayList<EntrantFile>();
-        boolean debug = false;
-        for (String file : initialRobots) {
-            if (!debug && "-d".equals(file)) {
-                debug = true;
-            } else {
-                files.add(new EntrantFile(debug, robotFile(file)));
-                debug = false;
-            }
-        }
-        return files.toArray(new EntrantFile[files.size()]);
-    }
-
-    private static EntrantFile[] getEntrantFiles(File[] initialRobots) {
-        final java.util.List<EntrantFile> files = new ArrayList<EntrantFile>();
-        for (File file : initialRobots) {
-            files.add(new EntrantFile(false, file));
-        }
-        return files.toArray(new EntrantFile[files.size()]);
-    }
-
-    private static File robotFile(String robotName) {
-        final File file = new File(robotName);
-        if (file.exists()) {
-            return file;
-        }
-        for (File f : file.getParentFile().listFiles(new FilenameAt2Filter(robotName))) {
-            return f;
-        }
-        return file;
-    }
-
-    static class EntrantFile {
-        final boolean debug;
-        final File file;
-
-        EntrantFile(boolean debug, File file) {
-            this.debug = debug;
-            this.file = file;
-        }
-    }
-
     private class EntrantLoader extends SwingWorker<Errors, Entrant> {
-        private final EntrantFile[] selectedFiles;
+        private final RobotFileUtils.EntrantFile[] selectedFiles;
 
         public EntrantLoader(File[] selectedFiles) {
-            this(getEntrantFiles(selectedFiles));
+            this(RobotFileUtils.getEntrantFiles(selectedFiles));
         }
 
-        public EntrantLoader(EntrantFile[] selectedFiles) {
+        public EntrantLoader(RobotFileUtils.EntrantFile[] selectedFiles) {
             this.selectedFiles = selectedFiles;
         }
 
         public EntrantLoader(java.util.List<String> initialRobots) {
-            this(getFilesByName(initialRobots));
+            this(RobotFileUtils.getFilesByName(initialRobots));
         }
 
 
         protected Errors doInBackground() throws Exception {
             Errors errors = new Errors();
-            for (EntrantFile entrantFile : selectedFiles) {
+            for (RobotFileUtils.EntrantFile entrantFile : selectedFiles) {
                 final File file = entrantFile.file;
                 Compiler compiler = new net.virtualinfinity.atrobots.compiler.Compiler();
                 try {
@@ -435,15 +391,4 @@ public class Main implements Runnable {
         }
     }
 
-    private static class FilenameAt2Filter implements FilenameFilter {
-        private final String robotName;
-
-        public FilenameAt2Filter(String robotName) {
-            this.robotName = robotName;
-        }
-
-        public boolean accept(File dir, String name) {
-            return name.toLowerCase().equals(robotName + ".at2");
-        }
-    }
 }

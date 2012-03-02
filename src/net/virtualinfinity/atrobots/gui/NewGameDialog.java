@@ -6,12 +6,12 @@ import net.virtualinfinity.atrobots.config.EntrantFile;
 import net.virtualinfinity.atrobots.config.EntrantSource;
 
 import javax.swing.*;
-import javax.swing.filechooser.FileNameExtensionFilter;
 import java.awt.event.*;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Properties;
 
 public class NewGameDialog extends JDialog {
     private JPanel contentPane;
@@ -58,9 +58,10 @@ public class NewGameDialog extends JDialog {
         }, KeyStroke.getKeyStroke(KeyEvent.VK_ESCAPE, 0), JComponent.WHEN_ANCESTOR_OF_FOCUSED_COMPONENT);
         loadEntrantsButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                final JFileChooser jFileChooser = new JFileChooser(new File("."));
+                final Properties properties = System.getProperties();
+                final JFileChooser jFileChooser = new JFileChooser(new File(properties.getProperty("user.dir")));
                 jFileChooser.setMultiSelectionEnabled(true);
-                jFileChooser.setFileFilter(new FileNameExtensionFilter("AT-Robots files", "at2", "ats"));
+                jFileChooser.setFileFilter(RobotFileUtils.getAtRobotsFileNameFilter());
                 if (jFileChooser.showOpenDialog(NewGameDialog.this) == JFileChooser.APPROVE_OPTION) {
                     Errors errors = new Errors();
                     for (File file : jFileChooser.getSelectedFiles()) {
