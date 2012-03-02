@@ -12,21 +12,32 @@ import net.virtualinfinity.atrobots.debugger.*;
  * @author Daniel Pitts
  */
 public class Entrant {
-    private int id;
-    private Game game;
-    private String name;
-    private Program program;
-    private HardwareSpecification hardwareSpecification;
-    private int totalKills;
-    private int roundKills;
-    private int totalDeaths;
-    private DebugInfo debugInfo;
-    private int maxProcessorSpeed = Integer.MAX_VALUE;
+    private static final int ROBOT_STACK_SIZE = 256;
+    private static final int LOWER_MEMORY_BLOCK_SIZE = 1024;
+    private volatile int id;
+    private final String name;
+    private final Program program;
+    private final HardwareSpecification hardwareSpecification;
+    private final DebugInfo debugInfo;
+    private final int maxProcessorSpeed;
+    private volatile String message = "";
+    private volatile Game game;
+    private volatile int totalTies;
+    private volatile int totalWins;
+    private volatile int totalKills;
+    private volatile int roundKills;
+    private volatile int totalDeaths;
     private boolean debug;
     private static final Debugger DEBUGGER = DebugConsole.create(getSystemConsole()).getDebugger();
-    private String message = "";
-    private int totalTies;
-    private int totalWins;
+
+    public Entrant(String name, Program program, HardwareSpecification hardwareSpecification, DebugInfo debugInfo, int maxProcessorSpeed, String message) {
+        this.name = name;
+        this.program = program;
+        this.hardwareSpecification = hardwareSpecification;
+        this.debugInfo = debugInfo;
+        this.maxProcessorSpeed = maxProcessorSpeed;
+        this.message = message;
+    }
 
     private static Console getSystemConsole() {
         return new ConsoleImpl(new ReaderConsoleInput(System.in), new PrintStreamConsoleOutput(System.out), new PrintStreamConsoleOutput(System.err));
@@ -41,9 +52,9 @@ public class Entrant {
         final Robot robot = new Robot();
         robot.setEntrant(this);
         robot.setArena(game.getRound().getArena());
-        final RandomAccessMemoryArray lowerMemoryBlock = new RandomAccessMemoryArray(1024);
+        final RandomAccessMemoryArray lowerMemoryBlock = new RandomAccessMemoryArray(LOWER_MEMORY_BLOCK_SIZE);
         robot.setComputer(createComputer(lowerMemoryBlock));
-        HardwareContext hardwareContext = new HardwareContext();
+        final HardwareContext hardwareContext = new HardwareContext();
         hardwareContext.setRobot(robot);
         hardwareSpecification.configureHardwareContext(hardwareContext);
         hardwareContext.setLowerMemoryArray(lowerMemoryBlock);
@@ -60,9 +71,13 @@ public class Entrant {
         final Memory memory = new Memory();
         memory.addMemoryArray(lowerMemoryBlock);
         memory.addMemoryArray(program.createProgramMemory());
-        Computer computer = new Computer(memory, 256, Math.max(maxProcessorSpeed, game.getMaxProcessorSpeed()));
+        final Computer computer = new Computer(memory, ROBOT_STACK_SIZE, getProcessorSpeed());
         computer.setEntrant(this);
         return computer;
+    }
+
+    private int getProcessorSpeed() {
+        return Math.max(maxProcessorSpeed, game.getMaxProcessorSpeed());
     }
 
     /**
@@ -110,39 +125,12 @@ public class Entrant {
     }
 
     /**
-     * Set the program to use for the robots this entrant creates.
-     *
-     * @param program the program.
-     */
-    public void setProgram(Program program) {
-        this.program = program;
-    }
-
-    /**
      * Set the game that this entrant will enter.
      *
      * @param game the game.
      */
     public void setGame(Game game) {
         this.game = game;
-    }
-
-    /**
-     * Set the display name of this entrant.
-     *
-     * @param name the name.
-     */
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    /**
-     * Set the hardware specifications to use for the robots.
-     *
-     * @param hardwareSpecification the specs.
-     */
-    public void setHardwareSpecification(HardwareSpecification hardwareSpecification) {
-        this.hardwareSpecification = hardwareSpecification;
     }
 
     /**
@@ -170,7 +158,7 @@ public class Entrant {
     /**
      * Record a kill.
      */
-    public void incrementKills() {
+    public synchronized void incrementKills() {
         roundKills++;
         totalKills++;
     }
@@ -178,21 +166,21 @@ public class Entrant {
     /**
      * Record a win.
      */
-    public void incrementWins() {
+    public synchronized void incrementWins() {
         totalWins++;
     }
 
     /**
      * Record a tie.
      */
-    public void incrementTies() {
+    public synchronized void incrementTies() {
         totalTies++;
     }
 
     /**
      * Record a death.
      */
-    public void incrementDeaths() {
+    public synchronized void incrementDeaths() {
         totalDeaths++;
     }
 
@@ -206,16 +194,8 @@ public class Entrant {
         return debugInfo;
     }
 
-    public void setDebugInfo(DebugInfo debugInfo) {
-        this.debugInfo = debugInfo;
-    }
-
     public int getMaxProcessorSpeed() {
         return maxProcessorSpeed;
-    }
-
-    public void setMaxProcessorSpeed(int maxProcessorSpeed) {
-        this.maxProcessorSpeed = maxProcessorSpeed;
     }
 
     public Robot getCurrentRobot() {

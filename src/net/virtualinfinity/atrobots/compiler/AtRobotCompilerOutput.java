@@ -63,14 +63,7 @@ public class AtRobotCompilerOutput {
         if (hasErrors()) {
             throw new IllegalStateException("Can not create an entrant with errors. Check CompilerOutput.hasErrors() first.");
         }
-        final Entrant entrant = new Entrant();
-        entrant.setProgram(program);
-        entrant.setName(name);
-        entrant.setHardwareSpecification(hardwareSpecification);
-        entrant.setDebugInfo(debugInfo);
-        entrant.setMaxProcessorSpeed(maxProcessorSpeed);
-        entrant.setMessage(message);
-        return entrant;
+        return new Entrant(name, program, hardwareSpecification, debugInfo, maxProcessorSpeed, message);
     }
 
     /**
