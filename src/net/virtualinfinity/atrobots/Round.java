@@ -54,4 +54,8 @@ public class Round {
     public Robot getRobot(Entrant entrant) {
         return robots.get(entrant);
     }
+
+    public void finalizeRound() {
+        arena.determineWinners();
+    }
 }

@@ -19,6 +19,8 @@ public class RobotSnapshot extends ArenaObjectSnapshot {
     private int roundKills;
     private int totalKills;
     private int totalDeaths;
+    private int totalWins;
+    private int totalTies;
 
     public void setTemperature(Temperature temperature) {
         this.temperature = temperature;
@@ -120,6 +122,22 @@ public class RobotSnapshot extends ArenaObjectSnapshot {
         this.totalDeaths = totalDeaths;
     }
 
+    public int getTotalWins() {
+        return totalWins;
+    }
+
+    public void setTotalWins(int totalWins) {
+        this.totalWins = totalWins;
+    }
+
+    public int getTotalTies() {
+        return totalTies;
+    }
+
+    public void setTotalTies(int totalTies) {
+        this.totalTies = totalTies;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -133,6 +151,8 @@ public class RobotSnapshot extends ArenaObjectSnapshot {
         if (overburn != that.overburn) return false;
         if (roundKills != that.roundKills) return false;
         if (totalDeaths != that.totalDeaths) return false;
+        if (totalWins != that.totalWins) return false;
+        if (totalTies != that.totalTies) return false;
         if (totalKills != that.totalKills) return false;
         if (!heading.equals(that.heading)) return false;
         if (lastMessage != null ? !lastMessage.equals(that.lastMessage) : that.lastMessage != null) return false;
@@ -159,6 +179,8 @@ public class RobotSnapshot extends ArenaObjectSnapshot {
         result = 31 * result + (lastMessage != null ? lastMessage.hashCode() : 0);
         result = 31 * result + roundKills;
         result = 31 * result + totalKills;
+        result = 31 * result + totalWins;
+        result = 31 * result + totalTies;
         result = 31 * result + totalDeaths;
         return result;
     }

@@ -49,6 +49,9 @@ public class Game {
      * Start the next round. This ends the current round.
      */
     public synchronized void nextRound() {
+        if (round != null) {
+            round.finalizeRound();
+        }
         round = new Round(++roundNumber, this);
         round.getArena().setSimulationFrameBuffer(frameBuffer);
         for (Entrant entrant : entrants) {

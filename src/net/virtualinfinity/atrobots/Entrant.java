@@ -25,6 +25,8 @@ public class Entrant {
     private boolean debug;
     private static final Debugger DEBUGGER = DebugConsole.create(getSystemConsole()).getDebugger();
     private String message = "";
+    private int totalTies;
+    private int totalWins;
 
     private static Console getSystemConsole() {
         return new ConsoleImpl(new ReaderConsoleInput(System.in), new PrintStreamConsoleOutput(System.out), new PrintStreamConsoleOutput(System.err));
@@ -88,6 +90,14 @@ public class Entrant {
      */
     public int getTotalDeaths() {
         return totalDeaths;
+    }
+
+    public int getTotalTies() {
+        return totalTies;
+    }
+
+    public int getTotalWins() {
+        return totalWins;
     }
 
     /**
@@ -166,6 +176,28 @@ public class Entrant {
     }
 
     /**
+     * Record a win.
+     */
+    public void incrementWins() {
+        totalWins++;
+    }
+
+    /**
+     * Record a tie.
+     */
+    public void incrementTies() {
+        totalTies++;
+    }
+
+    /**
+     * Record a death.
+     */
+    public void incrementDeaths() {
+        totalDeaths++;
+    }
+
+
+    /**
      * Get the debugging information.
      *
      * @return the debugging information.
@@ -197,4 +229,5 @@ public class Entrant {
     public void setMessage(String message) {
         this.message = message;
     }
+
 }

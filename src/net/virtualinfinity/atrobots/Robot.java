@@ -254,6 +254,8 @@ public class Robot extends ArenaObject implements Resetable {
         robotSnapshot.setRoundKills(getEntrant().getRoundKills());
         robotSnapshot.setTotalKills(getEntrant().getTotalKills());
         robotSnapshot.setTotalDeaths(getEntrant().getTotalDeaths());
+        robotSnapshot.setTotalWins(getEntrant().getTotalWins());
+        robotSnapshot.setTotalTies(getEntrant().getTotalTies());
         robotSnapshot.setLastMessage(getComputer().getLastMessage());
         return robotSnapshot;
     }
@@ -279,13 +281,14 @@ public class Robot extends ArenaObject implements Resetable {
         if (!isDead()) {
             armor.inflictDamage(shield.absorbDamage(damageAmount));
             if (isDead()) {
-                cause.getEntrant().incrementKills();
+                cause.killedRobot();
             }
         }
     }
 
     public void explode() {
         if (!isDead()) {
+            entrant.incrementDeaths();
             die();
             getArena().explosion(this, new LinearDamageFunction(position, isOverburn() ? 1.3 : 1, 25.0));
         }
@@ -326,5 +329,17 @@ public class Robot extends ArenaObject implements Resetable {
         this.throttle = throttle;
         throttle.setSpeed(speed);
         throttle.setHeat(heat);
+    }
+
+    public void winRound() {
+        getEntrant().incrementWins();
+    }
+
+    public void tieRound() {
+        getEntrant().incrementTies();
+    }
+
+    private void killedRobot() {
+        getEntrant().incrementKills();
     }
 }

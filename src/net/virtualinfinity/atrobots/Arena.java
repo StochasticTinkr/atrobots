@@ -12,7 +12,7 @@ import java.util.*;
  * @author Daniel Pitts
  */
 public class Arena {
-    private final List<Robot> robots = new LinkedList<Robot>();
+    private final List<Robot> activeRobots = new LinkedList<Robot>();
     private final List<Robot> allRobots = new LinkedList<Robot>();
     private final List<Mine> mines = new LinkedList<Mine>();
     private final List<Missile> missiles = new LinkedList<Missile>();
@@ -22,7 +22,7 @@ public class Arena {
     {
         allArenaObjectCollections.add(missiles);
         allArenaObjectCollections.add(mines);
-        allArenaObjectCollections.add(robots);
+        allArenaObjectCollections.add(activeRobots);
         allArenaObjectCollections.add(others);
     }
 
@@ -43,7 +43,7 @@ public class Arena {
      * @return the number of robots still active in the arena.
      */
     public int countActiveRobots() {
-        return robots.size();
+        return activeRobots.size();
     }
 
     /**
@@ -105,7 +105,7 @@ public class Arena {
 
     private ScanResult calculateResult(Robot ignore, Position position, AngleBracket angleBracket, double maxDistance, boolean calculateAccuracy) {
         ScanWork scanWork = new ScanWork(position, angleBracket, maxDistance, calculateAccuracy);
-        for (Robot robot : robots) {
+        for (Robot robot : activeRobots) {
             if (robot != ignore) {
                 scanWork.visit(robot);
             }
@@ -149,7 +149,7 @@ public class Arena {
 
     private void removeDead() {
         for (Collection<? extends ArenaObject> objectCollection : allArenaObjectCollections) {
-            for (Iterator<? extends ArenaObject> it = objectCollection.iterator(); it.hasNext();) {
+            for (Iterator<? extends ArenaObject> it = objectCollection.iterator(); it.hasNext(); ) {
                 if (it.next().isDead()) {
                     it.remove();
                 }
@@ -158,8 +158,8 @@ public class Arena {
     }
 
     private void checkCollissions() {
-        for (final Robot collisionTarget : robots) {
-            for (Robot robot : robots) {
+        for (final Robot collisionTarget : activeRobots) {
+            for (Robot robot : activeRobots) {
                 if (robot == collisionTarget) {
                     break;
                 }
@@ -191,7 +191,7 @@ public class Arena {
     public void addRobot(Robot robot) {
         robot.getPosition().copyFrom(Position.random(0.0, 0.0, 1000.0, 1000.0));
         connectArena(robot);
-        robots.add(robot);
+        activeRobots.add(robot);
         allRobots.add(robot);
     }
 
@@ -213,8 +213,26 @@ public class Arena {
      */
     public void explosion(Robot cause, ExplosionFunction explosionFunction) {
         others.add(new Explosion(explosionFunction.getCenter(), explosionFunction.getRadius()));
-        for (Robot robot : robots) {
+        for (Robot robot : activeRobots) {
             explosionFunction.inflictDamage(cause, robot);
+        }
+    }
+
+    public void determineWinners() {
+        if (!activeRobots.isEmpty()) {
+            if (activeRobots.size() == 1) {
+                for (Robot robot : activeRobots) {
+                    robot.winRound();
+                }
+            } else {
+                for (Robot robot : activeRobots) {
+                    robot.tieRound();
+                }
+            }
+        } else {
+            for (Robot robot : allRobots) {
+                robot.tieRound();
+            }
         }
     }
 }

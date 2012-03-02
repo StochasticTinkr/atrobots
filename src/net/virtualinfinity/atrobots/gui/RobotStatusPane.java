@@ -40,11 +40,9 @@ public class RobotStatusPane extends JList implements SimulationObserver {
     }
 
     private void updateRobotStatus(RobotSnapshot robotSnapshot) {
-        RobotItem robotItem = items.get(robotSnapshot.getId());
+        final RobotItem robotItem = items.get(robotSnapshot.getId());
         if (robotItem == null) {
-            robotItem = new RobotItem(robotSnapshot);
-            items.put(robotSnapshot.getId(), robotItem);
-            robotList.addElement(robotItem);
+            addItem(new RobotItem(robotSnapshot));
         } else {
             robotItem.setRobotSnapshot(robotSnapshot);
 
@@ -52,11 +50,16 @@ public class RobotStatusPane extends JList implements SimulationObserver {
         revalidate();
     }
 
+    private void addItem(RobotItem robotItem) {
+        items.put(robotItem.getId(), robotItem);
+        robotList.addElement(robotItem);
+    }
+
     public static RobotStatusPane createRobotStatusPane() {
         return new RobotStatusPane();
     }
 
-    public java.util.Set<Integer> getSelectedRobotIds() {
+    public Set<Integer> getSelectedRobotIds() {
         final Object[] objects = this.getSelectedValues();
         final Set<Integer> selectedIds = new HashSet<Integer>();
         for (Object o : objects) {
@@ -171,6 +174,7 @@ public class RobotStatusPane extends JList implements SimulationObserver {
     private static class RobotStatusRenderer extends JPanel implements ListCellRenderer {
         private final JLabel name = new JLabel();
         private final JLabel roundKills = new JLabel();
+        private final JLabel gameStats = new JLabel();
         private final Bar armor = new Bar();
         private final Bar heat = new Bar();
         private final JLabel lastMessage = new JLabel();
@@ -186,17 +190,20 @@ public class RobotStatusPane extends JList implements SimulationObserver {
             heat.setForegroundGradientColors(new Color[]{new Color(.2f, 0, 0), Color.red, Color.yellow});
             name.setForeground(foreground);
             roundKills.setForeground(foreground);
+            gameStats.setForeground(foreground);
             lastMessage.setForeground(foreground);
             removeAll();
-            setLayout(new GridLayout(5, 1, 0, 1));
+            setLayout(new GridLayout(6, 1, 0, 1));
             add(name);
             add(roundKills);
             add(armor);
             add(heat);
+            add(gameStats);
             add(lastMessage);
-            RobotItem item = (RobotItem) value;
+            final RobotItem item = (RobotItem) value;
             final RobotSnapshot robotSnapshot = item.getRobotSnapshot();
             roundKills.setText("Kills (round/total): " + robotSnapshot.getRoundKills() + "/" + robotSnapshot.getTotalKills());
+            gameStats.setText("Wins/Ties/Deaths: " + robotSnapshot.getTotalWins() + "/" + robotSnapshot.getTotalTies() + "/" + robotSnapshot.getTotalDeaths());
             if (!item.isDead()) {
                 armor.setValue((int) Math.round(Math.min(100, robotSnapshot.getArmor())));
                 heat.setValue((int) Math.round(Math.min(100, robotSnapshot.getTemperature().getLogScale() * .2)));
@@ -239,6 +246,9 @@ public class RobotStatusPane extends JList implements SimulationObserver {
         private boolean dead;
         private boolean updated;
         private boolean changed;
+
+        private RobotItem() {
+        }
 
         public RobotItem(RobotSnapshot robotSnapshot) {
             setRobotSnapshot(robotSnapshot);
