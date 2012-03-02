@@ -10,7 +10,7 @@ import net.virtualinfinity.atrobots.computer.Program;
  *
  * @author Daniel Pitts
  */
-public class CompilerOutput {
+public class AtRobotCompilerOutput {
     private final Errors errors;
     private final Program program;
     private final HardwareSpecification hardwareSpecification;
@@ -29,7 +29,7 @@ public class CompilerOutput {
      * @param message               the robots message.
      * @throws NullPointerException if errors is null, or if errors.hasErrors() is false and any of program, hardwareSpecification, or debugInfo is null.
      */
-    public CompilerOutput(Errors errors, Program program, HardwareSpecification hardwareSpecification, int maxProcessorSpeed, DebugInfo debugInfo, String message) {
+    public AtRobotCompilerOutput(Errors errors, Program program, HardwareSpecification hardwareSpecification, int maxProcessorSpeed, DebugInfo debugInfo, String message) {
         if (errors == null) {
             throw new NullPointerException("errors must not be null");
         }

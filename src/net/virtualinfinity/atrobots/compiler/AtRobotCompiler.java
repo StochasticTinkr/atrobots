@@ -7,9 +7,9 @@ import java.io.*;
  *
  * @author Daniel Pitts
  */
-public class Compiler {
+public class AtRobotCompiler {
 
-    public Compiler() {
+    public AtRobotCompiler() {
     }
 
     /**
@@ -19,7 +19,7 @@ public class Compiler {
      * @return a CompilerOutput object.
      * @throws IOException if there is a problem reading from the file.
      */
-    public CompilerOutput compile(File sourceFile) throws IOException {
+    public AtRobotCompilerOutput compile(File sourceFile) throws IOException {
         final InputStream in = new FileInputStream(sourceFile);
         try {
             return compile(in);
@@ -35,7 +35,7 @@ public class Compiler {
      * @return a CompilerOutput object.
      * @throws IOException if there is a problem reading from the stream.
      */
-    public CompilerOutput compile(InputStream in) throws IOException {
+    public AtRobotCompilerOutput compile(InputStream in) throws IOException {
         final Reader reader = new InputStreamReader(in);
         try {
             return compile(reader);
@@ -51,7 +51,7 @@ public class Compiler {
      * @return a CompilerOutput object.
      * @throws IOException if there is a problem reading from the reader.
      */
-    public CompilerOutput compile(Reader in) throws IOException {
+    public AtRobotCompilerOutput compile(Reader in) throws IOException {
         if (in instanceof LineNumberReader) {
             return compile((LineNumberReader) in);
         }
@@ -70,7 +70,7 @@ public class Compiler {
      * @return a CompilerOutput object.
      * @throws IOException if there is a problem reading from the reader.
      */
-    public CompilerOutput compile(LineNumberReader reader) throws IOException {
+    public AtRobotCompilerOutput compile(LineNumberReader reader) throws IOException {
         return new LineNumberReaderCompiler().compile(reader);
     }
 

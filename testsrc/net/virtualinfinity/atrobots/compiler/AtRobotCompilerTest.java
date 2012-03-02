@@ -12,7 +12,7 @@ import java.io.IOException;
 /**
  * @author Daniel Pitts
  */
-public class CompilerTest extends AbstractCompilerTest {
+public class AtRobotCompilerTest extends AbstractCompilerTest {
 
     public void testNumberLabel() throws IOException {
         source.println(":3");
@@ -97,7 +97,7 @@ public class CompilerTest extends AbstractCompilerTest {
             }
         });
         Errors errors = new Errors();
-        Compiler compiler = new net.virtualinfinity.atrobots.compiler.Compiler();
+        AtRobotCompiler compiler = new AtRobotCompiler();
         for (File file : files) {
             try {
                 System.out.println("Loading " + file);

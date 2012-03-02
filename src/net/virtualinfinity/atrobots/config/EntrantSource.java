@@ -1,8 +1,8 @@
 package net.virtualinfinity.atrobots.config;
 
 import net.virtualinfinity.atrobots.Entrant;
-import net.virtualinfinity.atrobots.compiler.Compiler;
-import net.virtualinfinity.atrobots.compiler.CompilerOutput;
+import net.virtualinfinity.atrobots.compiler.AtRobotCompiler;
+import net.virtualinfinity.atrobots.compiler.AtRobotCompilerOutput;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -17,7 +17,7 @@ public abstract class EntrantSource {
     private boolean debug;
     private int numberOfEntrants = 1;
     private String name;
-    private Compiler compiler = new Compiler();
+    private AtRobotCompiler compiler = new AtRobotCompiler();
 
     public final boolean isDebug() {
         return debug;
@@ -48,7 +48,7 @@ public abstract class EntrantSource {
     }
 
     public final Entrants createEntrants() throws IOException {
-        CompilerOutput factory = compile(compiler);
+        AtRobotCompilerOutput factory = compile(compiler);
         final List<Entrant> entrants = new ArrayList<Entrant>();
         for (int i = 0; i < numberOfEntrants; ++i) {
             entrants.add(factory.createEntrant(getName()));
@@ -59,13 +59,13 @@ public abstract class EntrantSource {
         return new Entrants(factory, entrants);
     }
 
-    protected abstract CompilerOutput compile(net.virtualinfinity.atrobots.compiler.Compiler compiler) throws IOException;
+    protected abstract AtRobotCompilerOutput compile(AtRobotCompiler compiler) throws IOException;
 
-    public Compiler getCompiler() {
+    public AtRobotCompiler getCompiler() {
         return compiler;
     }
 
-    public void setCompiler(Compiler compiler) {
+    public void setCompiler(AtRobotCompiler compiler) {
         this.compiler = compiler;
     }
 

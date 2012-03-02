@@ -43,7 +43,7 @@ public class LineNumberReaderCompiler {
         return new MyLineVisitor();
     }
 
-    public CompilerOutput compile(LineNumberReader reader) throws IOException {
+    public AtRobotCompilerOutput compile(LineNumberReader reader) throws IOException {
         createLineLexer(reader).visitAllLines();
         resolve();
         return createCompilerOutput();
@@ -209,8 +209,8 @@ public class LineNumberReaderCompiler {
         }
     }
 
-    public CompilerOutput createCompilerOutput() {
-        return new CompilerOutput(getErrors(), createProgram(), createHardwareSpecification(), getMaxProcessorSpeed(), getDebugInfo(), getMessage());
+    public AtRobotCompilerOutput createCompilerOutput() {
+        return new AtRobotCompilerOutput(getErrors(), createProgram(), createHardwareSpecification(), getMaxProcessorSpeed(), getDebugInfo(), getMessage());
     }
 
     private DebugInfo getDebugInfo() {
@@ -249,7 +249,7 @@ public class LineNumberReaderCompiler {
 
     private short getMicrocodeFor(List<Token> tokens) {
         short microcode = 0;
-        for (ListIterator<Token> iterator = tokens.listIterator(tokens.size()); iterator.hasPrevious();) {
+        for (ListIterator<Token> iterator = tokens.listIterator(tokens.size()); iterator.hasPrevious(); ) {
             microcode = (short) ((microcode << 4) | iterator.previous().getMicrocode(symbols));
         }
         return microcode;
