@@ -80,7 +80,7 @@ public enum Microcode {
         }
     };
 
-    private static final Microcode[] codes = new Microcode[15];
+    private static final Microcode[] codes = new Microcode[16];
 
     static {
         Arrays.fill(codes, Invalid);
