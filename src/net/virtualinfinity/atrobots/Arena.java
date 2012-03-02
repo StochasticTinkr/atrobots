@@ -36,6 +36,7 @@ public class Arena {
 
     private final RadioDispatcher radioDispatcher = new RadioDispatcher();
     private SimulationFrameBuffer simulationFrameBuffer;
+    private boolean roundOver;
 
     /**
      * Get the number of robots still active in the arena.
@@ -125,7 +126,7 @@ public class Arena {
      * Prepare a snapshot of the current arena state in the {@link net.virtualinfinity.atrobots.SimulationFrameBuffer}.
      */
     public void buildFrame() {
-        simulationFrameBuffer.beginFrame();
+        simulationFrameBuffer.beginFrame(roundOver);
         for (Collection<? extends ArenaObject> objectCollection : nonRobots) {
             for (ArenaObject object : objectCollection) {
                 simulationFrameBuffer.addObject(object.getSnapshot());
@@ -234,5 +235,11 @@ public class Arena {
                 robot.tieRound();
             }
         }
+    }
+
+    public void endRound() {
+        roundOver = true;
+        determineWinners();
+        buildFrame();
     }
 }

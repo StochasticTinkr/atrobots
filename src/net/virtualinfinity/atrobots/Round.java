@@ -56,6 +56,6 @@ public class Round {
     }
 
     public void finalizeRound() {
-        arena.determineWinners();
+        arena.endRound();
     }
 }

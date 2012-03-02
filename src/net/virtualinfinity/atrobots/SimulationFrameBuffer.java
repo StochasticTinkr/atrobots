@@ -17,10 +17,12 @@ public class SimulationFrameBuffer {
     public static class SimulationFrame {
         private final Collection<ArenaObjectSnapshot> allObjects;
         private final Collection<RobotSnapshot> robots;
+        private final boolean roundOver;
 
-        public SimulationFrame(Collection<ArenaObjectSnapshot> allObjects, Collection<RobotSnapshot> robots) {
+        public SimulationFrame(Collection<ArenaObjectSnapshot> allObjects, Collection<RobotSnapshot> robots, boolean roundOver) {
             this.allObjects = allObjects;
             this.robots = robots;
+            this.roundOver = roundOver;
         }
 
         public void visitAll(SnapshotVisitor visitor) {
@@ -46,15 +48,18 @@ public class SimulationFrameBuffer {
         public void addRobot(RobotSnapshot snapshot) {
             robots.add(snapshot);
             add(snapshot);
+        }
 
+        public boolean isRoundOver() {
+            return roundOver;
         }
     }
 
     private SimulationFrame frameToBuild;
     private volatile SimulationFrame currentFrame;
 
-    public void beginFrame() {
-        frameToBuild = new SimulationFrame(new ArrayList<ArenaObjectSnapshot>(), new ArrayList<RobotSnapshot>());
+    public void beginFrame(boolean roundOver) {
+        frameToBuild = new SimulationFrame(new ArrayList<ArenaObjectSnapshot>(), new ArrayList<RobotSnapshot>(), roundOver);
     }
 
     public void addObject(ArenaObjectSnapshot snapshot) {
@@ -71,6 +76,14 @@ public class SimulationFrameBuffer {
             observer.frameAvailable(SimulationFrameBuffer.this);
         }
     }
+
+    public void roundEnded() {
+        currentFrame = frameToBuild;
+        for (SimulationObserver observer : observers) {
+            observer.frameAvailable(SimulationFrameBuffer.this);
+        }
+    }
+
 
     public SimulationFrame getCurrentFrame() {
         return currentFrame;

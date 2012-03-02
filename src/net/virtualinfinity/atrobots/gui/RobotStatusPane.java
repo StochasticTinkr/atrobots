@@ -10,10 +10,8 @@ import javax.swing.border.EtchedBorder;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 import java.awt.*;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
+import java.util.List;
 
 /**
  * TODO: Describe this class.
@@ -22,6 +20,7 @@ import java.util.Set;
  */
 public class RobotStatusPane extends JList implements SimulationObserver {
     private final DefaultListModel robotList;
+    private final List<RobotItem> reorderedList = new ArrayList<RobotItem>();
     private final Map<Integer, RobotItem> items = new HashMap<Integer, RobotItem>();
 
     private RobotStatusPane() {
@@ -226,22 +225,31 @@ public class RobotStatusPane extends JList implements SimulationObserver {
         }
 
         public void run() {
-            frameBuffer.getCurrentFrame().visitRobots(new SnapshotAdaptor() {
+            final SimulationFrameBuffer.SimulationFrame currentFrame = frameBuffer.getCurrentFrame();
+            currentFrame.visitRobots(new SnapshotAdaptor() {
                 @Override
                 public void acceptRobot(RobotSnapshot robotSnapshot) {
                     updateRobotStatus(robotSnapshot);
                 }
             });
-            for (int i = 0; i < robotList.getSize(); ++i) {
-                final RobotItem robotItem = (RobotItem) robotList.get(i);
-                if (robotItem.isChanged()) {
-                    robotList.set(i, robotItem);
+
+            if (currentFrame.isRoundOver()) {
+                reorderedList.clear();
+                reorderedList.addAll(items.values());
+                Collections.sort(reorderedList);
+                robotList.setSize(reorderedList.size());
+            }
+            for (int i = 0; i < reorderedList.size(); ++i) {
+                final RobotItem existingItem = (RobotItem) robotList.get(i);
+                final RobotItem reorderedItem = reorderedList.get(i);
+                if (reorderedItem.isChanged() || existingItem != reorderedItem) {
+                    robotList.set(i, reorderedItem);
                 }
             }
         }
     }
 
-    private static class RobotItem {
+    private static class RobotItem implements Comparable<RobotItem> {
         private RobotSnapshot robotSnapshot;
         private boolean dead;
         private boolean updated;
@@ -286,8 +294,22 @@ public class RobotStatusPane extends JList implements SimulationObserver {
             return getRobotSnapshot().getId();
         }
 
-        public void died() {
-            dead = true;
+        public int compareTo(RobotItem o) {
+            if (robotSnapshot == null && o.robotSnapshot == null) {
+                return 0;
+            }
+            if (robotSnapshot == null) {
+                return -1;
+            }
+            if (o.robotSnapshot == null) {
+                return 1;
+            }
+            return -compare(robotSnapshot.getTotalWins(), o.robotSnapshot.getTotalWins(), 2) +
+                    -compare(robotSnapshot.getTotalTies(), o.robotSnapshot.getTotalTies(), 1);
+        }
+
+        private int compare(int left, int right, int priority) {
+            return left == right ? 0 : left < right ? -priority : priority;
         }
     }
 }
