@@ -1,11 +1,14 @@
 package net.virtualinfinity.atrobots.atsetup;
 
+import java.util.Collection;
+import java.util.Collections;
+
 /**
  * A mapping between register symbol names and addresses.
  *
  * @author Daniel Pitts
  */
-public enum AtRobotRegister {
+public enum AtRobotRegister implements AtRobotSymbol {
     COLCNT(8),
     METERS(9),
     COMBASE(10),
@@ -25,5 +28,14 @@ public enum AtRobotRegister {
 
     private AtRobotRegister(int address) {
         this.address = address;
+    }
+
+
+    public int getSymbolValue() {
+        return address;
+    }
+
+    public Collection<String> getSymbolNames() {
+        return Collections.singleton(name());
     }
 }

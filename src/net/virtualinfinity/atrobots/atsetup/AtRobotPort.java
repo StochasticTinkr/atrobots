@@ -9,7 +9,7 @@ import java.util.Collections;
  *
  * @author Daniel Pitts
  */
-public enum AtRobotPort {
+public enum AtRobotPort implements AtRobotSymbol {
     SPEDOMETER(1),
     HEAT(2),
     COMPASS(3),
@@ -73,6 +73,14 @@ public enum AtRobotPort {
             }
         }
         return "<unknown>";
+    }
+
+    public int getSymbolValue() {
+        return portNumber;
+    }
+
+    public Collection<String> getSymbolNames() {
+        return names;
     }
 }
 

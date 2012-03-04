@@ -56,17 +56,17 @@ public class LineNumberReaderCompiler {
     {
         addConstant(Short.MAX_VALUE, "MAXINT", BUILT_IN_SYMBOL_LINENUMBER);
         addConstant(Short.MIN_VALUE, "MININT", BUILT_IN_SYMBOL_LINENUMBER);
-        for (AtRobotPort port : AtRobotPort.values()) {
-            addConstants(port.portNumber, port.names);
-        }
-        for (AtRobotInstruction instruction : AtRobotInstruction.values()) {
-            addConstants(instruction.value, instruction.names);
-        }
-        for (AtRobotInterrupt interrupt : AtRobotInterrupt.values()) {
-            addConstants(interrupt.interruptNumber, interrupt.names);
-        }
-        for (AtRobotRegister register : AtRobotRegister.values()) {
-            addReference(register.address, register.name(), BUILT_IN_SYMBOL_LINENUMBER);
+        addConstants(AtRobotPort.values(), AtRobotMicrocodes.CONSTANT);
+        addConstants(AtRobotInstruction.values(), AtRobotMicrocodes.CONSTANT);
+        addConstants(AtRobotInterrupt.values(), AtRobotMicrocodes.CONSTANT);
+        addConstants(AtRobotRegister.values(), AtRobotMicrocodes.REFERENCE);
+    }
+
+    private void addConstants(AtRobotSymbol[] values, short microcode) {
+        for (AtRobotSymbol symbol : values) {
+            for (String name : symbol.getSymbolNames()) {
+                addSymbol(name, microcode, symbol.getSymbolValue(), BUILT_IN_SYMBOL_LINENUMBER);
+            }
         }
     }
 
@@ -174,6 +174,9 @@ public class LineNumberReaderCompiler {
             duplicateSymbol(lowerCaseName, symbols.get(lowerCaseName), lineNumber);
         }
         symbols.put(lowerCaseName, new Symbol(microcode, (short) value, lineNumber));
+        if (microcode == AtRobotMicrocodes.REFERENCE) {
+            debugInfo.addVariable(value, name);
+        }
     }
 
     public void resolve() {
@@ -256,14 +259,7 @@ public class LineNumberReaderCompiler {
     }
 
     private void addReference(int value, String variableName, int lineNumber) {
-        debugInfo.addVariable(value, variableName);
         addSymbol(variableName, AtRobotMicrocodes.REFERENCE, value, lineNumber);
-    }
-
-    private void addConstants(int value, Collection<String> names) {
-        for (String name : names) {
-            addConstant(value, name, BUILT_IN_SYMBOL_LINENUMBER);
-        }
     }
 
     private void addConstant(int value, String name, int lineNumber) {

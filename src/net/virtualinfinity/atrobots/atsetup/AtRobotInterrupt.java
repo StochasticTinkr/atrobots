@@ -9,7 +9,7 @@ import java.util.Collections;
  *
  * @author Daniel Pitts
  */
-public enum AtRobotInterrupt {
+public enum AtRobotInterrupt implements AtRobotSymbol {
     DESTRUCT(0),
     RESET(1),
     LOCATE(2),
@@ -72,5 +72,14 @@ public enum AtRobotInterrupt {
             return INTERRUPT_PREFIX + byValue[interruptNumber].name();
         }
         return "<unknown>";
+    }
+
+
+    public int getSymbolValue() {
+        return interruptNumber;
+    }
+
+    public Collection<String> getSymbolNames() {
+        return names;
     }
 }

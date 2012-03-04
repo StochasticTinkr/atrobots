@@ -9,7 +9,7 @@ import java.util.Collections;
  *
  * @author Daniel Pitts
  */
-public enum AtRobotInstruction {
+public enum AtRobotInstruction implements AtRobotSymbol {
     NOP(0),
     ADD(1),
     SUB(2),
@@ -100,5 +100,14 @@ public enum AtRobotInstruction {
             return byValue[value].name();
         }
         return "<unknown>";
+    }
+
+
+    public int getSymbolValue() {
+        return value;
+    }
+
+    public Collection<String> getSymbolNames() {
+        return names;
     }
 }
