@@ -1,7 +1,5 @@
 package net.virtualinfinity.atrobots.computer;
 
-import net.virtualinfinity.atrobots.Flags;
-
 /**
  * @author Daniel Pitts
  */

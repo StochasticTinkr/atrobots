@@ -1,8 +1,8 @@
 package net.virtualinfinity.atrobots.interrupts;
 
-import net.virtualinfinity.atrobots.ArenaObject;
 import net.virtualinfinity.atrobots.computer.MemoryCell;
 import net.virtualinfinity.atrobots.measures.AbsoluteAngle;
+import net.virtualinfinity.atrobots.simulation.arena.ArenaObject;
 
 
 /**

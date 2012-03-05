@@ -1,7 +1,5 @@
 package net.virtualinfinity.atrobots.computer;
 
-import net.virtualinfinity.atrobots.Flags;
-
 /**
  * The base class for a Jump instruction which may not execute.
  *

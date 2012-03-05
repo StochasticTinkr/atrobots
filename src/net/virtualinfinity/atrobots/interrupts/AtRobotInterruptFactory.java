@@ -1,11 +1,11 @@
 package net.virtualinfinity.atrobots.interrupts;
 
-import net.virtualinfinity.atrobots.Arena;
 import net.virtualinfinity.atrobots.GameTimer;
-import net.virtualinfinity.atrobots.Robot;
 import net.virtualinfinity.atrobots.atsetup.AtRobotInterrupt;
 import net.virtualinfinity.atrobots.computer.MemoryCell;
 import net.virtualinfinity.atrobots.computer.Registers;
+import net.virtualinfinity.atrobots.simulation.arena.Arena;
+import net.virtualinfinity.atrobots.simulation.atrobot.Robot;
 import net.virtualinfinity.atrobots.util.MapWithDefaultValue;
 
 import java.util.Collection;

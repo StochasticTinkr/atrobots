@@ -1,8 +1,7 @@
 package net.virtualinfinity.atrobots.compiler;
 
-import net.virtualinfinity.atrobots.DebugInfo;
 import net.virtualinfinity.atrobots.Entrant;
-import net.virtualinfinity.atrobots.HardwareSpecification;
+import net.virtualinfinity.atrobots.computer.DebugInfo;
 import net.virtualinfinity.atrobots.computer.Program;
 
 /**

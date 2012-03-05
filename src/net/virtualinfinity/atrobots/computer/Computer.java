@@ -1,7 +1,10 @@
 package net.virtualinfinity.atrobots.computer;
 
-import net.virtualinfinity.atrobots.*;
 import net.virtualinfinity.atrobots.measures.Duration;
+import net.virtualinfinity.atrobots.ports.InvalidPort;
+import net.virtualinfinity.atrobots.ports.PortHandler;
+import net.virtualinfinity.atrobots.simulation.atrobot.HardwareBus;
+import net.virtualinfinity.atrobots.simulation.atrobot.Robot;
 
 import java.util.Collections;
 import java.util.HashMap;
@@ -13,7 +16,6 @@ import java.util.Map;
  * @author Daniel Pitts
  */
 public class Computer {
-    private Entrant entrant;
     private Memory memory;
     private Registers registers;
     private StackMemory stack;
@@ -31,9 +33,12 @@ public class Computer {
     private boolean shutDown;
     private int maxInstructionPointer;
     private DebugListener debugListener = new EmptyDebugListener();
+    private Robot robot;
+    private final DebugInfo debugInfo;
 
-    public Computer(Memory memory, int stackSize, int maxProcessorSpeed) {
+    public Computer(Memory memory, int stackSize, int maxProcessorSpeed, DebugInfo debugInfo) {
         this.memory = memory;
+        this.debugInfo = debugInfo;
         this.registers = new Registers(memory);
         this.stack = new StackMemory(registers.getStackPointerCell(), stackSize);
         this.program = new MemoryRegion(memory, 1024, 4096);
@@ -93,10 +98,6 @@ public class Computer {
 
     public int getInstructionPointer() {
         return instructionPointer;
-    }
-
-    public Entrant getEntrant() {
-        return entrant;
     }
 
     public short getOperandValue(int opnumber) {
@@ -324,16 +325,24 @@ public class Computer {
         return nextInstructionPointer;
     }
 
-    public void setEntrant(Entrant entrant) {
-        this.entrant = entrant;
-    }
-
     public String getLastMessage() {
         return lastMessage;
     }
 
     public StackMemory getStack() {
         return stack;
+    }
+
+    public void setRobot(Robot robot) {
+        this.robot = robot;
+    }
+
+    public Robot getRobot() {
+        return robot;
+    }
+
+    public DebugInfo getDebugInfo() {
+        return debugInfo;
     }
 
     private class ErrorHandler implements ComputerErrorHandler {

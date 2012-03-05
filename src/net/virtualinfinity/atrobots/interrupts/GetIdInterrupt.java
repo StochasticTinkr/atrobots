@@ -1,7 +1,7 @@
 package net.virtualinfinity.atrobots.interrupts;
 
-import net.virtualinfinity.atrobots.Transponder;
 import net.virtualinfinity.atrobots.computer.MemoryCell;
+import net.virtualinfinity.atrobots.simulation.atrobot.Transponder;
 
 /**
  * @author Daniel Pitts

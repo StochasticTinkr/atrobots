@@ -1,7 +1,7 @@
 package net.virtualinfinity.atrobots.interrupts;
 
-import net.virtualinfinity.atrobots.Arena;
 import net.virtualinfinity.atrobots.computer.MemoryCell;
+import net.virtualinfinity.atrobots.simulation.arena.Arena;
 
 /**
  * @author Daniel Pitts

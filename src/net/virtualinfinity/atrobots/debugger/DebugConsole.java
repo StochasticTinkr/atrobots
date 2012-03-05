@@ -143,7 +143,7 @@ public class DebugConsole {
     }
 
     private static String variableString(Computer computer, int operand) {
-        return computer.getEntrant().getDebugInfo().getVariableName(computer.getConstant(operand));
+        return computer.getDebugInfo().getVariableName(computer.getConstant(operand));
     }
 
     private static String operatorString(Computer computer) {
@@ -187,7 +187,7 @@ public class DebugConsole {
 
     public void println(Computer computer, Object o) {
         if (computer != null) {
-            console.println("#" + computer.getEntrant().getId() + ": " + computer.getEntrant().getName() + "} " + o);
+            console.println("#" + computer.getRobot().getId() + ": " + computer.getRobot().getName() + "} " + o);
         } else {
             console.println(" } " + o);
         }

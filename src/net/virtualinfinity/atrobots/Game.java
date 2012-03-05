@@ -1,6 +1,9 @@
 package net.virtualinfinity.atrobots;
 
 import net.virtualinfinity.atrobots.config.Entrants;
+import net.virtualinfinity.atrobots.simulation.arena.SimulationFrameBuffer;
+import net.virtualinfinity.atrobots.simulation.arena.SimulationObserver;
+import net.virtualinfinity.atrobots.simulation.atrobot.Robot;
 
 import java.util.ArrayList;
 import java.util.Collections;

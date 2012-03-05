@@ -1,0 +1,43 @@
+package net.virtualinfinity.atrobots.simulation.arena;
+
+import net.virtualinfinity.atrobots.measures.AngleBracket;
+import net.virtualinfinity.atrobots.measures.Duration;
+import net.virtualinfinity.atrobots.measures.Vector;
+import net.virtualinfinity.atrobots.snapshots.ArenaObjectSnapshot;
+import net.virtualinfinity.atrobots.snapshots.ScanSnapshot;
+
+/**
+ * @author Daniel Pitts
+ */
+public class ScanParameters extends ArenaObject {
+    private final AngleBracket angleBracket;
+    private final double maxDistance;
+    private final boolean successful;
+    private final Vector matchPositionVector;
+    private final boolean accuracyAvailable;
+    private final int accuracy;
+    private int frame;
+
+    public ScanParameters(AngleBracket angleBracket, double maxDistance, boolean successful, Vector matchPositionVector, boolean accuracyAvailable, int accuracy) {
+        this.accuracyAvailable = accuracyAvailable;
+        this.accuracy = accuracy;
+        this.angleBracket = angleBracket;
+        this.maxDistance = maxDistance;
+        this.successful = successful;
+        this.matchPositionVector = matchPositionVector;
+    }
+
+    protected ArenaObjectSnapshot createSpecificSnapshot() {
+        ScanSnapshot objectSnapshot = new ScanSnapshot(angleBracket, maxDistance, successful, matchPositionVector, accuracyAvailable, accuracy);
+        objectSnapshot.setPositionVector(position.getVector());
+        return objectSnapshot;
+    }
+
+
+    public void update(Duration duration) {
+        if (frame++ > 1) {
+            die();
+        }
+    }
+
+}

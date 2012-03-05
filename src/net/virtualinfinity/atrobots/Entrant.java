@@ -1,10 +1,11 @@
 package net.virtualinfinity.atrobots;
 
-import net.virtualinfinity.atrobots.computer.Computer;
-import net.virtualinfinity.atrobots.computer.Memory;
-import net.virtualinfinity.atrobots.computer.Program;
-import net.virtualinfinity.atrobots.computer.RandomAccessMemoryArray;
+import net.virtualinfinity.atrobots.compiler.HardwareSpecification;
+import net.virtualinfinity.atrobots.computer.*;
 import net.virtualinfinity.atrobots.debugger.*;
+import net.virtualinfinity.atrobots.simulation.atrobot.HardwareContext;
+import net.virtualinfinity.atrobots.simulation.atrobot.Robot;
+import net.virtualinfinity.atrobots.simulation.atrobot.RobotListener;
 
 /**
  * Represents an entrant in a game.
@@ -87,9 +88,7 @@ public class Entrant {
         final Memory memory = new Memory();
         memory.addMemoryArray(lowerMemoryBlock);
         memory.addMemoryArray(program.createProgramMemory());
-        final Computer computer = new Computer(memory, ROBOT_STACK_SIZE, getProcessorSpeed());
-        computer.setEntrant(this);
-        return computer;
+        return new Computer(memory, ROBOT_STACK_SIZE, getProcessorSpeed(), debugInfo);
     }
 
     private int getProcessorSpeed() {

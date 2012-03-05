@@ -1,8 +1,5 @@
 package net.virtualinfinity.atrobots.debugger;
 
-import net.virtualinfinity.atrobots.Entrant;
-import net.virtualinfinity.atrobots.Game;
-import net.virtualinfinity.atrobots.Robot;
 import net.virtualinfinity.atrobots.computer.Computer;
 import net.virtualinfinity.atrobots.computer.DebugListener;
 
@@ -32,7 +29,7 @@ public class Debugger implements DebugListener {
     private final Map<Integer, EntrantState> entrantStates = new HashMap<Integer, EntrantState>();
 
     protected EntrantState getEntrantState(Computer computer) {
-        return getEntrantState(getEntrant(computer).getId());
+        return getEntrantState(computer.getRobot().getId());
     }
 
     private EntrantState getEntrantState(int entrantId) {
@@ -46,19 +43,6 @@ public class Debugger implements DebugListener {
 
     protected EntrantState createEntrantState() {
         return new EntrantState();
-    }
-
-
-    protected Entrant getEntrant(Computer computer) {
-        return computer.getEntrant();
-    }
-
-    protected static Game getGame(Computer computer) {
-        return computer.getEntrant().getGame();
-    }
-
-    protected static Robot getRobot(Computer computer) {
-        return computer.getEntrant().getCurrentRobot();
     }
 
 
@@ -237,7 +221,7 @@ public class Debugger implements DebugListener {
     public void resetDefaultEntrant() throws InterruptedException {
         invokeLater(new Command() {
             public void execute(Computer computer) throws InterruptedException {
-                setDefaultEntrant(getEntrant(computer).getId());
+                setDefaultEntrant(computer.getRobot().getId());
             }
         });
     }

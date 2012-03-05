@@ -1,7 +1,7 @@
 package net.virtualinfinity.atrobots.computer;
 
-import net.virtualinfinity.atrobots.Flags;
 import net.virtualinfinity.atrobots.atsetup.AtRobotRegister;
+
 import static net.virtualinfinity.atrobots.atsetup.AtRobotRegister.*;
 import static net.virtualinfinity.atrobots.atsetup.AtRobotRegisterAddresses.*;
 

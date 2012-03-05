@@ -3,6 +3,7 @@ package net.virtualinfinity.atrobots;
 import junit.framework.TestCase;
 import net.virtualinfinity.atrobots.compiler.AtRobotCompiler;
 import net.virtualinfinity.atrobots.compiler.AtRobotCompilerOutput;
+import net.virtualinfinity.atrobots.simulation.atrobot.Robot;
 
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
