@@ -46,7 +46,7 @@ public class MissileLauncher {
     public PortHandler getActuator() {
         return new PortHandler() {
             public void write(short value) {
-                getComputer().consumeCycles(3);
+                consumeCycles(3);
                 fireMissile(RelativeAngle.fromBygrees(Math.max(-4, Math.min(value, 4))));
             }
         };

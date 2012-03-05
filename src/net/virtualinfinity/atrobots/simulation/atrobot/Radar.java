@@ -14,7 +14,7 @@ public class Radar {
     public PortHandler getScanPort() {
         return new PortHandler() {
             public short read() {
-                getComputer().consumeCycles(3);
+                consumeCycles(3);
                 final ScanResult scanResult = robot.scan(AngleBracket.all(), Double.POSITIVE_INFINITY, false);
                 if (!scanResult.successful()) {
                     return Short.MAX_VALUE;

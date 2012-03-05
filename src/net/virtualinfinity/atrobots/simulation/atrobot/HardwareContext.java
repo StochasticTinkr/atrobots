@@ -1,11 +1,11 @@
 package net.virtualinfinity.atrobots.simulation.atrobot;
 
 import net.virtualinfinity.atrobots.computer.CommunicationsQueue;
+import net.virtualinfinity.atrobots.computer.HardwareBus;
 import net.virtualinfinity.atrobots.computer.MemoryArray;
 import net.virtualinfinity.atrobots.computer.SpecialRegister;
 import net.virtualinfinity.atrobots.interrupts.AtRobotInterruptFactory;
 import net.virtualinfinity.atrobots.interrupts.InterruptHandler;
-import net.virtualinfinity.atrobots.ports.AtRobotPortFactory;
 import net.virtualinfinity.atrobots.ports.PortHandler;
 import net.virtualinfinity.atrobots.simulation.arena.Arena;
 
@@ -38,7 +38,7 @@ public class HardwareContext {
     };
     private final SpecialRegister desiredHeadingRegister = new SpecialRegister() {
         public short get() {
-            return (short) (hardwareBus.getDesiredHeading().getAngle().getBygrees() & 255);
+            return (short) (robot.getDesiredHeading().getAngle().getBygrees() & 255);
         }
     };
     private final SpecialRegister turretShiftRegister = new SpecialRegister() {
@@ -138,7 +138,8 @@ public class HardwareContext {
     }
 
     private void wireHardwareBus(Arena arena, int totalRounds, int roundNumber) {
-        hardwareBus.connectToRobot(robot);
+        robot.setHardwareBus(hardwareBus);
+        hardwareBus.setHeat(robot.getHeat());
         hardwareBus.setPorts(createPortHandlers());
         hardwareBus.setInterrupts(createInterruptHandlers(arena, totalRounds, roundNumber));
         hardwareBus.addResetable(robot.getTurret().getScanner());
@@ -146,7 +147,11 @@ public class HardwareContext {
         hardwareBus.addResetable(robot.getOdometer());
         hardwareBus.addResetable(robot);
         hardwareBus.addResetable(robot.getShield());
-        hardwareBus.connectComputer(robot.getComputer());
+        hardwareBus.setAutoShutdownListener(robot.getComputer());
+        robot.getComputer().setHardwareBus(hardwareBus);
+        hardwareBus.addShutdownListener(robot.getComputer());
+        hardwareBus.addShutdownListener(robot.getShield());
+        hardwareBus.addShutdownListener(robot.getThrottle());
     }
 
     private Map<Integer, PortHandler> createPortHandlers() {

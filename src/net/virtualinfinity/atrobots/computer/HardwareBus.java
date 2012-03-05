@@ -1,10 +1,10 @@
-package net.virtualinfinity.atrobots.simulation.atrobot;
+package net.virtualinfinity.atrobots.computer;
 
-import net.virtualinfinity.atrobots.computer.Computer;
 import net.virtualinfinity.atrobots.interrupts.InterruptHandler;
 import net.virtualinfinity.atrobots.ports.PortHandler;
-import net.virtualinfinity.atrobots.simulation.arena.Heading;
 import net.virtualinfinity.atrobots.simulation.arena.Resetable;
+import net.virtualinfinity.atrobots.simulation.atrobot.HasTemperature;
+import net.virtualinfinity.atrobots.simulation.atrobot.Temperature;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -20,10 +20,10 @@ public class HardwareBus {
     private Map<Integer, PortHandler> ports;
     private Map<Integer, InterruptHandler> interrupts;
     private final Collection<Resetable> resetables = new ArrayList<Resetable>();
-    private final Heading desiredHeading = new Heading();
+    private final Collection<ShutdownListener> shutdownListeners = new ArrayList<ShutdownListener>();
+    private Restartable autoShutdownTarget;
     private Temperature autoShutDown = Temperature.fromLogScale(350);
-    private Computer computer;
-    private Robot robot;
+    private HasTemperature heat;
 
     /**
      * Get the port handler map.
@@ -108,57 +108,42 @@ public class HardwareBus {
         resetables.add(resetable);
     }
 
-    /**
-     * get the desired heading.
-     *
-     * @return the desired heading.
-     */
-    public Heading getDesiredHeading() {
-        return desiredHeading;
+    public void addShutdownListener(ShutdownListener shutdownListener) {
+        shutdownListeners.add(shutdownListener);
     }
 
-    /**
-     * Connect a computer.
-     *
-     * @param computer the computer
-     */
-    public void connectComputer(Computer computer) {
-        this.computer = computer;
-        computer.setHardwareBus(this);
-    }
-
-    /**
-     * connect the robot.
-     *
-     * @param robot the robot
-     */
-    public void connectToRobot(Robot robot) {
-        this.robot = robot;
-        robot.setHardwareBus(this);
-        desiredHeading.setAngle(robot.getHeading().getAngle());
+    public void setAutoShutdownListener(Restartable autoShutdownListener) {
+        this.autoShutdownTarget = autoShutdownListener;
     }
 
     /**
      * Check temperature against autoShutDown temp
      */
     public void checkHeat() {
-        if (robot.getHeat().getTemperature().compareTo(autoShutDown) >= 0) {
+        if (isAutoShutdownEngaged()) {
             shutDown();
         }
-        if (computer.isShutDown() && robot.getHeat().getTemperature().compareTo(autoShutDown.minus(Temperature.fromLogScale(50))) < 0) {
-            startUp();
+        if (autoShutdownTarget.isShutDown() && isAutoStartupEngaged()) {
+            autoShutdownTarget.startUp();
         }
+    }
+
+    private boolean isAutoStartupEngaged() {
+        return heat.getTemperature().compareTo(autoShutDown.minus(Temperature.fromLogScale(50))) < 0;
+    }
+
+    private boolean isAutoShutdownEngaged() {
+        return heat.getTemperature().compareTo(autoShutDown) >= 0;
     }
 
     private void startUp() {
-        computer.startUp();
+        autoShutdownTarget.startUp();
     }
 
     private void shutDown() {
-        desiredHeading.setAngle(robot.getHeading().getAngle());
-        robot.getThrottle().setDesiredPower(0);
-        robot.getShield().setActive(false);
-        computer.shutDown();
+        for (ShutdownListener listener : shutdownListeners) {
+            listener.shutDown();
+        }
     }
 
     /**
@@ -178,5 +163,9 @@ public class HardwareBus {
      */
     public void setShutdownLevel(int value) {
         autoShutDown = Temperature.fromLogScale(value);
+    }
+
+    public void setHeat(HasTemperature heat) {
+        this.heat = heat;
     }
 }

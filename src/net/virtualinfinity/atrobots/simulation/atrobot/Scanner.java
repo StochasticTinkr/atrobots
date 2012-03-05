@@ -22,7 +22,7 @@ public class Scanner implements Resetable {
     public PortHandler getScanPort() {
         return new PortHandler() {
             public short read() {
-                getComputer().consumeCycles(1);
+                consumeCycles(1);
                 final ScanResult result = scan();
                 if (!result.successful()) {
                     return Short.MAX_VALUE;
@@ -48,7 +48,7 @@ public class Scanner implements Resetable {
     public PortHandler getAccuracyPort() {
         return new PortHandler() {
             public short read() {
-                getComputer().consumeCycles(1);
+                consumeCycles(1);
                 return (short) getAccuracy();
             }
         };

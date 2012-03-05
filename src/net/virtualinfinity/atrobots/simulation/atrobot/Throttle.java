@@ -1,6 +1,7 @@
 package net.virtualinfinity.atrobots.simulation.atrobot;
 
 
+import net.virtualinfinity.atrobots.computer.ShutdownListener;
 import net.virtualinfinity.atrobots.measures.Duration;
 import net.virtualinfinity.atrobots.ports.PortHandler;
 import net.virtualinfinity.atrobots.simulation.arena.Speed;
@@ -8,7 +9,7 @@ import net.virtualinfinity.atrobots.simulation.arena.Speed;
 /**
  * @author Daniel Pitts
  */
-public class Throttle {
+public class Throttle implements ShutdownListener {
     int desiredPower;
     int power;
     Speed speed;
@@ -90,5 +91,9 @@ public class Throttle {
 
     public void setRobot(Robot robot) {
         this.robot = robot;
+    }
+
+    public void shutDown() {
+        setDesiredPower(0);
     }
 }

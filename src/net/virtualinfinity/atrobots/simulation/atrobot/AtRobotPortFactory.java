@@ -1,10 +1,10 @@
-package net.virtualinfinity.atrobots.ports;
+package net.virtualinfinity.atrobots.simulation.atrobot;
 
 import net.virtualinfinity.atrobots.atsetup.AtRobotPort;
 import net.virtualinfinity.atrobots.measures.RelativeAngle;
+import net.virtualinfinity.atrobots.ports.PortHandler;
+import net.virtualinfinity.atrobots.ports.PortListener;
 import net.virtualinfinity.atrobots.simulation.arena.Heading;
-import net.virtualinfinity.atrobots.simulation.atrobot.HasHeading;
-import net.virtualinfinity.atrobots.simulation.atrobot.Robot;
 import net.virtualinfinity.atrobots.util.MapWithDefaultValue;
 
 import java.util.*;
@@ -37,7 +37,7 @@ public class AtRobotPortFactory {
     public Map<Integer, PortHandler> createPortHandlers(Robot robot) {
         final Map<Integer, PortHandler> ports = new HashMap<Integer, PortHandler>();
         mapPort(ports, SPEDOMETER, robot.getThrottle().getSpedometer());
-        mapPort(ports, HEAT, robot.getHeat().getHeatSensor());
+        mapPort(ports, HEAT, getTemperatureSensor(robot.getHeat()));
         mapPort(ports, COMPASS, getCompass(robot));
         mapPort(ports, TURRET_OFS, robot.getTurretOffsetSensor());
         mapPort(ports, TURRET_ABS, getCompass(robot.getTurret()));
@@ -60,17 +60,25 @@ public class AtRobotPortFactory {
         mapPort(ports, MINELAYER, robot.getMineLayer().getMineBayPort());
         mapPort(ports, MINETRIGGER, robot.getMineLayer().getPlacedMinePort());
         mapPort(ports, SHIELD, robot.getShield().getLatch());
-        connectRobot(robot, ports.values());
+        connectPortHandlers(ports.values(), robot.getComputer());
         return new MapWithDefaultValue<Integer, PortHandler>(Collections.unmodifiableMap(ports), robot.getComputer().createDefaultPortHandler());
+    }
+
+    private PortHandler getTemperatureSensor(final HasTemperature heat) {
+        return new PortHandler() {
+            public short read() {
+                return (short) heat.getTemperature().getLogScale();
+            }
+        };
     }
 
     private PortHandler getCompass(HasHeading hasHeading) {
         return getCompass(hasHeading.getHeading());
     }
 
-    private void connectRobot(Robot robot, Collection<PortHandler> collection) {
+    private void connectPortHandlers(Collection<PortHandler> collection, PortListener portListener) {
         for (PortHandler handler : collection) {
-            handler.setComputer(robot.getComputer());
+            handler.setPortListener(portListener);
         }
     }
 

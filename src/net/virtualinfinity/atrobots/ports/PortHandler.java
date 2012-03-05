@@ -1,28 +1,26 @@
 package net.virtualinfinity.atrobots.ports;
 
-import net.virtualinfinity.atrobots.computer.Computer;
-
 /**
  * @author Daniel Pitts
  */
 public abstract class PortHandler {
-    private Computer computer;
+    private PortListener portListener;
 
     public short read() {
-        computer.invalidPortError();
+        portListener.invalidPortError();
         return 0;
     }
 
     public void write(short value) {
-        computer.invalidPortError();
+        portListener.invalidPortError();
     }
 
-    public Computer getComputer() {
-        return computer;
-    }
-
-    public PortHandler setComputer(Computer computer) {
-        this.computer = computer;
+    public PortHandler setPortListener(PortListener portListener) {
+        this.portListener = portListener;
         return this;
+    }
+
+    protected void consumeCycles(int cycles) {
+        portListener.consumeCycles(cycles);
     }
 }

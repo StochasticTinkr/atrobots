@@ -9,10 +9,18 @@ import net.virtualinfinity.atrobots.measures.Vector;
  * @author Daniel Pitts
  */
 public class Heading {
-    private AbsoluteAngle absoluteAngle = AbsoluteAngle.fromBygrees((int) (Math.random() * 256));
+    private AbsoluteAngle absoluteAngle;
     private RelativeAngle relativeAngle = RelativeAngle.fromBygrees(0);
     private boolean absolute = true;
     private Heading relation;
+
+    public Heading() {
+        this(AbsoluteAngle.fromBygrees((int) (Math.random() * 256)));
+    }
+
+    public Heading(AbsoluteAngle absoluteAngle) {
+        this.absoluteAngle = absoluteAngle;
+    }
 
     public Vector times(double distance) {
         return getAngle().toVector(distance);

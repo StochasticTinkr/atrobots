@@ -2,6 +2,7 @@ package net.virtualinfinity.atrobots.simulation.atrobot;
 
 import net.virtualinfinity.atrobots.RobotScoreKeeper;
 import net.virtualinfinity.atrobots.computer.Computer;
+import net.virtualinfinity.atrobots.computer.HardwareBus;
 import net.virtualinfinity.atrobots.measures.AngleBracket;
 import net.virtualinfinity.atrobots.measures.Duration;
 import net.virtualinfinity.atrobots.measures.RelativeAngle;
@@ -42,16 +43,17 @@ public class Robot extends ArenaObject implements Resetable, HasHeading {
     private final Position oldPosition = new Position();
     private int roundKills;
     private final List<RobotListener> robotListeners = new ArrayList<RobotListener>();
+    private final Heading desiredHeading = new Heading(heading.getAngle());
+
+    {
+        position.setOdometer(odometer);
+    }
 
     public Robot(String name, int id, RobotScoreKeeper scoreKeeper) {
         this.name = name;
         this.id = id;
         this.scoreKeeper = scoreKeeper;
         this.roundKills = 0;
-    }
-
-    {
-        position.setOdometer(odometer);
     }
 
     public void setComputer(Computer computer) {
@@ -145,7 +147,7 @@ public class Robot extends ArenaObject implements Resetable, HasHeading {
     }
 
     public Heading getDesiredHeading() {
-        return getHardwareBus().getDesiredHeading();
+        return desiredHeading;
     }
 
     public Sonar getSonar() {

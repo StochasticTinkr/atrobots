@@ -3,7 +3,7 @@ package net.virtualinfinity.atrobots.computer;
 import net.virtualinfinity.atrobots.measures.Duration;
 import net.virtualinfinity.atrobots.ports.InvalidPort;
 import net.virtualinfinity.atrobots.ports.PortHandler;
-import net.virtualinfinity.atrobots.simulation.atrobot.HardwareBus;
+import net.virtualinfinity.atrobots.ports.PortListener;
 import net.virtualinfinity.atrobots.simulation.atrobot.Robot;
 
 import java.util.Collections;
@@ -15,7 +15,7 @@ import java.util.Map;
  *
  * @author Daniel Pitts
  */
-public class Computer {
+public class Computer implements PortListener, Restartable {
     private Memory memory;
     private Registers registers;
     private StackMemory stack;
@@ -63,7 +63,7 @@ public class Computer {
     }
 
     public void setHardwareBus(HardwareBus hardwareBus) {
-        Computer.this.hardwareBus = hardwareBus;
+        this.hardwareBus = hardwareBus;
     }
 
     public void useCycles() {
@@ -232,7 +232,7 @@ public class Computer {
     }
 
     public PortHandler createDefaultPortHandler() {
-        return new InvalidPort().setComputer(Computer.this);
+        return new InvalidPort().setPortListener(Computer.this);
     }
 
     public MemoryRegion getCommQueueMemoryRegion() {

@@ -1,5 +1,6 @@
 package net.virtualinfinity.atrobots.simulation.atrobot;
 
+import net.virtualinfinity.atrobots.computer.ShutdownListener;
 import net.virtualinfinity.atrobots.measures.Duration;
 import net.virtualinfinity.atrobots.ports.PortHandler;
 import net.virtualinfinity.atrobots.simulation.arena.Resetable;
@@ -7,7 +8,7 @@ import net.virtualinfinity.atrobots.simulation.arena.Resetable;
 /**
  * @author Daniel Pitts
  */
-public class Shield implements Resetable {
+public class Shield implements Resetable, ShutdownListener {
     private boolean active;
     private Robot robot;
     private double heatFraction = 0;
@@ -59,5 +60,9 @@ public class Shield implements Resetable {
         if (active && heatFraction > 0) {
             robot.getHeat().warm(Temperature.fromLogScale(duration.getCycles() / 3.0));
         }
+    }
+
+    public void shutDown() {
+        setActive(false);
     }
 }

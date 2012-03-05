@@ -20,7 +20,7 @@ public class Sonar {
     public PortHandler getScanPort() {
         return new PortHandler() {
             public short read() {
-                getComputer().consumeCycles(40);
+                consumeCycles(40);
                 final AbsoluteAngle angle = scan();
                 if (angle == null) {
                     return Short.MIN_VALUE;
