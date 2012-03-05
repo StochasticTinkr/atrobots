@@ -18,7 +18,8 @@ public class EntrantTest extends TestCase {
         final Game game = new Game(1);
         entrant.setGame(game);
         game.nextRound();
-        entrant.createRobot(new RoundState(entrant.getGame().getRound().getArena(), entrant.getGame().getTotalRounds(), entrant.getGame().getRound().getRoundNumber(), entrant.getGame().getMaxProcessorSpeed()));
+        final StandardRoundState roundState = new StandardRoundState(game.getRound().getArena(), game.getTotalRounds(), game.getRound().getRoundNumber());
+        entrant.createRobot(roundState, game.getMaxProcessorSpeed(), entrant.getRobotScoreKeeper());
 
     }
 }

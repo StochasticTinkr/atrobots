@@ -1,6 +1,5 @@
 package net.virtualinfinity.atrobots.simulation.arena;
 
-import net.virtualinfinity.atrobots.Game;
 import net.virtualinfinity.atrobots.measures.Duration;
 import net.virtualinfinity.atrobots.measures.Vector;
 import net.virtualinfinity.atrobots.snapshots.ArenaObjectSnapshot;
@@ -109,7 +108,4 @@ public abstract class ArenaObject {
     protected void arenaConnected(Arena arena) {
     }
 
-    public Game getGame() {
-        return getArena().getGame();
-    }
 }

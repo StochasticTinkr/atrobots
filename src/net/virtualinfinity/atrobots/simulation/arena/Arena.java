@@ -1,6 +1,5 @@
 package net.virtualinfinity.atrobots.simulation.arena;
 
-import net.virtualinfinity.atrobots.Game;
 import net.virtualinfinity.atrobots.GameTimer;
 import net.virtualinfinity.atrobots.measures.AngleBracket;
 import net.virtualinfinity.atrobots.measures.Duration;
@@ -46,11 +45,6 @@ public class Arena implements GameTimer {
     private final RadioDispatcher radioDispatcher = new RadioDispatcher();
     private SimulationFrameBuffer simulationFrameBuffer;
     private boolean roundOver;
-    private final Game game;
-
-    public Arena(Game game) {
-        this.game = game;
-    }
 
 
     /**
@@ -259,10 +253,6 @@ public class Arena implements GameTimer {
         buildFrame();
     }
 
-
-    public Game getGame() {
-        return game;
-    }
 
     public Duration getTime() {
         return time;

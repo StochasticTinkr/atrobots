@@ -14,7 +14,7 @@ import java.util.List;
  *
  * @author Daniel Pitts
  */
-public class Game {
+public class Game implements RoundListener {
     private Round round;
     private int roundNumber = 0;
     private int totalRounds;
@@ -55,7 +55,8 @@ public class Game {
         if (round != null) {
             round.finalizeRound();
         }
-        round = new Round(++roundNumber, this, frameBuffer);
+        round = new Round(++roundNumber, frameBuffer, this.getTotalRounds());
+        round.addRoundListener(this);
         for (Entrant entrant : entrants) {
             round.getArena().addRobot(createRobotFor(entrant));
         }
@@ -70,7 +71,7 @@ public class Game {
      * @return the robot.
      */
     protected Robot createRobotFor(Entrant entrant) {
-        final Robot robot = entrant.createRobot(new RoundState(entrant.getGame().getRound().getArena(), entrant.getGame().getTotalRounds(), entrant.getGame().getRound().getRoundNumber(), entrant.getGame().getMaxProcessorSpeed()));
+        final Robot robot = entrant.createRobot(getRound(), getMaxProcessorSpeed(), entrant.getRobotScoreKeeper());
         round.putRobot(entrant, robot);
         return robot;
     }

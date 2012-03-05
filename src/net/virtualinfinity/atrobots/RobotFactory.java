@@ -23,7 +23,6 @@ public class RobotFactory {
     protected final int maxProcessorSpeed;
     protected volatile String message = "";
     private boolean debug;
-    private final RobotScoreKeeper robotScoreKeeper = new RobotScoreKeeper();
 
     public RobotFactory(String message, Program program, String name, int maxProcessorSpeed, DebugInfo debugInfo, HardwareSpecification hardwareSpecification) {
         this.message = message;
@@ -42,13 +41,15 @@ public class RobotFactory {
      * Create a robot.
      *
      * @param roundState
+     * @param maxProcessorSpeed
+     * @param robotScoreKeeper
      * @return the robot to enter.
      */
-    public Robot createRobot(RoundState roundState) {
+    public Robot createRobot(RoundState roundState, int maxProcessorSpeed, RobotScoreKeeper robotScoreKeeper) {
         final Robot robot = new Robot(name, id, robotScoreKeeper);
         robot.addRobotListener(robotScoreKeeper);
         final RandomAccessMemoryArray lowerMemoryBlock = new RandomAccessMemoryArray(LOWER_MEMORY_BLOCK_SIZE);
-        robot.setComputer(createComputer(lowerMemoryBlock, roundState.getMaxProcessorSpeed()));
+        robot.setComputer(createComputer(lowerMemoryBlock, maxProcessorSpeed));
         final HardwareContext hardwareContext = new HardwareContext();
         hardwareContext.setRobot(robot);
         hardwareSpecification.configureHardwareContext(hardwareContext);

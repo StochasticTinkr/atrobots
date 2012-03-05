@@ -11,7 +11,8 @@ import net.virtualinfinity.atrobots.computer.Program;
  * @author Daniel Pitts
  */
 public class Entrant extends RobotFactory {
-    private volatile Game game;
+    private volatile RoundListener game;
+    private final RobotScoreKeeper robotScoreKeeper = new RobotScoreKeeper();
 
     public Entrant(String name, Program program, HardwareSpecification hardwareSpecification, DebugInfo debugInfo, int maxProcessorSpeed, String message) {
         super(message, program, name, maxProcessorSpeed, debugInfo, hardwareSpecification);
@@ -37,7 +38,7 @@ public class Entrant extends RobotFactory {
      *
      * @return the game.
      */
-    public Game getGame() {
+    public RoundListener getGame() {
         return game;
     }
 
@@ -46,9 +47,12 @@ public class Entrant extends RobotFactory {
      *
      * @param game the game.
      */
-    public void setGame(Game game) {
+    public void setGame(RoundListener game) {
         this.game = game;
     }
 
 
+    public RobotScoreKeeper getRobotScoreKeeper() {
+        return robotScoreKeeper;
+    }
 }
