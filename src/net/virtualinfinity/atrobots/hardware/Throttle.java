@@ -6,7 +6,7 @@ import net.virtualinfinity.atrobots.measures.Duration;
 import net.virtualinfinity.atrobots.measures.Temperature;
 import net.virtualinfinity.atrobots.ports.PortHandler;
 import net.virtualinfinity.atrobots.simulation.arena.Speed;
-import net.virtualinfinity.atrobots.simulation.atrobot.Robot;
+import net.virtualinfinity.atrobots.simulation.atrobot.HasOverburner;
 
 /**
  * @author Daniel Pitts
@@ -19,7 +19,7 @@ public class Throttle implements ShutdownListener {
     private static final double STANDARD_MAX_VELOCITY = 4.0;
     private double powerRatio = STANDARD_MAX_VELOCITY / 100.0;
     private HeatSinks heatSinks;
-    private Robot robot;
+    private HasOverburner overburner;
 
     public Throttle(double powerRatio) {
         this.powerRatio = powerRatio * STANDARD_MAX_VELOCITY / 100.0;
@@ -59,9 +59,11 @@ public class Throttle implements ShutdownListener {
     }
 
     private void updateSpeed() {
-        double powerRatio = robot.isOverburn() ? this.powerRatio * 1.3 : this.powerRatio;
+        speed.setDistanceOverTime(power * getPowerRatio(), Duration.ONE_CYCLE);
+    }
 
-        speed.setDistanceOverTime((power) * (powerRatio), Duration.ONE_CYCLE);
+    private double getPowerRatio() {
+        return overburner.isOverburn() ? this.powerRatio * 1.3 : this.powerRatio;
     }
 
     public void setSpeed(Speed speed) {
@@ -88,12 +90,8 @@ public class Throttle implements ShutdownListener {
         this.heatSinks = heatSinks;
     }
 
-    public Robot getRobot() {
-        return robot;
-    }
-
-    public void setRobot(Robot robot) {
-        this.robot = robot;
+    public void setOverburner(HasOverburner overburner) {
+        this.overburner = overburner;
     }
 
     public void shutDown() {

@@ -3,7 +3,8 @@ package net.virtualinfinity.atrobots.hardware;
 
 import net.virtualinfinity.atrobots.ports.PortHandler;
 import net.virtualinfinity.atrobots.simulation.arena.Arena;
-import net.virtualinfinity.atrobots.simulation.atrobot.Robot;
+import net.virtualinfinity.atrobots.simulation.arena.Position;
+import net.virtualinfinity.atrobots.simulation.atrobot.DamageInflicter;
 import net.virtualinfinity.atrobots.simulation.mine.Mine;
 
 import java.util.ArrayList;
@@ -15,7 +16,9 @@ import java.util.Collection;
 public class MineLayer {
     private int mines = 2;
     private Collection<Mine> layedMines = new ArrayList<Mine>();
-    private Robot robot;
+    private DamageInflicter owner;
+    private Position position;
+    private Arena arena;
 
     public MineLayer(int mines) {
         this.mines = mines;
@@ -35,9 +38,9 @@ public class MineLayer {
 
     private void layMine(double triggerRadius) {
         if (hasMines()) {
-            final Mine mine = new Mine(this);
+            final Mine mine = new Mine(owner);
             mine.setTriggerRadius(triggerRadius);
-            mine.setPosition(robot.getPosition());
+            mine.setPosition(position);
             getArena().placeMine(mine);
             layedMines.add(mine);
             mines--;
@@ -65,7 +68,9 @@ public class MineLayer {
     }
 
     private void detonateMines() {
-
+        for (Mine mine : layedMines) {
+            mine.explode();
+        }
     }
 
     private int countPlacedMines() {
@@ -79,14 +84,14 @@ public class MineLayer {
     }
 
     private Arena getArena() {
-        return robot.getArena();
+        return arena;
     }
 
-    public void setRobot(Robot robot) {
-        this.robot = robot;
+    public void setOwner(DamageInflicter owner) {
+        this.owner = owner;
     }
 
-    public Robot getRobot() {
-        return robot;
+    public DamageInflicter getOwner() {
+        return owner;
     }
 }

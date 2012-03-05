@@ -1,6 +1,7 @@
 package net.virtualinfinity.atrobots.simulation.atrobot;
 
 import net.virtualinfinity.atrobots.atsetup.AtRobotPort;
+import net.virtualinfinity.atrobots.hardware.HasHeading;
 import net.virtualinfinity.atrobots.hardware.HasTemperature;
 import net.virtualinfinity.atrobots.hardware.Transponder;
 import net.virtualinfinity.atrobots.measures.RelativeAngle;

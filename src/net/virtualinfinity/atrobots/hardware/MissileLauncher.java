@@ -8,8 +8,8 @@ import net.virtualinfinity.atrobots.simulation.arena.Arena;
 import net.virtualinfinity.atrobots.simulation.arena.Heading;
 import net.virtualinfinity.atrobots.simulation.arena.Position;
 import net.virtualinfinity.atrobots.simulation.atrobot.HasOverburner;
-import net.virtualinfinity.atrobots.simulation.atrobot.MissileFactory;
 import net.virtualinfinity.atrobots.simulation.missile.Missile;
+import net.virtualinfinity.atrobots.simulation.missile.MissileFactory;
 
 /**
  * @author Daniel Pitts

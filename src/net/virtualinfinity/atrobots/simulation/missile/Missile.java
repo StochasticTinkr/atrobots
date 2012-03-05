@@ -7,7 +7,7 @@ import net.virtualinfinity.atrobots.simulation.arena.ArenaObject;
 import net.virtualinfinity.atrobots.simulation.arena.LinearDamageFunction;
 import net.virtualinfinity.atrobots.simulation.arena.Position;
 import net.virtualinfinity.atrobots.simulation.arena.Speed;
-import net.virtualinfinity.atrobots.simulation.atrobot.Robot;
+import net.virtualinfinity.atrobots.simulation.atrobot.DamageInflicter;
 import net.virtualinfinity.atrobots.snapshots.ArenaObjectSnapshot;
 import net.virtualinfinity.atrobots.snapshots.MissileSnapshot;
 
@@ -17,16 +17,16 @@ import net.virtualinfinity.atrobots.snapshots.MissileSnapshot;
  * @author Daniel Pitts
  */
 public class Missile extends ArenaObject {
-    private final Robot robot;
+    private final DamageInflicter damageInflicter;
     private final double power;
     private final boolean overburn;
 
-    public Missile(Robot robot, Position position, AbsoluteAngle angle, double power) {
-        this.robot = robot;
+    public Missile(DamageInflicter damageInflicter, Position position, AbsoluteAngle angle, double power, boolean overburn) {
+        this.damageInflicter = damageInflicter;
         this.power = power;
         this.position.copyFrom(position);
         this.heading.setAngle(angle);
-        this.overburn = robot.isOverburn();
+        this.overburn = overburn;
         getSpeed().setDistanceOverTime((32) * (power), Duration.ONE_CYCLE);
     }
 
@@ -47,28 +47,28 @@ public class Missile extends ArenaObject {
     /**
      * See if this robot collides with this missile.
      *
-     * @param robot the robot to check collision against.
+     * @param arenaObject the robot to check collision against.
      */
-    public void checkCollision(Robot robot) {
-        if (robot == this.robot || isDead()) {
+    public void checkCollision(ArenaObject arenaObject) {
+        if (arenaObject == this.damageInflicter || isDead()) {
             return;
         }
-        final Vector collisionPoint = getCollisionPoint(robot);
+        final Vector collisionPoint = getCollisionPoint(arenaObject);
         if (collisionPoint != null) {
-            if (collisionPoint.minus(robot.getPosition().getVector()).getMagnitudeSquared() < 196) {
+            if (collisionPoint.minus(arenaObject.getPosition().getVector()).getMagnitudeSquared() < 196) {
                 position.copyFrom(new Position(collisionPoint));
                 explode();
             }
         }
     }
 
-    private Vector getCollisionPoint(Robot robot) {
-        return robot.getPosition().getVector().perpendicularIntersectionFrom(getPosition().getVector(), heading.getAngle(), speed.times(Duration.ONE_CYCLE));
+    private Vector getCollisionPoint(ArenaObject arenaObject) {
+        return arenaObject.getPosition().getVector().perpendicularIntersectionFrom(getPosition().getVector(), heading.getAngle(), speed.times(Duration.ONE_CYCLE));
     }
 
 
     private void explode() {
-        getArena().explosion(this.robot, new LinearDamageFunction(position, power, 14));
+        getArena().explosion(this.damageInflicter, new LinearDamageFunction(position, power, 14));
         die();
     }
 

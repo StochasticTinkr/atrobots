@@ -5,16 +5,15 @@ import net.virtualinfinity.atrobots.computer.ShutdownListener;
 import net.virtualinfinity.atrobots.measures.Duration;
 import net.virtualinfinity.atrobots.measures.Temperature;
 import net.virtualinfinity.atrobots.ports.PortHandler;
-import net.virtualinfinity.atrobots.simulation.atrobot.Robot;
 
 /**
  * @author Daniel Pitts
  */
 public class Shield implements Resettable, ShutdownListener {
     private boolean active;
-    private Robot robot;
     private double heatFraction = 0;
     private double damageFraction = 1;
+    private HeatSinks heatSinks;
 
     public Shield(double strength) {
         this.heatFraction = strength;
@@ -39,7 +38,7 @@ public class Shield implements Resettable, ShutdownListener {
 
     public void setActive(boolean active) {
         this.active = active;
-        robot.getHeatSinks().blockHeat(active);
+        heatSinks.blockHeat(active);
     }
 
     public void reset() {
@@ -48,19 +47,19 @@ public class Shield implements Resettable, ShutdownListener {
 
     public double absorbDamage(double damageAmount) {
         if (active) {
-            robot.getHeatSinks().warm(Temperature.fromLogScale((int) Math.round(damageAmount * heatFraction)));
+            heatSinks.warm(Temperature.fromLogScale((int) Math.round(damageAmount * heatFraction)));
             return damageAmount * damageFraction;
         }
         return damageAmount;
     }
 
-    public void setRobot(Robot robot) {
-        this.robot = robot;
+    public void setHeatSinks(HeatSinks heatSinks) {
+        this.heatSinks = heatSinks;
     }
 
     public void update(Duration duration) {
         if (active && heatFraction > 0) {
-            robot.getHeatSinks().warm(Temperature.fromLogScale(duration.getCycles() / 3.0));
+            heatSinks.warm(Temperature.fromLogScale(duration.getCycles() / 3.0));
         }
     }
 

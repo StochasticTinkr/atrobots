@@ -4,14 +4,13 @@ import net.virtualinfinity.atrobots.measures.AbsoluteAngle;
 import net.virtualinfinity.atrobots.measures.AngleBracket;
 import net.virtualinfinity.atrobots.measures.RelativeAngle;
 import net.virtualinfinity.atrobots.ports.PortHandler;
-import net.virtualinfinity.atrobots.simulation.arena.ScanResult;
-import net.virtualinfinity.atrobots.simulation.atrobot.Robot;
+import net.virtualinfinity.atrobots.simulation.atrobot.ScanSource;
 
 /**
  * @author Daniel Pitts
  */
 public class Sonar {
-    private Robot robot;
+    private ScanSource scanSource;
     private double maxDistance;
 
     public Sonar() {
@@ -32,11 +31,10 @@ public class Sonar {
     }
 
     private AbsoluteAngle scan() {
-        final ScanResult scanResult = robot.scan(AngleBracket.all(), maxDistance, false);
-        return scanResult.getAngle();
+        return scanSource.scan(AngleBracket.all(), maxDistance, false).getAngle();
     }
 
-    public void setRobot(Robot robot) {
-        this.robot = robot;
+    public void setScanSource(ScanSource scanSource) {
+        this.scanSource = scanSource;
     }
 }

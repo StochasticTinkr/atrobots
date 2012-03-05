@@ -3,6 +3,7 @@ package net.virtualinfinity.atrobots.simulation.arena;
 import net.virtualinfinity.atrobots.GameTimer;
 import net.virtualinfinity.atrobots.measures.AngleBracket;
 import net.virtualinfinity.atrobots.measures.Duration;
+import net.virtualinfinity.atrobots.simulation.atrobot.DamageInflicter;
 import net.virtualinfinity.atrobots.simulation.atrobot.Robot;
 import net.virtualinfinity.atrobots.simulation.mine.Mine;
 import net.virtualinfinity.atrobots.simulation.missile.Missile;
@@ -205,7 +206,7 @@ public class Arena implements GameTimer {
      * @param cause             the robot which gets credit for any damage done.
      * @param explosionFunction the damage explosion function.
      */
-    public void explosion(Robot cause, ExplosionFunction explosionFunction) {
+    public void explosion(DamageInflicter cause, ExplosionFunction explosionFunction) {
         others.add(new Explosion(explosionFunction.getCenter(), explosionFunction.getRadius()));
         for (Robot robot : activeRobots) {
             explosionFunction.inflictDamage(cause, robot);

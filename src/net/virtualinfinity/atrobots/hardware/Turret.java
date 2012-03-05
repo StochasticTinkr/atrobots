@@ -2,7 +2,6 @@ package net.virtualinfinity.atrobots.hardware;
 
 import net.virtualinfinity.atrobots.computer.Resettable;
 import net.virtualinfinity.atrobots.simulation.arena.Heading;
-import net.virtualinfinity.atrobots.simulation.atrobot.HasHeading;
 
 /**
  * @author Daniel Pitts

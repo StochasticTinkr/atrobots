@@ -3,20 +3,20 @@ package net.virtualinfinity.atrobots.hardware;
 import net.virtualinfinity.atrobots.measures.AngleBracket;
 import net.virtualinfinity.atrobots.ports.PortHandler;
 import net.virtualinfinity.atrobots.simulation.arena.ScanResult;
-import net.virtualinfinity.atrobots.simulation.atrobot.Robot;
+import net.virtualinfinity.atrobots.simulation.atrobot.ScanSource;
 
 
 /**
  * @author Daniel Pitts
  */
 public class Radar {
-    private Robot robot;
+    private ScanSource scanSource;
 
     public PortHandler getScanPort() {
         return new PortHandler() {
             public short read() {
                 consumeCycles(3);
-                final ScanResult scanResult = robot.scan(AngleBracket.all(), Double.POSITIVE_INFINITY, false);
+                final ScanResult scanResult = scanSource.scan(AngleBracket.all(), Double.POSITIVE_INFINITY, false);
                 if (!scanResult.successful()) {
                     return Short.MAX_VALUE;
                 }
@@ -25,7 +25,7 @@ public class Radar {
         };
     }
 
-    public void setRobot(Robot robot) {
-        this.robot = robot;
+    public void setScanSource(ScanSource scanSource) {
+        this.scanSource = scanSource;
     }
 }

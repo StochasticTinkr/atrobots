@@ -3,10 +3,12 @@ package net.virtualinfinity.atrobots.simulation.atrobot;
 import net.virtualinfinity.atrobots.RobotScoreKeeper;
 import net.virtualinfinity.atrobots.computer.*;
 import net.virtualinfinity.atrobots.hardware.*;
+import net.virtualinfinity.atrobots.interrupts.Destructable;
 import net.virtualinfinity.atrobots.measures.*;
 import net.virtualinfinity.atrobots.ports.PortHandler;
 import net.virtualinfinity.atrobots.simulation.arena.*;
 import net.virtualinfinity.atrobots.simulation.missile.Missile;
+import net.virtualinfinity.atrobots.simulation.missile.MissileFactory;
 import net.virtualinfinity.atrobots.snapshots.ArenaObjectSnapshot;
 import net.virtualinfinity.atrobots.snapshots.RobotSnapshot;
 
@@ -16,7 +18,7 @@ import java.util.List;
 /**
  * @author Daniel Pitts
  */
-public class Robot extends ArenaObject implements Resettable, HasHeading, Destructable, HasOverburner, MissileFactory, ArmorDepletionListener {
+public class Robot extends ArenaObject implements Resettable, HasHeading, Destructable, HasOverburner, MissileFactory, ArmorDepletionListener, ScanSource, DamageInflicter {
     private final HeatSinks heatSinks = new HeatSinks();
     private final Odometer odometer = new Odometer();
     private final String name;
@@ -290,7 +292,7 @@ public class Robot extends ArenaObject implements Resettable, HasHeading, Destru
         computer.getRegisters().getCollisionCount().increment();
     }
 
-    public void inflictDamage(Robot cause, double damageAmount) {
+    public void inflictDamage(DamageInflicter cause, double damageAmount) {
         if (!isDead()) {
             armor.inflictDamage(shield.absorbDamage(damageAmount));
             if (isDead()) {
@@ -358,7 +360,7 @@ public class Robot extends ArenaObject implements Resettable, HasHeading, Destru
         }
     }
 
-    private void killedRobot() {
+    public void killedRobot() {
         for (RobotListener listener : robotListeners) {
             listener.killedRobot(this);
         }
@@ -410,7 +412,7 @@ public class Robot extends ArenaObject implements Resettable, HasHeading, Destru
     }
 
     public Missile createMissile(AbsoluteAngle heading, Position position, double power) {
-        return new Missile(this, position, heading, power);
+        return new Missile(this, position, heading, power, this.isOverburn());
     }
 
     /**

@@ -4,8 +4,9 @@ import net.virtualinfinity.atrobots.computer.Resettable;
 import net.virtualinfinity.atrobots.measures.AngleBracket;
 import net.virtualinfinity.atrobots.measures.RelativeAngle;
 import net.virtualinfinity.atrobots.ports.PortHandler;
+import net.virtualinfinity.atrobots.simulation.arena.Heading;
 import net.virtualinfinity.atrobots.simulation.arena.ScanResult;
-import net.virtualinfinity.atrobots.simulation.atrobot.Robot;
+import net.virtualinfinity.atrobots.simulation.atrobot.ScanSource;
 
 /**
  * @author Daniel Pitts
@@ -13,8 +14,9 @@ import net.virtualinfinity.atrobots.simulation.atrobot.Robot;
 public class Scanner implements Resettable {
     private int accuracy;
     private RelativeAngle scanArc = RelativeAngle.fromBygrees(8);
-    private Robot robot;
+    private ScanSource scanSource;
     private double maxDistance = (1500);
+    private Heading heading;
 
     public Scanner(double maxDistance) {
         this.maxDistance = (maxDistance);
@@ -35,7 +37,7 @@ public class Scanner implements Resettable {
 
     private ScanResult scan() {
         AngleBracket angleBracket = getAngleBracket();
-        ScanResult scanResult = robot.scan(angleBracket, maxDistance, true);
+        ScanResult scanResult = scanSource.scan(angleBracket, maxDistance, true);
         if (scanResult.successful()) {
             setAccuracy(scanResult.getAccuracy());
         }
@@ -43,7 +45,7 @@ public class Scanner implements Resettable {
     }
 
     private AngleBracket getAngleBracket() {
-        return AngleBracket.around(robot.getTurret().getHeading().getAngle(), scanArc);
+        return AngleBracket.around(heading.getAngle(), scanArc);
     }
 
     public PortHandler getAccuracyPort() {
@@ -87,7 +89,11 @@ public class Scanner implements Resettable {
         this.accuracy = accuracy;
     }
 
-    public void setRobot(Robot robot) {
-        this.robot = robot;
+    public void setHeading(Heading heading) {
+        this.heading = heading;
+    }
+
+    public void setScanSource(ScanSource scanSource) {
+        this.scanSource = scanSource;
     }
 }

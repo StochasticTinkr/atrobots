@@ -1,11 +1,10 @@
 package net.virtualinfinity.atrobots.simulation.mine;
 
 
-import net.virtualinfinity.atrobots.hardware.MineLayer;
 import net.virtualinfinity.atrobots.simulation.arena.ArenaObject;
 import net.virtualinfinity.atrobots.simulation.arena.LinearDamageFunction;
 import net.virtualinfinity.atrobots.simulation.arena.Position;
-import net.virtualinfinity.atrobots.simulation.atrobot.Robot;
+import net.virtualinfinity.atrobots.simulation.atrobot.DamageInflicter;
 import net.virtualinfinity.atrobots.snapshots.ArenaObjectSnapshot;
 import net.virtualinfinity.atrobots.snapshots.MineSnapshot;
 
@@ -16,10 +15,10 @@ import net.virtualinfinity.atrobots.snapshots.MineSnapshot;
  */
 public class Mine extends ArenaObject {
     private double triggerRadius;
-    private final MineLayer owner;
+    private final DamageInflicter owner;
     private double triggerRadiusSquared;
 
-    public Mine(MineLayer owner) {
+    public Mine(DamageInflicter owner) {
         this.owner = owner;
     }
 
@@ -32,8 +31,8 @@ public class Mine extends ArenaObject {
         position.copyFrom(source);
     }
 
-    public boolean layedBy(MineLayer mineLayer) {
-        return mineLayer == owner;
+    public boolean layedBy(Object owner) {
+        return this.owner == owner;
     }
 
     protected ArenaObjectSnapshot createSpecificSnapshot() {
@@ -42,24 +41,21 @@ public class Mine extends ArenaObject {
         return snapshot;
     }
 
-    public void checkCollision(Robot robot) {
-        if (isDead() || layedBy(robot.getMineLayer())) {
+    public void checkCollision(ArenaObject arenaObject) {
+        if (isDead() || layedBy(arenaObject)) {
             return;
         }
-        if (robot.getPosition().getVectorTo(position).getMagnitudeSquared() < triggerRadiusSquared) {
+        if (arenaObject.getPosition().getVectorTo(position).getMagnitudeSquared() < triggerRadiusSquared) {
             explode();
         }
     }
 
-    private void explode() {
+    public void explode() {
         if (!isDead()) {
             die();
-            getArena().explosion(getRobot(), new LinearDamageFunction(position, 1, 35.0));
+            getArena().explosion(owner, new LinearDamageFunction(position, 1, 35.0));
         }
     }
 
-    private Robot getRobot() {
-        return owner.getRobot();
-    }
 
 }

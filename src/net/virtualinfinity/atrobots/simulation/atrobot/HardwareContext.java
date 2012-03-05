@@ -178,7 +178,8 @@ public class HardwareContext {
 
     private void wireScanner() {
         turret.setScanner(scanner);
-        scanner.setRobot(robot);
+        scanner.setScanSource(robot);
+        scanner.setHeading(robot.getHeading());
     }
 
     private void wireComputer(CommunicationsQueue commQueue) {
@@ -205,22 +206,22 @@ public class HardwareContext {
 
     private void wireSonar() {
         robot.setSonar(sonar);
-        sonar.setRobot(robot);
+        sonar.setScanSource(robot);
     }
 
     private void wireShield() {
         robot.setShield(shield);
-        robot.getShield().setRobot(robot);
+        robot.getShield().setHeatSinks(robot.getHeatSinks());
     }
 
     private void wireRadar() {
-        radar.setRobot(robot);
+        radar.setScanSource(robot);
         robot.setRadar(radar);
     }
 
     private void wireMineLayer() {
         robot.setMineLayer(mineLayer);
-        mineLayer.setRobot(robot);
+        mineLayer.setOwner(robot);
     }
 
     private void wireArmor() {
@@ -229,7 +230,7 @@ public class HardwareContext {
 
     private void wireThrottle() {
         robot.setThrottle(throttle);
-        throttle.setRobot(robot);
+        throttle.setOverburner(robot);
     }
 
     private CommunicationsQueue createCommQueue() {
