@@ -2,41 +2,36 @@ package net.virtualinfinity.atrobots.simulation.arena;
 
 import net.virtualinfinity.atrobots.measures.AbsoluteAngle;
 import net.virtualinfinity.atrobots.measures.Vector;
-import net.virtualinfinity.atrobots.simulation.atrobot.Robot;
 
 /**
  * @author Daniel Pitts
  */
 public class ScanResult {
-    private final Robot match;
     private final double distance;
     private final AbsoluteAngle angle;
-    private final AbsoluteAngle heading;
-    private final int throttle;
     private final int accuracy;
+    private final Vector matchPositionVector;
+    private final int matchTransponderId;
+    private final boolean successful;
 
-    public ScanResult(Robot match, double distance, AbsoluteAngle angle, int accuracy) {
-        this.match = match;
+    public ScanResult(double distance, AbsoluteAngle angle, int accuracy, Vector matchPositionVector, int matchTransponderId) {
         this.distance = distance;
         this.angle = angle;
         this.accuracy = accuracy;
-        heading = match.getHeading().getAngle();
-        throttle = match.getThrottle().getDesiredPower();
+        this.matchPositionVector = matchPositionVector;
+        this.matchTransponderId = matchTransponderId;
+        this.successful = true;
     }
 
     public ScanResult() {
         distance = Double.POSITIVE_INFINITY;
-        match = null;
         angle = null;
-        heading = null;
-        throttle = 0;
+        matchPositionVector = null;
         accuracy = 0;
+        matchTransponderId = 0;
+        successful = false;
     }
 
-
-    public Robot getMatch() {
-        return match;
-    }
 
     public double getDistance() {
         return distance;
@@ -46,16 +41,8 @@ public class ScanResult {
         return angle;
     }
 
-    public AbsoluteAngle getHeading() {
-        return heading;
-    }
-
-    public int getThrottle() {
-        return throttle;
-    }
-
     public boolean successful() {
-        return match != null;
+        return successful;
     }
 
     public int getAccuracy() {
@@ -63,6 +50,10 @@ public class ScanResult {
     }
 
     Vector getMatchPositionVector() {
-        return successful() ? getMatch().getPosition().getVector() : null;
+        return matchPositionVector;
+    }
+
+    public int getMatchTransponderId() {
+        return matchTransponderId;
     }
 }

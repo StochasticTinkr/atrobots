@@ -6,11 +6,15 @@ import net.virtualinfinity.atrobots.simulation.arena.Arena;
 import net.virtualinfinity.atrobots.simulation.atrobot.Robot;
 import net.virtualinfinity.atrobots.simulation.mine.Mine;
 
+import java.util.ArrayList;
+import java.util.Collection;
+
 /**
  * @author Daniel Pitts
  */
 public class MineLayer {
     private int mines = 2;
+    private Collection<Mine> layedMines = new ArrayList<Mine>();
     private Robot robot;
 
     public MineLayer(int mines) {
@@ -35,6 +39,7 @@ public class MineLayer {
             mine.setTriggerRadius(triggerRadius);
             mine.setPosition(robot.getPosition());
             getArena().placeMine(mine);
+            layedMines.add(mine);
             mines--;
         }
     }
@@ -64,7 +69,13 @@ public class MineLayer {
     }
 
     private int countPlacedMines() {
-        return getArena().countMinesLayedBy(this);
+        int count = 0;
+        for (Mine mine : layedMines) {
+            if (!mine.isDead()) {
+                count++;
+            }
+        }
+        return count;
     }
 
     private Arena getArena() {

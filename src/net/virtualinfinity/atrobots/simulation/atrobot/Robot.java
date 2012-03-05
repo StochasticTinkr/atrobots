@@ -249,7 +249,7 @@ public class Robot extends ArenaObject implements Resettable, HasHeading, Destru
         final ScanResult scanResult = getArena().scan(this, getPosition(), angleBracket, maxDistance, calculateAccuracy);
         lastScanResult.set(scanResult);
         if (scanResult.successful()) {
-            getComputer().getRegisters().getTargetId().set((short) scanResult.getMatch().getTransponder().getId());
+            getComputer().getRegisters().getTargetId().set((short) scanResult.getMatchTransponderId());
         }
         return scanResult;
     }

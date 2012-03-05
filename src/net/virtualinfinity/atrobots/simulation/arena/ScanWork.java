@@ -60,22 +60,22 @@ public class ScanWork {
     }
 
     public ScanResult toScanResult() {
-        if (closest != null && closestDistanceSquared <= maxDistanceSquared) {
-            final AbsoluteAngle angleToClosest = vectorToClosest.getAngle();
-            final int accuracy;
-            if (calculateAccuracy) {
-                final double v = 0.5d - angleBracket.fractionTo(angleToClosest);
-                if (angleBracket.getRangeSize().getBygrees() <= 4) {
-                    accuracy = roundAwayFromZero(v * 2) * 2;
-                } else {
-                    accuracy = roundAwayFromZero(v * 4);
-                }
-            } else {
-                accuracy = 0;
-            }
-            return new ScanResult(closest, Math.sqrt(closestDistanceSquared), angleToClosest, Math.min(2, Math.max(-2, accuracy)));
+        if (closest == null || closestDistanceSquared > maxDistanceSquared) {
+            return new ScanResult();
         }
-        return new ScanResult();
+        final AbsoluteAngle angleToClosest = vectorToClosest.getAngle();
+        final int accuracy;
+        if (calculateAccuracy) {
+            final double v = 0.5d - angleBracket.fractionTo(angleToClosest);
+            if (angleBracket.getRangeSize().getBygrees() <= 4) {
+                accuracy = roundAwayFromZero(v * 2) * 2;
+            } else {
+                accuracy = roundAwayFromZero(v * 4);
+            }
+        } else {
+            accuracy = 0;
+        }
+        return new ScanResult(Math.sqrt(closestDistanceSquared), angleToClosest, Math.min(2, Math.max(-2, accuracy)), closest.getPosition().getVector(), closest.getTransponder().getId());
     }
 
     private static int roundAwayFromZero(double value) {

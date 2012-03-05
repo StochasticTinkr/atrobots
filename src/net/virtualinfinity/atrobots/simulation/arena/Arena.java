@@ -1,7 +1,6 @@
 package net.virtualinfinity.atrobots.simulation.arena;
 
 import net.virtualinfinity.atrobots.GameTimer;
-import net.virtualinfinity.atrobots.hardware.MineLayer;
 import net.virtualinfinity.atrobots.measures.AngleBracket;
 import net.virtualinfinity.atrobots.measures.Duration;
 import net.virtualinfinity.atrobots.simulation.atrobot.Robot;
@@ -68,22 +67,6 @@ public class Arena implements GameTimer {
 
     private void connectArena(ArenaObject object) {
         object.setArena(this);
-    }
-
-    /**
-     * Count the number of live mines which were layed by the given mine layer.
-     *
-     * @param mineLayer the mine layer.
-     * @return the number of live mines in this arena which were layed by the given mine layer.
-     */
-    public int countMinesLayedBy(MineLayer mineLayer) {
-        int count = 0;
-        for (Mine mine : mines) {
-            if (!mine.isDead() && mine.layedBy(mineLayer)) {
-                count++;
-            }
-        }
-        return count;
     }
 
     /**
