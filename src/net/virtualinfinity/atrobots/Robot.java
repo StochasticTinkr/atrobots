@@ -399,4 +399,9 @@ public class Robot extends ArenaObject implements Resetable {
     public void addRobotListener(RobotListener robotListener) {
         robotListeners.add(robotListener);
     }
+
+    @Override
+    protected void arenaConnected(Arena arena) {
+        transceiver.setRadioDispatcher(arena.getRadioDispatcher());
+    }
 }

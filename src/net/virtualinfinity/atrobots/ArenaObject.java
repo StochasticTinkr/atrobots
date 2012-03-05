@@ -102,6 +102,10 @@ public abstract class ArenaObject {
      */
     final void setArena(Arena arena) {
         this.arena = arena;
+        arenaConnected(arena);
+    }
+
+    protected void arenaConnected(Arena arena) {
     }
 
     public Game getGame() {

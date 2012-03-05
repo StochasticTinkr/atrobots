@@ -68,7 +68,6 @@ public class Entrant {
                 incrementDeaths();
             }
         });
-        robot.setArena(game.getRound().getArena());
         final RandomAccessMemoryArray lowerMemoryBlock = new RandomAccessMemoryArray(LOWER_MEMORY_BLOCK_SIZE);
         robot.setComputer(createComputer(lowerMemoryBlock));
         final HardwareContext hardwareContext = new HardwareContext();

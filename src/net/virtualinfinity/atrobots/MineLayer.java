@@ -5,7 +5,6 @@ package net.virtualinfinity.atrobots;
  * @author Daniel Pitts
  */
 public class MineLayer {
-    private Arena arena;
     private int mines = 2;
     private Robot robot;
 
@@ -30,7 +29,7 @@ public class MineLayer {
             final Mine mine = new Mine(this);
             mine.setTriggerRadius(triggerRadius);
             mine.setPosition(robot.getPosition());
-            arena.placeMine(mine);
+            getArena().placeMine(mine);
             mines--;
         }
     }
@@ -60,11 +59,11 @@ public class MineLayer {
     }
 
     private int countPlacedMines() {
-        return arena.countMinesLayedBy(this);
+        return getArena().countMinesLayedBy(this);
     }
 
-    public void setArena(Arena arena) {
-        this.arena = arena;
+    private Arena getArena() {
+        return robot.getArena();
     }
 
     public void setRobot(Robot robot) {
