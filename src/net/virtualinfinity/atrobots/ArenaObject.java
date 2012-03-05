@@ -103,4 +103,8 @@ public abstract class ArenaObject {
     final void setArena(Arena arena) {
         this.arena = arena;
     }
+
+    public Game getGame() {
+        return getArena().getGame();
+    }
 }

@@ -7,12 +7,17 @@ import net.virtualinfinity.atrobots.measures.RelativeAngle;
 import net.virtualinfinity.atrobots.snapshots.ArenaObjectSnapshot;
 import net.virtualinfinity.atrobots.snapshots.RobotSnapshot;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * @author Daniel Pitts
  */
 public class Robot extends ArenaObject implements Resetable {
     private final Heat heat = new Heat();
     private final Odometer odometer = new Odometer();
+    private final String name;
+    private final int id;
     private Throttle throttle;
     private Computer computer;
     private Turret turret;
@@ -20,7 +25,6 @@ public class Robot extends ArenaObject implements Resetable {
     private Transceiver transceiver;
     private Duration lastDamageGiven = Duration.fromCycles(0);
     private Duration lastDamageTaken = Duration.fromCycles(0);
-    private Entrant entrant;
     private Armor armor;
     private Radar radar;
     private Sonar sonar;
@@ -32,6 +36,23 @@ public class Robot extends ArenaObject implements Resetable {
     private final LastScanResult lastScanResult = new LastScanResult();
     private static final RelativeAngle STEERING_SPEED = RelativeAngle.fromBygrees(8);
     private final Position oldPosition = new Position();
+    private int roundKills;
+    private int totalKills;
+    private int totalDeaths;
+    private int totalWins;
+    private int totalTies;
+    private final List<RobotListener> robotListeners = new ArrayList<RobotListener>();
+    private Game game;
+
+    public Robot(String name, int id, int totalDeaths, int totalKills, int totalWins, int totalTies) {
+        this.name = name;
+        this.id = id;
+        this.totalDeaths = totalDeaths;
+        this.totalKills = totalKills;
+        this.roundKills = 0;
+        this.totalWins = totalWins;
+        this.totalTies = totalTies;
+    }
 
     {
         position.setOdometer(odometer);
@@ -80,14 +101,6 @@ public class Robot extends ArenaObject implements Resetable {
 
     public Odometer getOdometer() {
         return odometer;
-    }
-
-    public void setEntrant(Entrant entrant) {
-        this.entrant = entrant;
-    }
-
-    public Entrant getEntrant() {
-        return entrant;
     }
 
     public Throttle getThrottle() {
@@ -249,13 +262,13 @@ public class Robot extends ArenaObject implements Resetable {
         robotSnapshot.setActiveShield(getShield().isActive());
         robotSnapshot.setHeading(getHeading().getAngle());
         robotSnapshot.setTurretHeading(getTurret().getHeading().getAngle());
-        robotSnapshot.setName(getEntrant().getName());
-        robotSnapshot.setId(getEntrant().getId());
-        robotSnapshot.setRoundKills(getEntrant().getRoundKills());
-        robotSnapshot.setTotalKills(getEntrant().getTotalKills());
-        robotSnapshot.setTotalDeaths(getEntrant().getTotalDeaths());
-        robotSnapshot.setTotalWins(getEntrant().getTotalWins());
-        robotSnapshot.setTotalTies(getEntrant().getTotalTies());
+        robotSnapshot.setName(getName());
+        robotSnapshot.setId(getId());
+        robotSnapshot.setRoundKills(getRoundKills());
+        robotSnapshot.setTotalKills(getTotalKills());
+        robotSnapshot.setTotalDeaths(getTotalDeaths());
+        robotSnapshot.setTotalWins(getTotalWins());
+        robotSnapshot.setTotalTies(getTotalTies());
         robotSnapshot.setLastMessage(getComputer().getLastMessage());
         return robotSnapshot;
     }
@@ -288,7 +301,10 @@ public class Robot extends ArenaObject implements Resetable {
 
     public void explode() {
         if (!isDead()) {
-            entrant.incrementDeaths();
+            ++totalDeaths;
+            for (RobotListener listener : robotListeners) {
+                listener.died(this);
+            }
             die();
             getArena().explosion(this, new LinearDamageFunction(position, isOverburn() ? 1.3 : 1, 25.0));
         }
@@ -332,14 +348,55 @@ public class Robot extends ArenaObject implements Resetable {
     }
 
     public void winRound() {
-        getEntrant().incrementWins();
+        totalWins++;
+        for (RobotListener listener : robotListeners) {
+            listener.wonRound(this);
+        }
     }
 
     public void tieRound() {
-        getEntrant().incrementTies();
+        totalTies++;
+        for (RobotListener listener : robotListeners) {
+            listener.tiedRound(this);
+        }
     }
 
     private void killedRobot() {
-        getEntrant().incrementKills();
+        totalKills++;
+        for (RobotListener listener : robotListeners) {
+            listener.killedRobot(this);
+        }
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public int getTotalKills() {
+        return totalKills;
+    }
+
+    public int getRoundKills() {
+        return roundKills;
+    }
+
+    public int getTotalDeaths() {
+        return totalDeaths;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public int getTotalWins() {
+        return totalWins;
+    }
+
+    public int getTotalTies() {
+        return totalTies;
+    }
+
+    public void addRobotListener(RobotListener robotListener) {
+        robotListeners.add(robotListener);
     }
 }

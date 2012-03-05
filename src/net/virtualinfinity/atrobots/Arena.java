@@ -37,6 +37,12 @@ public class Arena {
     private final RadioDispatcher radioDispatcher = new RadioDispatcher();
     private SimulationFrameBuffer simulationFrameBuffer;
     private boolean roundOver;
+    private final Game game;
+
+    public Arena(Game game) {
+        this.game = game;
+    }
+
 
     /**
      * Get the number of robots still active in the arena.
@@ -241,5 +247,10 @@ public class Arena {
         roundOver = true;
         determineWinners();
         buildFrame();
+    }
+
+
+    public Game getGame() {
+        return game;
     }
 }

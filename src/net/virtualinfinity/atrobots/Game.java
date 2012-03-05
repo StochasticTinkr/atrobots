@@ -52,8 +52,7 @@ public class Game {
         if (round != null) {
             round.finalizeRound();
         }
-        round = new Round(++roundNumber, this);
-        round.getArena().setSimulationFrameBuffer(frameBuffer);
+        round = new Round(++roundNumber, this, frameBuffer);
         for (Entrant entrant : entrants) {
             round.getArena().addRobot(createRobotFor(entrant));
         }

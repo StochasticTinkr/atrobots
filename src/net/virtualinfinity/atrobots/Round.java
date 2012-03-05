@@ -12,14 +12,16 @@ public class Round {
     private Duration time = Duration.fromCycles(0);
     private Duration roundEnd = Duration.fromCycles(10);
     private Duration maxCycles = Duration.fromCycles(25000);
-    private Arena arena = new Arena();
+    private Arena arena;
     private int number;
     private Game game;
     private Map<Entrant, Robot> robots = new HashMap<Entrant, Robot>();
 
-    public Round(int number, Game game) {
+    public Round(int number, Game game, SimulationFrameBuffer frameBuffer) {
         this.number = number;
         this.game = game;
+        arena = new Arena(game);
+        arena.setSimulationFrameBuffer(frameBuffer);
     }
 
     public Duration getTime() {

@@ -49,8 +49,25 @@ public class Entrant {
      * @return the robot to enter.
      */
     public Robot createRobot() {
-        final Robot robot = new Robot();
-        robot.setEntrant(this);
+        final Robot robot = new Robot(name, id, totalDeaths, totalKills, totalWins, totalTies);
+        robot.addRobotListener(new RobotListener() {
+
+            public void wonRound(Robot robot) {
+                incrementWins();
+            }
+
+            public void tiedRound(Robot robot) {
+                incrementTies();
+            }
+
+            public void killedRobot(Robot robot) {
+                incrementKills();
+            }
+
+            public void died(Robot robot) {
+                incrementDeaths();
+            }
+        });
         robot.setArena(game.getRound().getArena());
         final RandomAccessMemoryArray lowerMemoryBlock = new RandomAccessMemoryArray(LOWER_MEMORY_BLOCK_SIZE);
         robot.setComputer(createComputer(lowerMemoryBlock));

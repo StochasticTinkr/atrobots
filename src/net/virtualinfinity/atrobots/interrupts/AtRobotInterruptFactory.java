@@ -2,7 +2,6 @@ package net.virtualinfinity.atrobots.interrupts;
 
 import net.virtualinfinity.atrobots.Robot;
 import net.virtualinfinity.atrobots.atsetup.AtRobotInterrupt;
-import static net.virtualinfinity.atrobots.atsetup.AtRobotInterrupt.*;
 import net.virtualinfinity.atrobots.computer.MemoryCell;
 import net.virtualinfinity.atrobots.computer.Registers;
 import net.virtualinfinity.atrobots.util.MapWithDefaultValue;
@@ -11,21 +10,21 @@ import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
 
+import static net.virtualinfinity.atrobots.atsetup.AtRobotInterrupt.*;
+
 /**
  * Creates built-in interrupt handlers for the standard AT-Robots set up.
  *
  * @author Daniel Pitts
  */
 public class AtRobotInterruptFactory {
-    public AtRobotInterruptFactory() {
-    }
 
     private InterruptHandler createResetMetersInterrupt(Robot robot) {
         return new ResetMetersInterrupt(robot, getRegisters(robot).getMeters());
     }
 
     private InterruptHandler createGetRobotStatisticsInterrupt(Robot robot) {
-        return new GetRobotStatisticsInterrupt(robot.getEntrant(), getDxCell(robot), getExCell(robot), getFxCell(robot));
+        return new GetRobotStatisticsInterrupt(robot, getDxCell(robot), getExCell(robot), getFxCell(robot));
     }
 
     private MemoryCell getDxCell(Robot robot) {
@@ -62,7 +61,7 @@ public class AtRobotInterruptFactory {
     }
 
     private InterruptHandler createGetGameInfoInterrupt(Robot robot) {
-        return new GetGameInfoInterrupt(robot.getEntrant().getGame(), getDxCell(robot), getExCell(robot), getFxCell(robot));
+        return new GetGameInfoInterrupt(robot.getGame(), getDxCell(robot), getExCell(robot), getFxCell(robot));
     }
 
     private InterruptHandler createGetTargetInfoInterrupt(Robot robot) {
@@ -83,7 +82,7 @@ public class AtRobotInterruptFactory {
     }
 
     private InterruptHandler createGetTimerInterrupt(Robot robot) {
-        return new GetTimerInterrupt(robot.getEntrant().getGame(), getExCell(robot), getFxCell(robot));
+        return new GetTimerInterrupt(robot.getGame(), getExCell(robot), getFxCell(robot));
     }
 
     private InterruptHandler createGetTransponderIdInterrupt(Robot robot) {
