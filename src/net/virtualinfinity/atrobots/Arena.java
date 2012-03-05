@@ -11,12 +11,14 @@ import java.util.*;
  *
  * @author Daniel Pitts
  */
-public class Arena {
+public class Arena implements GameTimer {
     private final List<Robot> activeRobots = new LinkedList<Robot>();
     private final List<Robot> allRobots = new LinkedList<Robot>();
     private final List<Mine> mines = new LinkedList<Mine>();
     private final List<Missile> missiles = new LinkedList<Missile>();
     private final Collection<ArenaObject> others = new LinkedList<ArenaObject>();
+    private Duration time = Duration.fromCycles(0);
+
     final Collection<Collection<? extends ArenaObject>> allArenaObjectCollections = new ArrayList<Collection<? extends ArenaObject>>();
 
     {
@@ -126,6 +128,7 @@ public class Arena {
     public void simulate() {
         updateSimulation();
         buildFrame();
+        time = time.plus(Duration.ONE_CYCLE);
     }
 
     /**
@@ -252,5 +255,9 @@ public class Arena {
 
     public Game getGame() {
         return game;
+    }
+
+    public Duration getTime() {
+        return time;
     }
 }

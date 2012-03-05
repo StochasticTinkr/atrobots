@@ -1,5 +1,7 @@
 package net.virtualinfinity.atrobots.interrupts;
 
+import net.virtualinfinity.atrobots.Arena;
+import net.virtualinfinity.atrobots.GameTimer;
 import net.virtualinfinity.atrobots.Robot;
 import net.virtualinfinity.atrobots.atsetup.AtRobotInterrupt;
 import net.virtualinfinity.atrobots.computer.MemoryCell;
@@ -60,8 +62,8 @@ public class AtRobotInterruptFactory {
         return new GetRobotInfoInterrupt(robot, getDxCell(robot), getExCell(robot), getFxCell(robot));
     }
 
-    private InterruptHandler createGetGameInfoInterrupt(Robot robot) {
-        return new GetGameInfoInterrupt(robot.getGame(), getDxCell(robot), getExCell(robot), getFxCell(robot));
+    private InterruptHandler createGetGameInfoInterrupt(Robot robot, Arena arena, int totalRounds, int roundNumber) {
+        return new GetGameInfoInterrupt(getDxCell(robot), getExCell(robot), getFxCell(robot), totalRounds, roundNumber, arena);
     }
 
     private InterruptHandler createGetTargetInfoInterrupt(Robot robot) {
@@ -81,8 +83,8 @@ public class AtRobotInterruptFactory {
         return getRegisters(robot).getAx();
     }
 
-    private InterruptHandler createGetTimerInterrupt(Robot robot) {
-        return new GetTimerInterrupt(robot.getGame(), getExCell(robot), getFxCell(robot));
+    private InterruptHandler createGetTimerInterrupt(Robot robot, GameTimer gameTimer) {
+        return new GetTimerInterrupt(getExCell(robot), getFxCell(robot), gameTimer);
     }
 
     private InterruptHandler createGetTransponderIdInterrupt(Robot robot) {
@@ -126,7 +128,7 @@ public class AtRobotInterruptFactory {
         return new InvalidInterrupt(robot.getComputer());
     }
 
-    public Map<Integer, InterruptHandler> createInterruptTable(Robot robot) {
+    public Map<Integer, InterruptHandler> createInterruptTable(Robot robot, Arena arena, int totalRounds, int roundNumber) {
         Map<Integer, InterruptHandler> interrupts = new HashMap<Integer, InterruptHandler>();
 
         mapHandler(interrupts, DESTRUCT, createDestructInterrupt(robot));
@@ -135,11 +137,11 @@ public class AtRobotInterruptFactory {
         mapHandler(interrupts, KEEPSHIFT, createSetKeepshiftInterrupt(robot).costs(2));
         mapHandler(interrupts, OVERBURN, createOverburnInterrupt(robot).costs(1));
         mapHandler(interrupts, ID, createGetTransponderIdInterrupt(robot).costs(2));
-        mapHandler(interrupts, TIMER, createGetTimerInterrupt(robot).costs(2));
+        mapHandler(interrupts, TIMER, createGetTimerInterrupt(robot, arena).costs(2));
         mapHandler(interrupts, ANGLE, createFindAngleInterrupt(robot).costs(32));
         mapHandler(interrupts, TARGETID, createGetTargetIdInterrupt(robot).costs(1));
         mapHandler(interrupts, TARGETINFO, createGetTargetInfoInterrupt(robot).costs(2));
-        mapHandler(interrupts, GAMEINFO, createGetGameInfoInterrupt(robot).costs(4));
+        mapHandler(interrupts, GAMEINFO, createGetGameInfoInterrupt(robot, arena, totalRounds, roundNumber).costs(4));
         mapHandler(interrupts, ROBOTINFO, createGetRobotInfoInterrupt(robot).costs(5));
         mapHandler(interrupts, COLLISIONS, createGetCollisionsInterrupt(robot).costs(1));
         mapHandler(interrupts, RESETCOLCNT, createResetCollisionCountInterrupt(robot).costs(1));

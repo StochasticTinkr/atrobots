@@ -75,7 +75,7 @@ public class Entrant {
         hardwareContext.setRobot(robot);
         hardwareSpecification.configureHardwareContext(hardwareContext);
         hardwareContext.setLowerMemoryArray(lowerMemoryBlock);
-        hardwareContext.wireRobotComponents();
+        hardwareContext.wireRobotComponents(game.getRound().getArena(), game.getTotalRounds(), game.getRound().getRoundNumber());
         if (debug) {
             robot.getComputer().setDebugListener(DEBUGGER);
         }

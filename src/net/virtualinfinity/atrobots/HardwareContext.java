@@ -81,7 +81,7 @@ public class HardwareContext {
         this.scanner = scanner;
     }
 
-    public void wireRobotComponents() {
+    public void wireRobotComponents(Arena arena, int totalRounds, int roundNumber) {
         robot.getHeat().setCoolMultiplier(coolMultiplier);
         wireThrottle();
         wireArmor();
@@ -97,7 +97,7 @@ public class HardwareContext {
         wireTurret();
         wireMissileLauncher();
         wireScanner();
-        wireHardwareBus();
+        wireHardwareBus(arena, totalRounds, roundNumber);
         connectSpecialRegisters();
     }
 
@@ -129,10 +129,10 @@ public class HardwareContext {
         });
     }
 
-    private void wireHardwareBus() {
+    private void wireHardwareBus(Arena arena, int totalRounds, int roundNumber) {
         hardwareBus.connectToRobot(robot);
         hardwareBus.setPorts(createPortHandlers());
-        hardwareBus.setInterrupts(createInterruptHandlers());
+        hardwareBus.setInterrupts(createInterruptHandlers(arena, totalRounds, roundNumber));
         hardwareBus.addResetable(robot.getTurret().getScanner());
         hardwareBus.addResetable(robot.getTurret());
         hardwareBus.addResetable(robot.getOdometer());
@@ -149,8 +149,8 @@ public class HardwareContext {
         return new AtRobotPortFactory();
     }
 
-    private Map<Integer, InterruptHandler> createInterruptHandlers() {
-        return getInterruptFactory().createInterruptTable(robot);
+    private Map<Integer, InterruptHandler> createInterruptHandlers(Arena arena, int totalRounds, int roundNumber) {
+        return getInterruptFactory().createInterruptTable(robot, arena, totalRounds, roundNumber);
     }
 
     private AtRobotInterruptFactory getInterruptFactory() {
