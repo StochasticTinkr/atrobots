@@ -1,10 +1,9 @@
 package net.virtualinfinity.atrobots.computer;
 
 import net.virtualinfinity.atrobots.interrupts.InterruptHandler;
+import net.virtualinfinity.atrobots.measures.Temperature;
 import net.virtualinfinity.atrobots.ports.PortHandler;
-import net.virtualinfinity.atrobots.simulation.arena.Resetable;
 import net.virtualinfinity.atrobots.simulation.atrobot.HasTemperature;
-import net.virtualinfinity.atrobots.simulation.atrobot.Temperature;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -19,7 +18,7 @@ public class HardwareBus {
 
     private Map<Integer, PortHandler> ports;
     private Map<Integer, InterruptHandler> interrupts;
-    private final Collection<Resetable> resetables = new ArrayList<Resetable>();
+    private final Collection<Resettable> resettables = new ArrayList<Resettable>();
     private final Collection<ShutdownListener> shutdownListeners = new ArrayList<ShutdownListener>();
     private Restartable autoShutdownTarget;
     private Temperature autoShutDown = Temperature.fromLogScale(350);
@@ -94,18 +93,18 @@ public class HardwareBus {
      * Reset all resetables in this hardward bus.
      */
     public void reset() {
-        for (Resetable resetable : resetables) {
-            resetable.reset();
+        for (Resettable resettable : resettables) {
+            resettable.reset();
         }
     }
 
     /**
      * Register a resetable.
      *
-     * @param resetable a resetible to get reset when this bus is reset.
+     * @param resettable a resetible to get reset when this bus is reset.
      */
-    public void addResetable(Resetable resetable) {
-        resetables.add(resetable);
+    public void addResetable(Resettable resettable) {
+        resettables.add(resettable);
     }
 
     public void addShutdownListener(ShutdownListener shutdownListener) {

@@ -1,4 +1,4 @@
-package net.virtualinfinity.atrobots.simulation.atrobot;
+package net.virtualinfinity.atrobots.measures;
 
 /**
  * @author Daniel Pitts

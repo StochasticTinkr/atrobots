@@ -8,7 +8,7 @@ import net.virtualinfinity.atrobots.AbstractCompilerTest;
 public class InstructionTest extends AbstractCompilerTest {
     public void testNOP() {
         executeFirst("NOP");
-        assertEquals(-1, robot.getComputer().getCycles());
+        assertEquals(-1, computer.getCycles());
     }
 
     public void testADD() {
@@ -81,7 +81,7 @@ public class InstructionTest extends AbstractCompilerTest {
 
     public void testPOP() {
         compile("POP AX");
-        robot.getComputer().getStack().push((short) 3);
+        computer.getStack().push((short) 3);
         executeInstruction();
         assertAX(3);
     }
@@ -272,35 +272,35 @@ public class InstructionTest extends AbstractCompilerTest {
     }
 
     private void assertFlagZero() {
-        assertTrue(robot.getComputer().getFlags().isZero());
+        assertTrue(computer.getFlags().isZero());
     }
 
     private void assertFlagEqual() {
-        assertTrue(robot.getComputer().getFlags().isEqual());
+        assertTrue(computer.getFlags().isEqual());
     }
 
     private void assertFlagNotLess() {
-        assertFalse(robot.getComputer().getFlags().isLess());
+        assertFalse(computer.getFlags().isLess());
     }
 
     private void assertFlagGreater() {
-        assertTrue(robot.getComputer().getFlags().isGreater());
+        assertTrue(computer.getFlags().isGreater());
     }
 
     private void assertFlagLess() {
-        assertTrue(robot.getComputer().getFlags().isLess());
+        assertTrue(computer.getFlags().isLess());
     }
 
     private void assertFlagNotZero() {
-        assertFalse(robot.getComputer().getFlags().isZero());
+        assertFalse(computer.getFlags().isZero());
     }
 
     private void assertFlagNotGreater() {
-        assertFalse(robot.getComputer().getFlags().isGreater());
+        assertFalse(computer.getFlags().isGreater());
     }
 
     private void assertFlagNotEqual() {
-        assertFalse(robot.getComputer().getFlags().isEqual());
+        assertFalse(computer.getFlags().isEqual());
     }
 
     private void executeFirst(String program) {
@@ -309,15 +309,15 @@ public class InstructionTest extends AbstractCompilerTest {
     }
 
     private void assertStackPointer(int expectedStackPointer) {
-        assertEquals(expectedStackPointer, robot.getComputer().getRegisters().getSp().signed());
+        assertEquals(expectedStackPointer, computer.getRegisters().getSp().signed());
     }
 
     private void assertInstructionPointer(int expectedInstructionPointer) {
-        assertEquals(expectedInstructionPointer, robot.getComputer().getNextInstructionPointer());
+        assertEquals(expectedInstructionPointer, computer.getNextInstructionPointer());
     }
 
     private void assertStackPop(int stackPopValue) {
-        assertEquals(stackPopValue, robot.getComputer().getStack().pop());
+        assertEquals(stackPopValue, computer.getStack().pop());
     }
 
     private void compile(String instruction) {
@@ -333,19 +333,19 @@ public class InstructionTest extends AbstractCompilerTest {
     }
 
     private void assertAX(String message, int result) {
-        assertEquals(message, result, robot.getComputer().getRegisters().getAx().signed());
+        assertEquals(message, result, computer.getRegisters().getAx().signed());
     }
 
     private void assertAX(int result) {
-        assertEquals(result, robot.getComputer().getRegisters().getAx().signed());
+        assertEquals(result, computer.getRegisters().getAx().signed());
     }
 
     private void assertCX(int result) {
-        assertEquals(result, robot.getComputer().getRegisters().getCx().signed());
+        assertEquals(result, computer.getRegisters().getCx().signed());
     }
 
     private void executeInstruction() {
-        robot.getComputer().executeInstruction();
+        computer.executeInstruction();
     }
 
     private void assertConditionalJump(int v1, int v2, String jump, int v3, int v4) {

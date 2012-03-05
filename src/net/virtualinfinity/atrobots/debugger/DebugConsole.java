@@ -187,7 +187,7 @@ public class DebugConsole {
 
     public void println(Computer computer, Object o) {
         if (computer != null) {
-            console.println("#" + computer.getRobot().getId() + ": " + computer.getRobot().getName() + "} " + o);
+            console.println("#" + computer.getId() + ": " + computer.getName() + "} " + o);
         } else {
             console.println(" } " + o);
         }

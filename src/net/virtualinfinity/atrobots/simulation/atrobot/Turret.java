@@ -1,12 +1,12 @@
 package net.virtualinfinity.atrobots.simulation.atrobot;
 
+import net.virtualinfinity.atrobots.computer.Resettable;
 import net.virtualinfinity.atrobots.simulation.arena.Heading;
-import net.virtualinfinity.atrobots.simulation.arena.Resetable;
 
 /**
  * @author Daniel Pitts
  */
-public class Turret implements Resetable, HasHeading {
+public class Turret implements Resettable, HasHeading {
     private final Heading heading = new Heading();
     private boolean keepshift;
     private Scanner scanner;

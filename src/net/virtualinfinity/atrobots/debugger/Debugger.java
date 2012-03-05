@@ -29,7 +29,7 @@ public class Debugger implements DebugListener {
     private final Map<Integer, EntrantState> entrantStates = new HashMap<Integer, EntrantState>();
 
     protected EntrantState getEntrantState(Computer computer) {
-        return getEntrantState(computer.getRobot().getId());
+        return getEntrantState(computer.getId());
     }
 
     private EntrantState getEntrantState(int entrantId) {
@@ -221,7 +221,7 @@ public class Debugger implements DebugListener {
     public void resetDefaultEntrant() throws InterruptedException {
         invokeLater(new Command() {
             public void execute(Computer computer) throws InterruptedException {
-                setDefaultEntrant(computer.getRobot().getId());
+                setDefaultEntrant(computer.getId());
             }
         });
     }

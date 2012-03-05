@@ -3,6 +3,7 @@ package net.virtualinfinity.atrobots.simulation.atrobot;
 
 import net.virtualinfinity.atrobots.computer.ShutdownListener;
 import net.virtualinfinity.atrobots.measures.Duration;
+import net.virtualinfinity.atrobots.measures.Temperature;
 import net.virtualinfinity.atrobots.ports.PortHandler;
 import net.virtualinfinity.atrobots.simulation.arena.Speed;
 

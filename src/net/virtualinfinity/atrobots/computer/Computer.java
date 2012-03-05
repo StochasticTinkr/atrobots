@@ -4,7 +4,6 @@ import net.virtualinfinity.atrobots.measures.Duration;
 import net.virtualinfinity.atrobots.ports.InvalidPort;
 import net.virtualinfinity.atrobots.ports.PortHandler;
 import net.virtualinfinity.atrobots.ports.PortListener;
-import net.virtualinfinity.atrobots.simulation.atrobot.Robot;
 
 import java.util.Collections;
 import java.util.HashMap;
@@ -33,7 +32,8 @@ public class Computer implements PortListener, Restartable {
     private boolean shutDown;
     private int maxInstructionPointer;
     private DebugListener debugListener = new EmptyDebugListener();
-    private Robot robot;
+    private int id;
+    private String name;
     private final DebugInfo debugInfo;
 
     public Computer(Memory memory, int stackSize, int maxProcessorSpeed, DebugInfo debugInfo) {
@@ -333,16 +333,24 @@ public class Computer implements PortListener, Restartable {
         return stack;
     }
 
-    public void setRobot(Robot robot) {
-        this.robot = robot;
-    }
-
-    public Robot getRobot() {
-        return robot;
-    }
-
     public DebugInfo getDebugInfo() {
         return debugInfo;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public String getName() {
+        return name;
     }
 
     private class ErrorHandler implements ComputerErrorHandler {

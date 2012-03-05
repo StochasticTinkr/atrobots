@@ -1,15 +1,15 @@
 package net.virtualinfinity.atrobots.simulation.atrobot;
 
+import net.virtualinfinity.atrobots.computer.Resettable;
 import net.virtualinfinity.atrobots.measures.AngleBracket;
 import net.virtualinfinity.atrobots.measures.RelativeAngle;
 import net.virtualinfinity.atrobots.ports.PortHandler;
-import net.virtualinfinity.atrobots.simulation.arena.Resetable;
 import net.virtualinfinity.atrobots.simulation.arena.ScanResult;
 
 /**
  * @author Daniel Pitts
  */
-public class Scanner implements Resetable {
+public class Scanner implements Resettable {
     private int accuracy;
     private RelativeAngle scanArc = RelativeAngle.fromBygrees(8);
     private Robot robot;

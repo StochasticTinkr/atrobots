@@ -3,9 +3,11 @@ package net.virtualinfinity.atrobots.simulation.atrobot;
 import net.virtualinfinity.atrobots.RobotScoreKeeper;
 import net.virtualinfinity.atrobots.computer.Computer;
 import net.virtualinfinity.atrobots.computer.HardwareBus;
+import net.virtualinfinity.atrobots.computer.Resettable;
 import net.virtualinfinity.atrobots.measures.AngleBracket;
 import net.virtualinfinity.atrobots.measures.Duration;
 import net.virtualinfinity.atrobots.measures.RelativeAngle;
+import net.virtualinfinity.atrobots.measures.Temperature;
 import net.virtualinfinity.atrobots.ports.PortHandler;
 import net.virtualinfinity.atrobots.simulation.arena.*;
 import net.virtualinfinity.atrobots.snapshots.ArenaObjectSnapshot;
@@ -17,7 +19,7 @@ import java.util.List;
 /**
  * @author Daniel Pitts
  */
-public class Robot extends ArenaObject implements Resetable, HasHeading {
+public class Robot extends ArenaObject implements Resettable, HasHeading {
     private final Heat heat = new Heat();
     private final Odometer odometer = new Odometer();
     private final String name;
@@ -58,7 +60,8 @@ public class Robot extends ArenaObject implements Resetable, HasHeading {
 
     public void setComputer(Computer computer) {
         this.computer = computer;
-        computer.setRobot(this);
+        computer.setId(getId());
+        computer.setName(getName());
     }
 
     public Computer getComputer() {

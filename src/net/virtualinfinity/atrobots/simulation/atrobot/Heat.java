@@ -1,5 +1,7 @@
 package net.virtualinfinity.atrobots.simulation.atrobot;
 
+import net.virtualinfinity.atrobots.measures.Temperature;
+
 /**
  * @author Daniel Pitts
  */

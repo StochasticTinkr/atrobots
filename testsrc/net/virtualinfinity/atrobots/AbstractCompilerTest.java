@@ -3,6 +3,7 @@ package net.virtualinfinity.atrobots;
 import junit.framework.TestCase;
 import net.virtualinfinity.atrobots.compiler.AtRobotCompiler;
 import net.virtualinfinity.atrobots.compiler.AtRobotCompilerOutput;
+import net.virtualinfinity.atrobots.computer.Computer;
 import net.virtualinfinity.atrobots.simulation.atrobot.Robot;
 
 import java.io.ByteArrayInputStream;
@@ -20,6 +21,7 @@ public abstract class AbstractCompilerTest extends TestCase {
     private Game game;
     protected Robot robot;
     protected AtRobotCompilerOutput compilerOutput;
+    protected Computer computer;
 
     public void setUp() throws IOException {
         compiler = new AtRobotCompiler();
@@ -48,6 +50,7 @@ public abstract class AbstractCompilerTest extends TestCase {
                 game.addEntrant(entrant);
                 game.nextRound();
                 robot = game.getRound().getRobot(entrant);
+                computer = robot.getComputer();
             } finally {
                 stream.close();
             }
