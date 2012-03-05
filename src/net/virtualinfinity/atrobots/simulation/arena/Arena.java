@@ -1,9 +1,9 @@
 package net.virtualinfinity.atrobots.simulation.arena;
 
 import net.virtualinfinity.atrobots.GameTimer;
+import net.virtualinfinity.atrobots.hardware.MineLayer;
 import net.virtualinfinity.atrobots.measures.AngleBracket;
 import net.virtualinfinity.atrobots.measures.Duration;
-import net.virtualinfinity.atrobots.simulation.atrobot.MineLayer;
 import net.virtualinfinity.atrobots.simulation.atrobot.Robot;
 import net.virtualinfinity.atrobots.simulation.mine.Mine;
 import net.virtualinfinity.atrobots.simulation.missile.Missile;
@@ -105,7 +105,7 @@ public class Arena implements GameTimer {
      * @param calculateAccuracy whether the accuracy should be calculated or not.
      * @return the result of the scan.
      */
-    public ScanResult scan(Robot ignore, Position position, final AngleBracket angleBracket, final double maxDistance, boolean calculateAccuracy) {
+    public ScanResult scan(ArenaObject ignore, Position position, final AngleBracket angleBracket, final double maxDistance, boolean calculateAccuracy) {
         final ScanResult scanResult = calculateResult(ignore, position, angleBracket, maxDistance, calculateAccuracy);
         final ScanParameters object = new ScanParameters(angleBracket, maxDistance, scanResult.successful(), scanResult.getMatchPositionVector(), calculateAccuracy && scanResult.successful(), scanResult.getAccuracy());
         others.add(object);
@@ -113,7 +113,7 @@ public class Arena implements GameTimer {
         return scanResult;
     }
 
-    private ScanResult calculateResult(Robot ignore, Position position, AngleBracket angleBracket, double maxDistance, boolean calculateAccuracy) {
+    private ScanResult calculateResult(ArenaObject ignore, Position position, AngleBracket angleBracket, double maxDistance, boolean calculateAccuracy) {
         ScanWork scanWork = new ScanWork(position, angleBracket, maxDistance, calculateAccuracy);
         for (Robot robot : activeRobots) {
             if (robot != ignore) {

@@ -1,8 +1,9 @@
-package net.virtualinfinity.atrobots.simulation.atrobot;
+package net.virtualinfinity.atrobots.hardware;
 
 
 import net.virtualinfinity.atrobots.ports.PortHandler;
 import net.virtualinfinity.atrobots.simulation.arena.Arena;
+import net.virtualinfinity.atrobots.simulation.atrobot.Robot;
 import net.virtualinfinity.atrobots.simulation.mine.Mine;
 
 /**

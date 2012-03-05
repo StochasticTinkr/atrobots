@@ -1,15 +1,12 @@
 package net.virtualinfinity.atrobots.simulation.atrobot;
 
 import net.virtualinfinity.atrobots.RobotScoreKeeper;
-import net.virtualinfinity.atrobots.computer.Computer;
-import net.virtualinfinity.atrobots.computer.HardwareBus;
-import net.virtualinfinity.atrobots.computer.Resettable;
-import net.virtualinfinity.atrobots.measures.AngleBracket;
-import net.virtualinfinity.atrobots.measures.Duration;
-import net.virtualinfinity.atrobots.measures.RelativeAngle;
-import net.virtualinfinity.atrobots.measures.Temperature;
+import net.virtualinfinity.atrobots.computer.*;
+import net.virtualinfinity.atrobots.hardware.*;
+import net.virtualinfinity.atrobots.measures.*;
 import net.virtualinfinity.atrobots.ports.PortHandler;
 import net.virtualinfinity.atrobots.simulation.arena.*;
+import net.virtualinfinity.atrobots.simulation.missile.Missile;
 import net.virtualinfinity.atrobots.snapshots.ArenaObjectSnapshot;
 import net.virtualinfinity.atrobots.snapshots.RobotSnapshot;
 
@@ -19,8 +16,8 @@ import java.util.List;
 /**
  * @author Daniel Pitts
  */
-public class Robot extends ArenaObject implements Resettable, HasHeading {
-    private final Heat heat = new Heat();
+public class Robot extends ArenaObject implements Resettable, HasHeading, Destructable, HasOverburner, MissileFactory, ArmorDepletionListener {
+    private final HeatSinks heatSinks = new HeatSinks();
     private final Odometer odometer = new Odometer();
     private final String name;
     private final int id;
@@ -109,8 +106,8 @@ public class Robot extends ArenaObject implements Resettable, HasHeading {
         return throttle;
     }
 
-    public Heat getHeat() {
-        return heat;
+    public HeatSinks getHeatSinks() {
+        return heatSinks;
     }
 
     public Heading getHeading() {
@@ -216,6 +213,7 @@ public class Robot extends ArenaObject implements Resettable, HasHeading {
 
     public void setArmor(Armor armor) {
         this.armor = armor;
+        armor.setArmorDepletionListener(this);
     }
 
     public void setRadar(Radar radar) {
@@ -258,7 +256,7 @@ public class Robot extends ArenaObject implements Resettable, HasHeading {
 
     protected ArenaObjectSnapshot createSpecificSnapshot() {
         final RobotSnapshot robotSnapshot = new RobotSnapshot();
-        robotSnapshot.setTemperature(getHeat().getTemperature());
+        robotSnapshot.setTemperature(getHeatSinks().getTemperature());
         robotSnapshot.setArmor(getArmor().getRemaining());
         robotSnapshot.setOverburn(isOverburn());
         robotSnapshot.setActiveShield(getShield().isActive());
@@ -301,7 +299,7 @@ public class Robot extends ArenaObject implements Resettable, HasHeading {
         }
     }
 
-    public void explode() {
+    public void armorDepleted() {
         if (!isDead()) {
             for (RobotListener listener : robotListeners) {
                 listener.died(this);
@@ -317,20 +315,20 @@ public class Robot extends ArenaObject implements Resettable, HasHeading {
         getThrottle().update(duration);
         getHeading().moveToward(getDesiredHeading(), STEERING_SPEED);
         getComputer().update(duration);
-        if (heat.getTemperature().getLogScale() >= 500) {
+        if (heatSinks.getTemperature().getLogScale() >= 500) {
             destruct();
-        } else if (heat.getTemperature().getLogScale() >= 475) {
+        } else if (heatSinks.getTemperature().getLogScale() >= 475) {
             armor.inflictDamage(duration.getCycles() / 4d);
-        } else if (heat.getTemperature().getLogScale() >= 450) {
+        } else if (heatSinks.getTemperature().getLogScale() >= 450) {
             armor.inflictDamage(duration.getCycles() / 8d);
-        } else if (heat.getTemperature().getLogScale() >= 400) {
+        } else if (heatSinks.getTemperature().getLogScale() >= 400) {
             armor.inflictDamage(duration.getCycles() / 16d);
-        } else if (heat.getTemperature().getLogScale() >= 350) {
+        } else if (heatSinks.getTemperature().getLogScale() >= 350) {
             armor.inflictDamage(duration.getCycles() / 32d);
-        } else if (heat.getTemperature().getLogScale() >= 300) {
+        } else if (heatSinks.getTemperature().getLogScale() >= 300) {
             armor.inflictDamage(duration.getCycles() / 64d);
         }
-        heat.cool(isOverburn() ? getCoolTemp(duration).times(0.66) : getCoolTemp(duration));
+        heatSinks.cool(isOverburn() ? getCoolTemp(duration).times(0.66) : getCoolTemp(duration));
         shield.update(duration);
         if (position.getX() < 4 || position.getX() > 1000 - 4 ||
                 position.getY() < 4 || position.getY() > 1000 - 4) {
@@ -345,7 +343,7 @@ public class Robot extends ArenaObject implements Resettable, HasHeading {
     public void setThrottle(Throttle throttle) {
         this.throttle = throttle;
         throttle.setSpeed(speed);
-        throttle.setHeat(heat);
+        throttle.setHeatSinks(heatSinks);
     }
 
     public void winRound() {
@@ -401,5 +399,59 @@ public class Robot extends ArenaObject implements Resettable, HasHeading {
     @Override
     protected void arenaConnected(Arena arena) {
         transceiver.setRadioDispatcher(arena.getRadioDispatcher());
+    }
+
+    public InterruptHandler createGetRobotInfoInterruptHandler(MemoryCell speed, MemoryCell lastDamageTaken, MemoryCell lastDamageGiven) {
+        return new GetRobotInfoInterrupt(speed, lastDamageTaken, lastDamageGiven);
+    }
+
+    public GetRobotStatisticsInterrupt createGetRobotStatisticsInterrupt(MemoryCell totalKills, MemoryCell roundKills, MemoryCell totalDeaths) {
+        return new GetRobotStatisticsInterrupt(totalKills, roundKills, totalDeaths);
+    }
+
+    public Missile createMissile(AbsoluteAngle heading, Position position, double power) {
+        return new Missile(this, position, heading, power);
+    }
+
+    /**
+     * @author Daniel Pitts
+     */
+    public class GetRobotInfoInterrupt extends InterruptHandler {
+        private final MemoryCell speed;
+        private final MemoryCell lastDamageTaken;
+        private final MemoryCell lastDamageGiven;
+
+        private GetRobotInfoInterrupt(MemoryCell speed, MemoryCell lastDamageTaken, MemoryCell lastDamageGiven) {
+            this.speed = speed;
+            this.lastDamageTaken = lastDamageTaken;
+            this.lastDamageGiven = lastDamageGiven;
+        }
+
+        public void handleInterrupt() {
+            speed.set((short) Math.round(getSpeed().times(Duration.ONE_CYCLE) * 100));
+            lastDamageGiven.set((short) getLastDamageGiven().getCycles());
+            lastDamageTaken.set((short) getLastDamageTaken().getCycles());
+        }
+    }
+
+    /**
+     * @author Daniel Pitts
+     */
+    public class GetRobotStatisticsInterrupt extends InterruptHandler {
+        private final MemoryCell totalKills;
+        private final MemoryCell roundKills;
+        private final MemoryCell totalDeaths;
+
+        private GetRobotStatisticsInterrupt(MemoryCell totalKills, MemoryCell roundKills, MemoryCell totalDeaths) {
+            this.totalKills = totalKills;
+            this.roundKills = roundKills;
+            this.totalDeaths = totalDeaths;
+        }
+
+        public void handleInterrupt() {
+            totalKills.set((short) getTotalKills());
+            roundKills.set((short) getRoundKills());
+            totalDeaths.set((short) getTotalDeaths());
+        }
     }
 }

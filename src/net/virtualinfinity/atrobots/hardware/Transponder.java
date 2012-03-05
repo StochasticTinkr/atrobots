@@ -1,4 +1,4 @@
-package net.virtualinfinity.atrobots.simulation.atrobot;
+package net.virtualinfinity.atrobots.hardware;
 
 import net.virtualinfinity.atrobots.ports.PortHandler;
 

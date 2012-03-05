@@ -1,6 +1,7 @@
-package net.virtualinfinity.atrobots.simulation.atrobot;
+package net.virtualinfinity.atrobots.hardware;
 
 import net.virtualinfinity.atrobots.ports.PortHandler;
+import net.virtualinfinity.atrobots.simulation.atrobot.ArmorDepletionListener;
 
 /**
  * Represents the armor of a robot.
@@ -9,7 +10,7 @@ import net.virtualinfinity.atrobots.ports.PortHandler;
  */
 public class Armor {
     private double pointsRemaining;
-    private Robot robot;
+    private ArmorDepletionListener armorDepletionListener;
 
     /**
      * Construct armor with the specific number of points remaining.
@@ -42,7 +43,7 @@ public class Armor {
 
     private void checkDead() {
         if (pointsRemaining <= 0) {
-            robot.explode();
+            armorDepletionListener.armorDepleted();
         }
     }
 
@@ -65,12 +66,7 @@ public class Armor {
         checkDead();
     }
 
-    /**
-     * Set the armor which this robot protects.
-     *
-     * @param robot the robot.
-     */
-    void setRobot(Robot robot) {
-        this.robot = robot;
+    public void setArmorDepletionListener(ArmorDepletionListener armorDepletionListener) {
+        this.armorDepletionListener = armorDepletionListener;
     }
 }

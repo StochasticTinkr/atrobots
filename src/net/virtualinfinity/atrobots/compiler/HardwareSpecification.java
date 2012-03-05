@@ -1,7 +1,8 @@
 package net.virtualinfinity.atrobots.compiler;
 
 import net.virtualinfinity.atrobots.computer.HardwareBus;
-import net.virtualinfinity.atrobots.simulation.atrobot.*;
+import net.virtualinfinity.atrobots.hardware.*;
+import net.virtualinfinity.atrobots.simulation.atrobot.HardwareContext;
 
 import java.util.Map;
 

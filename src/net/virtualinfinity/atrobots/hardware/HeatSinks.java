@@ -1,11 +1,11 @@
-package net.virtualinfinity.atrobots.simulation.atrobot;
+package net.virtualinfinity.atrobots.hardware;
 
 import net.virtualinfinity.atrobots.measures.Temperature;
 
 /**
  * @author Daniel Pitts
  */
-public class Heat implements HasTemperature {
+public class HeatSinks implements HasTemperature {
     private Temperature temperature = Temperature.BASE_TEMPERATURE;
     private double coolMultiplier = 1;
     private boolean blockHeat;

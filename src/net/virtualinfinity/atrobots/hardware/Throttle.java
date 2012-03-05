@@ -1,4 +1,4 @@
-package net.virtualinfinity.atrobots.simulation.atrobot;
+package net.virtualinfinity.atrobots.hardware;
 
 
 import net.virtualinfinity.atrobots.computer.ShutdownListener;
@@ -6,6 +6,7 @@ import net.virtualinfinity.atrobots.measures.Duration;
 import net.virtualinfinity.atrobots.measures.Temperature;
 import net.virtualinfinity.atrobots.ports.PortHandler;
 import net.virtualinfinity.atrobots.simulation.arena.Speed;
+import net.virtualinfinity.atrobots.simulation.atrobot.Robot;
 
 /**
  * @author Daniel Pitts
@@ -17,7 +18,7 @@ public class Throttle implements ShutdownListener {
     private static final int MAX_ACCELERATION = 4;
     private static final double STANDARD_MAX_VELOCITY = 4.0;
     private double powerRatio = STANDARD_MAX_VELOCITY / 100.0;
-    private Heat heat;
+    private HeatSinks heatSinks;
     private Robot robot;
 
     public Throttle(double powerRatio) {
@@ -75,15 +76,16 @@ public class Throttle implements ShutdownListener {
                 power += desiredPower > power ? MAX_ACCELERATION : -MAX_ACCELERATION;
             }
             updateSpeed();
+            // TODO: This looks like a bug, should it be <= 25?
             if (Math.abs(power) > 25) {
-                heat.cool(Temperature.fromLogScale(.125));
+                heatSinks.cool(Temperature.fromLogScale(.125));
             }
             duration = duration.minus(Duration.ONE_CYCLE);
         }
     }
 
-    public void setHeat(Heat heat) {
-        this.heat = heat;
+    public void setHeatSinks(HeatSinks heatSinks) {
+        this.heatSinks = heatSinks;
     }
 
     public Robot getRobot() {

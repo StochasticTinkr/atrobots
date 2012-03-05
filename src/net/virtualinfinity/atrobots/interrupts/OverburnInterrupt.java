@@ -1,21 +1,22 @@
 package net.virtualinfinity.atrobots.interrupts;
 
+import net.virtualinfinity.atrobots.computer.InterruptHandler;
 import net.virtualinfinity.atrobots.computer.MemoryCell;
-import net.virtualinfinity.atrobots.simulation.atrobot.Robot;
+import net.virtualinfinity.atrobots.simulation.atrobot.HasOverburner;
 
 /**
  * @author Daniel Pitts
  */
 public class OverburnInterrupt extends InterruptHandler {
-    private final Robot robot;
+    private final HasOverburner hasOverburner;
     private final MemoryCell toggler;
 
-    public OverburnInterrupt(Robot robot, MemoryCell toggler) {
-        this.robot = robot;
+    public OverburnInterrupt(HasOverburner hasOverburner, MemoryCell toggler) {
+        this.hasOverburner = hasOverburner;
         this.toggler = toggler;
     }
 
     public void handleInterrupt() {
-        robot.setOverburn(toggler.signed() != 0);
+        hasOverburner.setOverburn(toggler.signed() != 0);
     }
 }

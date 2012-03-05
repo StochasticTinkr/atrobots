@@ -1,10 +1,11 @@
-package net.virtualinfinity.atrobots.simulation.atrobot;
+package net.virtualinfinity.atrobots.hardware;
 
 import net.virtualinfinity.atrobots.computer.Resettable;
 import net.virtualinfinity.atrobots.computer.ShutdownListener;
 import net.virtualinfinity.atrobots.measures.Duration;
 import net.virtualinfinity.atrobots.measures.Temperature;
 import net.virtualinfinity.atrobots.ports.PortHandler;
+import net.virtualinfinity.atrobots.simulation.atrobot.Robot;
 
 /**
  * @author Daniel Pitts
@@ -38,7 +39,7 @@ public class Shield implements Resettable, ShutdownListener {
 
     public void setActive(boolean active) {
         this.active = active;
-        robot.getHeat().blockHeat(active);
+        robot.getHeatSinks().blockHeat(active);
     }
 
     public void reset() {
@@ -47,7 +48,7 @@ public class Shield implements Resettable, ShutdownListener {
 
     public double absorbDamage(double damageAmount) {
         if (active) {
-            robot.getHeat().warm(Temperature.fromLogScale((int) Math.round(damageAmount * heatFraction)));
+            robot.getHeatSinks().warm(Temperature.fromLogScale((int) Math.round(damageAmount * heatFraction)));
             return damageAmount * damageFraction;
         }
         return damageAmount;
@@ -59,7 +60,7 @@ public class Shield implements Resettable, ShutdownListener {
 
     public void update(Duration duration) {
         if (active && heatFraction > 0) {
-            robot.getHeat().warm(Temperature.fromLogScale(duration.getCycles() / 3.0));
+            robot.getHeatSinks().warm(Temperature.fromLogScale(duration.getCycles() / 3.0));
         }
     }
 

@@ -1,11 +1,12 @@
-package net.virtualinfinity.atrobots.interrupts;
+package net.virtualinfinity.atrobots.simulation.atrobot;
 
 import net.virtualinfinity.atrobots.GameTimer;
 import net.virtualinfinity.atrobots.atsetup.AtRobotInterrupt;
+import net.virtualinfinity.atrobots.computer.InterruptHandler;
 import net.virtualinfinity.atrobots.computer.MemoryCell;
 import net.virtualinfinity.atrobots.computer.Registers;
+import net.virtualinfinity.atrobots.interrupts.*;
 import net.virtualinfinity.atrobots.simulation.arena.Arena;
-import net.virtualinfinity.atrobots.simulation.atrobot.Robot;
 import net.virtualinfinity.atrobots.util.MapWithDefaultValue;
 
 import java.util.Collection;
@@ -22,11 +23,11 @@ import static net.virtualinfinity.atrobots.atsetup.AtRobotInterrupt.*;
 public class AtRobotInterruptFactory {
 
     private InterruptHandler createResetMetersInterrupt(Robot robot) {
-        return new ResetMetersInterrupt(robot, getRegisters(robot).getMeters());
+        return new ResetMetersInterrupt(getRegisters(robot).getMeters(), robot.getOdometer());
     }
 
     private InterruptHandler createGetRobotStatisticsInterrupt(Robot robot) {
-        return new GetRobotStatisticsInterrupt(robot, getDxCell(robot), getExCell(robot), getFxCell(robot));
+        return robot.createGetRobotStatisticsInterrupt(getDxCell(robot), getExCell(robot), getFxCell(robot));
     }
 
     private MemoryCell getDxCell(Robot robot) {
@@ -59,7 +60,7 @@ public class AtRobotInterruptFactory {
     }
 
     private InterruptHandler createGetRobotInfoInterrupt(Robot robot) {
-        return new GetRobotInfoInterrupt(robot, getDxCell(robot), getExCell(robot), getFxCell(robot));
+        return robot.createGetRobotInfoInterruptHandler(getDxCell(robot), getExCell(robot), getFxCell(robot));
     }
 
     private InterruptHandler createGetGameInfoInterrupt(Robot robot, Arena arena, int totalRounds, int roundNumber) {
@@ -120,8 +121,8 @@ public class AtRobotInterruptFactory {
         return new ResetInterrupt(robot.getComputer());
     }
 
-    private InterruptHandler createDestructInterrupt(Robot robot) {
-        return new DestructInterrupt(robot);
+    private InterruptHandler createDestructInterrupt(Destructable destructable) {
+        return new DestructInterrupt(destructable);
     }
 
     InvalidInterrupt createInvalidInterrupt(Robot robot) {
@@ -161,7 +162,7 @@ public class AtRobotInterruptFactory {
 
     private void connectHandlers(Robot robot, Collection<InterruptHandler> interruptHandlers) {
         for (InterruptHandler handler : interruptHandlers) {
-            handler.setComputer(robot.getComputer());
+            handler.setCycleSource(robot.getComputer());
         }
     }
 }

@@ -1,5 +1,6 @@
 package net.virtualinfinity.atrobots.interrupts;
 
+import net.virtualinfinity.atrobots.computer.InterruptHandler;
 import net.virtualinfinity.atrobots.computer.MemoryCell;
 
 /**

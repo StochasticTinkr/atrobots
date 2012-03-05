@@ -1,10 +1,10 @@
 package net.virtualinfinity.atrobots.simulation.mine;
 
 
+import net.virtualinfinity.atrobots.hardware.MineLayer;
 import net.virtualinfinity.atrobots.simulation.arena.ArenaObject;
 import net.virtualinfinity.atrobots.simulation.arena.LinearDamageFunction;
 import net.virtualinfinity.atrobots.simulation.arena.Position;
-import net.virtualinfinity.atrobots.simulation.atrobot.MineLayer;
 import net.virtualinfinity.atrobots.simulation.atrobot.Robot;
 import net.virtualinfinity.atrobots.snapshots.ArenaObjectSnapshot;
 import net.virtualinfinity.atrobots.snapshots.MineSnapshot;

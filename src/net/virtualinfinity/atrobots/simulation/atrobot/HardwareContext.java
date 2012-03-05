@@ -1,11 +1,7 @@
 package net.virtualinfinity.atrobots.simulation.atrobot;
 
-import net.virtualinfinity.atrobots.computer.CommunicationsQueue;
-import net.virtualinfinity.atrobots.computer.HardwareBus;
-import net.virtualinfinity.atrobots.computer.MemoryArray;
-import net.virtualinfinity.atrobots.computer.SpecialRegister;
-import net.virtualinfinity.atrobots.interrupts.AtRobotInterruptFactory;
-import net.virtualinfinity.atrobots.interrupts.InterruptHandler;
+import net.virtualinfinity.atrobots.computer.*;
+import net.virtualinfinity.atrobots.hardware.*;
 import net.virtualinfinity.atrobots.ports.PortHandler;
 import net.virtualinfinity.atrobots.simulation.arena.Arena;
 
@@ -110,7 +106,7 @@ public class HardwareContext {
     }
 
     public void wireRobotComponents(Arena arena, int totalRounds, int roundNumber) {
-        robot.getHeat().setCoolMultiplier(coolMultiplier);
+        robot.getHeatSinks().setCoolMultiplier(coolMultiplier);
         wireThrottle();
         wireArmor();
         wireMineLayer();
@@ -123,7 +119,7 @@ public class HardwareContext {
         wireComputer(commQueue);
         wireTransponder();
         wireTurret();
-        wireMissileLauncher();
+        wireMissileLauncher(arena);
         wireScanner();
         wireHardwareBus(arena, totalRounds, roundNumber);
         connectSpecialRegisters();
@@ -139,7 +135,7 @@ public class HardwareContext {
 
     private void wireHardwareBus(Arena arena, int totalRounds, int roundNumber) {
         robot.setHardwareBus(hardwareBus);
-        hardwareBus.setHeat(robot.getHeat());
+        hardwareBus.setHeat(robot.getHeatSinks());
         hardwareBus.setPorts(createPortHandlers());
         hardwareBus.setInterrupts(createInterruptHandlers(arena, totalRounds, roundNumber));
         hardwareBus.addResetable(robot.getTurret().getScanner());
@@ -170,10 +166,13 @@ public class HardwareContext {
         return new AtRobotInterruptFactory();
     }
 
-    private void wireMissileLauncher() {
+    private void wireMissileLauncher(Arena arena) {
         missileLauncher.setHeading(turret.getHeading());
         missileLauncher.setPower(missileLauncherPower);
-        missileLauncher.setRobot(robot);
+        missileLauncher.setHeatSinks(robot.getHeatSinks());
+        missileLauncher.setMissileFactory(robot);
+        missileLauncher.setOverburner(robot);
+        missileLauncher.setArena(arena);
         missileLauncher.setPosition(robot.getPosition());
     }
 
@@ -226,7 +225,6 @@ public class HardwareContext {
 
     private void wireArmor() {
         robot.setArmor(armor);
-        armor.setRobot(robot);
     }
 
     private void wireThrottle() {

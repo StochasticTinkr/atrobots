@@ -1,4 +1,4 @@
-package net.virtualinfinity.atrobots.simulation.atrobot;
+package net.virtualinfinity.atrobots.hardware;
 
 import net.virtualinfinity.atrobots.measures.AbsoluteAngle;
 import net.virtualinfinity.atrobots.measures.RelativeAngle;
@@ -7,6 +7,8 @@ import net.virtualinfinity.atrobots.ports.PortHandler;
 import net.virtualinfinity.atrobots.simulation.arena.Arena;
 import net.virtualinfinity.atrobots.simulation.arena.Heading;
 import net.virtualinfinity.atrobots.simulation.arena.Position;
+import net.virtualinfinity.atrobots.simulation.atrobot.HasOverburner;
+import net.virtualinfinity.atrobots.simulation.atrobot.MissileFactory;
 import net.virtualinfinity.atrobots.simulation.missile.Missile;
 
 /**
@@ -16,14 +18,10 @@ public class MissileLauncher {
     private Heading heading;
     private double power;
     private Position position;
-    private Robot robot;
-
-    public MissileLauncher(Robot robot, Position position, Heading heading, double power) {
-        this.robot = robot;
-        this.position = position;
-        this.heading = heading;
-        this.power = power;
-    }
+    private HeatSinks heatSinks;
+    private MissileFactory missileFactory;
+    private HasOverburner overburner;
+    private Arena arena;
 
     public MissileLauncher() {
     }
@@ -40,10 +38,6 @@ public class MissileLauncher {
         this.position = position;
     }
 
-    public void setRobot(Robot robot) {
-        this.robot = robot;
-    }
-
     public PortHandler getActuator() {
         return new PortHandler() {
             public void write(short value) {
@@ -55,7 +49,7 @@ public class MissileLauncher {
 
     private void fireMissile(RelativeAngle shift) {
         getArena().fireMissile(createMissile(shift));
-        robot.getHeat().warm(getFiringTempurature());
+        getHeatSinks().warm(getFiringTempurature());
     }
 
     private AbsoluteAngle getMissileHeading(RelativeAngle shift) {
@@ -63,18 +57,46 @@ public class MissileLauncher {
     }
 
     private Temperature getFiringTempurature() {
-        return Temperature.fromLogScale(robot.isOverburn() ? 20 : 30);
+        return Temperature.fromLogScale(overburner.isOverburn() ? 20 : 30);
     }
 
     private Missile createMissile(RelativeAngle shift) {
-        return new Missile(robot, position, getMissileHeading(shift), getPower());
+        return missileFactory.createMissile(getMissileHeading(shift), position, getPower());
     }
 
     private double getPower() {
-        return robot.isOverburn() ? power * 1.30 : power;
+        return overburner.isOverburn() ? power * 1.30 : power;
+    }
+
+    public HeatSinks getHeatSinks() {
+        return heatSinks;
+    }
+
+    public void setHeatSinks(HeatSinks heatSinks) {
+        this.heatSinks = heatSinks;
+    }
+
+    public MissileFactory getMissileFactory() {
+        return missileFactory;
+    }
+
+    public void setMissileFactory(MissileFactory missileFactory) {
+        this.missileFactory = missileFactory;
+    }
+
+    public HasOverburner getOverburner() {
+        return overburner;
+    }
+
+    public void setOverburner(HasOverburner overburner) {
+        this.overburner = overburner;
     }
 
     public Arena getArena() {
-        return robot.getArena();
+        return arena;
+    }
+
+    public void setArena(Arena arena) {
+        this.arena = arena;
     }
 }

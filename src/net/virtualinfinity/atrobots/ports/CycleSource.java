@@ -5,7 +5,6 @@ package net.virtualinfinity.atrobots.ports;
  *
  * @author <a href='mailto:daniel.pitts@cbs.com'>Daniel Pitts</a>
  */
-public interface PortListener extends CycleSource {
-
-    void invalidPortError();
+public interface CycleSource {
+    void consumeCycles(int cost);
 }

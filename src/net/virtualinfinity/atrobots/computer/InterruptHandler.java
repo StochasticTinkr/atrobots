@@ -1,13 +1,13 @@
-package net.virtualinfinity.atrobots.interrupts;
+package net.virtualinfinity.atrobots.computer;
 
-import net.virtualinfinity.atrobots.computer.Computer;
+import net.virtualinfinity.atrobots.ports.CycleSource;
 
 /**
  * @author Daniel Pitts
  */
 public abstract class InterruptHandler {
     private int cost;
-    private Computer computer;
+    private CycleSource cycleSource;
 
     protected abstract void handleInterrupt();
 
@@ -16,12 +16,12 @@ public abstract class InterruptHandler {
         return this;
     }
 
-    public void setComputer(Computer computer) {
-        this.computer = computer;
+    public void setCycleSource(CycleSource cycleSource) {
+        this.cycleSource = cycleSource;
     }
 
     public final void call() {
-        computer.consumeCycles(cost);
+        cycleSource.consumeCycles(cost);
         handleInterrupt();
     }
 }

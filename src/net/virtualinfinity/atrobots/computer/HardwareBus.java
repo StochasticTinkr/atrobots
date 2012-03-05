@@ -1,9 +1,8 @@
 package net.virtualinfinity.atrobots.computer;
 
-import net.virtualinfinity.atrobots.interrupts.InterruptHandler;
+import net.virtualinfinity.atrobots.hardware.HasTemperature;
 import net.virtualinfinity.atrobots.measures.Temperature;
 import net.virtualinfinity.atrobots.ports.PortHandler;
-import net.virtualinfinity.atrobots.simulation.atrobot.HasTemperature;
 
 import java.util.ArrayList;
 import java.util.Collection;

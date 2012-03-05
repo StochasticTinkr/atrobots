@@ -1,6 +1,7 @@
 package net.virtualinfinity.atrobots.interrupts;
 
 import net.virtualinfinity.atrobots.GameTimer;
+import net.virtualinfinity.atrobots.computer.InterruptHandler;
 import net.virtualinfinity.atrobots.computer.MemoryCell;
 
 /**

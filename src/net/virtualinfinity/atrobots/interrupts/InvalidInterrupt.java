@@ -1,6 +1,7 @@
 package net.virtualinfinity.atrobots.interrupts;
 
 import net.virtualinfinity.atrobots.computer.Computer;
+import net.virtualinfinity.atrobots.computer.InterruptHandler;
 
 /**
  * @author Daniel Pitts
