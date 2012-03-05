@@ -96,7 +96,7 @@ public abstract class ArenaObject {
     }
 
     /**
-     * Set the arena that htis object lives in.
+     * Set the arena that this object lives in.
      *
      * @param arena the arena.
      */
