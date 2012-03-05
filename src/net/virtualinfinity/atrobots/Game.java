@@ -70,7 +70,7 @@ public class Game {
      * @return the robot.
      */
     protected Robot createRobotFor(Entrant entrant) {
-        final Robot robot = entrant.createRobot();
+        final Robot robot = entrant.createRobot(new RoundState(entrant.getGame().getRound().getArena(), entrant.getGame().getTotalRounds(), entrant.getGame().getRound().getRoundNumber(), entrant.getGame().getMaxProcessorSpeed()));
         round.putRobot(entrant, robot);
         return robot;
     }

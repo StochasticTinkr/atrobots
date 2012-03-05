@@ -279,7 +279,7 @@ public class Main implements Runnable {
                         errors.addAll(result.getErrors());
                     }
                     if (game != null) {
-                        game.addEntrant(result.createEntrant(file.getName()));
+                        game.addEntrant(Entrant.createEntrant(file.getName(), result));
                     }
                 } catch (IOException e1) {
                     errors.info("Errors in " + file.getName());

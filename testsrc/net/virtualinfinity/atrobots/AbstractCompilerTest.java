@@ -44,7 +44,7 @@ public abstract class AbstractCompilerTest extends TestCase {
                 if (compilerOutput.hasErrors()) {
                     return;
                 }
-                final Entrant entrant = compilerOutput.createEntrant("test");
+                final Entrant entrant = Entrant.createEntrant("test", compilerOutput);
                 game.addEntrant(entrant);
                 game.nextRound();
                 robot = game.getRound().getRobot(entrant);

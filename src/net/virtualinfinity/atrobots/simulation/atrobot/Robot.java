@@ -1,6 +1,6 @@
 package net.virtualinfinity.atrobots.simulation.atrobot;
 
-import net.virtualinfinity.atrobots.Game;
+import net.virtualinfinity.atrobots.RobotScoreKeeper;
 import net.virtualinfinity.atrobots.computer.Computer;
 import net.virtualinfinity.atrobots.measures.AngleBracket;
 import net.virtualinfinity.atrobots.measures.Duration;
@@ -21,6 +21,7 @@ public class Robot extends ArenaObject implements Resetable, HasHeading {
     private final Odometer odometer = new Odometer();
     private final String name;
     private final int id;
+    private final RobotScoreKeeper scoreKeeper;
     private Throttle throttle;
     private Computer computer;
     private Turret turret;
@@ -40,21 +41,13 @@ public class Robot extends ArenaObject implements Resetable, HasHeading {
     private static final RelativeAngle STEERING_SPEED = RelativeAngle.fromBygrees(8);
     private final Position oldPosition = new Position();
     private int roundKills;
-    private int totalKills;
-    private int totalDeaths;
-    private int totalWins;
-    private int totalTies;
     private final List<RobotListener> robotListeners = new ArrayList<RobotListener>();
-    private Game game;
 
-    public Robot(String name, int id, int totalDeaths, int totalKills, int totalWins, int totalTies) {
+    public Robot(String name, int id, RobotScoreKeeper scoreKeeper) {
         this.name = name;
         this.id = id;
-        this.totalDeaths = totalDeaths;
-        this.totalKills = totalKills;
+        this.scoreKeeper = scoreKeeper;
         this.roundKills = 0;
-        this.totalWins = totalWins;
-        this.totalTies = totalTies;
     }
 
     {
@@ -305,7 +298,6 @@ public class Robot extends ArenaObject implements Resetable, HasHeading {
 
     public void explode() {
         if (!isDead()) {
-            ++totalDeaths;
             for (RobotListener listener : robotListeners) {
                 listener.died(this);
             }
@@ -352,21 +344,18 @@ public class Robot extends ArenaObject implements Resetable, HasHeading {
     }
 
     public void winRound() {
-        totalWins++;
         for (RobotListener listener : robotListeners) {
             listener.wonRound(this);
         }
     }
 
     public void tieRound() {
-        totalTies++;
         for (RobotListener listener : robotListeners) {
             listener.tiedRound(this);
         }
     }
 
     private void killedRobot() {
-        totalKills++;
         for (RobotListener listener : robotListeners) {
             listener.killedRobot(this);
         }
@@ -377,7 +366,7 @@ public class Robot extends ArenaObject implements Resetable, HasHeading {
     }
 
     public int getTotalKills() {
-        return totalKills;
+        return scoreKeeper.getTotalKills();
     }
 
     public int getRoundKills() {
@@ -385,7 +374,7 @@ public class Robot extends ArenaObject implements Resetable, HasHeading {
     }
 
     public int getTotalDeaths() {
-        return totalDeaths;
+        return scoreKeeper.getTotalDeaths();
     }
 
     public int getId() {
@@ -393,11 +382,11 @@ public class Robot extends ArenaObject implements Resetable, HasHeading {
     }
 
     public int getTotalWins() {
-        return totalWins;
+        return scoreKeeper.getTotalWins();
     }
 
     public int getTotalTies() {
-        return totalTies;
+        return scoreKeeper.getTotalTies();
     }
 
     public void addRobotListener(RobotListener robotListener) {

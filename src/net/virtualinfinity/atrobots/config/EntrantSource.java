@@ -51,7 +51,7 @@ public abstract class EntrantSource {
         AtRobotCompilerOutput factory = compile(compiler);
         final List<Entrant> entrants = new ArrayList<Entrant>();
         for (int i = 0; i < numberOfEntrants; ++i) {
-            entrants.add(factory.createEntrant(getName()));
+            entrants.add(Entrant.createEntrant(getName(), factory));
         }
         if (debug && !entrants.isEmpty()) {
             entrants.get(0).setDebug(true);
