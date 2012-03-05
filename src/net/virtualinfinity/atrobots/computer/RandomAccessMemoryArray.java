@@ -1,7 +1,6 @@
 package net.virtualinfinity.atrobots.computer;
 
 import java.util.Arrays;
-import java.util.Map;
 
 /**
  * A Memory Array which can be both read from and written to.
@@ -11,10 +10,6 @@ import java.util.Map;
 public class RandomAccessMemoryArray extends MemoryArray {
     public RandomAccessMemoryArray(int blockSize) {
         super(blockSize);
-    }
-
-    public RandomAccessMemoryArray(int blockSize, Map<Integer, SpecialRegister> specialRegisters) {
-        super(blockSize, specialRegisters);
     }
 
     public void put(int index, short value) {

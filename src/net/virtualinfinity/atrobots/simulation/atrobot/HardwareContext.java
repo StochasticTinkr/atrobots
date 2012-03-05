@@ -31,6 +31,31 @@ public class HardwareContext {
     private Robot robot;
     private HardwareBus hardwareBus;
     private MemoryArray lowerMemoryArray;
+    private final SpecialRegister desiredPowerRegister = new SpecialRegister() {
+        public short get() {
+            return (short) robot.getThrottle().getDesiredPower();
+        }
+    };
+    private final SpecialRegister desiredHeadingRegister = new SpecialRegister() {
+        public short get() {
+            return (short) (hardwareBus.getDesiredHeading().getAngle().getBygrees() & 255);
+        }
+    };
+    private final SpecialRegister turretShiftRegister = new SpecialRegister() {
+        public short get() {
+            return (short) robot.getTurretShift();
+        }
+    };
+    private final SpecialRegister scannerAccuracyRegister = new SpecialRegister() {
+        public short get() {
+            return (short) robot.getTurret().getScanner().getAccuracy();
+        }
+    };
+    private final SpecialRegister odometerRegister = new SpecialRegister() {
+        public short get() {
+            return (short) Math.round(robot.getOdometer().getDistance());
+        }
+    };
 
     public void setThrottle(Throttle throttle) {
         this.throttle = throttle;
@@ -105,31 +130,11 @@ public class HardwareContext {
     }
 
     private void connectSpecialRegisters() {
-        lowerMemoryArray.addSpecialRegister(0, new SpecialRegister() {
-            public short get() {
-                return (short) robot.getThrottle().getDesiredPower();
-            }
-        });
-        lowerMemoryArray.addSpecialRegister(1, new SpecialRegister() {
-            public short get() {
-                return (short) (hardwareBus.getDesiredHeading().getAngle().getBygrees() & 255);
-            }
-        });
-        lowerMemoryArray.addSpecialRegister(2, new SpecialRegister() {
-            public short get() {
-                return (short) robot.getTurretShift();
-            }
-        });
-        lowerMemoryArray.addSpecialRegister(3, new SpecialRegister() {
-            public short get() {
-                return (short) robot.getTurret().getScanner().getAccuracy();
-            }
-        });
-        lowerMemoryArray.addSpecialRegister(9, new SpecialRegister() {
-            public short get() {
-                return (short) Math.round(robot.getOdometer().getDistance());
-            }
-        });
+        lowerMemoryArray.addSpecialRegister(9, odometerRegister);
+        lowerMemoryArray.addSpecialRegister(0, desiredPowerRegister);
+        lowerMemoryArray.addSpecialRegister(1, desiredHeadingRegister);
+        lowerMemoryArray.addSpecialRegister(2, turretShiftRegister);
+        lowerMemoryArray.addSpecialRegister(3, scannerAccuracyRegister);
     }
 
     private void wireHardwareBus(Arena arena, int totalRounds, int roundNumber) {
