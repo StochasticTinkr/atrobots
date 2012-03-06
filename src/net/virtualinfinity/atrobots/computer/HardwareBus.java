@@ -1,7 +1,7 @@
 package net.virtualinfinity.atrobots.computer;
 
-import net.virtualinfinity.atrobots.HasTemperature;
 import net.virtualinfinity.atrobots.Resettable;
+import net.virtualinfinity.atrobots.measures.Heat;
 import net.virtualinfinity.atrobots.measures.Temperature;
 import net.virtualinfinity.atrobots.ports.PortHandler;
 
@@ -22,7 +22,7 @@ public class HardwareBus {
     private final Collection<ShutdownListener> shutdownListeners = new ArrayList<ShutdownListener>();
     private Restartable autoShutdownTarget;
     private Temperature autoShutDown = Temperature.fromLogScale(350);
-    private HasTemperature heat;
+    private Heat heat;
 
     /**
      * Get the port handler map.
@@ -164,7 +164,7 @@ public class HardwareBus {
         autoShutDown = Temperature.fromLogScale(value);
     }
 
-    public void setHeat(HasTemperature heat) {
+    public void setHeat(Heat heat) {
         this.heat = heat;
     }
 }

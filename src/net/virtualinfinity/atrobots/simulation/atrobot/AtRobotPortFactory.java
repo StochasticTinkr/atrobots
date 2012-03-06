@@ -1,10 +1,10 @@
 package net.virtualinfinity.atrobots.simulation.atrobot;
 
-import net.virtualinfinity.atrobots.HasTemperature;
 import net.virtualinfinity.atrobots.arena.Heading;
 import net.virtualinfinity.atrobots.atsetup.AtRobotPort;
 import net.virtualinfinity.atrobots.hardware.HasHeading;
 import net.virtualinfinity.atrobots.hardware.transponder.Transponder;
+import net.virtualinfinity.atrobots.measures.Heat;
 import net.virtualinfinity.atrobots.measures.RelativeAngle;
 import net.virtualinfinity.atrobots.ports.PortHandler;
 import net.virtualinfinity.atrobots.ports.PortListener;
@@ -79,7 +79,7 @@ public class AtRobotPortFactory {
         };
     }
 
-    private PortHandler getTemperatureSensor(final HasTemperature heat) {
+    private PortHandler getTemperatureSensor(final Heat heat) {
         return new PortHandler() {
             public short read() {
                 return (short) heat.getTemperature().getLogScale();

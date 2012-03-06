@@ -1,12 +1,10 @@
-package net.virtualinfinity.atrobots;
-
-import net.virtualinfinity.atrobots.measures.Temperature;
+package net.virtualinfinity.atrobots.measures;
 
 /**
  * TODO: JavaDoc
  *
  * @author <a href='mailto:daniel.pitts@cbs.com'>Daniel Pitts</a>
  */
-public interface HasTemperature {
+public interface Heat {
     Temperature getTemperature();
 }
