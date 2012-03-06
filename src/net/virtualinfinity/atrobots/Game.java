@@ -5,9 +5,7 @@ import net.virtualinfinity.atrobots.arena.SimulationObserver;
 import net.virtualinfinity.atrobots.config.Entrants;
 import net.virtualinfinity.atrobots.simulation.atrobot.Robot;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
+import java.util.*;
 
 /**
  * This class coordinates rounds, entrants, and the simulation frame buffer.
@@ -20,8 +18,9 @@ public class Game implements RoundListener {
     private int totalRounds;
     private int maxProcessorSpeed = 5;
     private SimulationFrameBuffer frameBuffer = new SimulationFrameBuffer();
-    private final List<Entrant> entrants = Collections.synchronizedList(new ArrayList<Entrant>());
+    private final List<RobotFactory> entrants = Collections.synchronizedList(new ArrayList<RobotFactory>());
     private int nextEntrantId;
+    private final Map<RobotFactory, RobotScoreKeeper> scoreKeepers = new IdentityHashMap<RobotFactory, RobotScoreKeeper>();
 
     public Game(int totalRounds) {
         this.totalRounds = totalRounds;
@@ -57,7 +56,7 @@ public class Game implements RoundListener {
         }
         round = new Round(++roundNumber, frameBuffer, this.getTotalRounds());
         round.addRoundListener(this);
-        for (Entrant entrant : entrants) {
+        for (RobotFactory entrant : entrants) {
             round.getArena().addRobot(createRobotFor(entrant));
         }
         round.getArena().buildFrame();
@@ -70,10 +69,17 @@ public class Game implements RoundListener {
      * @param entrant the entrant
      * @return the robot.
      */
-    protected Robot createRobotFor(Entrant entrant) {
-        final Robot robot = entrant.createRobot(getRound(), getMaxProcessorSpeed(), entrant.getRobotScoreKeeper());
-        round.putRobot(entrant, robot);
-        return robot;
+    protected Robot createRobotFor(RobotFactory entrant) {
+        return entrant.createRobot(getRound(), getMaxProcessorSpeed(), getScoreKeeper(entrant));
+    }
+
+    private RobotScoreKeeper getScoreKeeper(RobotFactory entrant) {
+        RobotScoreKeeper robotScoreKeeper = scoreKeepers.get(entrant);
+        if (robotScoreKeeper == null) {
+            robotScoreKeeper = new RobotScoreKeeper();
+            scoreKeepers.put(entrant, robotScoreKeeper);
+        }
+        return robotScoreKeeper;
     }
 
     /**
@@ -99,7 +105,7 @@ public class Game implements RoundListener {
      *
      * @param entrant the entrant
      */
-    public synchronized void addEntrant(Entrant entrant) {
+    public synchronized void addEntrant(RobotFactory entrant) {
         entrant.setId(++nextEntrantId);
         entrants.add(entrant);
     }
@@ -125,7 +131,7 @@ public class Game implements RoundListener {
     }
 
     public void addAll(Entrants entrants) {
-        for (Entrant entrant : entrants.getEntrants()) {
+        for (RobotFactory entrant : entrants.getEntrants()) {
             addEntrant(entrant);
         }
     }

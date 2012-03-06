@@ -2,8 +2,8 @@ package net.virtualinfinity.atrobots.gui;
 
 import net.virtualinfinity.atrobots.Game;
 import net.virtualinfinity.atrobots.compiler.Errors;
-import net.virtualinfinity.atrobots.config.EntrantFile;
-import net.virtualinfinity.atrobots.config.EntrantSource;
+import net.virtualinfinity.atrobots.config.RobotFile;
+import net.virtualinfinity.atrobots.config.RobotSource;
 
 import javax.swing.*;
 import java.awt.event.*;
@@ -66,7 +66,7 @@ public class NewGameDialog extends JDialog {
                     Errors errors = new Errors();
                     for (File file : jFileChooser.getSelectedFiles()) {
                         try {
-                            EntrantSource factory = new EntrantFile(file);
+                            RobotSource factory = new RobotFile(file);
                             System.out.println("Loading " + file);
                             entrantsModel.add(factory);
                         } catch (IOException e1) {
@@ -95,9 +95,9 @@ public class NewGameDialog extends JDialog {
 // add your code here
         game = new Game(((Number) numberOfRounds.getValue()).intValue());
         game.setMaxProcessorSpeed(((Number) maxCpu.getValue()).intValue());
-        for (EntrantSource factory : entrantsModel.getList()) {
+        for (RobotSource factory : entrantsModel.getList()) {
             try {
-                game.addAll(factory.createEntrants());
+                game.addEntrant(factory.createFactory());
             } catch (IOException e) {
                 throw new RuntimeException(e);
             }
@@ -128,7 +128,7 @@ public class NewGameDialog extends JDialog {
     }
 
     private class EntrantFactoryListModel extends AbstractListModel implements ListModel {
-        List<EntrantSource> list = new ArrayList<EntrantSource>();
+        List<RobotSource> list = new ArrayList<RobotSource>();
 
         public int getSize() {
             return list.size();
@@ -138,12 +138,12 @@ public class NewGameDialog extends JDialog {
             return list.get(index).getName();
         }
 
-        public void add(EntrantSource factory) {
+        public void add(RobotSource factory) {
             list.add(factory);
             fireIntervalAdded(this, list.size() - 1, list.size() - 1);
         }
 
-        public void remove(EntrantSource factory) {
+        public void remove(RobotSource factory) {
             final int i = list.indexOf(factory);
             if (i != -1) {
                 list.remove(i);
@@ -152,16 +152,16 @@ public class NewGameDialog extends JDialog {
         }
 
         public void remove(int[] indices) {
-            List<EntrantSource> toRemove = new ArrayList<EntrantSource>();
+            List<RobotSource> toRemove = new ArrayList<RobotSource>();
             for (int i : indices) {
                 toRemove.add(list.get(i));
             }
-            for (EntrantSource factory : toRemove) {
+            for (RobotSource factory : toRemove) {
                 remove(factory);
             }
         }
 
-        public List<EntrantSource> getList() {
+        public List<RobotSource> getList() {
             return list;
         }
     }

@@ -19,7 +19,7 @@ public class Round implements RoundState {
     private Arena arena;
     private int number;
     private final List<RoundListener> roundListeners = new ArrayList<RoundListener>();
-    private Map<Entrant, Robot> robots = new HashMap<Entrant, Robot>();
+    private Map<RobotFactory, Robot> robots = new HashMap<RobotFactory, Robot>();
     private final int totalRounds;
 
     public Round(int number, SimulationFrameBuffer frameBuffer, int totalRounds) {
@@ -59,13 +59,6 @@ public class Round implements RoundState {
 
     }
 
-    public void putRobot(Entrant entrant, Robot robot) {
-        robots.put(entrant, robot);
-    }
-
-    public Robot getRobot(Entrant entrant) {
-        return robots.get(entrant);
-    }
 
     public void finalizeRound() {
         arena.endRound();

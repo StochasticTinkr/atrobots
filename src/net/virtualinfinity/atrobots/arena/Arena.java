@@ -19,20 +19,21 @@ public class Arena implements GameTimer {
     private final Collection<ArenaObject> others = new LinkedList<ArenaObject>();
     private Duration time = Duration.fromCycles(0);
 
-    final Collection<Collection<? extends ArenaObject>> allArenaObjectCollections = new ArrayList<Collection<? extends ArenaObject>>();
+    @SuppressWarnings({"unchecked"})
+    final Collection<Collection<? extends ArenaObject>> allActiveObjects = new ArrayList<Collection<? extends ArenaObject>>(
+            Arrays.asList(collidables, activeRobots, others)
+    );
 
-    {
-        allArenaObjectCollections.add(collidables);
-        allArenaObjectCollections.add(activeRobots);
-        allArenaObjectCollections.add(others);
-    }
+    @SuppressWarnings({"unchecked"})
+    final Collection<Collection<? extends ArenaObject>> allFramedObjects = new ArrayList<Collection<? extends ArenaObject>>(
+            Arrays.asList(collidables, others, allRobots)
+    );
 
-    final Collection<Collection<? extends ArenaObject>> nonRobots = new ArrayList<Collection<? extends ArenaObject>>();
+    @SuppressWarnings({"unchecked"})
+    final Collection<Collection<? extends CollidableArenaObject>> allCollidable = new ArrayList<Collection<? extends CollidableArenaObject>>(
+            Arrays.asList(collidables, activeRobots)
+    );
 
-    {
-        nonRobots.add(collidables);
-        nonRobots.add(others);
-    }
 
     private final RadioDispatcher radioDispatcher = new RadioDispatcher();
     private SimulationFrameBuffer simulationFrameBuffer;
@@ -80,7 +81,7 @@ public class Arena implements GameTimer {
     }
 
     private ScanResult calculateResult(ArenaObject ignore, Position position, AngleBracket angleBracket, double maxDistance, boolean calculateAccuracy) {
-        ScanWork scanWork = new ScanWork(position, angleBracket, maxDistance, calculateAccuracy);
+        final ScanWork scanWork = new ScanWork(position, angleBracket, maxDistance, calculateAccuracy);
         for (TangibleArenaObject robot : activeRobots) {
             if (robot != ignore) {
                 scanWork.visit(robot);
@@ -103,7 +104,7 @@ public class Arena implements GameTimer {
      */
     public void buildFrame() {
         simulationFrameBuffer.beginFrame(roundOver);
-        for (Collection<? extends ArenaObject> objectCollection : allArenaObjectCollections) {
+        for (Collection<? extends ArenaObject> objectCollection : allFramedObjects) {
             for (ArenaObject object : objectCollection) {
                 simulationFrameBuffer.addObject(object.getSnapshot());
             }
@@ -112,7 +113,7 @@ public class Arena implements GameTimer {
     }
 
     private void updateSimulation() {
-        for (Collection<? extends ArenaObject> objectCollection : allArenaObjectCollections) {
+        for (Collection<? extends ArenaObject> objectCollection : allActiveObjects) {
             for (ArenaObject object : objectCollection) {
                 object.update(Duration.ONE_CYCLE);
             }
@@ -122,7 +123,7 @@ public class Arena implements GameTimer {
     }
 
     private void removeDead() {
-        for (Collection<? extends ArenaObject> objectCollection : allArenaObjectCollections) {
+        for (Collection<? extends ArenaObject> objectCollection : allActiveObjects) {
             for (Iterator<? extends ArenaObject> it = objectCollection.iterator(); it.hasNext(); ) {
                 if (it.next().isDead()) {
                     it.remove();
@@ -133,11 +134,13 @@ public class Arena implements GameTimer {
 
     private void checkCollissions() {
         for (final TangibleArenaObject collisionTarget : activeRobots) {
-            for (CollidableArenaObject collidable : collidables) {
-                if (collidable == collisionTarget) {
-                    break;
+            for (Iterable<? extends CollidableArenaObject> toCheckAgainst : allCollidable) {
+                for (CollidableArenaObject collidable : toCheckAgainst) {
+                    if (collidable == collisionTarget) {
+                        break;
+                    }
+                    collidable.checkCollision(collisionTarget);
                 }
-                collidable.checkCollision(collisionTarget);
             }
         }
     }

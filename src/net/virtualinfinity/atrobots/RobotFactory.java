@@ -7,30 +7,32 @@ import net.virtualinfinity.atrobots.simulation.atrobot.HardwareContext;
 import net.virtualinfinity.atrobots.simulation.atrobot.Robot;
 
 /**
- * TODO: JavaDoc
+ * Represents an entrant in a game.
  *
- * @author <a href='mailto:daniel.pitts@cbs.com'>Daniel Pitts</a>
+ * @author Daniel Pitts
  */
 public class RobotFactory {
+
     private static final int ROBOT_STACK_SIZE = 256;
     private static final int LOWER_MEMORY_BLOCK_SIZE = 1024;
-    private static final Debugger DEBUGGER = DebugConsole.create(getSystemConsole()).getDebugger();
+    private static final Debugger DEBUGGER = DebugConsole.create(RobotFactory.getSystemConsole()).getDebugger();
     private volatile int id;
     protected final String name;
     protected final Program program;
     protected final HardwareSpecification hardwareSpecification;
     protected final DebugInfo debugInfo;
     protected final int maxProcessorSpeed;
-    protected volatile String message = "";
-    private boolean debug;
+    protected final String message;
+    private volatile boolean debug;
 
-    public RobotFactory(String message, Program program, String name, int maxProcessorSpeed, DebugInfo debugInfo, HardwareSpecification hardwareSpecification) {
+    public RobotFactory(String name, Program program, HardwareSpecification hardwareSpecification, DebugInfo debugInfo, int maxProcessorSpeed, String message) {
         this.message = message;
         this.program = program;
         this.name = name;
         this.maxProcessorSpeed = maxProcessorSpeed;
         this.debugInfo = debugInfo;
         this.hardwareSpecification = hardwareSpecification;
+
     }
 
     private static Console getSystemConsole() {
@@ -83,5 +85,4 @@ public class RobotFactory {
     public void setDebug(boolean debug) {
         this.debug = debug;
     }
-
 }

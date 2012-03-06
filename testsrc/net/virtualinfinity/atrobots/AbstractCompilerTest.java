@@ -46,10 +46,15 @@ public abstract class AbstractCompilerTest extends TestCase {
                 if (compilerOutput.hasErrors()) {
                     return;
                 }
-                final Entrant entrant = Entrant.createEntrant("test", compilerOutput);
+                final RobotFactory entrant = new RobotFactory("test", compilerOutput.getProgram(), compilerOutput.getHardwareSpecification(), compilerOutput.getDebugInfo(), compilerOutput.getMaxProcessorSpeed(), compilerOutput.getMessage()) {
+                    @Override
+                    public Robot createRobot(RoundState roundState, int maxProcessorSpeed, RobotScoreKeeper robotScoreKeeper) {
+                        robot = super.createRobot(roundState, maxProcessorSpeed, robotScoreKeeper);
+                        return robot;
+                    }
+                };
                 game.addEntrant(entrant);
                 game.nextRound();
-                robot = game.getRound().getRobot(entrant);
                 computer = robot.getComputer();
             } finally {
                 stream.close();

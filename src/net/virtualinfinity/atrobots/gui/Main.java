@@ -1,7 +1,7 @@
 package net.virtualinfinity.atrobots.gui;
 
-import net.virtualinfinity.atrobots.Entrant;
 import net.virtualinfinity.atrobots.Game;
+import net.virtualinfinity.atrobots.RobotFactory;
 import net.virtualinfinity.atrobots.compiler.AtRobotCompiler;
 import net.virtualinfinity.atrobots.compiler.AtRobotCompilerOutput;
 import net.virtualinfinity.atrobots.compiler.Errors;
@@ -250,7 +250,7 @@ public class Main implements Runnable {
         this.debugMode = debugMode;
     }
 
-    private class EntrantLoader extends SwingWorker<Errors, Entrant> {
+    private class EntrantLoader extends SwingWorker<Errors, RobotFactory> {
         private final RobotFileUtils.EntrantFile[] selectedFiles;
 
         public EntrantLoader(File[] selectedFiles) {
@@ -279,7 +279,7 @@ public class Main implements Runnable {
                         errors.addAll(result.getErrors());
                     }
                     if (game != null) {
-                        game.addEntrant(Entrant.createEntrant(file.getName(), result));
+                        game.addEntrant(result.createRobotFactory(file.getName()));
                     }
                 } catch (IOException e1) {
                     errors.info("Errors in " + file.getName());

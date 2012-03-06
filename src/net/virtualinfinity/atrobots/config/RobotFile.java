@@ -12,19 +12,12 @@ import java.io.IOException;
  *
  * @author Daniel Pitts
  */
-public class EntrantFile extends EntrantSource {
+public class RobotFile extends RobotSource {
     private File file;
     private String defaultName;
 
-    public EntrantFile() {
-    }
-
-    public EntrantFile(File file) throws IOException {
+    public RobotFile(File file) throws IOException {
         setFile(file);
-    }
-
-    public File getFile() {
-        return file;
     }
 
     public void setFile(File file) throws IOException {

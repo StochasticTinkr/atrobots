@@ -16,7 +16,7 @@ public class RobotTest extends TestCase {
 
     public void testSittingDuck() throws IOException {
         final AtRobotCompilerOutput compile = new AtRobotCompiler().compile(new File("original/SDUCK.AT2"));
-        final RobotFactory robotFactory = new RobotFactory(compile.getMessage(), compile.getProgram(), "sduck", compile.getMaxProcessorSpeed(), compile.getDebugInfo(), compile.getHardwareSpecification());
+        final RobotFactory robotFactory = compile.createRobotFactory("SDUCK");
         final StandardRoundState roundState = new StandardRoundState(new Arena(), 1, 1);
         final Robot robot = robotFactory.createRobot(roundState, 5, new RobotScoreKeeper());
         assertNotNull(robot);

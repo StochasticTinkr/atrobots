@@ -1,6 +1,6 @@
 package net.virtualinfinity.atrobots.config;
 
-import net.virtualinfinity.atrobots.Entrant;
+import net.virtualinfinity.atrobots.RobotFactory;
 import net.virtualinfinity.atrobots.compiler.AtRobotCompilerOutput;
 
 import java.util.Collection;
@@ -14,14 +14,14 @@ import java.util.List;
  */
 public class Entrants {
     private final AtRobotCompilerOutput compilerOutput;
-    private final List<Entrant> entrants;
+    private final List<RobotFactory> entrants;
 
-    public Entrants(AtRobotCompilerOutput compilerOutput, List<Entrant> entrants) {
+    public Entrants(AtRobotCompilerOutput compilerOutput, List<RobotFactory> entrants) {
         this.compilerOutput = compilerOutput;
         this.entrants = entrants;
     }
 
-    public Collection<? extends Entrant> getEntrants() {
+    public Collection<? extends RobotFactory> getEntrants() {
         return Collections.unmodifiableCollection(entrants);
     }
 }
