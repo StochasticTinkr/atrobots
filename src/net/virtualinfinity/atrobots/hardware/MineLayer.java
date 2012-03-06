@@ -41,7 +41,7 @@ public class MineLayer {
             final Mine mine = new Mine(owner);
             mine.setTriggerRadius(triggerRadius);
             mine.setPosition(position);
-            getArena().placeMine(mine);
+            getArena().addCollidable(mine);
             layedMines.add(mine);
             mines--;
         }
@@ -93,5 +93,13 @@ public class MineLayer {
 
     public DamageInflicter getOwner() {
         return owner;
+    }
+
+    public void setArena(Arena arena) {
+        this.arena = arena;
+    }
+
+    public void setPosition(Position position) {
+        this.position = position;
     }
 }

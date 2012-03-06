@@ -2,6 +2,7 @@ package net.virtualinfinity.atrobots.simulation.arena;
 
 import net.virtualinfinity.atrobots.snapshots.ArenaObjectSnapshot;
 import net.virtualinfinity.atrobots.snapshots.RobotSnapshot;
+import net.virtualinfinity.atrobots.snapshots.SnapshotAdaptor;
 import net.virtualinfinity.atrobots.snapshots.SnapshotVisitor;
 
 import java.awt.*;
@@ -18,6 +19,12 @@ public class SimulationFrameBuffer {
         private final Collection<ArenaObjectSnapshot> allObjects;
         private final Collection<RobotSnapshot> robots;
         private final boolean roundOver;
+        private SnapshotVisitor robotFilter = new SnapshotAdaptor() {
+            @Override
+            public void acceptRobot(RobotSnapshot robotSnapshot) {
+                SimulationFrame.this.robots.add(robotSnapshot);
+            }
+        };
 
         public SimulationFrame(Collection<ArenaObjectSnapshot> allObjects, Collection<RobotSnapshot> robots, boolean roundOver) {
             this.allObjects = allObjects;
@@ -39,16 +46,13 @@ public class SimulationFrameBuffer {
 
         void add(ArenaObjectSnapshot snapshot) {
             allObjects.add(snapshot);
+            snapshot.visit(robotFilter);
         }
 
         public Collection<ArenaObjectSnapshot> getAllObjects() {
             return allObjects;
         }
 
-        public void addRobot(RobotSnapshot snapshot) {
-            robots.add(snapshot);
-            add(snapshot);
-        }
 
         public boolean isRoundOver() {
             return roundOver;
@@ -66,9 +70,6 @@ public class SimulationFrameBuffer {
         frameToBuild.add(snapshot);
     }
 
-    public void addRobot(RobotSnapshot snapshot) {
-        frameToBuild.addRobot(snapshot);
-    }
 
     public void endFrame() {
         currentFrame = frameToBuild;

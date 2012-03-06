@@ -18,7 +18,7 @@ import java.util.List;
 /**
  * @author Daniel Pitts
  */
-public class Robot extends ArenaObject implements Resettable, HasHeading, Destructable, HasOverburner, MissileFactory, ArmorDepletionListener, ScanSource, DamageInflicter {
+public class Robot extends TangibleArenaObject implements Resettable, HasHeading, Destructable, HasOverburner, MissileFactory, ArmorDepletionListener, ScanSource, DamageInflicter {
     private final HeatSinks heatSinks = new HeatSinks();
     private final Odometer odometer = new Odometer();
     private final String name;
@@ -275,14 +275,15 @@ public class Robot extends ArenaObject implements Resettable, HasHeading, Destru
         return robotSnapshot;
     }
 
-    public void checkCollision(Robot robot) {
+    @Override
+    public void checkCollision(TangibleArenaObject robot) {
         if (robot.getPosition().getVectorTo(position).getMagnitudeSquared() < 64) {
             collides();
             robot.collides();
         }
     }
 
-    private void collides() {
+    public void collides() {
         position.copyFrom(oldPosition);
         if (speed.times(Duration.ONE_CYCLE) > 2) {
             armor.inflictDamage(1);

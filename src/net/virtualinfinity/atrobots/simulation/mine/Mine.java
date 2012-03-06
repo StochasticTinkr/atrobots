@@ -1,9 +1,9 @@
 package net.virtualinfinity.atrobots.simulation.mine;
 
 
-import net.virtualinfinity.atrobots.simulation.arena.ArenaObject;
 import net.virtualinfinity.atrobots.simulation.arena.LinearDamageFunction;
 import net.virtualinfinity.atrobots.simulation.arena.Position;
+import net.virtualinfinity.atrobots.simulation.arena.TangibleArenaObject;
 import net.virtualinfinity.atrobots.simulation.atrobot.DamageInflicter;
 import net.virtualinfinity.atrobots.snapshots.ArenaObjectSnapshot;
 import net.virtualinfinity.atrobots.snapshots.MineSnapshot;
@@ -13,7 +13,7 @@ import net.virtualinfinity.atrobots.snapshots.MineSnapshot;
  *
  * @author Daniel Pitts
  */
-public class Mine extends ArenaObject {
+public class Mine extends CollidableArenaObject {
     private double triggerRadius;
     private final DamageInflicter owner;
     private double triggerRadiusSquared;
@@ -41,7 +41,8 @@ public class Mine extends ArenaObject {
         return snapshot;
     }
 
-    public void checkCollision(ArenaObject arenaObject) {
+    @Override
+    public void checkCollision(TangibleArenaObject arenaObject) {
         if (isDead() || layedBy(arenaObject)) {
             return;
         }

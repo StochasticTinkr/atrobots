@@ -48,7 +48,7 @@ public class MissileLauncher {
     }
 
     private void fireMissile(RelativeAngle shift) {
-        getArena().fireMissile(createMissile(shift));
+        getArena().addCollidable(createMissile(shift));
         getHeatSinks().warm(getFiringTempurature());
     }
 

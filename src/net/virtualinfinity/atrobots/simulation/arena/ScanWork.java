@@ -3,7 +3,6 @@ package net.virtualinfinity.atrobots.simulation.arena;
 import net.virtualinfinity.atrobots.measures.AbsoluteAngle;
 import net.virtualinfinity.atrobots.measures.AngleBracket;
 import net.virtualinfinity.atrobots.measures.Vector;
-import net.virtualinfinity.atrobots.simulation.atrobot.Robot;
 
 /**
  * TODO: Describe this class.
@@ -18,7 +17,7 @@ public class ScanWork {
 
     private Vector vectorToClosest = null;
     private double closestDistanceSquared;
-    private Robot closest = null;
+    private TangibleArenaObject closest = null;
     private Vector counterClockwiseBound;
     private Vector clockwiseBound;
     private static final int ROBOT_RADIUS_SQUARED = 16;
@@ -40,7 +39,7 @@ public class ScanWork {
         return absoluteAngle.toUnitVector();
     }
 
-    public void visit(Robot arenaObject) {
+    public void visit(TangibleArenaObject arenaObject) {
         final Vector position = arenaObject.getPosition().getVectorTo(this.position);
         final double distanceSquared = position.getMagnitudeSquared();
         if (distanceSquared < closestDistanceSquared && withinArc(position, distanceSquared)) {

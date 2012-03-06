@@ -109,7 +109,7 @@ public class HardwareContext {
         robot.getHeatSinks().setCoolMultiplier(coolMultiplier);
         wireThrottle();
         wireArmor();
-        wireMineLayer();
+        wireMineLayer(arena);
         wireRadar();
         wireShield();
         wireSonar();
@@ -219,9 +219,11 @@ public class HardwareContext {
         robot.setRadar(radar);
     }
 
-    private void wireMineLayer() {
+    private void wireMineLayer(Arena arena) {
         robot.setMineLayer(mineLayer);
         mineLayer.setOwner(robot);
+        mineLayer.setArena(arena);
+        mineLayer.setPosition(robot.getPosition());
     }
 
     private void wireArmor() {

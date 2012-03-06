@@ -3,11 +3,9 @@ package net.virtualinfinity.atrobots.simulation.missile;
 import net.virtualinfinity.atrobots.measures.AbsoluteAngle;
 import net.virtualinfinity.atrobots.measures.Duration;
 import net.virtualinfinity.atrobots.measures.Vector;
-import net.virtualinfinity.atrobots.simulation.arena.ArenaObject;
-import net.virtualinfinity.atrobots.simulation.arena.LinearDamageFunction;
-import net.virtualinfinity.atrobots.simulation.arena.Position;
-import net.virtualinfinity.atrobots.simulation.arena.Speed;
+import net.virtualinfinity.atrobots.simulation.arena.*;
 import net.virtualinfinity.atrobots.simulation.atrobot.DamageInflicter;
+import net.virtualinfinity.atrobots.simulation.mine.CollidableArenaObject;
 import net.virtualinfinity.atrobots.snapshots.ArenaObjectSnapshot;
 import net.virtualinfinity.atrobots.snapshots.MissileSnapshot;
 
@@ -16,7 +14,7 @@ import net.virtualinfinity.atrobots.snapshots.MissileSnapshot;
  *
  * @author Daniel Pitts
  */
-public class Missile extends ArenaObject {
+public class Missile extends CollidableArenaObject {
     private final DamageInflicter damageInflicter;
     private final double power;
     private final boolean overburn;
@@ -49,7 +47,8 @@ public class Missile extends ArenaObject {
      *
      * @param arenaObject the robot to check collision against.
      */
-    public void checkCollision(ArenaObject arenaObject) {
+    @Override
+    public void checkCollision(TangibleArenaObject arenaObject) {
         if (arenaObject == this.damageInflicter || isDead()) {
             return;
         }

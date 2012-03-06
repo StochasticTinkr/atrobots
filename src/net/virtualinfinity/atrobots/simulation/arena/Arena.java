@@ -4,11 +4,8 @@ import net.virtualinfinity.atrobots.GameTimer;
 import net.virtualinfinity.atrobots.measures.AngleBracket;
 import net.virtualinfinity.atrobots.measures.Duration;
 import net.virtualinfinity.atrobots.simulation.atrobot.DamageInflicter;
-import net.virtualinfinity.atrobots.simulation.atrobot.Robot;
-import net.virtualinfinity.atrobots.simulation.mine.Mine;
-import net.virtualinfinity.atrobots.simulation.missile.Missile;
+import net.virtualinfinity.atrobots.simulation.mine.CollidableArenaObject;
 import net.virtualinfinity.atrobots.simulation.radio.RadioDispatcher;
-import net.virtualinfinity.atrobots.snapshots.RobotSnapshot;
 
 import java.util.*;
 
@@ -18,18 +15,16 @@ import java.util.*;
  * @author Daniel Pitts
  */
 public class Arena implements GameTimer {
-    private final List<Robot> activeRobots = new LinkedList<Robot>();
-    private final List<Robot> allRobots = new LinkedList<Robot>();
-    private final List<Mine> mines = new LinkedList<Mine>();
-    private final List<Missile> missiles = new LinkedList<Missile>();
+    private final List<TangibleArenaObject> activeRobots = new LinkedList<TangibleArenaObject>();
+    private final List<TangibleArenaObject> allRobots = new LinkedList<TangibleArenaObject>();
+    private final List<CollidableArenaObject> collidables = new LinkedList<CollidableArenaObject>();
     private final Collection<ArenaObject> others = new LinkedList<ArenaObject>();
     private Duration time = Duration.fromCycles(0);
 
     final Collection<Collection<? extends ArenaObject>> allArenaObjectCollections = new ArrayList<Collection<? extends ArenaObject>>();
 
     {
-        allArenaObjectCollections.add(missiles);
-        allArenaObjectCollections.add(mines);
+        allArenaObjectCollections.add(collidables);
         allArenaObjectCollections.add(activeRobots);
         allArenaObjectCollections.add(others);
     }
@@ -37,8 +32,7 @@ public class Arena implements GameTimer {
     final Collection<Collection<? extends ArenaObject>> nonRobots = new ArrayList<Collection<? extends ArenaObject>>();
 
     {
-        nonRobots.add(missiles);
-        nonRobots.add(mines);
+        nonRobots.add(collidables);
         nonRobots.add(others);
     }
 
@@ -54,16 +48,6 @@ public class Arena implements GameTimer {
      */
     public int countActiveRobots() {
         return activeRobots.size();
-    }
-
-    /**
-     * Places a mine into this virtual arena.
-     *
-     * @param mine the mine to place in the arena.
-     */
-    public void placeMine(Mine mine) {
-        connectArena(mine);
-        mines.add(mine);
     }
 
     private void connectArena(ArenaObject object) {
@@ -99,7 +83,7 @@ public class Arena implements GameTimer {
 
     private ScanResult calculateResult(ArenaObject ignore, Position position, AngleBracket angleBracket, double maxDistance, boolean calculateAccuracy) {
         ScanWork scanWork = new ScanWork(position, angleBracket, maxDistance, calculateAccuracy);
-        for (Robot robot : activeRobots) {
+        for (TangibleArenaObject robot : activeRobots) {
             if (robot != ignore) {
                 scanWork.visit(robot);
             }
@@ -121,13 +105,10 @@ public class Arena implements GameTimer {
      */
     public void buildFrame() {
         simulationFrameBuffer.beginFrame(roundOver);
-        for (Collection<? extends ArenaObject> objectCollection : nonRobots) {
+        for (Collection<? extends ArenaObject> objectCollection : allArenaObjectCollections) {
             for (ArenaObject object : objectCollection) {
                 simulationFrameBuffer.addObject(object.getSnapshot());
             }
-        }
-        for (Robot robot : allRobots) {
-            simulationFrameBuffer.addRobot((RobotSnapshot) robot.getSnapshot());
         }
         simulationFrameBuffer.endFrame();
     }
@@ -153,18 +134,12 @@ public class Arena implements GameTimer {
     }
 
     private void checkCollissions() {
-        for (final Robot collisionTarget : activeRobots) {
-            for (Robot robot : activeRobots) {
-                if (robot == collisionTarget) {
+        for (final TangibleArenaObject collisionTarget : activeRobots) {
+            for (CollidableArenaObject collidable : collidables) {
+                if (collidable == collisionTarget) {
                     break;
                 }
-                robot.checkCollision(collisionTarget);
-            }
-            for (Mine mine : mines) {
-                mine.checkCollision(collisionTarget);
-            }
-            for (Missile missile : missiles) {
-                missile.checkCollision(collisionTarget);
+                collidable.checkCollision(collisionTarget);
             }
         }
     }
@@ -183,21 +158,16 @@ public class Arena implements GameTimer {
      *
      * @param robot the robot to add to this arena.
      */
-    public void addRobot(Robot robot) {
+    public void addRobot(TangibleArenaObject robot) {
         robot.getPosition().copyFrom(Position.random(0.0, 0.0, 1000.0, 1000.0));
         connectArena(robot);
         activeRobots.add(robot);
         allRobots.add(robot);
     }
 
-    /**
-     * File a missile within the arena.
-     *
-     * @param missile the missle.
-     */
-    public void fireMissile(Missile missile) {
-        connectArena(missile);
-        missiles.add(missile);
+    public void addCollidable(CollidableArenaObject arenaObject) {
+        connectArena(arenaObject);
+        collidables.add(arenaObject);
     }
 
     /**
@@ -208,7 +178,7 @@ public class Arena implements GameTimer {
      */
     public void explosion(DamageInflicter cause, ExplosionFunction explosionFunction) {
         others.add(new Explosion(explosionFunction.getCenter(), explosionFunction.getRadius()));
-        for (Robot robot : activeRobots) {
+        for (TangibleArenaObject robot : activeRobots) {
             explosionFunction.inflictDamage(cause, robot);
         }
     }
@@ -216,16 +186,16 @@ public class Arena implements GameTimer {
     public void determineWinners() {
         if (!activeRobots.isEmpty()) {
             if (activeRobots.size() == 1) {
-                for (Robot robot : activeRobots) {
+                for (TangibleArenaObject robot : activeRobots) {
                     robot.winRound();
                 }
             } else {
-                for (Robot robot : activeRobots) {
+                for (TangibleArenaObject robot : activeRobots) {
                     robot.tieRound();
                 }
             }
         } else {
-            for (Robot robot : allRobots) {
+            for (TangibleArenaObject robot : allRobots) {
                 robot.tieRound();
             }
         }
