@@ -2,6 +2,7 @@ package net.virtualinfinity.atrobots.hardware;
 
 
 import net.virtualinfinity.atrobots.computer.ShutdownListener;
+import net.virtualinfinity.atrobots.hardware.heatsinks.HeatSinks;
 import net.virtualinfinity.atrobots.measures.Duration;
 import net.virtualinfinity.atrobots.measures.Temperature;
 import net.virtualinfinity.atrobots.ports.PortHandler;

@@ -1,7 +1,6 @@
-package net.virtualinfinity.atrobots.hardware;
+package net.virtualinfinity.atrobots.hardware.armor;
 
 import net.virtualinfinity.atrobots.ports.PortHandler;
-import net.virtualinfinity.atrobots.simulation.atrobot.ArmorDepletionListener;
 
 /**
  * Represents the armor of a robot.

@@ -3,12 +3,15 @@ package net.virtualinfinity.atrobots.simulation.atrobot;
 import net.virtualinfinity.atrobots.RobotScoreKeeper;
 import net.virtualinfinity.atrobots.computer.*;
 import net.virtualinfinity.atrobots.hardware.*;
+import net.virtualinfinity.atrobots.hardware.armor.Armor;
+import net.virtualinfinity.atrobots.hardware.armor.ArmorDepletionListener;
+import net.virtualinfinity.atrobots.hardware.heatsinks.HeatSinks;
+import net.virtualinfinity.atrobots.hardware.missiles.Missile;
+import net.virtualinfinity.atrobots.hardware.missiles.MissileFactory;
 import net.virtualinfinity.atrobots.interrupts.Destructable;
 import net.virtualinfinity.atrobots.measures.*;
 import net.virtualinfinity.atrobots.ports.PortHandler;
 import net.virtualinfinity.atrobots.simulation.arena.*;
-import net.virtualinfinity.atrobots.simulation.missile.Missile;
-import net.virtualinfinity.atrobots.simulation.missile.MissileFactory;
 import net.virtualinfinity.atrobots.snapshots.ArenaObjectSnapshot;
 import net.virtualinfinity.atrobots.snapshots.RobotSnapshot;
 

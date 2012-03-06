@@ -2,6 +2,8 @@ package net.virtualinfinity.atrobots.simulation.atrobot;
 
 import net.virtualinfinity.atrobots.computer.*;
 import net.virtualinfinity.atrobots.hardware.*;
+import net.virtualinfinity.atrobots.hardware.armor.Armor;
+import net.virtualinfinity.atrobots.hardware.missiles.MissileLauncher;
 import net.virtualinfinity.atrobots.ports.PortHandler;
 import net.virtualinfinity.atrobots.simulation.arena.Arena;
 
@@ -170,7 +172,7 @@ public class HardwareContext {
         missileLauncher.setHeading(turret.getHeading());
         missileLauncher.setPower(missileLauncherPower);
         missileLauncher.setHeatSinks(robot.getHeatSinks());
-        missileLauncher.setMissileFactory(robot);
+        missileLauncher.setDamageInflicter(robot);
         missileLauncher.setOverburner(robot);
         missileLauncher.setArena(arena);
         missileLauncher.setPosition(robot.getPosition());
@@ -179,7 +181,7 @@ public class HardwareContext {
     private void wireScanner() {
         turret.setScanner(scanner);
         scanner.setScanSource(robot);
-        scanner.setHeading(robot.getHeading());
+        scanner.setHeading(robot.getTurret().getHeading());
     }
 
     private void wireComputer(CommunicationsQueue commQueue) {

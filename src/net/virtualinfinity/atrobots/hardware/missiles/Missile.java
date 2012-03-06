@@ -1,4 +1,4 @@
-package net.virtualinfinity.atrobots.simulation.missile;
+package net.virtualinfinity.atrobots.hardware.missiles;
 
 import net.virtualinfinity.atrobots.measures.AbsoluteAngle;
 import net.virtualinfinity.atrobots.measures.Duration;
@@ -18,6 +18,7 @@ public class Missile extends CollidableArenaObject {
     private final DamageInflicter damageInflicter;
     private final double power;
     private final boolean overburn;
+    private Duration age = Duration.ZERO_CYCLE;
 
     public Missile(DamageInflicter damageInflicter, Position position, AbsoluteAngle angle, double power, boolean overburn) {
         this.damageInflicter = damageInflicter;
@@ -29,7 +30,7 @@ public class Missile extends CollidableArenaObject {
     }
 
     protected ArenaObjectSnapshot createSpecificSnapshot() {
-        return new MissileSnapshot(overburn);
+        return new MissileSnapshot(overburn, age);
     }
 
     /**
@@ -74,6 +75,7 @@ public class Missile extends CollidableArenaObject {
     @Override
     public void update(Duration duration) {
         super.update(duration);
+        age = age.plus(duration);
         if (!isDead()) {
             checkWallCollision();
         }

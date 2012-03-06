@@ -1,4 +1,4 @@
-package net.virtualinfinity.atrobots.simulation.missile;
+package net.virtualinfinity.atrobots.hardware.missiles;
 
 import net.virtualinfinity.atrobots.measures.AbsoluteAngle;
 import net.virtualinfinity.atrobots.simulation.arena.Position;

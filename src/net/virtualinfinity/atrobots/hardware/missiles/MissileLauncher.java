@@ -1,5 +1,6 @@
-package net.virtualinfinity.atrobots.hardware;
+package net.virtualinfinity.atrobots.hardware.missiles;
 
+import net.virtualinfinity.atrobots.hardware.heatsinks.HeatSinks;
 import net.virtualinfinity.atrobots.measures.AbsoluteAngle;
 import net.virtualinfinity.atrobots.measures.RelativeAngle;
 import net.virtualinfinity.atrobots.measures.Temperature;
@@ -7,9 +8,8 @@ import net.virtualinfinity.atrobots.ports.PortHandler;
 import net.virtualinfinity.atrobots.simulation.arena.Arena;
 import net.virtualinfinity.atrobots.simulation.arena.Heading;
 import net.virtualinfinity.atrobots.simulation.arena.Position;
+import net.virtualinfinity.atrobots.simulation.atrobot.DamageInflicter;
 import net.virtualinfinity.atrobots.simulation.atrobot.HasOverburner;
-import net.virtualinfinity.atrobots.simulation.missile.Missile;
-import net.virtualinfinity.atrobots.simulation.missile.MissileFactory;
 
 /**
  * @author Daniel Pitts
@@ -19,9 +19,9 @@ public class MissileLauncher {
     private double power;
     private Position position;
     private HeatSinks heatSinks;
-    private MissileFactory missileFactory;
     private HasOverburner overburner;
     private Arena arena;
+    private DamageInflicter damageInflicter;
 
     public MissileLauncher() {
     }
@@ -61,7 +61,7 @@ public class MissileLauncher {
     }
 
     private Missile createMissile(RelativeAngle shift) {
-        return missileFactory.createMissile(getMissileHeading(shift), position, getPower());
+        return new Missile(damageInflicter, position, getMissileHeading(shift), getPower(), overburner.isOverburn());
     }
 
     private double getPower() {
@@ -76,12 +76,12 @@ public class MissileLauncher {
         this.heatSinks = heatSinks;
     }
 
-    public MissileFactory getMissileFactory() {
-        return missileFactory;
+    public DamageInflicter getDamageInflicter() {
+        return this.damageInflicter;
     }
 
-    public void setMissileFactory(MissileFactory missileFactory) {
-        this.missileFactory = missileFactory;
+    public void setDamageInflicter(DamageInflicter damageInflicter) {
+        this.damageInflicter = damageInflicter;
     }
 
     public HasOverburner getOverburner() {

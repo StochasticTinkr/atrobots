@@ -7,6 +7,7 @@ package net.virtualinfinity.atrobots.measures;
  */
 public final class Duration implements Comparable<Duration> {
     private final int cycles;
+    public static final Duration ZERO_CYCLE = Duration.fromCycles(1);
     public static final Duration ONE_CYCLE = Duration.fromCycles(1);
 
     private Duration(int cycles) {

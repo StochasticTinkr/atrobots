@@ -1,6 +1,7 @@
 package net.virtualinfinity.atrobots.hardware;
 
 import net.virtualinfinity.atrobots.computer.Resettable;
+import net.virtualinfinity.atrobots.hardware.missiles.MissileLauncher;
 import net.virtualinfinity.atrobots.simulation.arena.Heading;
 
 /**
