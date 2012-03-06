@@ -1,7 +1,9 @@
 package net.virtualinfinity.atrobots.arena;
 
-import net.virtualinfinity.atrobots.GameTimer;
-import net.virtualinfinity.atrobots.measures.AngleBracket;
+import net.virtualinfinity.atrobots.ArenaObjectVisitor;
+import net.virtualinfinity.atrobots.arenaobjects.ArenaObject;
+import net.virtualinfinity.atrobots.arenaobjects.CollidableArenaObject;
+import net.virtualinfinity.atrobots.arenaobjects.DamageInflicter;
 import net.virtualinfinity.atrobots.measures.Duration;
 import net.virtualinfinity.atrobots.radio.RadioDispatcher;
 
@@ -12,21 +14,21 @@ import java.util.*;
  *
  * @author Daniel Pitts
  */
-public class Arena implements GameTimer {
+public class Arena implements RoundTimer {
     private final List<TangibleArenaObject> activeRobots = new LinkedList<TangibleArenaObject>();
     private final List<TangibleArenaObject> allRobots = new LinkedList<TangibleArenaObject>();
     private final List<CollidableArenaObject> collidables = new LinkedList<CollidableArenaObject>();
-    private final Collection<ArenaObject> others = new LinkedList<ArenaObject>();
+    private final Collection<ArenaObject> intangibles = new LinkedList<ArenaObject>();
     private Duration time = Duration.fromCycles(0);
 
     @SuppressWarnings({"unchecked"})
     final Collection<Collection<? extends ArenaObject>> allActiveObjects = new ArrayList<Collection<? extends ArenaObject>>(
-            Arrays.asList(collidables, activeRobots, others)
+            Arrays.asList(collidables, activeRobots, intangibles)
     );
 
     @SuppressWarnings({"unchecked"})
     final Collection<Collection<? extends ArenaObject>> allFramedObjects = new ArrayList<Collection<? extends ArenaObject>>(
-            Arrays.asList(collidables, others, allRobots)
+            Arrays.asList(collidables, intangibles, allRobots)
     );
 
     @SuppressWarnings({"unchecked"})
@@ -60,34 +62,6 @@ public class Arena implements GameTimer {
      */
     public RadioDispatcher getRadioDispatcher() {
         return radioDispatcher;
-    }
-
-    /**
-     * Scan for the closest robot which is in the given arc.
-     *
-     * @param ignore            the source robot, which should be ignored.
-     * @param position          the vertex of the arc.
-     * @param angleBracket      the bracket which defines the scan arc.
-     * @param maxDistance       the radius of the scan arc.
-     * @param calculateAccuracy whether the accuracy should be calculated or not.
-     * @return the result of the scan.
-     */
-    public ScanResult scan(ArenaObject ignore, Position position, final AngleBracket angleBracket, final double maxDistance, boolean calculateAccuracy) {
-        final ScanResult scanResult = calculateResult(ignore, position, angleBracket, maxDistance, calculateAccuracy);
-        final ScanParameters object = new ScanParameters(angleBracket, maxDistance, scanResult.successful(), scanResult.getMatchPositionVector(), calculateAccuracy && scanResult.successful(), scanResult.getAccuracy());
-        others.add(object);
-        object.getPosition().copyFrom(position);
-        return scanResult;
-    }
-
-    private ScanResult calculateResult(ArenaObject ignore, Position position, AngleBracket angleBracket, double maxDistance, boolean calculateAccuracy) {
-        final ScanWork scanWork = new ScanWork(position, angleBracket, maxDistance, calculateAccuracy);
-        for (TangibleArenaObject robot : activeRobots) {
-            if (robot != ignore) {
-                scanWork.visit(robot);
-            }
-        }
-        return scanWork.toScanResult();
     }
 
     /**
@@ -178,7 +152,7 @@ public class Arena implements GameTimer {
      * @param explosionFunction the damage explosion function.
      */
     public void explosion(DamageInflicter cause, ExplosionFunction explosionFunction) {
-        others.add(new Explosion(explosionFunction.getCenter(), explosionFunction.getRadius()));
+        intangibles.add(new Explosion(explosionFunction.getCenter(), explosionFunction.getRadius()));
         for (TangibleArenaObject robot : activeRobots) {
             explosionFunction.inflictDamage(cause, robot);
         }
@@ -215,5 +189,15 @@ public class Arena implements GameTimer {
 
     public boolean isOnlyOneRobotAlive() {
         return countActiveRobots() == 1;
+    }
+
+    public void addIntangible(ArenaObject object) {
+        intangibles.add(object);
+    }
+
+    public void visitActiveRobots(ArenaObjectVisitor arenaObjectVisitor) {
+        for (ArenaObject arenaObject : activeRobots) {
+            arenaObject.accept(arenaObjectVisitor);
+        }
     }
 }

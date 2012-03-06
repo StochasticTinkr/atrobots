@@ -1,11 +1,13 @@
-package net.virtualinfinity.atrobots.arena;
+package net.virtualinfinity.atrobots.arenaobjects;
 
+import net.virtualinfinity.atrobots.ArenaObjectVisitor;
+import net.virtualinfinity.atrobots.arena.*;
 import net.virtualinfinity.atrobots.measures.Duration;
 import net.virtualinfinity.atrobots.measures.Vector;
 import net.virtualinfinity.atrobots.snapshots.ArenaObjectSnapshot;
 
 /**
- * Abstract base class for objects which can appear in the {@link Arena}.
+ * Abstract base class for objects which can appear in the {@link net.virtualinfinity.atrobots.arena.Arena}.
  *
  * @author Daniel Pitts
  */
@@ -100,7 +102,7 @@ public abstract class ArenaObject {
      *
      * @param arena the arena.
      */
-    final void setArena(Arena arena) {
+    public final void setArena(Arena arena) {
         this.arena = arena;
         arenaConnected(arena);
     }
@@ -108,4 +110,5 @@ public abstract class ArenaObject {
     protected void arenaConnected(Arena arena) {
     }
 
+    public abstract void accept(ArenaObjectVisitor arenaObjectVisitor);
 }

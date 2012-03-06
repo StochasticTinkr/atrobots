@@ -1,6 +1,7 @@
-package net.virtualinfinity.atrobots;
+package net.virtualinfinity.atrobots.game;
 
 import net.virtualinfinity.atrobots.arena.Arena;
+import net.virtualinfinity.atrobots.arena.RoundState;
 
 public class StandardRoundState implements RoundState {
     private final Arena arena;

@@ -1,9 +1,11 @@
-package net.virtualinfinity.atrobots;
+package net.virtualinfinity.atrobots.game;
 
 import net.virtualinfinity.atrobots.arena.Arena;
+import net.virtualinfinity.atrobots.arena.RoundState;
 import net.virtualinfinity.atrobots.arena.SimulationFrameBuffer;
+import net.virtualinfinity.atrobots.compiler.RobotFactory;
 import net.virtualinfinity.atrobots.measures.Duration;
-import net.virtualinfinity.atrobots.simulation.atrobot.Robot;
+import net.virtualinfinity.atrobots.robot.Robot;
 
 import java.util.ArrayList;
 import java.util.HashMap;

@@ -1,6 +1,6 @@
 package net.virtualinfinity.atrobots.hardware.shield;
 
-import net.virtualinfinity.atrobots.Resettable;
+import net.virtualinfinity.atrobots.computer.Resettable;
 import net.virtualinfinity.atrobots.computer.ShutdownListener;
 import net.virtualinfinity.atrobots.hardware.heatsinks.HeatSinks;
 import net.virtualinfinity.atrobots.measures.Duration;

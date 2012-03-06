@@ -1,6 +1,7 @@
 package net.virtualinfinity.atrobots.arena;
 
-import net.virtualinfinity.atrobots.hardware.transponder.Transponder;
+import net.virtualinfinity.atrobots.arenaobjects.CollidableArenaObject;
+import net.virtualinfinity.atrobots.arenaobjects.DamageInflicter;
 
 /**
  * TODO: JavaDoc
@@ -8,9 +9,6 @@ import net.virtualinfinity.atrobots.hardware.transponder.Transponder;
  * @author <a href='mailto:daniel.pitts@cbs.com'>Daniel Pitts</a>
  */
 public abstract class TangibleArenaObject extends CollidableArenaObject {
-    public abstract Transponder getTransponder();
-
-    public abstract void checkCollision(TangibleArenaObject collisionTarget);
 
     public abstract void inflictDamage(DamageInflicter cause, double amount);
 

@@ -1,7 +1,4 @@
-package net.virtualinfinity.atrobots;
-
-import net.virtualinfinity.atrobots.simulation.atrobot.Robot;
-import net.virtualinfinity.atrobots.simulation.atrobot.RobotListener;
+package net.virtualinfinity.atrobots.robot;
 
 public class RobotScoreKeeper implements RobotListener {
     volatile int totalTies;

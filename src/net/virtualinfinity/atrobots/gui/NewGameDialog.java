@@ -1,9 +1,9 @@
 package net.virtualinfinity.atrobots.gui;
 
-import net.virtualinfinity.atrobots.Game;
 import net.virtualinfinity.atrobots.compiler.Errors;
 import net.virtualinfinity.atrobots.config.RobotFile;
 import net.virtualinfinity.atrobots.config.RobotSource;
+import net.virtualinfinity.atrobots.game.Game;
 
 import javax.swing.*;
 import java.awt.event.*;

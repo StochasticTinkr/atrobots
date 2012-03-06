@@ -1,7 +1,7 @@
 package net.virtualinfinity.atrobots.arena;
 
 
-import net.virtualinfinity.atrobots.Resettable;
+import net.virtualinfinity.atrobots.computer.Resettable;
 
 /**
  * @author Daniel Pitts

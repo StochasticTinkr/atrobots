@@ -1,6 +1,6 @@
 package net.virtualinfinity.atrobots.hardware.scanning.radar;
 
-import net.virtualinfinity.atrobots.arena.ScanResult;
+import net.virtualinfinity.atrobots.hardware.scanning.ScanResult;
 import net.virtualinfinity.atrobots.hardware.scanning.ScanSource;
 import net.virtualinfinity.atrobots.measures.AngleBracket;
 import net.virtualinfinity.atrobots.ports.PortHandler;
@@ -16,7 +16,7 @@ public class Radar {
         return new PortHandler() {
             public short read() {
                 consumeCycles(3);
-                final ScanResult scanResult = scanSource.scan(AngleBracket.all(), Double.POSITIVE_INFINITY, false);
+                final ScanResult scanResult = scanSource.scan(AngleBracket.all(), Double.POSITIVE_INFINITY, false, false);
                 if (!scanResult.successful()) {
                     return Short.MAX_VALUE;
                 }

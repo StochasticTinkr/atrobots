@@ -1,6 +1,8 @@
 package net.virtualinfinity.atrobots.arena;
 
 
+import net.virtualinfinity.atrobots.arenaobjects.ArenaObject;
+import net.virtualinfinity.atrobots.arenaobjects.DamageInflicter;
 import net.virtualinfinity.atrobots.measures.Vector;
 
 /**

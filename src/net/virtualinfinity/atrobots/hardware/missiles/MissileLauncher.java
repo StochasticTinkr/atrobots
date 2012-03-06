@@ -1,9 +1,9 @@
 package net.virtualinfinity.atrobots.hardware.missiles;
 
 import net.virtualinfinity.atrobots.arena.Arena;
-import net.virtualinfinity.atrobots.arena.DamageInflicter;
 import net.virtualinfinity.atrobots.arena.Heading;
 import net.virtualinfinity.atrobots.arena.Position;
+import net.virtualinfinity.atrobots.arenaobjects.DamageInflicter;
 import net.virtualinfinity.atrobots.hardware.HasOverburner;
 import net.virtualinfinity.atrobots.hardware.heatsinks.HeatSinks;
 import net.virtualinfinity.atrobots.measures.AbsoluteAngle;

@@ -1,10 +1,14 @@
 package net.virtualinfinity.atrobots;
 
 import junit.framework.TestCase;
+import net.virtualinfinity.atrobots.arena.RoundState;
 import net.virtualinfinity.atrobots.compiler.AtRobotCompiler;
 import net.virtualinfinity.atrobots.compiler.AtRobotCompilerOutput;
+import net.virtualinfinity.atrobots.compiler.RobotFactory;
 import net.virtualinfinity.atrobots.computer.Computer;
-import net.virtualinfinity.atrobots.simulation.atrobot.Robot;
+import net.virtualinfinity.atrobots.game.Game;
+import net.virtualinfinity.atrobots.robot.Robot;
+import net.virtualinfinity.atrobots.robot.RobotScoreKeeper;
 
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;

@@ -1,8 +1,8 @@
 package net.virtualinfinity.atrobots.config;
 
-import net.virtualinfinity.atrobots.RobotFactory;
 import net.virtualinfinity.atrobots.compiler.AtRobotCompiler;
 import net.virtualinfinity.atrobots.compiler.AtRobotCompilerOutput;
+import net.virtualinfinity.atrobots.compiler.RobotFactory;
 
 import java.io.IOException;
 

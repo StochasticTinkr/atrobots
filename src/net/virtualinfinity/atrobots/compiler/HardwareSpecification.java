@@ -12,7 +12,6 @@ import net.virtualinfinity.atrobots.hardware.shield.Shield;
 import net.virtualinfinity.atrobots.hardware.throttle.Throttle;
 import net.virtualinfinity.atrobots.hardware.transponder.Transponder;
 import net.virtualinfinity.atrobots.hardware.turret.Turret;
-import net.virtualinfinity.atrobots.simulation.atrobot.HardwareContext;
 
 import java.util.Map;
 
@@ -84,22 +83,22 @@ public class HardwareSpecification {
     /**
      * Configure the specific hardware context based on this spec.
      *
-     * @param hardwareContext the context to configure.
+     * @param robotConfigurer the context to configure.
      */
-    public void configureHardwareContext(HardwareContext hardwareContext) {
-        hardwareContext.setThrottle(createThrottle());
-        hardwareContext.setCoolMultiplier(chooseFor(HEATSINKS, 0.75, 1.00, 1.125, 1.25, 1.33, 1.50));
-        hardwareContext.setArmor(createArmor());
-        hardwareContext.setMineLayer(createMineLayer());
-        hardwareContext.setRadar(createRadar());
-        hardwareContext.setShield(createShield());
-        hardwareContext.setSonar(createSonar());
-        hardwareContext.setTransceiver(createTransceiver());
-        hardwareContext.setTransponder(createTransponder());
-        hardwareContext.setTurret(createTurret());
-        hardwareContext.setMissileLauncher(new MissileLauncher());
-        hardwareContext.setMissileLauncherPower(chooseFor(WEAPON, .5, .8, 1.0, 1.2, 1.35, 1.5));
-        hardwareContext.setScanner(createScanner());
-        hardwareContext.setHardwareBus(new HardwareBus());
+    public void buildRobotConfigurer(RobotConfigurer robotConfigurer) {
+        robotConfigurer.setThrottle(createThrottle());
+        robotConfigurer.setCoolMultiplier(chooseFor(HEATSINKS, 0.75, 1.00, 1.125, 1.25, 1.33, 1.50));
+        robotConfigurer.setArmor(createArmor());
+        robotConfigurer.setMineLayer(createMineLayer());
+        robotConfigurer.setRadar(createRadar());
+        robotConfigurer.setShield(createShield());
+        robotConfigurer.setSonar(createSonar());
+        robotConfigurer.setTransceiver(createTransceiver());
+        robotConfigurer.setTransponder(createTransponder());
+        robotConfigurer.setTurret(createTurret());
+        robotConfigurer.setMissileLauncher(new MissileLauncher());
+        robotConfigurer.setMissileLauncherPower(chooseFor(WEAPON, .5, .8, 1.0, 1.2, 1.35, 1.5));
+        robotConfigurer.setScanner(createScanner());
+        robotConfigurer.setHardwareBus(new HardwareBus());
     }
 }

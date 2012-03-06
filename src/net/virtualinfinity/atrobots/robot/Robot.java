@@ -1,12 +1,9 @@
-package net.virtualinfinity.atrobots.simulation.atrobot;
+package net.virtualinfinity.atrobots.robot;
 
-import net.virtualinfinity.atrobots.Resettable;
-import net.virtualinfinity.atrobots.RobotScoreKeeper;
+import net.virtualinfinity.atrobots.ArenaObjectVisitor;
 import net.virtualinfinity.atrobots.arena.*;
-import net.virtualinfinity.atrobots.computer.Computer;
-import net.virtualinfinity.atrobots.computer.HardwareBus;
-import net.virtualinfinity.atrobots.computer.InterruptHandler;
-import net.virtualinfinity.atrobots.computer.MemoryCell;
+import net.virtualinfinity.atrobots.arenaobjects.DamageInflicter;
+import net.virtualinfinity.atrobots.computer.*;
 import net.virtualinfinity.atrobots.hardware.HasHeading;
 import net.virtualinfinity.atrobots.hardware.HasOverburner;
 import net.virtualinfinity.atrobots.hardware.armor.Armor;
@@ -16,6 +13,7 @@ import net.virtualinfinity.atrobots.hardware.mines.MineLayer;
 import net.virtualinfinity.atrobots.hardware.missiles.Missile;
 import net.virtualinfinity.atrobots.hardware.missiles.MissileFactory;
 import net.virtualinfinity.atrobots.hardware.radio.Transceiver;
+import net.virtualinfinity.atrobots.hardware.scanning.ScanResult;
 import net.virtualinfinity.atrobots.hardware.scanning.ScanSource;
 import net.virtualinfinity.atrobots.hardware.scanning.radar.Radar;
 import net.virtualinfinity.atrobots.hardware.scanning.sonar.Sonar;
@@ -56,7 +54,6 @@ public class Robot extends TangibleArenaObject implements Resettable, HasHeading
     private Shield shield;
     private boolean overburn;
     private HardwareBus hardwareBus;
-    private final LastScanResult lastScanResult = new LastScanResult();
     private static final RelativeAngle STEERING_SPEED = RelativeAngle.fromBygrees(8);
     private final Position oldPosition = new Position();
     private int roundKills;
@@ -201,14 +198,6 @@ public class Robot extends TangibleArenaObject implements Resettable, HasHeading
         };
     }
 
-    public Temperature getShutdownLevel() {
-        return shutdownLevel;
-    }
-
-    public void setShutdownLevel(Temperature shutdownLevel) {
-        this.shutdownLevel = shutdownLevel;
-    }
-
     public MineLayer getMineLayer() {
         return mineLayer;
     }
@@ -264,14 +253,32 @@ public class Robot extends TangibleArenaObject implements Resettable, HasHeading
 
     }
 
-    public ScanResult scan(AngleBracket angleBracket, double maxDistance, boolean calculateAccuracy) {
-        final ScanResult scanResult = getArena().scan(this, getPosition(), angleBracket, maxDistance, calculateAccuracy);
-        lastScanResult.set(scanResult);
+    public ScanResult scan(AngleBracket angleBracket, double maxDistance, boolean calculateAccuracy, boolean includeTargetDetails) {
+        final RobotScanResult scanResult = doScan(angleBracket, maxDistance, calculateAccuracy);
         if (scanResult.successful()) {
-            getComputer().getRegisters().getTargetId().set((short) scanResult.getMatchTransponderId());
+            getComputer().getRegisters().getTargetId().set((short) scanResult.getMatch().transponder.getId());
+            if (includeTargetDetails) {
+                final AbsoluteAngle matchAngle = scanResult.getMatch().getHeading().getAngle();
+                final AbsoluteAngle turretAngle = getTurret().getHeading().getAngle();
+                getComputer().getRegisters().getTargetHeading().set((short) matchAngle.getAngleCounterClockwiseTo(turretAngle).getBygrees());
+                getComputer().getRegisters().getTargetThrottle().set((short) scanResult.getMatch().getThrottle().getPower());
+                getComputer().getRegisters().getTargetVelocity().set((short) Math.round(scanResult.getMatch().getSpeed().times(Duration.ONE_CYCLE) * 100));
+            }
         }
         return scanResult;
     }
+
+    private RobotScanResult doScan(AngleBracket angleBracket, double maxDistance, boolean calculateAccuracy) {
+        Position position = getPosition();
+        final RobotScanner robotScanner = new RobotScanner(this, position, angleBracket, maxDistance, calculateAccuracy);
+        getArena().visitActiveRobots(robotScanner);
+        final RobotScanResult scanResult = robotScanner.toScanResult();
+        final Scan object = new Scan(angleBracket, maxDistance, scanResult.successful(), scanResult.getMatchPositionVector(), calculateAccuracy && scanResult.successful(), scanResult.getAccuracy());
+        getArena().addIntangible(object);
+        object.getPosition().copyFrom(position);
+        return scanResult;
+    }
+
 
     protected ArenaObjectSnapshot createSpecificSnapshot() {
         final RobotSnapshot robotSnapshot = new RobotSnapshot();
@@ -431,6 +438,10 @@ public class Robot extends TangibleArenaObject implements Resettable, HasHeading
 
     public Missile createMissile(AbsoluteAngle heading, Position position, double power) {
         return new Missile(this, position, heading, power, this.isOverburn());
+    }
+
+    public void accept(ArenaObjectVisitor arenaObjectVisitor) {
+        arenaObjectVisitor.visit(this);
     }
 
     /**

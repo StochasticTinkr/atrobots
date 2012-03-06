@@ -2,8 +2,8 @@ package net.virtualinfinity.atrobots.hardware.mines;
 
 
 import net.virtualinfinity.atrobots.arena.Arena;
-import net.virtualinfinity.atrobots.arena.DamageInflicter;
 import net.virtualinfinity.atrobots.arena.Position;
+import net.virtualinfinity.atrobots.arenaobjects.DamageInflicter;
 import net.virtualinfinity.atrobots.ports.PortHandler;
 
 import java.util.ArrayList;

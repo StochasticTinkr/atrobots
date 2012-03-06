@@ -1,6 +1,8 @@
 package net.virtualinfinity.atrobots.arena;
 
 
+import net.virtualinfinity.atrobots.ArenaObjectVisitor;
+import net.virtualinfinity.atrobots.arenaobjects.ArenaObject;
 import net.virtualinfinity.atrobots.measures.Duration;
 import net.virtualinfinity.atrobots.measures.Vector;
 import net.virtualinfinity.atrobots.snapshots.ArenaObjectSnapshot;
@@ -41,4 +43,7 @@ public class Explosion extends ArenaObject {
         }
     }
 
+    public void accept(ArenaObjectVisitor arenaObjectVisitor) {
+        arenaObjectVisitor.visit(this);
+    }
 }

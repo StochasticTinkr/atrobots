@@ -1,7 +1,12 @@
 package net.virtualinfinity.atrobots.hardware.mines;
 
 
-import net.virtualinfinity.atrobots.arena.*;
+import net.virtualinfinity.atrobots.ArenaObjectVisitor;
+import net.virtualinfinity.atrobots.arena.LinearDamageFunction;
+import net.virtualinfinity.atrobots.arena.Position;
+import net.virtualinfinity.atrobots.arena.TangibleArenaObject;
+import net.virtualinfinity.atrobots.arenaobjects.CollidableArenaObject;
+import net.virtualinfinity.atrobots.arenaobjects.DamageInflicter;
 import net.virtualinfinity.atrobots.snapshots.ArenaObjectSnapshot;
 import net.virtualinfinity.atrobots.snapshots.MineSnapshot;
 
@@ -56,4 +61,7 @@ public class Mine extends CollidableArenaObject {
     }
 
 
+    public void accept(ArenaObjectVisitor arenaObjectVisitor) {
+        arenaObjectVisitor.visit(this);
+    }
 }

@@ -31,7 +31,7 @@ public class Sonar {
     }
 
     private AbsoluteAngle scan() {
-        return scanSource.scan(AngleBracket.all(), maxDistance, false).getAngle();
+        return scanSource.scan(AngleBracket.all(), maxDistance, false, false).getAngle();
     }
 
     public void setScanSource(ScanSource scanSource) {

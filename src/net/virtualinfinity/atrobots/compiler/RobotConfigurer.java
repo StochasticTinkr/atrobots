@@ -1,4 +1,4 @@
-package net.virtualinfinity.atrobots.simulation.atrobot;
+package net.virtualinfinity.atrobots.compiler;
 
 import net.virtualinfinity.atrobots.arena.Arena;
 import net.virtualinfinity.atrobots.computer.*;
@@ -15,13 +15,14 @@ import net.virtualinfinity.atrobots.hardware.throttle.Throttle;
 import net.virtualinfinity.atrobots.hardware.transponder.Transponder;
 import net.virtualinfinity.atrobots.hardware.turret.Turret;
 import net.virtualinfinity.atrobots.ports.PortHandler;
+import net.virtualinfinity.atrobots.robot.Robot;
 
 import java.util.Map;
 
 /**
  * @author Daniel Pitts
  */
-public class HardwareContext {
+public class RobotConfigurer {
     private Throttle throttle;
     private double coolMultiplier;
     private Armor armor;
@@ -265,4 +266,5 @@ public class HardwareContext {
     public void setLowerMemoryArray(MemoryArray lowerMemoryArray) {
         this.lowerMemoryArray = lowerMemoryArray;
     }
+
 }

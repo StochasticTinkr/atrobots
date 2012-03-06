@@ -1,10 +1,10 @@
 package net.virtualinfinity.atrobots.gui;
 
-import net.virtualinfinity.atrobots.Game;
-import net.virtualinfinity.atrobots.RobotFactory;
 import net.virtualinfinity.atrobots.compiler.AtRobotCompiler;
 import net.virtualinfinity.atrobots.compiler.AtRobotCompilerOutput;
 import net.virtualinfinity.atrobots.compiler.Errors;
+import net.virtualinfinity.atrobots.compiler.RobotFactory;
+import net.virtualinfinity.atrobots.game.Game;
 import net.virtualinfinity.atrobots.gui.renderers.GradientExplosionRenderer;
 import net.virtualinfinity.atrobots.gui.renderers.RobotRenderer;
 import net.virtualinfinity.atrobots.gui.renderers.ScanRenderer;

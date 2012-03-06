@@ -1,4 +1,6 @@
-package net.virtualinfinity.atrobots.arena;
+package net.virtualinfinity.atrobots.arenaobjects;
+
+import net.virtualinfinity.atrobots.arena.TangibleArenaObject;
 
 /**
  * TODO: JavaDoc
@@ -7,4 +9,5 @@ package net.virtualinfinity.atrobots.arena;
  */
 public abstract class CollidableArenaObject extends ArenaObject {
     public abstract void checkCollision(TangibleArenaObject arenaObject);
+
 }

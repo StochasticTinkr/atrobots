@@ -1,12 +1,13 @@
-package net.virtualinfinity.atrobots.simulation.atrobot;
+package net.virtualinfinity.atrobots.compiler;
 
-import net.virtualinfinity.atrobots.GameTimer;
 import net.virtualinfinity.atrobots.arena.Arena;
+import net.virtualinfinity.atrobots.arena.RoundTimer;
 import net.virtualinfinity.atrobots.atsetup.AtRobotInterrupt;
 import net.virtualinfinity.atrobots.computer.InterruptHandler;
 import net.virtualinfinity.atrobots.computer.MemoryCell;
 import net.virtualinfinity.atrobots.computer.Registers;
 import net.virtualinfinity.atrobots.interrupts.*;
+import net.virtualinfinity.atrobots.robot.Robot;
 import net.virtualinfinity.atrobots.util.MapWithDefaultValue;
 
 import java.util.Collection;
@@ -84,8 +85,8 @@ public class AtRobotInterruptFactory {
         return getRegisters(robot).getAx();
     }
 
-    private InterruptHandler createGetTimerInterrupt(Robot robot, GameTimer gameTimer) {
-        return new GetTimerInterrupt(getExCell(robot), getFxCell(robot), gameTimer);
+    private InterruptHandler createGetTimerInterrupt(Robot robot, RoundTimer roundTimer) {
+        return new GetTimerInterrupt(getExCell(robot), getFxCell(robot), roundTimer);
     }
 
     private InterruptHandler createGetTransponderIdInterrupt(Robot robot) {

@@ -1,6 +1,5 @@
 package net.virtualinfinity.atrobots.compiler;
 
-import net.virtualinfinity.atrobots.RobotFactory;
 import net.virtualinfinity.atrobots.computer.DebugInfo;
 import net.virtualinfinity.atrobots.computer.Program;
 

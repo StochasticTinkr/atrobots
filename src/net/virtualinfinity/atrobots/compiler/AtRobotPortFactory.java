@@ -1,4 +1,4 @@
-package net.virtualinfinity.atrobots.simulation.atrobot;
+package net.virtualinfinity.atrobots.compiler;
 
 import net.virtualinfinity.atrobots.arena.Heading;
 import net.virtualinfinity.atrobots.atsetup.AtRobotPort;
@@ -8,6 +8,7 @@ import net.virtualinfinity.atrobots.measures.Heat;
 import net.virtualinfinity.atrobots.measures.RelativeAngle;
 import net.virtualinfinity.atrobots.ports.PortHandler;
 import net.virtualinfinity.atrobots.ports.PortListener;
+import net.virtualinfinity.atrobots.robot.Robot;
 import net.virtualinfinity.atrobots.util.MapWithDefaultValue;
 
 import java.util.*;

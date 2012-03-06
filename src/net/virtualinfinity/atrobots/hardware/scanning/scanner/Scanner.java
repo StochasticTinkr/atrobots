@@ -1,8 +1,8 @@
 package net.virtualinfinity.atrobots.hardware.scanning.scanner;
 
-import net.virtualinfinity.atrobots.Resettable;
 import net.virtualinfinity.atrobots.arena.Heading;
-import net.virtualinfinity.atrobots.arena.ScanResult;
+import net.virtualinfinity.atrobots.computer.Resettable;
+import net.virtualinfinity.atrobots.hardware.scanning.ScanResult;
 import net.virtualinfinity.atrobots.hardware.scanning.ScanSource;
 import net.virtualinfinity.atrobots.measures.AngleBracket;
 import net.virtualinfinity.atrobots.measures.RelativeAngle;
@@ -36,8 +36,8 @@ public class Scanner implements Resettable {
     }
 
     private ScanResult scan() {
-        AngleBracket angleBracket = getAngleBracket();
-        ScanResult scanResult = scanSource.scan(angleBracket, maxDistance, true);
+        final AngleBracket angleBracket = getAngleBracket();
+        final ScanResult scanResult = scanSource.scan(angleBracket, maxDistance, true, true);
         if (scanResult.successful()) {
             setAccuracy(scanResult.getAccuracy());
         }

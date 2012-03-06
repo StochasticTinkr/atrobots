@@ -1,10 +1,10 @@
-package net.virtualinfinity.atrobots;
+package net.virtualinfinity.atrobots.compiler;
 
-import net.virtualinfinity.atrobots.compiler.HardwareSpecification;
+import net.virtualinfinity.atrobots.arena.RoundState;
 import net.virtualinfinity.atrobots.computer.*;
 import net.virtualinfinity.atrobots.debugger.*;
-import net.virtualinfinity.atrobots.simulation.atrobot.HardwareContext;
-import net.virtualinfinity.atrobots.simulation.atrobot.Robot;
+import net.virtualinfinity.atrobots.robot.Robot;
+import net.virtualinfinity.atrobots.robot.RobotScoreKeeper;
 
 /**
  * Represents an entrant in a game.
@@ -52,11 +52,11 @@ public class RobotFactory {
         robot.addRobotListener(robotScoreKeeper);
         final RandomAccessMemoryArray lowerMemoryBlock = new RandomAccessMemoryArray(LOWER_MEMORY_BLOCK_SIZE);
         robot.setComputer(createComputer(lowerMemoryBlock, maxProcessorSpeed));
-        final HardwareContext hardwareContext = new HardwareContext();
-        hardwareContext.setRobot(robot);
-        hardwareSpecification.configureHardwareContext(hardwareContext);
-        hardwareContext.setLowerMemoryArray(lowerMemoryBlock);
-        hardwareContext.wireRobotComponents(roundState.getArena(), roundState.getTotalRounds(), roundState.getRoundNumber());
+        final RobotConfigurer robotConfigurer = new RobotConfigurer();
+        robotConfigurer.setRobot(robot);
+        hardwareSpecification.buildRobotConfigurer(robotConfigurer);
+        robotConfigurer.setLowerMemoryArray(lowerMemoryBlock);
+        robotConfigurer.wireRobotComponents(roundState.getArena(), roundState.getTotalRounds(), roundState.getRoundNumber());
         if (debug) {
             robot.getComputer().setDebugListener(DEBUGGER);
         }
@@ -78,7 +78,7 @@ public class RobotFactory {
         return Math.max(this.maxProcessorSpeed, maxProcessorSpeed);
     }
 
-    void setId(int id) {
+    public void setId(int id) {
         this.id = id;
     }
 

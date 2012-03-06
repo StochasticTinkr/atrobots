@@ -1,6 +1,13 @@
 package net.virtualinfinity.atrobots.hardware.missiles;
 
-import net.virtualinfinity.atrobots.arena.*;
+import net.virtualinfinity.atrobots.ArenaObjectVisitor;
+import net.virtualinfinity.atrobots.arena.LinearDamageFunction;
+import net.virtualinfinity.atrobots.arena.Position;
+import net.virtualinfinity.atrobots.arena.Speed;
+import net.virtualinfinity.atrobots.arena.TangibleArenaObject;
+import net.virtualinfinity.atrobots.arenaobjects.ArenaObject;
+import net.virtualinfinity.atrobots.arenaobjects.CollidableArenaObject;
+import net.virtualinfinity.atrobots.arenaobjects.DamageInflicter;
 import net.virtualinfinity.atrobots.measures.AbsoluteAngle;
 import net.virtualinfinity.atrobots.measures.Duration;
 import net.virtualinfinity.atrobots.measures.Vector;
@@ -111,4 +118,7 @@ public class Missile extends CollidableArenaObject {
                 || position.getY() < 0 || position.getY() > 1000;
     }
 
+    public void accept(ArenaObjectVisitor arenaObjectVisitor) {
+        arenaObjectVisitor.visit(this);
+    }
 }

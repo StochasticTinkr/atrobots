@@ -1,8 +1,10 @@
-package net.virtualinfinity.atrobots;
+package net.virtualinfinity.atrobots.game;
 
 import net.virtualinfinity.atrobots.arena.SimulationFrameBuffer;
 import net.virtualinfinity.atrobots.arena.SimulationObserver;
-import net.virtualinfinity.atrobots.simulation.atrobot.Robot;
+import net.virtualinfinity.atrobots.compiler.RobotFactory;
+import net.virtualinfinity.atrobots.robot.Robot;
+import net.virtualinfinity.atrobots.robot.RobotScoreKeeper;
 
 import java.util.*;
 
@@ -53,7 +55,7 @@ public class Game implements RoundListener {
         if (round != null) {
             round.finalizeRound();
         }
-        round = new Round(++roundNumber, frameBuffer, this.getTotalRounds());
+        round = new Round(++roundNumber, frameBuffer, getTotalRounds());
         round.addRoundListener(this);
         for (RobotFactory entrant : entrants) {
             round.getArena().addRobot(createRobotFor(entrant));
@@ -72,13 +74,17 @@ public class Game implements RoundListener {
         return entrant.createRobot(getRound(), getMaxProcessorSpeed(), getScoreKeeper(entrant));
     }
 
-    private RobotScoreKeeper getScoreKeeper(RobotFactory entrant) {
+    public RobotScoreKeeper getScoreKeeper(RobotFactory entrant) {
         RobotScoreKeeper robotScoreKeeper = scoreKeepers.get(entrant);
         if (robotScoreKeeper == null) {
             robotScoreKeeper = new RobotScoreKeeper();
-            scoreKeepers.put(entrant, robotScoreKeeper);
+            setScoreKeeper(entrant, robotScoreKeeper);
         }
         return robotScoreKeeper;
+    }
+
+    public void setScoreKeeper(RobotFactory entrant, RobotScoreKeeper robotScoreKeeper) {
+        scoreKeepers.put(entrant, robotScoreKeeper);
     }
 
     /**

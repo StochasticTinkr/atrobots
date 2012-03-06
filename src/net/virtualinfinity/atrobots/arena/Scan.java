@@ -1,5 +1,7 @@
 package net.virtualinfinity.atrobots.arena;
 
+import net.virtualinfinity.atrobots.ArenaObjectVisitor;
+import net.virtualinfinity.atrobots.arenaobjects.ArenaObject;
 import net.virtualinfinity.atrobots.measures.AngleBracket;
 import net.virtualinfinity.atrobots.measures.Duration;
 import net.virtualinfinity.atrobots.measures.Vector;
@@ -9,7 +11,7 @@ import net.virtualinfinity.atrobots.snapshots.ScanSnapshot;
 /**
  * @author Daniel Pitts
  */
-public class ScanParameters extends ArenaObject {
+public class Scan extends ArenaObject {
     private final AngleBracket angleBracket;
     private final double maxDistance;
     private final boolean successful;
@@ -18,7 +20,7 @@ public class ScanParameters extends ArenaObject {
     private final int accuracy;
     private int frame;
 
-    public ScanParameters(AngleBracket angleBracket, double maxDistance, boolean successful, Vector matchPositionVector, boolean accuracyAvailable, int accuracy) {
+    public Scan(AngleBracket angleBracket, double maxDistance, boolean successful, Vector matchPositionVector, boolean accuracyAvailable, int accuracy) {
         this.accuracyAvailable = accuracyAvailable;
         this.accuracy = accuracy;
         this.angleBracket = angleBracket;
@@ -40,4 +42,7 @@ public class ScanParameters extends ArenaObject {
         }
     }
 
+    public void accept(ArenaObjectVisitor arenaObjectVisitor) {
+        arenaObjectVisitor.visit(this);
+    }
 }
