@@ -2,7 +2,6 @@ package net.virtualinfinity.atrobots;
 
 import net.virtualinfinity.atrobots.arena.SimulationFrameBuffer;
 import net.virtualinfinity.atrobots.arena.SimulationObserver;
-import net.virtualinfinity.atrobots.config.Entrants;
 import net.virtualinfinity.atrobots.simulation.atrobot.Robot;
 
 import java.util.*;
@@ -130,9 +129,4 @@ public class Game implements RoundListener {
         this.maxProcessorSpeed = maxProcessorSpeed;
     }
 
-    public void addAll(Entrants entrants) {
-        for (RobotFactory entrant : entrants.getEntrants()) {
-            addEntrant(entrant);
-        }
-    }
 }
