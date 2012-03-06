@@ -16,7 +16,6 @@ public class EntrantTest extends TestCase {
         final AtRobotCompilerOutput compile = new AtRobotCompiler().compile(new File("original/SDUCK.AT2"));
         final Entrant entrant = Entrant.createEntrant("sduck", compile);
         final Game game = new Game(1);
-        entrant.setGame(game);
         game.nextRound();
         final StandardRoundState roundState = new StandardRoundState(game.getRound().getArena(), game.getTotalRounds(), game.getRound().getRoundNumber());
         entrant.createRobot(roundState, game.getMaxProcessorSpeed(), entrant.getRobotScoreKeeper());

@@ -102,7 +102,6 @@ public class Game implements RoundListener {
     public synchronized void addEntrant(Entrant entrant) {
         entrant.setId(++nextEntrantId);
         entrants.add(entrant);
-        entrant.setGame(this);
     }
 
     /**

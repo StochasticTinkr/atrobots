@@ -209,4 +209,8 @@ public class Arena implements GameTimer {
     public Duration getTime() {
         return time;
     }
+
+    public boolean isOnlyOneRobotAlive() {
+        return countActiveRobots() == 1;
+    }
 }

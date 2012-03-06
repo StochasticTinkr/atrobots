@@ -46,7 +46,7 @@ public class Round implements RoundState {
     }
 
     public void step() {
-        if (arena.countActiveRobots() == 1) {
+        if (arena.isOnlyOneRobotAlive()) {
             roundEnd = roundEnd.minus(Duration.ONE_CYCLE);
         }
         if (roundEnd.getCycles() == 0 || arena.countActiveRobots() == 0 || arena.getTime().compareTo(maxCycles) > 0) {

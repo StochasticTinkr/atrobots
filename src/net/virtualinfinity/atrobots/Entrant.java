@@ -11,7 +11,6 @@ import net.virtualinfinity.atrobots.computer.Program;
  * @author Daniel Pitts
  */
 public class Entrant extends RobotFactory {
-    private volatile RoundListener game;
     private final RobotScoreKeeper robotScoreKeeper = new RobotScoreKeeper();
 
     public Entrant(String name, Program program, HardwareSpecification hardwareSpecification, DebugInfo debugInfo, int maxProcessorSpeed, String message) {
@@ -31,24 +30,6 @@ public class Entrant extends RobotFactory {
             throw new IllegalStateException("Can not create an entrant with errors. Check CompilerOutput.hasErrors() first.");
         }
         return new Entrant(name, atRobotCompilerOutput.getProgram(), atRobotCompilerOutput.getHardwareSpecification(), atRobotCompilerOutput.getDebugInfo(), atRobotCompilerOutput.getMaxProcessorSpeed(), atRobotCompilerOutput.getMessage());
-    }
-
-    /**
-     * Get the game this entrant is in.
-     *
-     * @return the game.
-     */
-    public RoundListener getGame() {
-        return game;
-    }
-
-    /**
-     * Set the game that this entrant will enter.
-     *
-     * @param game the game.
-     */
-    public void setGame(RoundListener game) {
-        this.game = game;
     }
 
 
