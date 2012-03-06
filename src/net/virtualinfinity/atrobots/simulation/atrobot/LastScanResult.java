@@ -1,6 +1,6 @@
 package net.virtualinfinity.atrobots.simulation.atrobot;
 
-import net.virtualinfinity.atrobots.simulation.arena.ScanResult;
+import net.virtualinfinity.atrobots.arena.ScanResult;
 
 /**
  * @author Daniel Pitts

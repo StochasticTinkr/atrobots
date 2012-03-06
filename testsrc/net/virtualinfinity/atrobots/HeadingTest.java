@@ -1,9 +1,9 @@
 package net.virtualinfinity.atrobots;
 
 import junit.framework.TestCase;
+import net.virtualinfinity.atrobots.arena.Heading;
 import net.virtualinfinity.atrobots.measures.AbsoluteAngle;
 import net.virtualinfinity.atrobots.measures.RelativeAngle;
-import net.virtualinfinity.atrobots.simulation.arena.Heading;
 
 /**
  * @author Daniel Pitts

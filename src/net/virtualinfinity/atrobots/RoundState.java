@@ -1,6 +1,6 @@
 package net.virtualinfinity.atrobots;
 
-import net.virtualinfinity.atrobots.simulation.arena.Arena;
+import net.virtualinfinity.atrobots.arena.Arena;
 
 /**
  * TODO: JavaDoc

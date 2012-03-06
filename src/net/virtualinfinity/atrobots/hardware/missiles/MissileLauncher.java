@@ -1,15 +1,15 @@
 package net.virtualinfinity.atrobots.hardware.missiles;
 
+import net.virtualinfinity.atrobots.arena.Arena;
+import net.virtualinfinity.atrobots.arena.DamageInflicter;
+import net.virtualinfinity.atrobots.arena.Heading;
+import net.virtualinfinity.atrobots.arena.Position;
+import net.virtualinfinity.atrobots.hardware.HasOverburner;
 import net.virtualinfinity.atrobots.hardware.heatsinks.HeatSinks;
 import net.virtualinfinity.atrobots.measures.AbsoluteAngle;
 import net.virtualinfinity.atrobots.measures.RelativeAngle;
 import net.virtualinfinity.atrobots.measures.Temperature;
 import net.virtualinfinity.atrobots.ports.PortHandler;
-import net.virtualinfinity.atrobots.simulation.arena.Arena;
-import net.virtualinfinity.atrobots.simulation.arena.Heading;
-import net.virtualinfinity.atrobots.simulation.arena.Position;
-import net.virtualinfinity.atrobots.simulation.atrobot.DamageInflicter;
-import net.virtualinfinity.atrobots.simulation.atrobot.HasOverburner;
 
 /**
  * @author Daniel Pitts

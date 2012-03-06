@@ -1,7 +1,7 @@
 package net.virtualinfinity.atrobots.hardware.missiles;
 
+import net.virtualinfinity.atrobots.arena.Position;
 import net.virtualinfinity.atrobots.measures.AbsoluteAngle;
-import net.virtualinfinity.atrobots.simulation.arena.Position;
 
 /**
  * TODO: JavaDoc

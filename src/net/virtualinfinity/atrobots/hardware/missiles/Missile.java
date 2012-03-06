@@ -1,11 +1,9 @@
 package net.virtualinfinity.atrobots.hardware.missiles;
 
+import net.virtualinfinity.atrobots.arena.*;
 import net.virtualinfinity.atrobots.measures.AbsoluteAngle;
 import net.virtualinfinity.atrobots.measures.Duration;
 import net.virtualinfinity.atrobots.measures.Vector;
-import net.virtualinfinity.atrobots.simulation.arena.*;
-import net.virtualinfinity.atrobots.simulation.atrobot.DamageInflicter;
-import net.virtualinfinity.atrobots.simulation.mine.CollidableArenaObject;
 import net.virtualinfinity.atrobots.snapshots.ArenaObjectSnapshot;
 import net.virtualinfinity.atrobots.snapshots.MissileSnapshot;
 

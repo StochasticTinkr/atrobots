@@ -1,13 +1,13 @@
 package net.virtualinfinity.atrobots.simulation.atrobot;
 
+import net.virtualinfinity.atrobots.HasTemperature;
+import net.virtualinfinity.atrobots.arena.Heading;
 import net.virtualinfinity.atrobots.atsetup.AtRobotPort;
 import net.virtualinfinity.atrobots.hardware.HasHeading;
-import net.virtualinfinity.atrobots.hardware.HasTemperature;
-import net.virtualinfinity.atrobots.hardware.Transponder;
+import net.virtualinfinity.atrobots.hardware.transponder.Transponder;
 import net.virtualinfinity.atrobots.measures.RelativeAngle;
 import net.virtualinfinity.atrobots.ports.PortHandler;
 import net.virtualinfinity.atrobots.ports.PortListener;
-import net.virtualinfinity.atrobots.simulation.arena.Heading;
 import net.virtualinfinity.atrobots.util.MapWithDefaultValue;
 
 import java.util.*;

@@ -1,6 +1,7 @@
 package net.virtualinfinity.atrobots.computer;
 
-import net.virtualinfinity.atrobots.hardware.HasTemperature;
+import net.virtualinfinity.atrobots.HasTemperature;
+import net.virtualinfinity.atrobots.Resettable;
 import net.virtualinfinity.atrobots.measures.Temperature;
 import net.virtualinfinity.atrobots.ports.PortHandler;
 

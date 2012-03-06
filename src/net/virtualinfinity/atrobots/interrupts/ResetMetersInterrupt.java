@@ -1,8 +1,8 @@
 package net.virtualinfinity.atrobots.interrupts;
 
+import net.virtualinfinity.atrobots.arena.Odometer;
 import net.virtualinfinity.atrobots.computer.InterruptHandler;
 import net.virtualinfinity.atrobots.computer.MemoryCell;
-import net.virtualinfinity.atrobots.simulation.arena.Odometer;
 
 
 /**

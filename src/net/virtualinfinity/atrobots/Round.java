@@ -1,8 +1,8 @@
 package net.virtualinfinity.atrobots;
 
+import net.virtualinfinity.atrobots.arena.Arena;
+import net.virtualinfinity.atrobots.arena.SimulationFrameBuffer;
 import net.virtualinfinity.atrobots.measures.Duration;
-import net.virtualinfinity.atrobots.simulation.arena.Arena;
-import net.virtualinfinity.atrobots.simulation.arena.SimulationFrameBuffer;
 import net.virtualinfinity.atrobots.simulation.atrobot.Robot;
 
 import java.util.ArrayList;

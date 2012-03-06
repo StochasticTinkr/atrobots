@@ -1,6 +1,6 @@
 package net.virtualinfinity.atrobots.hardware.heatsinks;
 
-import net.virtualinfinity.atrobots.hardware.HasTemperature;
+import net.virtualinfinity.atrobots.HasTemperature;
 import net.virtualinfinity.atrobots.measures.Temperature;
 
 /**

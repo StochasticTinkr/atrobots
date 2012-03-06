@@ -25,7 +25,7 @@ public class Computer implements PortListener, Restartable {
     private InstructionTable instructionTable;
     private HardwareBus hardwareBus;
     private Map<Integer, Integer> jumpTable;
-    private CommunicationsQueue commQueue;
+    private AtRobotsCommunicationsQueue commQueue;
     private int cyclesPerSimCycle;
     private String lastMessage;
     private ComputerErrorHandler errorHandler = new ErrorHandler();
@@ -269,11 +269,11 @@ public class Computer implements PortListener, Restartable {
         this.nextInstructionPointer = instructionPointer;
     }
 
-    public void setCommQueue(CommunicationsQueue commQueue) {
+    public void setCommQueue(AtRobotsCommunicationsQueue commQueue) {
         Computer.this.commQueue = commQueue;
     }
 
-    public CommunicationsQueue getCommQueue() {
+    public AtRobotsCommunicationsQueue getCommQueue() {
         return commQueue;
     }
 

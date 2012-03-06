@@ -1,7 +1,7 @@
 package net.virtualinfinity.atrobots.gui;
 
-import net.virtualinfinity.atrobots.simulation.arena.SimulationFrameBuffer;
-import net.virtualinfinity.atrobots.simulation.arena.SimulationObserver;
+import net.virtualinfinity.atrobots.arena.SimulationFrameBuffer;
+import net.virtualinfinity.atrobots.arena.SimulationObserver;
 
 import javax.swing.*;
 import java.awt.*;
@@ -9,8 +9,8 @@ import java.awt.geom.AffineTransform;
 
 /**
  * A GUI component which renders the game arena.
- * This object should be registered as a {@link net.virtualinfinity.atrobots.simulation.arena.SimulationObserver} in the
- * {@link net.virtualinfinity.atrobots.simulation.arena.SimulationFrameBuffer}
+ * This object should be registered as a {@link net.virtualinfinity.atrobots.arena.SimulationObserver} in the
+ * {@link net.virtualinfinity.atrobots.arena.SimulationFrameBuffer}
  *
  * @author Daniel Pitts
  */

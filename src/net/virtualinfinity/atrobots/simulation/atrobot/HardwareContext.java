@@ -1,11 +1,20 @@
 package net.virtualinfinity.atrobots.simulation.atrobot;
 
+import net.virtualinfinity.atrobots.arena.Arena;
 import net.virtualinfinity.atrobots.computer.*;
-import net.virtualinfinity.atrobots.hardware.*;
+import net.virtualinfinity.atrobots.comqueue.CommunicationsQueue;
 import net.virtualinfinity.atrobots.hardware.armor.Armor;
+import net.virtualinfinity.atrobots.hardware.mines.MineLayer;
 import net.virtualinfinity.atrobots.hardware.missiles.MissileLauncher;
+import net.virtualinfinity.atrobots.hardware.radio.Transceiver;
+import net.virtualinfinity.atrobots.hardware.scanning.radar.Radar;
+import net.virtualinfinity.atrobots.hardware.scanning.scanner.Scanner;
+import net.virtualinfinity.atrobots.hardware.scanning.sonar.Sonar;
+import net.virtualinfinity.atrobots.hardware.shield.Shield;
+import net.virtualinfinity.atrobots.hardware.throttle.Throttle;
+import net.virtualinfinity.atrobots.hardware.transponder.Transponder;
+import net.virtualinfinity.atrobots.hardware.turret.Turret;
 import net.virtualinfinity.atrobots.ports.PortHandler;
-import net.virtualinfinity.atrobots.simulation.arena.Arena;
 
 import java.util.Map;
 
@@ -116,7 +125,7 @@ public class HardwareContext {
         wireShield();
         wireSonar();
         wireRadar();
-        final CommunicationsQueue commQueue = createCommQueue();
+        final AtRobotsCommunicationsQueue commQueue = createCommQueue();
         wireTranceiver(commQueue);
         wireComputer(commQueue);
         wireTransponder();
@@ -184,7 +193,7 @@ public class HardwareContext {
         scanner.setHeading(robot.getTurret().getHeading());
     }
 
-    private void wireComputer(CommunicationsQueue commQueue) {
+    private void wireComputer(AtRobotsCommunicationsQueue commQueue) {
         robot.getComputer().setCommQueue(commQueue);
         robot.getComputer().getMemory().setErrorHandler(robot.getComputer().getErrorHandler());
     }
@@ -237,8 +246,8 @@ public class HardwareContext {
         throttle.setOverburner(robot);
     }
 
-    private CommunicationsQueue createCommQueue() {
-        final CommunicationsQueue queue = new CommunicationsQueue(robot.getComputer().getCommQueueMemoryRegion(),
+    private AtRobotsCommunicationsQueue createCommQueue() {
+        final AtRobotsCommunicationsQueue queue = new AtRobotsCommunicationsQueue(robot.getComputer().getCommQueueMemoryRegion(),
                 robot.getComputer().getRegisters().getCommunicationQueueHead(),
                 robot.getComputer().getRegisters().getCommunicationQueueTail());
         queue.setComputerErrorHandler(robot.getComputer().getErrorHandler());

@@ -1,17 +1,31 @@
 package net.virtualinfinity.atrobots.simulation.atrobot;
 
+import net.virtualinfinity.atrobots.Resettable;
 import net.virtualinfinity.atrobots.RobotScoreKeeper;
-import net.virtualinfinity.atrobots.computer.*;
-import net.virtualinfinity.atrobots.hardware.*;
+import net.virtualinfinity.atrobots.arena.*;
+import net.virtualinfinity.atrobots.computer.Computer;
+import net.virtualinfinity.atrobots.computer.HardwareBus;
+import net.virtualinfinity.atrobots.computer.InterruptHandler;
+import net.virtualinfinity.atrobots.computer.MemoryCell;
+import net.virtualinfinity.atrobots.hardware.HasHeading;
+import net.virtualinfinity.atrobots.hardware.HasOverburner;
 import net.virtualinfinity.atrobots.hardware.armor.Armor;
 import net.virtualinfinity.atrobots.hardware.armor.ArmorDepletionListener;
 import net.virtualinfinity.atrobots.hardware.heatsinks.HeatSinks;
+import net.virtualinfinity.atrobots.hardware.mines.MineLayer;
 import net.virtualinfinity.atrobots.hardware.missiles.Missile;
 import net.virtualinfinity.atrobots.hardware.missiles.MissileFactory;
+import net.virtualinfinity.atrobots.hardware.radio.Transceiver;
+import net.virtualinfinity.atrobots.hardware.scanning.ScanSource;
+import net.virtualinfinity.atrobots.hardware.scanning.radar.Radar;
+import net.virtualinfinity.atrobots.hardware.scanning.sonar.Sonar;
+import net.virtualinfinity.atrobots.hardware.shield.Shield;
+import net.virtualinfinity.atrobots.hardware.throttle.Throttle;
+import net.virtualinfinity.atrobots.hardware.transponder.Transponder;
+import net.virtualinfinity.atrobots.hardware.turret.Turret;
 import net.virtualinfinity.atrobots.interrupts.Destructable;
 import net.virtualinfinity.atrobots.measures.*;
 import net.virtualinfinity.atrobots.ports.PortHandler;
-import net.virtualinfinity.atrobots.simulation.arena.*;
 import net.virtualinfinity.atrobots.snapshots.ArenaObjectSnapshot;
 import net.virtualinfinity.atrobots.snapshots.RobotSnapshot;
 

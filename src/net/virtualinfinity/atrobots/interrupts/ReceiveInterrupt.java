@@ -1,6 +1,6 @@
 package net.virtualinfinity.atrobots.interrupts;
 
-import net.virtualinfinity.atrobots.computer.CommunicationsQueue;
+import net.virtualinfinity.atrobots.computer.AtRobotsCommunicationsQueue;
 import net.virtualinfinity.atrobots.computer.InterruptHandler;
 import net.virtualinfinity.atrobots.computer.MemoryCell;
 
@@ -8,10 +8,10 @@ import net.virtualinfinity.atrobots.computer.MemoryCell;
  * @author Daniel Pitts
  */
 public class ReceiveInterrupt extends InterruptHandler {
-    private final CommunicationsQueue queue;
+    private final AtRobotsCommunicationsQueue queue;
     private final MemoryCell destination;
 
-    public ReceiveInterrupt(CommunicationsQueue queue, MemoryCell destination) {
+    public ReceiveInterrupt(AtRobotsCommunicationsQueue queue, MemoryCell destination) {
         this.queue = queue;
         this.destination = destination;
     }

@@ -1,6 +1,6 @@
 package net.virtualinfinity.atrobots.hardware;
 
-import net.virtualinfinity.atrobots.simulation.arena.Heading;
+import net.virtualinfinity.atrobots.arena.Heading;
 
 /**
  * TODO: JavaDoc

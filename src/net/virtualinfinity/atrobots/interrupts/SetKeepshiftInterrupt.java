@@ -2,7 +2,7 @@ package net.virtualinfinity.atrobots.interrupts;
 
 import net.virtualinfinity.atrobots.computer.InterruptHandler;
 import net.virtualinfinity.atrobots.computer.MemoryCell;
-import net.virtualinfinity.atrobots.hardware.Turret;
+import net.virtualinfinity.atrobots.hardware.turret.Turret;
 
 /**
  * @author Daniel Pitts

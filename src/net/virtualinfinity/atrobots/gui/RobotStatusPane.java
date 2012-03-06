@@ -1,7 +1,7 @@
 package net.virtualinfinity.atrobots.gui;
 
-import net.virtualinfinity.atrobots.simulation.arena.SimulationFrameBuffer;
-import net.virtualinfinity.atrobots.simulation.arena.SimulationObserver;
+import net.virtualinfinity.atrobots.arena.SimulationFrameBuffer;
+import net.virtualinfinity.atrobots.arena.SimulationObserver;
 import net.virtualinfinity.atrobots.snapshots.RobotSnapshot;
 import net.virtualinfinity.atrobots.snapshots.SnapshotAdaptor;
 
