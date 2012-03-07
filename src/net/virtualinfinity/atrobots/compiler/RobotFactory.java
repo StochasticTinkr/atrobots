@@ -82,7 +82,8 @@ public class RobotFactory {
         this.id = id;
     }
 
-    public void setDebug(boolean debug) {
+    public RobotFactory setDebug(boolean debug) {
         this.debug = debug;
+        return this;
     }
 }
