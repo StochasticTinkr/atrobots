@@ -13,4 +13,6 @@ public interface RobotListener {
     void killedRobot(Robot robot);
 
     void died(Robot robot);
+
+    void inflictedDamage(Robot robot, double amount);
 }

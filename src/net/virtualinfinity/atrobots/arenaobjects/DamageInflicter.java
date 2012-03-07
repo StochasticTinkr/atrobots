@@ -7,4 +7,6 @@ package net.virtualinfinity.atrobots.arenaobjects;
  */
 public interface DamageInflicter {
     void killedRobot();
+
+    void inflictedDamage(double amount);
 }

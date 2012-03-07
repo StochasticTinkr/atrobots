@@ -5,6 +5,7 @@ public class RobotScoreKeeper implements RobotListener {
     volatile int totalWins;
     volatile int totalKills;
     volatile int totalDeaths;
+    volatile double totalDamageInflicted;
 
     /**
      * Get the total number of kills this entrant has earned during this game.
@@ -32,6 +33,9 @@ public class RobotScoreKeeper implements RobotListener {
         return totalWins;
     }
 
+    public double getTotalDamageInflicted() {
+        return totalDamageInflicted;
+    }
 
     public void wonRound(Robot robot) {
         synchronized (this) {
@@ -54,6 +58,12 @@ public class RobotScoreKeeper implements RobotListener {
     public void died(Robot robot) {
         synchronized (this) {
             totalDeaths++;
+        }
+    }
+
+    public void inflictedDamage(Robot robot, double amount) {
+        synchronized (this) {
+            totalDamageInflicted += amount;
         }
     }
 }

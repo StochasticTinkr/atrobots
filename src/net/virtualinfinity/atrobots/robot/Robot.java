@@ -319,7 +319,12 @@ public class Robot extends TangibleArenaObject implements Resettable, HasHeading
 
     public void inflictDamage(DamageInflicter cause, double damageAmount) {
         if (!isDead()) {
-            armor.inflictDamage(shield.absorbDamage(damageAmount));
+            final double unabsorbedAmount = shield.absorbDamage(damageAmount);
+            if (unabsorbedAmount > 0) {
+                lastDamageTaken = getArena().getTime();
+                cause.inflictedDamage(unabsorbedAmount);
+            }
+            armor.inflictDamage(unabsorbedAmount);
             if (isDead()) {
                 cause.killedRobot();
             }
@@ -388,6 +393,13 @@ public class Robot extends TangibleArenaObject implements Resettable, HasHeading
     public void killedRobot() {
         for (RobotListener listener : robotListeners) {
             listener.killedRobot(this);
+        }
+    }
+
+    public void inflictedDamage(double amount) {
+        lastDamageGiven = getArena().getTime();
+        for (RobotListener listener : robotListeners) {
+            listener.inflictedDamage(this, amount);
         }
     }
 
