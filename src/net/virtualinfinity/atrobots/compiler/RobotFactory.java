@@ -86,4 +86,8 @@ public class RobotFactory {
         this.debug = debug;
         return this;
     }
+
+    public String getName() {
+        return name;
+    }
 }

@@ -66,4 +66,15 @@ public class RobotScoreKeeper implements RobotListener {
             totalDamageInflicted += amount;
         }
     }
+
+    @Override
+    public String toString() {
+        return "RobotScoreKeeper{" +
+                "totalTies=" + totalTies +
+                ", totalWins=" + totalWins +
+                ", totalKills=" + totalKills +
+                ", totalDeaths=" + totalDeaths +
+                ", totalDamageInflicted=" + totalDamageInflicted +
+                '}';
+    }
 }

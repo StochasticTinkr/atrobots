@@ -55,12 +55,21 @@ public class Game implements RoundListener {
         if (round != null) {
             round.finalizeRound();
         }
-        round = new Round(++roundNumber, frameBuffer, getTotalRounds());
-        round.addRoundListener(this);
-        for (RobotFactory entrant : entrants) {
-            round.getArena().addRobot(createRobotFor(entrant));
+
+        if (roundNumber < getTotalRounds()) {
+            round = new Round(++roundNumber, frameBuffer, getTotalRounds());
+            round.addRoundListener(this);
+            for (RobotFactory entrant : entrants) {
+                round.getArena().addRobot(createRobotFor(entrant));
+            }
+            round.getArena().buildFrame();
+        } else {
+            round = null;
+            gameOver();
         }
-        round.getArena().buildFrame();
+    }
+
+    private void gameOver() {
 
     }
 
@@ -116,11 +125,14 @@ public class Game implements RoundListener {
     }
 
     /**
-     * Extecute one step in the simulation.
+     * Execute one step in the simulation.
      */
-    public synchronized void stepRound() {
+    public synchronized boolean stepRound() {
+        if (round == null) {
+            return false;
+        }
         getRound().step();
-
+        return round != null;
     }
 
     public void roundOver() {
