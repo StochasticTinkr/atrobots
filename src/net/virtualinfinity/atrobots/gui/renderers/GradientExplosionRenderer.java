@@ -13,7 +13,7 @@ public class GradientExplosionRenderer implements SnapshotRenderer<ExplosionSnap
         g2d.setPaint(new RadialGradientPaint(explosionSnapshot.getPositionVector().toPoint2D(), (float) explosionSnapshot.getRadius(), new float[]{0, 1}, new Color[]{Color.yellow, Color.red}));
         final Composite composite = g2d.getComposite();
         g2d.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_ATOP, 0.85f));
-        g2d.fill(ExplosionRendererHelpers.getShapeOf(explosionSnapshot));
+        g2d.fill(explosionSnapshot.getExplosionShape());
         g2d.setComposite(composite);
 
     }
