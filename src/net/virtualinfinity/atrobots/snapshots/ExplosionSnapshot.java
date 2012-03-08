@@ -1,6 +1,8 @@
 package net.virtualinfinity.atrobots.snapshots;
 
 
+import net.virtualinfinity.atrobots.measures.Duration;
+
 import java.awt.geom.Ellipse2D;
 import java.awt.geom.Point2D;
 
@@ -9,17 +11,21 @@ import java.awt.geom.Point2D;
  */
 public class ExplosionSnapshot extends ArenaObjectSnapshot {
     private final double radius;
-    private final int frame;
+    private final Duration age;
 
-    public ExplosionSnapshot(double radius, int frame) {
+    public ExplosionSnapshot(double radius, Duration age) {
         this.radius = radius;
-        this.frame = frame;
+        this.age = age;
     }
 
     public Ellipse2D.Double getExplosionShape() {
         final Ellipse2D.Double circle = new Ellipse2D.Double();
-        circle.setFrameFromCenter(getPositionVector().toPoint2D(), new Point2D.Double(getPositionVector().getX() + (getRadius()) - getFrame(), getPositionVector().getY() + (getRadius()) - getFrame()));
+        circle.setFrameFromCenter(getPositionVector().toPoint2D(), new Point2D.Double(getPositionVector().getX() + getDegradedRadius(), getPositionVector().getY() + getDegradedRadius()));
         return circle;
+    }
+
+    private double getDegradedRadius() {
+        return getRadius() - getAge().getCycles();
     }
 
     public void visit(SnapshotVisitor visitor) {
@@ -30,7 +36,7 @@ public class ExplosionSnapshot extends ArenaObjectSnapshot {
         return radius;
     }
 
-    public int getFrame() {
-        return frame;
+    public Duration getAge() {
+        return age;
     }
 }

@@ -14,7 +14,7 @@ import net.virtualinfinity.atrobots.snapshots.ExplosionSnapshot;
  * @author Daniel Pitts
  */
 public class Explosion extends ArenaObject {
-    int frame;
+    Duration age;
     private final double radius;
 
     /**
@@ -29,15 +29,15 @@ public class Explosion extends ArenaObject {
     }
 
     protected ArenaObjectSnapshot createSpecificSnapshot() {
-        return new ExplosionSnapshot(radius, frame);
+        return new ExplosionSnapshot(radius, age);
     }
 
     @Override
     public void update(Duration duration) {
         if (!isDead()) {
-            frame += duration.getCycles();
-            if (frame > radius) {
-                frame = (int) Math.rint(radius);
+            age = age.plus(duration);
+            if (age.getCycles() > radius) {
+                age = Duration.fromCycles((int) Math.rint(radius));
                 die();
             }
         }
