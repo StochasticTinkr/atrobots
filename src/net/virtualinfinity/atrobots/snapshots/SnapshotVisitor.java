@@ -13,4 +13,6 @@ public interface SnapshotVisitor {
     void acceptExplosion(ExplosionSnapshot explosionSnapshot);
 
     void acceptScan(ScanSnapshot scanSnapshot);
+
+    void acceptUnknown(UnknownSnapshot unknownSnapshot);
 }

@@ -20,4 +20,7 @@ public class SnapshotAdaptor implements SnapshotVisitor {
 
     public void acceptScan(ScanSnapshot scanSnapshot) {
     }
+
+    public void acceptUnknown(UnknownSnapshot unknownSnapshot) {
+    }
 }

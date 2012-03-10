@@ -141,5 +141,9 @@ public class ArenaRenderer {
         public void acceptScan(ScanSnapshot scanSnapshot) {
             scanRenderer.render(g2d, scanSnapshot, selectedRobotIds);
         }
+
+        public void acceptUnknown(UnknownSnapshot unknownSnapshot) {
+            // TODO: Handle the unknown ;-)
+        }
     }
 }

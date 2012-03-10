@@ -32,6 +32,10 @@ public class AngleBracket {
         return new AngleBracket(center.counterClockwise(width), width.times(2));
     }
 
+    public static AngleBracket clockwiseFrom(AbsoluteAngle counterClockwiseBound, RelativeAngle width) {
+        return new AngleBracket(counterClockwiseBound, width);
+    }
+
     public static AngleBracket between(AbsoluteAngle counterClockwiseBound, AbsoluteAngle clockwiseBound) {
         return new AngleBracket(counterClockwiseBound, clockwiseBound);
     }
