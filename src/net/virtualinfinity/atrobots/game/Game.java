@@ -1,6 +1,6 @@
 package net.virtualinfinity.atrobots.game;
 
-import net.virtualinfinity.atrobots.arena.SimulationFrameBuffer;
+import net.virtualinfinity.atrobots.arena.FrameBuilder;
 import net.virtualinfinity.atrobots.arena.SimulationObserver;
 import net.virtualinfinity.atrobots.compiler.RobotFactory;
 import net.virtualinfinity.atrobots.robot.Robot;
@@ -18,13 +18,18 @@ public class Game implements RoundListener {
     private int roundNumber = 0;
     private int totalRounds;
     private int maxProcessorSpeed = 5;
-    private SimulationFrameBuffer frameBuffer = new SimulationFrameBuffer();
+    private final FrameBuilder frameBuffer;
     private final List<RobotFactory> entrants = Collections.synchronizedList(new ArrayList<RobotFactory>());
     private int nextEntrantId;
     private final Map<RobotFactory, RobotScoreKeeper> scoreKeepers = new IdentityHashMap<RobotFactory, RobotScoreKeeper>();
 
     public Game(int totalRounds) {
+        this(totalRounds, new FrameBuilder());
+    }
+
+    public Game(int totalRounds, FrameBuilder frameBuffer) {
         this.totalRounds = totalRounds;
+        this.frameBuffer = frameBuffer;
     }
 
     /**

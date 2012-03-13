@@ -129,4 +129,8 @@ public class SnapshotToJson implements SnapshotVisitor {
                 .put("counterClockwiseBound", angleBracket.getCounterClockwiseBound().getNormalizedRadians())
                 ;
     }
+
+    public JSONArray getSnapshots() {
+        return snapshots;
+    }
 }

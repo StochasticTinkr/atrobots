@@ -1,5 +1,6 @@
 package net.virtualinfinity.atrobots.gui;
 
+import net.virtualinfinity.atrobots.arena.SimulationFrame;
 import net.virtualinfinity.atrobots.arena.SimulationFrameBuffer;
 import net.virtualinfinity.atrobots.arena.SimulationObserver;
 import net.virtualinfinity.atrobots.snapshots.RobotSnapshot;
@@ -225,7 +226,7 @@ public class RobotStatusPane extends JList implements SimulationObserver {
         }
 
         public void run() {
-            final SimulationFrameBuffer.SimulationFrame currentFrame = frameBuffer.getCurrentFrame();
+            final SimulationFrame currentFrame = frameBuffer.getCurrentFrame();
             currentFrame.visitRobots(new SnapshotAdaptor() {
                 @Override
                 public void acceptRobot(RobotSnapshot robotSnapshot) {

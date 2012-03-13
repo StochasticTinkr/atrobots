@@ -5,13 +5,8 @@ import net.virtualinfinity.atrobots.compiler.AtRobotCompilerOutput;
 import net.virtualinfinity.atrobots.compiler.Errors;
 import net.virtualinfinity.atrobots.compiler.RobotFactory;
 import net.virtualinfinity.atrobots.game.Game;
-import net.virtualinfinity.atrobots.gui.renderers.GradientExplosionRenderer;
-import net.virtualinfinity.atrobots.gui.renderers.RobotRenderer;
-import net.virtualinfinity.atrobots.gui.renderers.ScanRenderer;
-import net.virtualinfinity.atrobots.gui.renderers.SimpleExplosionRenderer;
 
 import javax.swing.*;
-import javax.swing.border.BevelBorder;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.WindowAdapter;
@@ -28,11 +23,8 @@ import java.util.concurrent.ExecutionException;
  *
  * @author Daniel Pitts
  */
-public class Main implements Runnable {
-    private JFrame mainFrame;
-    private JMenuBar menubar;
+public class Main extends ArenaWindowBuilder implements Runnable {
     private volatile Game game;
-    private ArenaPane arenaPane;
     private boolean paused = true;
 
     private final Object gameLock;
@@ -41,16 +33,8 @@ public class Main implements Runnable {
     private Thread gameThread = new GameThread();
 
     private volatile boolean closed;
-    private RobotStatusPane robotStatusPane;
     private boolean debugMode;
     private java.util.List<String> initialRobots;
-    private RobotRenderer robotRenderer;
-    private ScanRenderer scanRenderer;
-    private final ToggleProperty toggleRobotStatusBars;
-    private final ToggleProperty toggleRenderDeadRobots;
-    private final ToggleProperty toggleFillScanArc;
-    private final ToggleProperty toggleFillShields;
-    private final ToggleProperty toggleShowNames;
     private final AbstractAction runAction = new AbstractAction("Run") {
         public void actionPerformed(ActionEvent e) {
             setPaused(!paused);
@@ -80,82 +64,36 @@ public class Main implements Runnable {
 
     public Main() {
         gameLock = new Object();
-        toggleRobotStatusBars = new ToggleProperty("Robot Status Bars", new ShowStatusBarsAccessor());
-        toggleRenderDeadRobots = new ToggleProperty("Dead Robots", new ShowDeadRobotsAccessor());
-        toggleFillScanArc = new ToggleProperty("Filled Scans", new ShowFilledScansAccessor());
-        toggleFillShields = new ToggleProperty("Filled Shields", new ShowFillShieldAccessor());
-        toggleShowNames = new ToggleProperty("Label Robots", new ShowRobotNameAccessor());
     }
 
     public void run() {
-        initializeSystemLookAndFeel();
+        initializeWindow();
+
+        startGame();
+    }
+
+    private void startGame() {
+        setGame(new Game(1000));
+        if (!initialRobots.isEmpty()) {
+            new EntrantLoader(initialRobots).execute();
+        }
+
         gameThread.setDaemon(true);
         gameThread.start();
-        mainFrame = new JFrame("AT-Robots 2 Clone 0.0.01");
-        mainFrame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-        mainFrame.addWindowListener(new WindowAdapter() {
-            public void windowClosed(WindowEvent e) {
-                synchronized (gameLock) {
-                    closed = true;
-                    paused = false;
-                    gameLock.notifyAll();
-                }
+    }
 
-            }
-        });
-        menubar = new JMenuBar();
-        mainFrame.setJMenuBar(menubar);
+    @Override
+    protected void buildMenuBar() {
         menubar.add(createFileMenu());
         menubar.add(createViewMenu());
         menubar.add(new JButton(runAction));
         if (isDebugMode()) {
             addDebugMenuItems();
         }
-        robotStatusPane = RobotStatusPane.createRobotStatusPane();
-        final JScrollPane robotStatusScroller = new JScrollPane(robotStatusPane, ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS, ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
-        mainFrame.getContentPane().add(robotStatusScroller, BorderLayout.EAST);
-        arenaPane = new ArenaPane();
-        mainFrame.getContentPane().add(arenaPane, BorderLayout.CENTER);
-        arenaPane.setBackground(Color.black);
-        arenaPane.setOpaque(true);
-        arenaPane.setBorder(BorderFactory.createBevelBorder(BevelBorder.LOWERED, Color.gray, Color.darkGray));
-        arenaPane.setPreferredSize(new Dimension(500, 500));
-        setGame(new Game(1000));
-        arenaPane.setRobotStatusPane(robotStatusPane);
-        robotRenderer = new RobotRenderer();
-        scanRenderer = new ScanRenderer();
-        arenaPane.getArenaRenderer().setRobotRenderer(robotRenderer);
-        arenaPane.getArenaRenderer().setScanRenderer(scanRenderer);
-
-        mainFrame.setLocationRelativeTo(null);
-        mainFrame.setLocationByPlatform(true);
-        mainFrame.pack();
-        mainFrame.setVisible(true);
-        if (!initialRobots.isEmpty()) {
-            new EntrantLoader(initialRobots).execute();
-        }
-    }
-
-    private JMenu createViewMenu() {
-        final JMenu viewMenu = new JMenu("View");
-        viewMenu.add(toggleShowNames.configure(new JCheckBoxMenuItem()));
-        viewMenu.add(toggleRobotStatusBars.configure(new JCheckBoxMenuItem()));
-        viewMenu.add(toggleFillShields.configure(new JCheckBoxMenuItem()));
-        viewMenu.add(toggleRenderDeadRobots.configure(new JCheckBoxMenuItem()));
-        viewMenu.addSeparator();
-        viewMenu.add(toggleFillScanArc.configure(new JCheckBoxMenuItem()));
-        viewMenu.add(new JCheckBoxMenuItem(new AbstractAction("Gradiant Explosions") {
-            public void actionPerformed(ActionEvent e) {
-                AbstractButton aButton = (AbstractButton) e.getSource();
-                boolean selected = aButton.getModel().isSelected();
-                arenaPane.getArenaRenderer().setExplosionRenderer(selected ? new GradientExplosionRenderer() : new SimpleExplosionRenderer());
-            }
-        }));
-        return viewMenu;
     }
 
     private JMenu createFileMenu() {
-        JMenu menu = new JMenu("Game");
+        final JMenu menu = new JMenu("Game");
         menu.add(new AbstractAction("New Game") {
             public void actionPerformed(ActionEvent e) {
                 final NewGameDialog dialog = new NewGameDialog();
@@ -220,16 +158,6 @@ public class Main implements Runnable {
         menubar.add(new JButton(speedToggleAction));
     }
 
-    private void initializeSystemLookAndFeel() {
-        try {
-            UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
-        } catch (Exception e) {
-            throw new RuntimeException(e);
-        }
-        JFrame.setDefaultLookAndFeelDecorated(true);
-        JDialog.setDefaultLookAndFeelDecorated(true);
-    }
-
     public static void main(String[] args) {
         final Main main = new Main();
         java.util.List<String> initialRobots = new ArrayList<String>(Arrays.asList(args));
@@ -248,6 +176,19 @@ public class Main implements Runnable {
 
     public void setDebugMode(boolean debugMode) {
         this.debugMode = debugMode;
+    }
+
+    protected void registerCloseListener() {
+        mainFrame.addWindowListener(new WindowAdapter() {
+            public void windowClosed(WindowEvent e) {
+                synchronized (gameLock) {
+                    closed = true;
+                    paused = false;
+                    gameLock.notifyAll();
+                }
+
+            }
+        });
     }
 
     private class EntrantLoader extends SwingWorker<Errors, RobotFactory> {
@@ -305,65 +246,6 @@ public class Main implements Runnable {
         }
     }
 
-    private abstract class RepaintArenaAfterSetBooleanAccessor implements BooleanAccessor {
-        public final void set(boolean value) {
-            doSet(value);
-            arenaPane.repaint();
-        }
-
-        protected abstract void doSet(boolean value);
-    }
-
-    private class ShowStatusBarsAccessor extends RepaintArenaAfterSetBooleanAccessor {
-        public boolean get() {
-            return robotRenderer.isShowStatusBars();
-        }
-
-        public void doSet(boolean value) {
-            robotRenderer.setShowStatusBars(value);
-        }
-    }
-
-    private class ShowFillShieldAccessor extends RepaintArenaAfterSetBooleanAccessor {
-        public boolean get() {
-            return robotRenderer.isFillShield();
-        }
-
-        public void doSet(boolean value) {
-            robotRenderer.setFillShield(value);
-        }
-    }
-
-    private class ShowRobotNameAccessor extends RepaintArenaAfterSetBooleanAccessor {
-        public boolean get() {
-            return robotRenderer.isShowName();
-        }
-
-        public void doSet(boolean value) {
-            robotRenderer.setShowName(value);
-        }
-    }
-
-
-    private class ShowDeadRobotsAccessor extends RepaintArenaAfterSetBooleanAccessor {
-        public boolean get() {
-            return robotRenderer.isRenderDead();
-        }
-
-        public void doSet(boolean value) {
-            robotRenderer.setRenderDead(value);
-        }
-    }
-
-    private class ShowFilledScansAccessor extends RepaintArenaAfterSetBooleanAccessor {
-        public boolean get() {
-            return scanRenderer.isFillArcs();
-        }
-
-        public void doSet(boolean value) {
-            scanRenderer.setFillArcs(value);
-        }
-    }
 
     private class GameThread extends Thread {
         public void run() {

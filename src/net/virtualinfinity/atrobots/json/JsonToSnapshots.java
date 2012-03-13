@@ -6,6 +6,10 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.List;
+
 /**
  * @author <a href='mailto:daniel.pitts@cbs.com'>Daniel Pitts</a>
  */
@@ -56,7 +60,8 @@ public class JsonToSnapshots {
         return new ExplosionSnapshot(json.optDouble("radius", 5.0), Duration.fromCycles(json.optInt("age", 0)));
     }
 
-    public void visitSnapshots(JSONArray array, SnapshotVisitor visitor) {
+    public Collection<ArenaObjectSnapshot> getSnapshots(JSONArray array) {
+        final List<ArenaObjectSnapshot> snapshots = new ArrayList<ArenaObjectSnapshot>(array.length());
         for (int i = 0, length = array.length(); i < length; ++i) {
             try {
                 final JSONObject json = array.getJSONObject(i);
@@ -68,15 +73,17 @@ public class JsonToSnapshots {
                         break;
                     }
                 }
-                ArenaObjectSnapshot snapshot = types.convert(this, json);
+                final ArenaObjectSnapshot snapshot = types.convert(this, json);
                 snapshot.setPositionVector(Vector.createCartesian(json.getDouble("x"), json.getDouble("y")));
                 snapshot.setVelocityVector(Vector.createCartesian(json.optDouble("deltaX", 0), json.optDouble("deltaY", 0)));
                 snapshot.setDead(json.optBoolean("dead", false));
-                snapshot.visit(visitor);
+                snapshots.add(snapshot);
+
             } catch (JSONException e) {
                 // TODO: Report problem?
             }
         }
+        return snapshots;
     }
 
     private RobotSnapshot getRobotSnapshot(JSONObject json) throws JSONException {

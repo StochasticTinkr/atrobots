@@ -1,8 +1,8 @@
 package net.virtualinfinity.atrobots.game;
 
 import net.virtualinfinity.atrobots.arena.Arena;
+import net.virtualinfinity.atrobots.arena.FrameBuilder;
 import net.virtualinfinity.atrobots.arena.RoundState;
-import net.virtualinfinity.atrobots.arena.SimulationFrameBuffer;
 import net.virtualinfinity.atrobots.compiler.RobotFactory;
 import net.virtualinfinity.atrobots.measures.Duration;
 import net.virtualinfinity.atrobots.robot.Robot;
@@ -24,7 +24,7 @@ public class Round implements RoundState {
     private Map<RobotFactory, Robot> robots = new HashMap<RobotFactory, Robot>();
     private final int totalRounds;
 
-    public Round(int number, SimulationFrameBuffer frameBuffer, int totalRounds) {
+    public Round(int number, FrameBuilder frameBuffer, int totalRounds) {
         this.number = number;
         this.totalRounds = totalRounds;
         arena = new Arena();

@@ -1,5 +1,6 @@
 package net.virtualinfinity.atrobots.gui;
 
+import net.virtualinfinity.atrobots.arena.SimulationFrame;
 import net.virtualinfinity.atrobots.arena.SimulationFrameBuffer;
 import net.virtualinfinity.atrobots.arena.SimulationObserver;
 
@@ -10,12 +11,12 @@ import java.awt.geom.AffineTransform;
 /**
  * A GUI component which renders the game arena.
  * This object should be registered as a {@link net.virtualinfinity.atrobots.arena.SimulationObserver} in the
- * {@link net.virtualinfinity.atrobots.arena.SimulationFrameBuffer}
+ * {@link net.virtualinfinity.atrobots.arena.FrameBuilder}
  *
  * @author Daniel Pitts
  */
 public class ArenaPane extends JComponent implements SimulationObserver {
-    private SimulationFrameBuffer.SimulationFrame currentFrame;
+    private SimulationFrame currentFrame;
     private final ArenaRenderer arenaRenderer = new ArenaRenderer();
     private static final double BORDER_WIDTH = 50.0;
     private static final double BORDER_HEIGHT = 50.0;

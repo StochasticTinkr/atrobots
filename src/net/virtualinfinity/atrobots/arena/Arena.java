@@ -38,7 +38,7 @@ public class Arena implements RoundTimer {
 
 
     private final RadioDispatcher radioDispatcher = new RadioDispatcher();
-    private SimulationFrameBuffer simulationFrameBuffer;
+    private FrameBuilder simulationFrameBuffer;
     private boolean roundOver;
 
 
@@ -74,7 +74,7 @@ public class Arena implements RoundTimer {
     }
 
     /**
-     * Prepare a snapshot of the current arena state in the {@link SimulationFrameBuffer}.
+     * Prepare a snapshot of the current arena state in the {@link FrameBuilder}.
      */
     public void buildFrame() {
         simulationFrameBuffer.beginFrame(roundOver);
@@ -124,7 +124,7 @@ public class Arena implements RoundTimer {
      *
      * @param simulationFrameBuffer the frame buffer.
      */
-    public void setSimulationFrameBuffer(SimulationFrameBuffer simulationFrameBuffer) {
+    public void setSimulationFrameBuffer(FrameBuilder simulationFrameBuffer) {
         this.simulationFrameBuffer = simulationFrameBuffer;
     }
 

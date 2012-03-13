@@ -1,5 +1,6 @@
 package net.virtualinfinity.atrobots.tournament;
 
+import net.virtualinfinity.atrobots.arena.FrameBuilder;
 import net.virtualinfinity.atrobots.compiler.RobotFactory;
 import net.virtualinfinity.atrobots.game.Game;
 
@@ -14,6 +15,15 @@ import java.util.concurrent.TimeUnit;
 public class Tournament {
     private List<RobotFactory> competitors;
     private int roundsPerPairing = 25;
+    private FrameBuilder frameBuffer;
+
+    public Tournament() {
+        frameBuffer = new FrameBuilder();
+    }
+
+    public FrameBuilder getFrameBuffer() {
+        return frameBuffer;
+    }
 
     public TournamentResults run() throws InterruptedException {
         final ExecutorService executorService = Executors.newFixedThreadPool(Runtime.getRuntime().availableProcessors() + 1);
@@ -23,11 +33,7 @@ public class Tournament {
                 if (right == left) {
                     break;
                 }
-                executorService.submit(new Runnable() {
-                    public void run() {
-                        compete(results, left, right);
-                    }
-                });
+                compete(results, left, right);
             }
         }
         executorService.shutdown();
@@ -53,7 +59,7 @@ public class Tournament {
 
     private void compete(TournamentResults results, RobotFactory left, RobotFactory right) {
         System.out.println("Running pairing: " + left.getName() + " vs " + right.getName());
-        final Game game = new Game(roundsPerPairing);
+        final Game game = new Game(roundsPerPairing, frameBuffer);
         game.addEntrant(left);
         game.addEntrant(right);
         game.nextRound();

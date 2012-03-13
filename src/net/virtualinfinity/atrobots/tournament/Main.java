@@ -3,8 +3,11 @@ package net.virtualinfinity.atrobots.tournament;
 import net.virtualinfinity.atrobots.compiler.AtRobotCompiler;
 import net.virtualinfinity.atrobots.compiler.AtRobotCompilerOutput;
 import net.virtualinfinity.atrobots.compiler.RobotFactory;
+import net.virtualinfinity.atrobots.network.Server;
 
 import java.io.File;
+import java.io.IOException;
+import java.net.ServerSocket;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -14,7 +17,7 @@ import java.util.List;
  * @author <a href='mailto:daniel.pitts@cbs.com'>Daniel Pitts</a>
  */
 public class Main {
-    public static void main(String[] args) throws InterruptedException {
+    public static void main(String[] args) throws InterruptedException, IOException {
         final List<RobotFactory> competitors = new ArrayList<RobotFactory>();
         final AtRobotCompiler compiler = new AtRobotCompiler();
         for (String arg : args) {
@@ -27,6 +30,9 @@ public class Main {
             }
         }
         final Tournament tournament = new Tournament();
+        final Server server = new Server(new ServerSocket(2001));
+        server.setBuffer(tournament.getFrameBuffer());
+        new Thread(server).start();
         tournament.setRoundsPerPairing(10);
         tournament.setCompetitors(competitors);
         final TournamentResults results = tournament.run();

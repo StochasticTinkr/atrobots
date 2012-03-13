@@ -70,7 +70,7 @@ public abstract class ArenaObject {
      * Get a snapshot of the current state of this ArenaObject.
      *
      * @return the current snapshot.
-     * @see SimulationFrameBuffer
+     * @see net.virtualinfinity.atrobots.arena.FrameBuilder
      * @see Arena#buildFrame()
      */
     public final ArenaObjectSnapshot getSnapshot() {
