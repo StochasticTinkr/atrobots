@@ -27,10 +27,13 @@ public class Client extends ArenaWindowBuilder implements Runnable {
         final Socket socket = new Socket(InetAddress.getLocalHost(), 2001);
         final SimulationClientWorker clientWorker = new SimulationClientWorker(new BufferedReader(new InputStreamReader(socket.getInputStream())), new OutputStreamWriter(socket.getOutputStream()));
         EventQueue.invokeLater(new Client(clientWorker));
+        clientWorker.run();
     }
 
     public void run() {
         initializeWindow();
+        frameBuffer.addSimulationObserver(arenaPane);
+        frameBuffer.addSimulationObserver(robotStatusPane);
     }
 
     @Override

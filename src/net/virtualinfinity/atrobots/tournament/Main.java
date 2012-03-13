@@ -32,7 +32,9 @@ public class Main {
         final Tournament tournament = new Tournament();
         final Server server = new Server(new ServerSocket(2001));
         server.setBuffer(tournament.getFrameBuffer());
-        new Thread(server).start();
+        final Thread thread = new Thread(server);
+        thread.setDaemon(true);
+        thread.start();
         tournament.setRoundsPerPairing(10);
         tournament.setCompetitors(competitors);
         final TournamentResults results = tournament.run();

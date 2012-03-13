@@ -33,7 +33,9 @@ public class Server implements Runnable {
         while (true) {
             try {
                 final Socket accept = listener.accept();
-                new Thread(new SimulationServerWorker(new InputStreamReader(accept.getInputStream(), "UTF-8"), new OutputStreamWriter(accept.getOutputStream(), "UTF-8"))).start();
+                final SimulationServerWorker worker = new SimulationServerWorker(new InputStreamReader(accept.getInputStream(), "UTF-8"), new OutputStreamWriter(accept.getOutputStream(), "UTF-8"));
+                buffer.addSimulationObserver(worker);
+                new Thread(worker).start();
             } catch (IOException e) {
             }
 
