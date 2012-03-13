@@ -57,7 +57,11 @@ public class ScanSnapshot extends ArenaObjectSnapshot {
         if (!accuracyAvailable) {
             return getScanArea();
         }
-        return shapeFor(getAngleBracket().subrange(Math.max(0, .5 - (accuracy * .25 + .125)), Math.min(1, .5 - (accuracy * .25 - .125))));
+        return shapeFor(getAccuracyBracket());
+    }
+
+    public AngleBracket getAccuracyBracket() {
+        return getAngleBracket().subrange(Math.max(0, .5 - (accuracy * .25 + .125)), Math.min(1, .5 - (accuracy * .25 - .125)));
     }
 
     public boolean isAccuracyAvailable() {
@@ -67,4 +71,5 @@ public class ScanSnapshot extends ArenaObjectSnapshot {
     public int getAccuracy() {
         return accuracy;
     }
+
 }
