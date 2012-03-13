@@ -14,7 +14,7 @@ import net.virtualinfinity.atrobots.snapshots.ExplosionSnapshot;
  * @author Daniel Pitts
  */
 public class Explosion extends ArenaObject {
-    Duration age;
+    private Duration age = Duration.ZERO_CYCLE;
     private final double radius;
 
     /**
