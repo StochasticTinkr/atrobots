@@ -9,6 +9,7 @@ import java.io.File;
 import java.io.IOException;
 import java.net.ServerSocket;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 /**
@@ -17,10 +18,15 @@ import java.util.List;
  * @author <a href='mailto:daniel.pitts@cbs.com'>Daniel Pitts</a>
  */
 public class Main {
+
+
     public static void main(String[] args) throws InterruptedException, IOException {
+        final List<String> realArgs = new ArrayList<String>(Arrays.asList(args));
+        final boolean runServer = realArgs.remove("--server");
+
         final List<RobotFactory> competitors = new ArrayList<RobotFactory>();
         final AtRobotCompiler compiler = new AtRobotCompiler();
-        for (String arg : args) {
+        for (String arg : realArgs) {
             try {
                 final AtRobotCompilerOutput compile = compiler.compile(getRobotFile(arg));
                 competitors.add(compile.createRobotFactory(arg));
@@ -29,12 +35,17 @@ public class Main {
                 e.printStackTrace();
             }
         }
-        final Tournament tournament = new Tournament();
-        final Server server = new Server(new ServerSocket(2001));
-        server.setBuffer(tournament.getFrameBuffer());
-        final Thread thread = new Thread(server);
-        thread.setDaemon(true);
-        thread.start();
+        final Tournament tournament;
+        if (!runServer) {
+            tournament = new Tournament();
+        } else {
+            tournament = new Tournament(25);
+            final Server server = new Server(new ServerSocket(2001));
+            server.setBuffer(tournament.getFrameBuffer());
+            final Thread thread = new Thread(server);
+            thread.setDaemon(true);
+            thread.start();
+        }
         tournament.setRoundsPerPairing(10);
         tournament.setCompetitors(competitors);
         final TournamentResults results = tournament.run();
