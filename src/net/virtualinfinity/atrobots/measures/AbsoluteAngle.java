@@ -8,11 +8,14 @@ package net.virtualinfinity.atrobots.measures;
  */
 public class AbsoluteAngle {
     private static final AbsoluteAngle[] bygreeTable = new AbsoluteAngle[256];
+    private static final double RADIANS_PER_BYGREE = Math.PI / 128.0;
+    private static final double BYGREES_PER_RADIANS = 128 / Math.PI;
+    private static final int BYGREE_MASK = 255;
+    private static final double FULL_CIRCLE_RADIANS = Math.PI * 2;
 
     static {
         for (int bygrees = 0; bygrees < bygreeTable.length; ++bygrees) {
-            final AbsoluteAngle value = AbsoluteAngle.fromRadians(bygreeToRadians(bygrees));
-            bygreeTable[bygrees] = new AbsoluateBygreeAngle(bygrees, value);
+            bygreeTable[bygrees] = new AbsoluateBygreeAngle(bygrees);
         }
     }
 
@@ -24,9 +27,9 @@ public class AbsoluteAngle {
 
     private AbsoluteAngle(double radians) {
         if (radians < 0) {
-            radians += Math.PI * 2;
-        } else if (radians >= Math.PI * 2) {
-            radians -= Math.PI * 2;
+            radians += FULL_CIRCLE_RADIANS;
+        } else if (radians >= FULL_CIRCLE_RADIANS) {
+            radians -= FULL_CIRCLE_RADIANS;
         }
         this.radians = radians;
     }
@@ -48,7 +51,7 @@ public class AbsoluteAngle {
     }
 
     public double getNormalizedRadians() {
-        if (radians >= Math.PI * 2 || radians < 0) {
+        if (radians >= FULL_CIRCLE_RADIANS || radians < 0) {
             return Math.atan2(sine(), cosine());
         }
         return radians;
@@ -101,7 +104,7 @@ public class AbsoluteAngle {
     }
 
     public static AbsoluteAngle fromBygrees(int value) {
-        return bygreeTable[value & 255];
+        return bygreeTable[value & BYGREE_MASK];
     }
 
     public static AbsoluteAngle fromCartesian(double x, double y) {
@@ -113,11 +116,11 @@ public class AbsoluteAngle {
     }
 
     private static int radiansToBygrees(double radians) {
-        return (int) Math.round(64 + (radians * 128 / Math.PI)) & 255;
+        return (int) Math.round(64 + (radians * BYGREES_PER_RADIANS)) & BYGREE_MASK;
     }
 
     private static double bygreeToRadians(int bygrees) {
-        return (bygrees - 64) * Math.PI / 128;
+        return (bygrees - 64) * RADIANS_PER_BYGREE;
     }
 
     public AbsoluteAngle getSupplementary() {
@@ -133,10 +136,27 @@ public class AbsoluteAngle {
         private final double degrees;
         private final RelativeAngle counterClockwiseFromStandardOrigin;
 
-        public AbsoluateBygreeAngle(int bygrees, AbsoluteAngle template) {
+        public AbsoluateBygreeAngle(int bygrees) {
             super(bygreeToRadians(bygrees));
-            this.cosine = template.cosine();
-            this.sine = template.sine();
+            final AbsoluteAngle template = AbsoluteAngle.fromRadians(bygreeToRadians(bygrees));
+            switch (bygrees) {
+                case 0:
+                    this.cosine = 0;
+                    this.sine = -1;
+                    break;
+                case 128:
+                    this.cosine = 0;
+                    this.sine = 1;
+                    break;
+                case 192:
+                    this.cosine = -1;
+                    this.sine = 0;
+                    break;
+                default:
+                    this.cosine = template.cosine();
+                    this.sine = template.sine();
+                    break;
+            }
             this.bygrees = bygrees;
             this.signedBygrees = template.getSignedBygrees();
             this.normalizedRadians = template.getNormalizedRadians();

@@ -6,7 +6,7 @@ import junit.framework.TestCase;
  * @author Daniel Pitts
  */
 public class VectorTest extends TestCase {
-    private static final double DELTA = 0.000001;
+    private static final double DELTA = Math.ulp(0d);
 
     public void testCartesianAngles() {
         assertEquals(AngleTest.NORTH_BYGREES, createCartesian(AngleTest.NORTH_COSINE, AngleTest.NORTH_SINE).getAngle().getBygrees());
