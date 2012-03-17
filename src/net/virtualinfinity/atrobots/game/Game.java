@@ -1,6 +1,7 @@
 package net.virtualinfinity.atrobots.game;
 
 import net.virtualinfinity.atrobots.arena.FrameBuilder;
+import net.virtualinfinity.atrobots.arena.RoundState;
 import net.virtualinfinity.atrobots.arena.SimulationObserver;
 import net.virtualinfinity.atrobots.compiler.RobotFactory;
 import net.virtualinfinity.atrobots.robot.Robot;
@@ -14,6 +15,7 @@ import java.util.*;
  * @author Daniel Pitts
  */
 public class Game implements RoundListener {
+    private RoundState roundState;
     private Round round;
     private int roundNumber = 0;
     private int totalRounds;
@@ -50,9 +52,6 @@ public class Game implements RoundListener {
         return totalRounds;
     }
 
-//    public synchronized void dispose() {
-//    }
-
     /**
      * Start the next round. This ends the current round.
      */
@@ -62,7 +61,8 @@ public class Game implements RoundListener {
         }
 
         if (roundNumber < getTotalRounds()) {
-            round = new Round(++roundNumber, frameBuffer, getTotalRounds());
+            roundState = new StandardRoundState(totalRounds, ++roundNumber);
+            round = new Round(frameBuffer);
             round.addRoundListener(this);
             for (RobotFactory entrant : entrants) {
                 round.getArena().addRobot(createRobotFor(entrant));
@@ -85,7 +85,7 @@ public class Game implements RoundListener {
      * @return the robot.
      */
     protected Robot createRobotFor(RobotFactory entrant) {
-        return entrant.createRobot(getRound(), getMaxProcessorSpeed(), getScoreKeeper(entrant));
+        return entrant.createRobot(roundState, getMaxProcessorSpeed(), getScoreKeeper(entrant), round.getArena());
     }
 
     public RobotScoreKeeper getScoreKeeper(RobotFactory entrant) {

@@ -2,32 +2,28 @@ package net.virtualinfinity.atrobots.game;
 
 import net.virtualinfinity.atrobots.arena.Arena;
 import net.virtualinfinity.atrobots.arena.FrameBuilder;
-import net.virtualinfinity.atrobots.arena.RoundState;
-import net.virtualinfinity.atrobots.compiler.RobotFactory;
+import net.virtualinfinity.atrobots.arena.RoundTimer;
 import net.virtualinfinity.atrobots.measures.Duration;
-import net.virtualinfinity.atrobots.robot.Robot;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 /**
+ * TODO: Document
+ *
  * @author Daniel Pitts
  */
-public class Round implements RoundState {
+public class Round {
     private Duration roundEnd = Duration.fromCycles(10);
     private Duration maxCycles = Duration.fromCycles(25000);
-    private Arena arena;
-    private int number;
+    private final Arena arena;
+    private final RoundTimer roundTimer;
     private final List<RoundListener> roundListeners = new ArrayList<RoundListener>();
-    private Map<RobotFactory, Robot> robots = new HashMap<RobotFactory, Robot>();
-    private final int totalRounds;
+    private boolean roundOver;
 
-    public Round(int number, FrameBuilder frameBuffer, int totalRounds) {
-        this.number = number;
-        this.totalRounds = totalRounds;
+    public Round(FrameBuilder frameBuffer) {
         arena = new Arena();
+        roundTimer = arena.getRoundTimer();
         arena.setSimulationFrameBuffer(frameBuffer);
     }
 
@@ -39,26 +35,39 @@ public class Round implements RoundState {
         return arena;
     }
 
-    public int getTotalRounds() {
-        return totalRounds;
+    public boolean step() {
+        if (!roundOver) {
+            arena.simulate();
+            checkEndCondition();
+            if (roundOver) {
+                for (RoundListener roundListener : roundListeners) {
+                    roundListener.roundOver();
+                }
+            }
+        }
+        return roundOver;
+
     }
 
-    public int getRoundNumber() {
-        return number;
-    }
-
-    public void step() {
+    private void checkEndCondition() {
         if (arena.isOnlyOneRobotAlive()) {
             roundEnd = roundEnd.minus(Duration.ONE_CYCLE);
-        }
-        if (roundEnd.getCycles() == 0 || arena.countActiveRobots() == 0 || arena.getTime().compareTo(maxCycles) > 0) {
-            for (RoundListener roundListener : roundListeners) {
-                roundListener.roundOver();
+            if (roundEnd.getCycles() == 0) {
+                roundOver = true;
             }
-            return;
         }
-        arena.simulate();
 
+        if (isArenaEmpty() || isRoundExpired()) {
+            roundOver = true;
+        }
+    }
+
+    private boolean isRoundExpired() {
+        return roundTimer.getTime().compareTo(maxCycles) > 0;
+    }
+
+    private boolean isArenaEmpty() {
+        return arena.countActiveRobots() == 0;
     }
 
 

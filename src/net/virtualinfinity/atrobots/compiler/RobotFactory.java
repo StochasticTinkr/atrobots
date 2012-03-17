@@ -1,5 +1,6 @@
 package net.virtualinfinity.atrobots.compiler;
 
+import net.virtualinfinity.atrobots.arena.Arena;
 import net.virtualinfinity.atrobots.arena.RoundState;
 import net.virtualinfinity.atrobots.computer.*;
 import net.virtualinfinity.atrobots.debugger.*;
@@ -45,9 +46,10 @@ public class RobotFactory {
      * @param roundState
      * @param maxProcessorSpeed
      * @param robotScoreKeeper
+     * @param arena
      * @return the robot to enter.
      */
-    public Robot createRobot(RoundState roundState, int maxProcessorSpeed, RobotScoreKeeper robotScoreKeeper) {
+    public Robot createRobot(RoundState roundState, int maxProcessorSpeed, RobotScoreKeeper robotScoreKeeper, Arena arena) {
         final Robot robot = new Robot(name, id, robotScoreKeeper);
         robot.addRobotListener(robotScoreKeeper);
         final RandomAccessMemoryArray lowerMemoryBlock = new RandomAccessMemoryArray(LOWER_MEMORY_BLOCK_SIZE);
@@ -56,7 +58,7 @@ public class RobotFactory {
         robotConfigurer.setRobot(robot);
         hardwareSpecification.buildRobotConfigurer(robotConfigurer);
         robotConfigurer.setLowerMemoryArray(lowerMemoryBlock);
-        robotConfigurer.wireRobotComponents(roundState.getArena(), roundState.getTotalRounds(), roundState.getRoundNumber());
+        robotConfigurer.wireRobotComponents(arena, roundState);
         if (debug) {
             robot.getComputer().setDebugListener(DEBUGGER);
         }

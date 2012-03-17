@@ -1,6 +1,7 @@
 package net.virtualinfinity.atrobots.compiler;
 
 import net.virtualinfinity.atrobots.arena.Arena;
+import net.virtualinfinity.atrobots.arena.RoundState;
 import net.virtualinfinity.atrobots.arena.RoundTimer;
 import net.virtualinfinity.atrobots.atsetup.AtRobotInterrupt;
 import net.virtualinfinity.atrobots.computer.InterruptHandler;
@@ -64,8 +65,8 @@ public class AtRobotInterruptFactory {
         return robot.createGetRobotInfoInterruptHandler(getDxCell(robot), getExCell(robot), getFxCell(robot));
     }
 
-    private InterruptHandler createGetGameInfoInterrupt(Robot robot, Arena arena, int totalRounds, int roundNumber) {
-        return new GetGameInfoInterrupt(getDxCell(robot), getExCell(robot), getFxCell(robot), totalRounds, roundNumber, arena);
+    private InterruptHandler createGetGameInfoInterrupt(Robot robot, Arena arena, RoundState roundState) {
+        return new GetGameInfoInterrupt(getDxCell(robot), getExCell(robot), getFxCell(robot), roundState.getTotalRounds(), roundState.getRoundNumber(), arena);
     }
 
     private InterruptHandler createGetTargetInfoInterrupt(Robot robot) {
@@ -130,7 +131,7 @@ public class AtRobotInterruptFactory {
         return new InvalidInterrupt(robot.getComputer());
     }
 
-    public Map<Integer, InterruptHandler> createInterruptTable(Robot robot, Arena arena, int totalRounds, int roundNumber) {
+    public Map<Integer, InterruptHandler> createInterruptTable(Robot robot, Arena arena, RoundState roundState) {
         Map<Integer, InterruptHandler> interrupts = new HashMap<Integer, InterruptHandler>();
 
         mapHandler(interrupts, DESTRUCT, createDestructInterrupt(robot));
@@ -139,11 +140,11 @@ public class AtRobotInterruptFactory {
         mapHandler(interrupts, KEEPSHIFT, createSetKeepshiftInterrupt(robot).costs(2));
         mapHandler(interrupts, OVERBURN, createOverburnInterrupt(robot).costs(1));
         mapHandler(interrupts, ID, createGetTransponderIdInterrupt(robot).costs(2));
-        mapHandler(interrupts, TIMER, createGetTimerInterrupt(robot, arena).costs(2));
+        mapHandler(interrupts, TIMER, createGetTimerInterrupt(robot, arena.getRoundTimer()).costs(2));
         mapHandler(interrupts, ANGLE, createFindAngleInterrupt(robot).costs(32));
         mapHandler(interrupts, TARGETID, createGetTargetIdInterrupt(robot).costs(1));
         mapHandler(interrupts, TARGETINFO, createGetTargetInfoInterrupt(robot).costs(2));
-        mapHandler(interrupts, GAMEINFO, createGetGameInfoInterrupt(robot, arena, totalRounds, roundNumber).costs(4));
+        mapHandler(interrupts, GAMEINFO, createGetGameInfoInterrupt(robot, arena, roundState).costs(4));
         mapHandler(interrupts, ROBOTINFO, createGetRobotInfoInterrupt(robot).costs(5));
         mapHandler(interrupts, COLLISIONS, createGetCollisionsInterrupt(robot).costs(1));
         mapHandler(interrupts, RESETCOLCNT, createResetCollisionCountInterrupt(robot).costs(1));

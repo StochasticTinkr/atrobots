@@ -14,12 +14,12 @@ import java.util.*;
  *
  * @author Daniel Pitts
  */
-public class Arena implements RoundTimer {
+public class Arena {
     private final List<TangibleArenaObject> activeRobots = new LinkedList<TangibleArenaObject>();
     private final List<TangibleArenaObject> allRobots = new LinkedList<TangibleArenaObject>();
     private final List<CollidableArenaObject> collidables = new LinkedList<CollidableArenaObject>();
     private final Collection<ArenaObject> intangibles = new LinkedList<ArenaObject>();
-    private Duration time = Duration.fromCycles(0);
+    private final RoundTimer roundTimer;
 
     @SuppressWarnings({"unchecked"})
     final Collection<Collection<? extends ArenaObject>> allActiveObjects = new ArrayList<Collection<? extends ArenaObject>>(
@@ -41,6 +41,13 @@ public class Arena implements RoundTimer {
     private FrameBuilder simulationFrameBuffer;
     private boolean roundOver;
 
+    public Arena() {
+        this(new RoundTimer());
+    }
+
+    public Arena(RoundTimer roundTimer) {
+        this.roundTimer = roundTimer;
+    }
 
     /**
      * Get the number of robots still active in the arena.
@@ -70,7 +77,7 @@ public class Arena implements RoundTimer {
     public void simulate() {
         updateSimulation();
         buildFrame();
-        time = time.plus(Duration.ONE_CYCLE);
+        roundTimer.increment(Duration.ONE_CYCLE);
     }
 
     /**
@@ -183,10 +190,6 @@ public class Arena implements RoundTimer {
     }
 
 
-    public Duration getTime() {
-        return time;
-    }
-
     public boolean isOnlyOneRobotAlive() {
         return countActiveRobots() == 1;
     }
@@ -199,5 +202,9 @@ public class Arena implements RoundTimer {
         for (ArenaObject arenaObject : activeRobots) {
             arenaObject.accept(arenaObjectVisitor);
         }
+    }
+
+    public RoundTimer getRoundTimer() {
+        return roundTimer;
     }
 }

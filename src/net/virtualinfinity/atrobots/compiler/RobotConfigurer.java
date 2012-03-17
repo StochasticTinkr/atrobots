@@ -1,6 +1,7 @@
 package net.virtualinfinity.atrobots.compiler;
 
 import net.virtualinfinity.atrobots.arena.Arena;
+import net.virtualinfinity.atrobots.arena.RoundState;
 import net.virtualinfinity.atrobots.computer.*;
 import net.virtualinfinity.atrobots.comqueue.CommunicationsQueue;
 import net.virtualinfinity.atrobots.hardware.armor.Armor;
@@ -117,7 +118,7 @@ public class RobotConfigurer {
         this.scanner = scanner;
     }
 
-    public void wireRobotComponents(Arena arena, int totalRounds, int roundNumber) {
+    public void wireRobotComponents(Arena arena, RoundState roundState) {
         robot.getHeatSinks().setCoolMultiplier(coolMultiplier);
         wireThrottle();
         wireArmor();
@@ -133,7 +134,7 @@ public class RobotConfigurer {
         wireTurret();
         wireMissileLauncher(arena);
         wireScanner();
-        wireHardwareBus(arena, totalRounds, roundNumber);
+        wireHardwareBus(arena, roundState);
         connectSpecialRegisters();
     }
 
@@ -145,11 +146,11 @@ public class RobotConfigurer {
         lowerMemoryArray.addSpecialRegister(3, scannerAccuracyRegister);
     }
 
-    private void wireHardwareBus(Arena arena, int totalRounds, int roundNumber) {
+    private void wireHardwareBus(Arena arena, RoundState roundState) {
         robot.setHardwareBus(hardwareBus);
         hardwareBus.setHeat(robot.getHeatSinks());
         hardwareBus.setPorts(createPortHandlers());
-        hardwareBus.setInterrupts(createInterruptHandlers(arena, totalRounds, roundNumber));
+        hardwareBus.setInterrupts(createInterruptHandlers(arena, roundState));
         hardwareBus.addResetable(robot.getTurret().getScanner());
         hardwareBus.addResetable(robot.getTurret());
         hardwareBus.addResetable(robot.getOdometer());
@@ -170,8 +171,8 @@ public class RobotConfigurer {
         return new AtRobotPortFactory();
     }
 
-    private Map<Integer, InterruptHandler> createInterruptHandlers(Arena arena, int totalRounds, int roundNumber) {
-        return getInterruptFactory().createInterruptTable(robot, arena, totalRounds, roundNumber);
+    private Map<Integer, InterruptHandler> createInterruptHandlers(Arena arena, RoundState roundState) {
+        return getInterruptFactory().createInterruptTable(robot, arena, roundState);
     }
 
     private AtRobotInterruptFactory getInterruptFactory() {
