@@ -22,9 +22,8 @@ public class Round {
     private boolean roundOver;
 
     public Round(FrameBuilder frameBuffer) {
-        arena = new Arena();
+        arena = new Arena(frameBuffer);
         roundTimer = arena.getRoundTimer();
-        arena.setSimulationFrameBuffer(frameBuffer);
     }
 
     public void addRoundListener(RoundListener roundListener) {

@@ -19,7 +19,7 @@ public class Arena {
     private final List<TangibleArenaObject> allRobots = new LinkedList<TangibleArenaObject>();
     private final List<CollidableArenaObject> collidables = new LinkedList<CollidableArenaObject>();
     private final Collection<ArenaObject> intangibles = new LinkedList<ArenaObject>();
-    private final RoundTimer roundTimer;
+    private final RoundTimer roundTimer = new RoundTimer();
 
     @SuppressWarnings({"unchecked"})
     final Collection<Collection<? extends ArenaObject>> allActiveObjects = new ArrayList<Collection<? extends ArenaObject>>(
@@ -38,16 +38,20 @@ public class Arena {
 
 
     private final RadioDispatcher radioDispatcher = new RadioDispatcher();
-    private FrameBuilder simulationFrameBuffer;
+    private final FrameBuilder frameBuilder;
     private boolean roundOver;
 
     public Arena() {
-        this(new RoundTimer());
+        this(null);
     }
 
-    public Arena(RoundTimer roundTimer) {
-        this.roundTimer = roundTimer;
+    public Arena(FrameBuilder frameBuilder) {
+        this.frameBuilder = frameBuilder;
+        if (frameBuilder != null) {
+
+        }
     }
+
 
     /**
      * Get the number of robots still active in the arena.
@@ -84,14 +88,14 @@ public class Arena {
      * Prepare a snapshot of the current arena state in the {@link FrameBuilder}.
      */
     public void buildFrame() {
-        if (simulationFrameBuffer != null) {
-            simulationFrameBuffer.beginFrame(roundOver);
+        if (frameBuilder != null) {
+            frameBuilder.beginFrame(roundOver);
             for (Collection<? extends ArenaObject> objectCollection : allFramedObjects) {
                 for (ArenaObject object : objectCollection) {
-                    simulationFrameBuffer.addObject(object.getSnapshot());
+                    frameBuilder.addObject(object.getSnapshot());
                 }
             }
-            simulationFrameBuffer.endFrame();
+            frameBuilder.endFrame();
         }
     }
 
@@ -129,15 +133,6 @@ public class Arena {
     }
 
     /**
-     * The the frame buffer to use.
-     *
-     * @param simulationFrameBuffer the frame buffer.
-     */
-    public void setSimulationFrameBuffer(FrameBuilder simulationFrameBuffer) {
-        this.simulationFrameBuffer = simulationFrameBuffer;
-    }
-
-    /**
      * Add a robot to the arena at a random location.
      *
      * @param robot the robot to add to this arena.
@@ -161,7 +156,7 @@ public class Arena {
      * @param explosionFunction the damage explosion function.
      */
     public void explosion(DamageInflicter cause, ExplosionFunction explosionFunction) {
-        intangibles.add(new Explosion(explosionFunction.getCenter(), explosionFunction.getRadius()));
+        addIntangible(new Explosion(explosionFunction.getCenter(), explosionFunction.getRadius()));
         for (TangibleArenaObject robot : activeRobots) {
             explosionFunction.inflictDamage(cause, robot);
         }
@@ -197,7 +192,9 @@ public class Arena {
     }
 
     public void addIntangible(ArenaObject object) {
-        intangibles.add(object);
+        if (frameBuilder != null) {
+            intangibles.add(object);
+        }
     }
 
     public void visitActiveRobots(ArenaObjectVisitor arenaObjectVisitor) {
