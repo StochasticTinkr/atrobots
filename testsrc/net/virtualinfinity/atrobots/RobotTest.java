@@ -21,7 +21,7 @@ public class RobotTest extends TestCase {
         final AtRobotCompilerOutput compile = new AtRobotCompiler().compile(new File("original/SDUCK.AT2"));
         final RobotFactory robotFactory = compile.createRobotFactory("SDUCK");
         final StandardRoundState roundState = new StandardRoundState(1, 1);
-        final Robot robot = robotFactory.createRobot(roundState, 5, new RobotScoreKeeper(), new Arena());
+        final Robot robot = robotFactory.createRobot(roundState, 5, new RobotScoreKeeper(), new Arena(), 1);
         assertNotNull(robot);
 
     }

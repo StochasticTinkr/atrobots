@@ -38,7 +38,7 @@ public class Robot extends TangibleArenaObject implements Resettable, HasHeading
     private final Odometer odometer = new Odometer();
     private final String name;
     private final int id;
-    private final RobotScoreKeeper scoreKeeper;
+    private final RobotScore score;
     private Throttle throttle;
     private Computer computer;
     private Turret turret;
@@ -64,10 +64,10 @@ public class Robot extends TangibleArenaObject implements Resettable, HasHeading
         position.setOdometer(odometer);
     }
 
-    public Robot(String name, int id, RobotScoreKeeper scoreKeeper) {
+    public Robot(String name, int id, RobotScore score) {
         this.name = name;
         this.id = id;
-        this.scoreKeeper = scoreKeeper;
+        this.score = score;
         this.roundKills = 0;
     }
 
@@ -408,7 +408,7 @@ public class Robot extends TangibleArenaObject implements Resettable, HasHeading
     }
 
     public int getTotalKills() {
-        return scoreKeeper.getTotalKills();
+        return score.getTotalKills();
     }
 
     public int getRoundKills() {
@@ -416,7 +416,7 @@ public class Robot extends TangibleArenaObject implements Resettable, HasHeading
     }
 
     public int getTotalDeaths() {
-        return scoreKeeper.getTotalDeaths();
+        return score.getTotalDeaths();
     }
 
     public int getId() {
@@ -424,11 +424,11 @@ public class Robot extends TangibleArenaObject implements Resettable, HasHeading
     }
 
     public int getTotalWins() {
-        return scoreKeeper.getTotalWins();
+        return score.getTotalWins();
     }
 
     public int getTotalTies() {
-        return scoreKeeper.getTotalTies();
+        return score.getTotalTies();
     }
 
     public void addRobotListener(RobotListener robotListener) {

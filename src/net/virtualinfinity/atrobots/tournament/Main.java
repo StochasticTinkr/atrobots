@@ -4,13 +4,18 @@ import net.virtualinfinity.atrobots.compiler.AtRobotCompiler;
 import net.virtualinfinity.atrobots.compiler.AtRobotCompilerOutput;
 import net.virtualinfinity.atrobots.compiler.RobotFactory;
 import net.virtualinfinity.atrobots.network.Server;
+import net.virtualinfinity.atrobots.robot.RobotScore;
 
+import javax.swing.*;
+import javax.swing.table.AbstractTableModel;
+import java.awt.*;
 import java.io.File;
 import java.io.IOException;
 import java.net.ServerSocket;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.concurrent.ExecutionException;
 
 /**
  * TODO: JavaDoc
@@ -20,7 +25,7 @@ import java.util.List;
 public class Main {
 
 
-    public static void main(String[] args) throws InterruptedException, IOException {
+    public static void main(String[] args) throws InterruptedException, IOException, ExecutionException {
         final List<String> realArgs = new ArrayList<String>(Arrays.asList(args));
         final boolean runServer = realArgs.remove("--server");
 
@@ -29,17 +34,24 @@ public class Main {
         for (String arg : realArgs) {
             try {
                 final AtRobotCompilerOutput compile = compiler.compile(getRobotFile(arg));
-                competitors.add(compile.createRobotFactory(arg));
+                String name;
+                if (arg.contains("/")) {
+                    name = arg.substring(arg.indexOf("/") + 1).toLowerCase();
+                } else {
+                    name = arg.toLowerCase();
+                }
+                if (name.endsWith(".at2") || name.endsWith(".atl")) name = name.substring(0, name.length() - 4);
+                competitors.add(compile.createRobotFactory(name));
             } catch (Exception e) {
                 System.out.println(arg + " failed to compile, disqualified. ");
                 e.printStackTrace();
             }
         }
-        final Tournament tournament;
+        final PairTournament tournament;
         if (!runServer) {
-            tournament = new Tournament();
+            tournament = new PairTournament();
         } else {
-            tournament = new Tournament(25);
+            tournament = new PairTournament(25);
             final Server server = new Server(new ServerSocket(2001));
             server.setBuffer(tournament.getFrameBuffer());
             final Thread thread = new Thread(server);
@@ -48,12 +60,47 @@ public class Main {
         }
         tournament.setRoundsPerPairing(10);
         tournament.setCompetitors(competitors);
-        final TournamentResults results = tournament.run();
+        final PairTournamentResults results = tournament.call();
+        EventQueue.invokeLater(new Runnable() {
+            public void run() {
+                final JFrame frame = new JFrame("Tournament Results");
+                frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+                final JTable table = new JTable(new AbstractTableModel() {
+                    public int getRowCount() {
+                        return competitors.size();
+                    }
 
-        System.out.println("Name:\tGames Won\tGames tied\tRounds won");
-        for (TournamentResults.Score score : results.getScores()) {
-            System.out.println(score.getName() + ":\t" + score.getTotalWins() + "\t" + score.getTies() + "\t" + score.getRoundWins());
-        }
+                    public int getColumnCount() {
+                        return competitors.size() + 1;
+                    }
+
+                    public Object getValueAt(int rowIndex, int columnIndex) {
+                        if (columnIndex == 0) {
+                            return competitors.get(rowIndex).getName();
+                        }
+                        if (rowIndex == (columnIndex - 1)) {
+                            return "vs";
+                        }
+                        final RobotFactory scorer = competitors.get(rowIndex);
+                        final RobotFactory opponent = competitors.get(columnIndex - 1);
+                        final RobotScore score = results.getScore(scorer, opponent);
+                        return score == null ? "x" : score.getTotalWins();
+                    }
+
+                    @Override
+                    public String getColumnName(int column) {
+                        return column == 0 ? "vs" : competitors.get(column - 1).getName();
+                    }
+                });
+                frame.getContentPane().add(new JScrollPane(table));
+                frame.pack();
+                frame.setVisible(true);
+            }
+        });
+//        System.out.println("Name:\tGames Won\tGames tied\tRounds won");
+//        for (PairTournamentResults.Score score : results.getScores()) {
+//            System.out.println(score.getName() + ":\t" + score.getTotalWins() + "\t" + score.getTies() + "\t" + score.getRoundWins());
+//        }
     }
 
     private static File getRobotFile(String arg) {

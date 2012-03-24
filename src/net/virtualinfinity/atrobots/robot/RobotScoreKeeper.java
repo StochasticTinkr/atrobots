@@ -1,6 +1,6 @@
 package net.virtualinfinity.atrobots.robot;
 
-public class RobotScoreKeeper implements RobotListener {
+public class RobotScoreKeeper implements RobotListener, RobotScore {
     volatile int totalTies;
     volatile int totalWins;
     volatile int totalKills;

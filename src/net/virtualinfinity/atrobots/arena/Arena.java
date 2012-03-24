@@ -84,13 +84,15 @@ public class Arena {
      * Prepare a snapshot of the current arena state in the {@link FrameBuilder}.
      */
     public void buildFrame() {
-        simulationFrameBuffer.beginFrame(roundOver);
-        for (Collection<? extends ArenaObject> objectCollection : allFramedObjects) {
-            for (ArenaObject object : objectCollection) {
-                simulationFrameBuffer.addObject(object.getSnapshot());
+        if (simulationFrameBuffer != null) {
+            simulationFrameBuffer.beginFrame(roundOver);
+            for (Collection<? extends ArenaObject> objectCollection : allFramedObjects) {
+                for (ArenaObject object : objectCollection) {
+                    simulationFrameBuffer.addObject(object.getSnapshot());
+                }
             }
+            simulationFrameBuffer.endFrame();
         }
-        simulationFrameBuffer.endFrame();
     }
 
     private void updateSimulation() {

@@ -17,7 +17,6 @@ public class RobotFactory {
     private static final int ROBOT_STACK_SIZE = 256;
     private static final int LOWER_MEMORY_BLOCK_SIZE = 1024;
     private static final Debugger DEBUGGER = DebugConsole.create(RobotFactory.getSystemConsole()).getDebugger();
-    private volatile int id;
     protected final String name;
     protected final Program program;
     protected final HardwareSpecification hardwareSpecification;
@@ -47,10 +46,11 @@ public class RobotFactory {
      * @param maxProcessorSpeed
      * @param robotScoreKeeper
      * @param arena
+     * @param robotId
      * @return the robot to enter.
      */
-    public Robot createRobot(RoundState roundState, int maxProcessorSpeed, RobotScoreKeeper robotScoreKeeper, Arena arena) {
-        final Robot robot = new Robot(name, id, robotScoreKeeper);
+    public Robot createRobot(RoundState roundState, int maxProcessorSpeed, RobotScoreKeeper robotScoreKeeper, Arena arena, int robotId) {
+        final Robot robot = new Robot(name, robotId, robotScoreKeeper);
         robot.addRobotListener(robotScoreKeeper);
         final RandomAccessMemoryArray lowerMemoryBlock = new RandomAccessMemoryArray(LOWER_MEMORY_BLOCK_SIZE);
         robot.setComputer(createComputer(lowerMemoryBlock, maxProcessorSpeed));
@@ -80,10 +80,6 @@ public class RobotFactory {
         return Math.max(this.maxProcessorSpeed, maxProcessorSpeed);
     }
 
-    public void setId(int id) {
-        this.id = id;
-    }
-
     public RobotFactory setDebug(boolean debug) {
         this.debug = debug;
         return this;
@@ -91,5 +87,12 @@ public class RobotFactory {
 
     public String getName() {
         return name;
+    }
+
+    @Override
+    public String toString() {
+        return "RobotFactory{" +
+                "name='" + name + '\'' +
+                '}';
     }
 }
