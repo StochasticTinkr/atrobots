@@ -92,7 +92,31 @@ public class Main {
                         return column == 0 ? "vs" : competitors.get(column - 1).getName();
                     }
                 });
-                frame.getContentPane().add(new JScrollPane(table));
+//                frame.getContentPane().add(new JScrollPane(table));
+                final JPanel scorePanel = new JPanel();
+                frame.getContentPane().add(scorePanel);
+                scorePanel.setLayout(new GridLayout(competitors.size(), competitors.size()));
+                for (int y = 0; y < competitors.size(); ++y) {
+                    for (int x = 0; x < competitors.size(); ++x) {
+                        if (x == y) {
+                            scorePanel.add(new JLabel(competitors.get(x).getName()));
+                        } else
+                        if (x < y) {
+                            scorePanel.add(new JComponent(){});
+                        } else {
+                            final RobotScore leftScore = results.getScore(competitors.get(y), competitors.get(x));
+                            final RobotScore rightScore = results.getScore(competitors.get(x), competitors.get(y));
+                            scorePanel.add(new JComponent() {
+                                @Override
+                                protected void paintComponent(Graphics g) {
+                                    g.drawLine(0, getHeight(), getWidth(), 0);
+                                    g.drawString(leftScore.getTotalWins()+"", 0, 0);
+                                    g.drawString(leftScore.getTotalWins()+"", 0, getHeight());
+                                }
+                            });
+                        }
+                    }
+                }
                 frame.pack();
                 frame.setVisible(true);
             }
