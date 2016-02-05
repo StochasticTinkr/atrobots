@@ -23,19 +23,21 @@ public class AtRobotLineLexer {
     public void visitAllLines() throws IOException {
         stopProcessing = false;
         String line;
+        //noinspection NestedAssignment
         while (!(stopProcessing || (line = reader.readLine()) == null)) {
             visitLine(line);
         }
     }
 
-    public void visitLine(String line) throws IOException {
+    public void visitLine(String inputLine) throws IOException {
+        String line = inputLine;
         lineVisitor.appendRawLine(line);
         final int commentStart = line.indexOf(';');
         if (commentStart >= 0) {
             line = line.substring(0, commentStart);
         }
         int i = 0;
-        while (i < line.length() && isSeperator(line.charAt(i))) {
+        while (i < line.length() && isSeparator(line.charAt(i))) {
             ++i;
         }
         line = line.substring(i);
@@ -63,7 +65,7 @@ public class AtRobotLineLexer {
     private void visitLabel(String line) {
         int i = 0;
         while (i < line.length()) {
-            if (isSeperator(line.charAt(i))) {
+            if (isSeparator(line.charAt(i))) {
                 line = line.substring(0, i);
                 break;
             }
@@ -73,14 +75,14 @@ public class AtRobotLineLexer {
     }
 
     private void visitNormalLine(String line) {
-        List<Token> tokens = new ArrayList<Token>(4);
+        final List<Token> tokens = new ArrayList<>(4);
         int i = 0;
         while (i < line.length()) {
-            while (i < line.length() && isSeperator(line.charAt(i))) {
+            while (i < line.length() && isSeparator(line.charAt(i))) {
                 i++;
             }
-            int last = i;
-            while (i < line.length() && !isSeperator(line.charAt(i))) {
+            final int last = i;
+            while (i < line.length() && !isSeparator(line.charAt(i))) {
                 i++;
             }
             if (last != i) {
@@ -90,17 +92,17 @@ public class AtRobotLineLexer {
         lineVisitor.tokenizedLine(tokens, getLineNumber());
     }
 
-    private static boolean isSeperator(char c) {
+    private static boolean isSeparator(char c) {
         return "0123456789ABCDEFGHJIKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz#![]:@*_-$".indexOf(c) < 0;
     }
 
     private void visitMachineCode(String line) {
-        String[] tokens = line.toLowerCase().split("[^0-9h]+");
+        final String[] tokens = line.toLowerCase().split("[^0-9h]+");
         if (tokens.length != 4) {
             lineVisitor.expectedMoreTokens(getLineNumber());
             return;
         }
-        int[] values = new int[4];
+        final int[] values = new int[4];
         for (int i = 0; i < 4; ++i) {
             values[i] = parseNumber(tokens[i]);
             if (values[i] == Integer.MIN_VALUE) {
@@ -111,13 +113,13 @@ public class AtRobotLineLexer {
         lineVisitor.machineCode(values, getLineNumber());
     }
 
-    public static int parseNumber(String token) {
-        int value = 0;
-        final int radix;
+    public static int parseNumber(String inputToken) {
+        String token = inputToken;
         final boolean negative = token.charAt(0) == '-';
         if (negative) {
             token = token.substring(1);
         }
+        final int radix;
         if (token.endsWith("h")) {
             token = token.substring(0, token.length() - 1);
             radix = 16;
@@ -128,6 +130,7 @@ public class AtRobotLineLexer {
             radix = 10;
         }
 
+        int value = 0;
         for (int i = 0; i < token.length(); ++i) {
             final int digit = Character.digit(token.charAt(i), radix);
             if (digit < 0) {
@@ -139,10 +142,10 @@ public class AtRobotLineLexer {
     }
 
     private void visitNumberLabel(String line) {
-        String number = line.substring(1);
+        final String number = line.substring(1);
         int value = 0;
         for (int i = 0; i < number.length(); ++i) {
-            if (isSeperator(number.charAt(i))) {
+            if (isSeparator(number.charAt(i))) {
                 break;
             }
             if (!Character.isDigit(number.charAt(i))) {
@@ -165,20 +168,20 @@ public class AtRobotLineLexer {
 
     }
 
-    private void handleDirective(String line, int i) throws IOException {
-        String directive = line.substring(1, i).toLowerCase();
+    private void handleDirective(String line, int i) {
+        final String directive = line.substring(1, i).toLowerCase();
         if (directive.length() == 0) {
             lineVisitor.expectedDirectiveName(i, getLineNumber());
             return;
         }
-        if (i < line.length() && !isSeperator(line.charAt(i))) {
+        if (i < line.length() && !isSeparator(line.charAt(i))) {
             lineVisitor.unexpectedCharacter(i, getLineNumber());
         }
-        while (i < line.length() && isSeperator(line.charAt(i))) {
+        while (i < line.length() && isSeparator(line.charAt(i))) {
             ++i;
         }
         final int start = i;
-        if (directive.equals("def")) {
+        if ("def".equals(directive)) {
 
             while (i < line.length()) {
                 if (!isValidVariableNameChar(line.charAt(i))) {
@@ -190,7 +193,7 @@ public class AtRobotLineLexer {
             lineVisitor.defineVariable(line.substring(start).toLowerCase(), getLineNumber());
             return;
         }
-        if (directive.equals("time")) {
+        if ("time".equals(directive)) {
             while (i < line.length()) {
                 if (!Character.isDigit(line.charAt(i))) {
                     lineVisitor.expectedDigit(i, getLineNumber());
@@ -201,16 +204,16 @@ public class AtRobotLineLexer {
             lineVisitor.maxProcessorSpeed(Integer.parseInt(line.substring(start)));
             return;
         }
-        if (directive.equals("msg")) {
+        if ("msg".equals(directive)) {
             lineVisitor.setMessage(line.substring(i));
             return;
         }
-        if (directive.equals("config")) {
+        if ("config".equals(directive)) {
             while (i < line.length()) {
                 if (line.charAt(i) == '=') {
-                    String name = line.substring(start, i);
-                    int valueStart = ++i;
-                    while (i < line.length() && !isSeperator(line.charAt(i))) {
+                    final String name = line.substring(start, i);
+                    final int valueStart = ++i;
+                    while (i < line.length() && !isSeparator(line.charAt(i))) {
                         if (!Character.isDigit(line.charAt(i))) {
                             lineVisitor.expectedDigit(i, getLineNumber());
                             return;
@@ -228,7 +231,7 @@ public class AtRobotLineLexer {
             }
             return;
         }
-        if (directive.equals("end")) {
+        if ("end".equals(directive)) {
             stopProcessing();
             return;
         }

@@ -16,7 +16,7 @@ public class RobotFactory {
 
     private static final int ROBOT_STACK_SIZE = 256;
     private static final int LOWER_MEMORY_BLOCK_SIZE = 1024;
-    private static final Debugger DEBUGGER = DebugConsole.create(RobotFactory.getSystemConsole()).getDebugger();
+    private static final DebugListener DEBUGGER = DebugConsole.create(RobotFactory.getSystemConsole()).getDebugger();
     protected final String name;
     protected final Program program;
     protected final HardwareSpecification hardwareSpecification;
@@ -36,19 +36,10 @@ public class RobotFactory {
     }
 
     private static Console getSystemConsole() {
+        //noinspection UseOfSystemOutOrSystemErr
         return new ConsoleImpl(new ReaderConsoleInput(System.in), new PrintStreamConsoleOutput(System.out), new PrintStreamConsoleOutput(System.err));
     }
 
-    /**
-     * Create a robot.
-     *
-     * @param roundState
-     * @param maxProcessorSpeed
-     * @param robotScoreKeeper
-     * @param arena
-     * @param robotId
-     * @return the robot to enter.
-     */
     public Robot createRobot(RoundState roundState, int maxProcessorSpeed, RobotScoreKeeper robotScoreKeeper, Arena arena, int robotId) {
         final Robot robot = new Robot(name, robotId, robotScoreKeeper);
         robot.addRobotListener(robotScoreKeeper);

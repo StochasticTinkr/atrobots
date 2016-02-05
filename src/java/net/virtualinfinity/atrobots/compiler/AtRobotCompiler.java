@@ -9,9 +9,6 @@ import java.io.*;
  */
 public class AtRobotCompiler {
 
-    public AtRobotCompiler() {
-    }
-
     /**
      * Compile the specific file.
      *
@@ -20,11 +17,8 @@ public class AtRobotCompiler {
      * @throws IOException if there is a problem reading from the file.
      */
     public AtRobotCompilerOutput compile(File sourceFile) throws IOException {
-        final InputStream in = new FileInputStream(sourceFile);
-        try {
+        try (InputStream in = new FileInputStream(sourceFile)) {
             return compile(in);
-        } finally {
-            in.close();
         }
     }
 
@@ -36,11 +30,8 @@ public class AtRobotCompiler {
      * @throws IOException if there is a problem reading from the stream.
      */
     public AtRobotCompilerOutput compile(InputStream in) throws IOException {
-        final Reader reader = new InputStreamReader(in);
-        try {
+        try (Reader reader = new InputStreamReader(in)) {
             return compile(reader);
-        } finally {
-            reader.close();
         }
     }
 
@@ -55,11 +46,8 @@ public class AtRobotCompiler {
         if (in instanceof LineNumberReader) {
             return compile((LineNumberReader) in);
         }
-        final LineNumberReader reader = new LineNumberReader(in);
-        try {
+        try (LineNumberReader reader = new LineNumberReader(in)) {
             return compile(reader);
-        } finally {
-            reader.close();
         }
     }
 

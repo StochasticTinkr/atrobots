@@ -26,13 +26,13 @@ public class ConsoleImpl implements Console {
         try {
             println("> ");
             return input.readLine();
-        } catch (IOException e) {
+        } catch (final IOException e) {
             println("IO Exception handling debug command: " + e.getLocalizedMessage());
         }
         return null;
     }
 
     public void handleException(Exception e) {
-        error.handleExceptione(e);
+        error.handleException(e);
     }
 }

@@ -39,7 +39,7 @@ public class AtRobotPortFactory {
     }
 
     public Map<Integer, PortHandler> createPortHandlers(Robot robot) {
-        final Map<Integer, PortHandler> ports = new HashMap<Integer, PortHandler>();
+        final Map<Integer, PortHandler> ports = new HashMap<>();
         mapPort(ports, SPEDOMETER, robot.getThrottle().getSpedometer());
         mapPort(ports, HEAT, getTemperatureSensor(robot.getHeatSinks()));
         mapPort(ports, COMPASS, getCompass(robot));
@@ -65,7 +65,7 @@ public class AtRobotPortFactory {
         mapPort(ports, MINETRIGGER, robot.getMineLayer().getPlacedMinePort());
         mapPort(ports, SHIELD, robot.getShield().getLatch());
         connectPortHandlers(ports.values(), robot.getComputer());
-        return new MapWithDefaultValue<Integer, PortHandler>(Collections.unmodifiableMap(ports), robot.getComputer().createDefaultPortHandler());
+        return new MapWithDefaultValue<>(Collections.unmodifiableMap(ports), robot.getComputer().createDefaultPortHandler());
     }
 
     private PortHandler getTransponderLatchPort(final Transponder transponder) {
@@ -92,10 +92,8 @@ public class AtRobotPortFactory {
         return getCompass(hasHeading.getHeading());
     }
 
-    private void connectPortHandlers(Collection<PortHandler> collection, PortListener portListener) {
-        for (PortHandler handler : collection) {
-            handler.setPortListener(portListener);
-        }
+    private void connectPortHandlers(Iterable<PortHandler> collection, PortListener portListener) {
+        collection.forEach(handler -> handler.setPortListener(portListener));
     }
 
     private void mapPort(Map<Integer, PortHandler> ports, AtRobotPort port, PortHandler portHandler) {

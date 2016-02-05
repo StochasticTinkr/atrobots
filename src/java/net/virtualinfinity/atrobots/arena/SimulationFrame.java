@@ -16,7 +16,7 @@ public class SimulationFrame {
     private final Collection<ArenaObjectSnapshot> allObjects;
     private final Collection<RobotSnapshot> robots;
     private final boolean roundOver;
-    private SnapshotVisitor robotFilter = new SnapshotAdaptor() {
+    private final SnapshotVisitor robotFilter = new SnapshotAdaptor() {
         @Override
         public void acceptRobot(RobotSnapshot robotSnapshot) {
             SimulationFrame.this.robots.add(robotSnapshot);
@@ -30,15 +30,11 @@ public class SimulationFrame {
     }
 
     public void visitAll(SnapshotVisitor visitor) {
-        for (ArenaObjectSnapshot snapshot : allObjects) {
-            snapshot.visit(visitor);
-        }
+        allObjects.forEach(snapshot -> snapshot.visit(visitor));
     }
 
     public void visitRobots(SnapshotVisitor visitor) {
-        for (RobotSnapshot snapshot : robots) {
-            snapshot.visit(visitor);
-        }
+        robots.forEach(snapshot -> snapshot.visit(visitor));
     }
 
     void add(ArenaObjectSnapshot snapshot) {
@@ -49,7 +45,6 @@ public class SimulationFrame {
     public Collection<ArenaObjectSnapshot> getAllObjects() {
         return allObjects;
     }
-
 
     public boolean isRoundOver() {
         return roundOver;

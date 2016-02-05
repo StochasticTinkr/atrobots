@@ -31,13 +31,12 @@ public class SimulationClientWorker extends FrameBuilder implements Runnable {
                 final String roundOver = reader.readLine();
                 beginFrame("true".equals(roundOver));
                 final Collection<ArenaObjectSnapshot> snapshots = new JsonToSnapshots().getSnapshots(new JSONArray(reader.readLine()));
-                for (ArenaObjectSnapshot snapshot : snapshots) {
+                for (final ArenaObjectSnapshot snapshot : snapshots) {
                     addObject(snapshot);
                 }
                 endFrame();
             }
-        } catch (IOException e) {
-        } catch (JSONException e) {
+        } catch (IOException | JSONException ignored) {
         }
     }
 }

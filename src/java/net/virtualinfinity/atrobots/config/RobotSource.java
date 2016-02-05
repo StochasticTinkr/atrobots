@@ -12,7 +12,7 @@ import java.io.IOException;
  * @author Daniel Pitts
  */
 public abstract class RobotSource {
-    private AtRobotCompiler compiler = new AtRobotCompiler();
+    private final AtRobotCompiler compiler = new AtRobotCompiler();
 
     public final String getName() {
         return getDefaultName();

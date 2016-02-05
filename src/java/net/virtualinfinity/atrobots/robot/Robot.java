@@ -28,7 +28,7 @@ import net.virtualinfinity.atrobots.snapshots.ArenaObjectSnapshot;
 import net.virtualinfinity.atrobots.snapshots.RobotSnapshot;
 
 import java.util.ArrayList;
-import java.util.List;
+import java.util.Collection;
 
 /**
  * @author Daniel Pitts
@@ -49,16 +49,15 @@ public class Robot extends TangibleArenaObject implements Resettable, HasHeading
     private Armor armor;
     private Radar radar;
     private Sonar sonar;
-    private Temperature shutdownLevel;
     private MineLayer mineLayer;
     private Shield shield;
     private boolean overburn;
     private HardwareBus hardwareBus;
     private static final RelativeAngle STEERING_SPEED = RelativeAngle.fromBygrees(8);
     private final Position oldPosition = new Position();
-    private int roundKills;
-    private final List<RobotListener> robotListeners = new ArrayList<RobotListener>();
+    private final Collection<RobotListener> robotListeners = new ArrayList<>();
     private final Heading desiredHeading = new Heading(heading.getAngle());
+    private int roundKills;
 
     {
         position.setOdometer(odometer);
@@ -240,10 +239,6 @@ public class Robot extends TangibleArenaObject implements Resettable, HasHeading
         this.shield = shield;
     }
 
-    public HardwareBus getHardwareBus() {
-        return hardwareBus;
-    }
-
     public void setHardwareBus(HardwareBus hardwareBus) {
         this.hardwareBus = hardwareBus;
     }
@@ -269,7 +264,7 @@ public class Robot extends TangibleArenaObject implements Resettable, HasHeading
     }
 
     private RobotScanResult doScan(AngleBracket angleBracket, double maxDistance, boolean calculateAccuracy) {
-        Position position = getPosition();
+        final Position position = getPosition();
         final RobotScanner robotScanner = new RobotScanner(this, position, angleBracket, maxDistance, calculateAccuracy);
         getArena().visitActiveRobots(robotScanner);
         final RobotScanResult scanResult = robotScanner.toScanResult();
@@ -333,9 +328,7 @@ public class Robot extends TangibleArenaObject implements Resettable, HasHeading
 
     public void armorDepleted() {
         if (!isDead()) {
-            for (RobotListener listener : robotListeners) {
-                listener.died(this);
-            }
+            robotListeners.forEach(listener -> listener.died(this));
             die();
             getArena().explosion(this, new LinearDamageFunction(position, isOverburn() ? 1.3 : 1, 25.0));
         }
@@ -379,28 +372,21 @@ public class Robot extends TangibleArenaObject implements Resettable, HasHeading
     }
 
     public void winRound() {
-        for (RobotListener listener : robotListeners) {
-            listener.wonRound(this);
-        }
+        robotListeners.forEach(listener -> listener.wonRound(this));
     }
 
     public void tieRound() {
-        for (RobotListener listener : robotListeners) {
-            listener.tiedRound(this);
-        }
+        robotListeners.forEach(listener -> listener.tiedRound(this));
     }
 
     public void killedRobot() {
-        for (RobotListener listener : robotListeners) {
-            listener.killedRobot(this);
-        }
+        roundKills++;
+        robotListeners.forEach(listener -> listener.killedRobot(this));
     }
 
     public void inflictedDamage(double amount) {
         lastDamageGiven = getArena().getRoundTimer().getTime();
-        for (RobotListener listener : robotListeners) {
-            listener.inflictedDamage(this, amount);
-        }
+        robotListeners.forEach(listener -> listener.inflictedDamage(this, amount));
     }
 
     public String getName() {

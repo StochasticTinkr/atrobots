@@ -13,8 +13,8 @@ import java.util.concurrent.LinkedBlockingDeque;
  * @author Daniel Pitts
  */
 public class Debugger implements DebugListener {
-    private final BlockingQueue<Command> afterBreakpointCommandQueue = new LinkedBlockingDeque<Command>();
-    private final BlockingQueue<Command> commandQueue = new LinkedBlockingDeque<Command>();
+    private final BlockingQueue<Command> afterBreakpointCommandQueue = new LinkedBlockingDeque<>();
+    private final BlockingQueue<Command> commandQueue = new LinkedBlockingDeque<>();
     private BreakpointHandler breakpointHandler;
 
     private volatile boolean allPaused;
@@ -26,7 +26,7 @@ public class Debugger implements DebugListener {
         allPaused = true;
     }
 
-    private final Map<Integer, EntrantState> entrantStates = new HashMap<Integer, EntrantState>();
+    private final Map<Integer, EntrantState> entrantStates = new HashMap<>();
 
     protected EntrantState getEntrantState(Computer computer) {
         return getEntrantState(computer.getId());
@@ -86,10 +86,6 @@ public class Debugger implements DebugListener {
         this.defaultEntrant = defaultEntrant;
     }
 
-    public void clearDefaultEntrant() {
-        this.defaultEntrant = null;
-    }
-
     public boolean hasDefaultEntrant() {
         return defaultEntrant != null;
     }
@@ -104,21 +100,23 @@ public class Debugger implements DebugListener {
 
     public void beforeInstruction(Computer computer) {
         try {
-            final Collection<Command> commands = new ArrayList<Command>();
-            commandQueue.drainTo(commands);
-            for (Command command : commands) {
-                command.execute(computer);
-            }
+            getQueuedCommands().forEach(command -> command.execute(computer));
             wasAllPaused = isAllPaused();
             if (isBreakpoint(computer) || isPaused(computer)) {
                 clearPaused(computer);
                 getBreakpointHandler().handleBreakpoint(computer);
                 waitForCommandAfterBreakpoint(computer);
             }
-        } catch (InterruptedException e) {
+        } catch (final InterruptedException e) {
             Thread.interrupted();
             e.printStackTrace();
         }
+    }
+
+    private Iterable<Command> getQueuedCommands() {
+        final Collection<Command> commands = new ArrayList<>();
+        commandQueue.drainTo(commands);
+        return commands;
     }
 
     private void waitForCommandAfterBreakpoint(Computer computer) throws InterruptedException {
@@ -128,40 +126,28 @@ public class Debugger implements DebugListener {
         }
     }
 
-    public void pause(final int enrantId) throws InterruptedException {
-        invokeLater(new Command() {
-            public void execute(Computer computer) {
-                doPause(enrantId);
-            }
-        });
+    public void pause(final int entrantId) throws InterruptedException {
+        invokeLater(computer -> doPause(entrantId));
     }
 
     public void pauseAll() throws InterruptedException {
-        invokeLater(new Command() {
-            public void execute(Computer computer) {
-                doPauseAll();
-            }
-        });
+        invokeLater(computer -> doPauseAll());
     }
 
     public void go() throws InterruptedException {
-        invokeOnBreakpoint(new Command() {
-            public void execute(Computer computer) {
-                inBreakpoint = false;
-                clearPaused(computer);
-            }
+        invokeOnBreakpoint(computer -> {
+            inBreakpoint = false;
+            clearPaused(computer);
         });
     }
 
     public void step() throws InterruptedException {
-        invokeOnBreakpoint(new Command() {
-            public void execute(Computer computer) throws InterruptedException {
-                inBreakpoint = false;
-                if (wasAllPaused) {
-                    doPauseAll();
-                } else {
-                    doPause(computer);
-                }
+        invokeOnBreakpoint(computer -> {
+            inBreakpoint = false;
+            if (wasAllPaused) {
+                doPauseAll();
+            } else {
+                doPause(computer);
             }
         });
     }
@@ -182,36 +168,20 @@ public class Debugger implements DebugListener {
     }
 
     public void clearBreakpoint() throws InterruptedException {
-        invokeOnBreakpoint(new Command() {
-            public void execute(Computer computer) {
-                getEntrantState(computer).removeBreakpoint(computer.getInstructionPointer());
-            }
-        });
+        invokeOnBreakpoint(computer -> getEntrantState(computer).removeBreakpoint(computer.getInstructionPointer()));
 
     }
 
     public void clearBreakpoint(final int instructionPointer) throws InterruptedException {
-        invokeLater(new Command() {
-            public void execute(Computer computer) {
-                getDefaultEntrantState(computer).removeBreakpoint(instructionPointer);
-            }
-        });
+        invokeLater(computer -> getDefaultEntrantState(computer).removeBreakpoint(instructionPointer));
     }
 
     public void setBreakpoint() throws InterruptedException {
-        invokeOnBreakpoint(new Command() {
-            public void execute(Computer computer) {
-                getEntrantState(computer).setBreakpoint(computer.getInstructionPointer());
-            }
-        });
+        invokeOnBreakpoint(computer -> getEntrantState(computer).setBreakpoint(computer.getInstructionPointer()));
     }
 
     public void setBreakpoint(final int instructionPointer) throws InterruptedException {
-        invokeLater(new Command() {
-            public void execute(Computer computer) {
-                getDefaultEntrantState(computer).setBreakpoint(instructionPointer);
-            }
-        });
+        invokeLater(computer -> getDefaultEntrantState(computer).setBreakpoint(instructionPointer));
     }
 
     private EntrantState getDefaultEntrantState(Computer computer) {
@@ -219,15 +189,11 @@ public class Debugger implements DebugListener {
     }
 
     public void resetDefaultEntrant() throws InterruptedException {
-        invokeLater(new Command() {
-            public void execute(Computer computer) throws InterruptedException {
-                setDefaultEntrant(computer.getId());
-            }
-        });
+        invokeLater(computer -> setDefaultEntrant(computer.getId()));
     }
 
     protected static class EntrantState {
-        private Set<Integer> breakpoints = new HashSet<Integer>();
+        private final Collection<Integer> breakpoints = new HashSet<>();
         private boolean paused;
 
         public boolean isBreakpoint(Computer computer) {
@@ -255,8 +221,8 @@ public class Debugger implements DebugListener {
         }
     }
 
-    protected static interface Command {
-        void execute(Computer computer) throws InterruptedException;
+    protected interface Command {
+        void execute(Computer computer);
     }
 
 

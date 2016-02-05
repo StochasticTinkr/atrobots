@@ -10,7 +10,7 @@ public abstract class AbstractConditionalJumpInstruction extends Instruction {
         super(baseExecutionCost);
     }
 
-    final protected void perform(Computer computer) {
+    protected final void perform(Computer computer) {
         if (conditionMet(computer.getFlags())) {
             computer.jump();
         }

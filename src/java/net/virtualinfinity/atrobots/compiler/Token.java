@@ -42,9 +42,9 @@ public abstract class Token {
         return new Name(token);
     }
 
-    abstract public short getValue(Map<String, Symbol> symbols);
+    public abstract short getValue(Map<String, Symbol> symbols);
 
-    abstract public short getMicrocode(Map<String, Symbol> symbols);
+    public abstract short getMicrocode(Map<String, Symbol> symbols);
 
     public boolean isUnresolved(Map<String, Symbol> symbols) {
         return false;
@@ -75,7 +75,7 @@ public abstract class Token {
     }
 
     private static class Constant extends Token {
-        private int value;
+        private final int value;
 
         public Constant(int value) {
             this.value = value;
@@ -112,8 +112,6 @@ public abstract class Token {
         }
 
         public boolean isUnresolved(Map<String, Symbol> symbols) {
-            int old = 0x481;
-            int n = 0x488;
             return !symbols.containsKey(name);
         }
 

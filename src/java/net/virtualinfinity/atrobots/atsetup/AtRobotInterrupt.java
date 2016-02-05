@@ -31,7 +31,7 @@ public enum AtRobotInterrupt implements AtRobotSymbol {
     KILLS(18, "DEATHS"),
     CLEARMETERS(19),;
     private static final String INTERRUPT_PREFIX = "I_";
-    private static AtRobotInterrupt[] byValue = new AtRobotInterrupt[values().length];
+    private static final AtRobotInterrupt[] byValue = new AtRobotInterrupt[values().length];
     /**
      * The interrupt number.
      */
@@ -43,7 +43,7 @@ public enum AtRobotInterrupt implements AtRobotSymbol {
     public final Collection<String> names;
 
     static {
-        for (AtRobotInterrupt instruction : values()) {
+        for (final AtRobotInterrupt instruction : values()) {
             if (byValue[instruction.interruptNumber] != null) {
                 throw new IllegalStateException();
             }
@@ -51,12 +51,12 @@ public enum AtRobotInterrupt implements AtRobotSymbol {
         }
     }
 
-    private AtRobotInterrupt(int interruptNumber) {
+    AtRobotInterrupt(int interruptNumber) {
         this.interruptNumber = interruptNumber;
         this.names = Collections.singleton(INTERRUPT_PREFIX + name());
     }
 
-    private AtRobotInterrupt(int interruptNumber, String alternate) {
+    AtRobotInterrupt(int interruptNumber, String alternate) {
         this.interruptNumber = interruptNumber;
         this.names = Collections.unmodifiableCollection(Arrays.asList(INTERRUPT_PREFIX + name(), INTERRUPT_PREFIX + alternate));
     }

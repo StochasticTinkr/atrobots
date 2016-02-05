@@ -45,17 +45,17 @@ public enum AtRobotPort implements AtRobotSymbol {
 
     private static final String PORT_SYMBOL_PREFIX = "P_";
 
-    private AtRobotPort(int portNumber) {
+    AtRobotPort(int portNumber) {
         this.portNumber = portNumber;
         names = Collections.singleton(PORT_SYMBOL_PREFIX + name());
     }
 
-    private AtRobotPort(int portNumber, String alternateName) {
+    AtRobotPort(int portNumber, String alternateName) {
         this.portNumber = portNumber;
         names = Collections.unmodifiableCollection(Arrays.asList(PORT_SYMBOL_PREFIX + name(), PORT_SYMBOL_PREFIX + alternateName));
     }
 
-    private AtRobotPort(int portNumber, String alternateName1, String alternateName2) {
+    AtRobotPort(int portNumber, String alternateName1, String alternateName2) {
         this.portNumber = portNumber;
         names = Collections.unmodifiableCollection(Arrays.asList(PORT_SYMBOL_PREFIX + name(), PORT_SYMBOL_PREFIX + alternateName1, PORT_SYMBOL_PREFIX + alternateName2));
     }
@@ -67,7 +67,7 @@ public enum AtRobotPort implements AtRobotSymbol {
      * @return the name() of the corresponding port, or "&lt;unknown>" if there is none.
      */
     public static String nameOf(short portNumber) {
-        for (AtRobotPort port : values()) {
+        for (final AtRobotPort port : values()) {
             if (port.portNumber == portNumber) {
                 return PORT_SYMBOL_PREFIX + port.name();
             }

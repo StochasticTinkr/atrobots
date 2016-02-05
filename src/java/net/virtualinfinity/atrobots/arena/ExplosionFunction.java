@@ -9,7 +9,7 @@ import net.virtualinfinity.atrobots.measures.Vector;
  * @author Daniel Pitts
  */
 public abstract class ExplosionFunction {
-    public void inflictDamage(DamageInflicter cause, TangibleArenaObject robot) {
+    public final void inflictDamage(DamageInflicter cause, TangibleArenaObject robot) {
         final double amount = getDamageAmount(robot);
         if (amount > 0) {
             robot.inflictDamage(cause, amount);

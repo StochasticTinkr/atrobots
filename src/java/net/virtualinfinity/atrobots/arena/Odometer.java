@@ -7,7 +7,7 @@ import net.virtualinfinity.atrobots.computer.Resettable;
  * @author Daniel Pitts
  */
 public class Odometer implements Resettable {
-    private double distance = (0);
+    private double distance;
 
     public void setDistance(double distance) {
         this.distance = distance;
@@ -18,7 +18,7 @@ public class Odometer implements Resettable {
     }
 
     public void reset() {
-        distance = (0);
+        distance = 0;
     }
 
     public double getDistance() {

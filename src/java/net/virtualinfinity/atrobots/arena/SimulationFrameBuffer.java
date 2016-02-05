@@ -9,7 +9,7 @@ import java.util.Collection;
  * @author <a href='mailto:daniel.pitts@cbs.com'>Daniel Pitts</a>
  */
 public class SimulationFrameBuffer {
-    protected Collection<SimulationObserver> observers = new ArrayList<SimulationObserver>();
+    protected final Collection<SimulationObserver> observers = new ArrayList<SimulationObserver>();
     protected volatile SimulationFrame currentFrame;
 
     public SimulationFrame getCurrentFrame() {
@@ -31,9 +31,7 @@ public class SimulationFrameBuffer {
     protected void setFrame(SimulationFrame frame) {
         currentFrame = frame;
         synchronized (observers) {
-            for (SimulationObserver observer : observers) {
-                observer.frameAvailable(SimulationFrameBuffer.this);
-            }
+            observers.forEach(observer -> observer.frameAvailable(this));
         }
     }
 }

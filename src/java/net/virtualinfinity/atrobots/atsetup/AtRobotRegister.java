@@ -26,7 +26,7 @@ public enum AtRobotRegister implements AtRobotSymbol {
      */
     public final int address;
 
-    private AtRobotRegister(int address) {
+    AtRobotRegister(int address) {
         this.address = address;
     }
 

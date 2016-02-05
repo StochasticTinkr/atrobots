@@ -6,10 +6,10 @@ import net.virtualinfinity.atrobots.arena.SimulationObserver;
 import net.virtualinfinity.atrobots.compiler.RobotFactory;
 import net.virtualinfinity.atrobots.robot.FinalRobotScore;
 import net.virtualinfinity.atrobots.robot.Robot;
-import net.virtualinfinity.atrobots.robot.RobotScore;
 import net.virtualinfinity.atrobots.robot.RobotScoreKeeper;
 
 import java.util.*;
+import java.util.stream.Collectors;
 
 /**
  * This class coordinates rounds, entrants, and the simulation frame buffer.
@@ -20,12 +20,11 @@ public class Game implements RoundListener {
     private RoundState roundState;
     private Round round;
     private int roundNumber = 0;
-    private int totalRounds;
+    private final int totalRounds;
     private int maxProcessorSpeed = 5;
     private final FrameBuilder frameBuffer;
-    private final List<RobotFactory> entrants = Collections.synchronizedList(new ArrayList<RobotFactory>());
-    private int nextEntrantId;
-    private final Map<RobotFactory, RobotScoreKeeper> scoreKeepers = new IdentityHashMap<RobotFactory, RobotScoreKeeper>();
+    private final List<RobotFactory> entrants = Collections.synchronizedList(new ArrayList<>());
+    private final Map<RobotFactory, RobotScoreKeeper> scoreKeepers = new IdentityHashMap<>();
 
     public Game(int totalRounds) {
         this(totalRounds, new FrameBuilder());
@@ -100,21 +99,15 @@ public class Game implements RoundListener {
         return robotScoreKeeper;
     }
 
-    private RobotScore getFinalRobotScore(RobotFactory entrant) {
-        final RobotScoreKeeper robotScoreKeeper = scoreKeepers.get(entrant);
-        if (robotScoreKeeper == null) {
-            throw new IllegalArgumentException("Entrant did not participate in this game, so you can't get its final score.");
-        }
-        return FinalRobotScore.copyOf(getScoreKeeper(entrant));
-    }
-
     public GameResult getFinalResults() {
-        List<RobotGameResult> results = new ArrayList<RobotGameResult>();
-        for (Map.Entry<RobotFactory, RobotScoreKeeper> robots : scoreKeepers.entrySet()) {
-            results.add(new RobotGameResult(robots.getKey(), FinalRobotScore.copyOf(robots.getValue())));
-        }
-        Collections.sort(results);
-        return new GameResult(results);
+        return new GameResult(
+            scoreKeepers
+                .entrySet()
+                .stream()
+                .map(robots -> new RobotGameResult(robots.getKey(), FinalRobotScore.copyOf(robots.getValue())))
+                .sorted()
+                .collect(Collectors.toCollection(ArrayList::new))
+        );
     }
 
     /**

@@ -76,7 +76,8 @@ public class HardwareSpecification {
                 chooseFor(ARMOR, 1.33, 1.20, 1.00, 0.85, 0.75, 0.66));
     }
 
-    private <T> T chooseFor(String name, T... values) {
+    @SafeVarargs
+    private final <T> T chooseFor(String name, T... values) {
         return values[Math.max(0, Math.min(configs.get(name), values.length))];
     }
 

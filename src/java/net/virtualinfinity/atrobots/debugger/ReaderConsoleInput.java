@@ -14,8 +14,8 @@ public class ReaderConsoleInput implements ConsoleInput {
         this(new InputStreamReader(in));
     }
 
-    public ReaderConsoleInput(Reader readfer) {
-        this(new BufferedReader(readfer));
+    public ReaderConsoleInput(Reader reader) {
+        this(new BufferedReader(reader));
     }
 
     public ReaderConsoleInput(BufferedReader reader) {

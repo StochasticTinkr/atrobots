@@ -9,18 +9,18 @@ import java.io.LineNumberReader;
 import java.util.*;
 
 /**
- * A line-lexer visiter which creates a compiled output.
+ * A line-lexer visitor which creates a compiled output.
  *
  * @author Daniel Pitts
  */
 public class LineNumberReaderCompiler {
     private final Errors errors = new Errors();
-    private final List<Short> programCode = new ArrayList<Short>();
-    private final Map<String, Symbol> symbols = new HashMap<String, Symbol>();
-    private final Collection<UnresolvedToken> unresolved = new ArrayList<UnresolvedToken>();
-    private final Map<String, Integer> configs = new HashMap<String, Integer>();
-    private final List<String> lines = new ArrayList<String>();
-    private final List<Integer> instructionLineNumber = new ArrayList<Integer>();
+    private final List<Short> programCode = new ArrayList<>();
+    private final Map<String, Symbol> symbols = new HashMap<>();
+    private final Collection<UnresolvedToken> unresolved = new ArrayList<>();
+    private final Map<String, Integer> configs = new HashMap<>();
+    private final List<String> lines = new ArrayList<>();
+    private final Collection<Integer> instructionLineNumber = new ArrayList<>();
     private final DebugInfo debugInfo = new DebugInfo();
     private int variables;
     private String message = "";
@@ -62,10 +62,10 @@ public class LineNumberReaderCompiler {
     }
 
     private void addConstants(AtRobotSymbol[] values, short microcode) {
-        for (AtRobotSymbol symbol : values) {
-            for (String name : symbol.getSymbolNames()) {
-                addSymbol(name, microcode, symbol.getSymbolValue(), BUILT_IN_SYMBOL_LINENUMBER);
-            }
+        for (final AtRobotSymbol symbol : values) {
+            symbol.getSymbolNames().forEach(
+                name -> addSymbol(name, microcode, symbol.getSymbolValue(), BUILT_IN_SYMBOL_LINENUMBER)
+            );
         }
     }
 
@@ -124,7 +124,7 @@ public class LineNumberReaderCompiler {
 
 
         public void machineCode(int[] values, int lineNumber) {
-            for (int value : values) {
+            for (final int value : values) {
                 programCode.add((short) value);
             }
             alignProgram();
@@ -179,36 +179,28 @@ public class LineNumberReaderCompiler {
     }
 
     public void resolve() {
-        int sum = 0;
-        for (int value : configs.values()) {
-            sum += value;
-        }
+        final int sum = configs.values().stream().mapToInt(Integer::intValue).sum();
         if (sum > 12) {
             errors.info("Config points too high. " + sum + " out of a max of 12.");
         }
-        for (UnresolvedToken entry : unresolved) {
-            if (!entry.getToken().isUnresolved(symbols)) {
-                resolve(entry.getAddress(), entry.getToken());
-            } else {
-                errors.add("Unresolved symbol: " + entry.getToken().toString(), entry.getToken().getLineNumber());
-            }
+
+        unresolved.forEach(this::tryResolve);
+    }
+
+    private void tryResolve(UnresolvedToken entry) {
+        if (!entry.getToken().isUnresolved(symbols)) {
+            resolve(entry.getAddress(), entry.getToken());
+        } else {
+            errors.add("Unresolved symbol: " + entry.getToken().toString(), entry.getToken().getLineNumber());
         }
     }
 
     private Program createProgram() {
-        if (hasErrors()) {
-            return null;
-        } else {
-            return new Program(getProgramCode());
-        }
+        return hasErrors() ? null : new Program(getProgramCode());
     }
 
     private HardwareSpecification createHardwareSpecification() {
-        if (hasErrors()) {
-            return null;
-        } else {
-            return new HardwareSpecification(configs);
-        }
+        return hasErrors() ? null : new HardwareSpecification(configs);
     }
 
     public AtRobotCompilerOutput createCompilerOutput() {
@@ -236,10 +228,8 @@ public class LineNumberReaderCompiler {
         programCode.set(programCode.size() - 1, getMicrocodeFor(tokens));
     }
 
-    private void addTokensToProgram(List<Token> tokens) {
-        for (Token token : tokens) {
-            addTokenToProgram(token);
-        }
+    private void addTokensToProgram(Iterable<Token> tokens) {
+        tokens.forEach(this::addTokenToProgram);
     }
 
     private void addTokenToProgram(Token token) {
@@ -251,7 +241,7 @@ public class LineNumberReaderCompiler {
 
     private short getMicrocodeFor(List<Token> tokens) {
         short microcode = 0;
-        for (ListIterator<Token> iterator = tokens.listIterator(tokens.size()); iterator.hasPrevious(); ) {
+        for (final ListIterator<Token> iterator = tokens.listIterator(tokens.size()); iterator.hasPrevious(); ) {
             microcode = (short) ((microcode << 4) | iterator.previous().getMicrocode(symbols));
         }
         return microcode;
@@ -276,17 +266,17 @@ public class LineNumberReaderCompiler {
 
     private void adjustMicrocode(int address, Token token) {
         final int microcodeIndex = address | 3;
-        programCode.set(microcodeIndex, replaceMicrocdeNibble(address & 3, programCode.get(microcodeIndex), token.getMicrocode(symbols)));
+        programCode.set(microcodeIndex, replaceMicrocodeNibble(address & 3, programCode.get(microcodeIndex), token.getMicrocode(symbols)));
     }
 
-    private short replaceMicrocdeNibble(int opNumber, short oldMicrocode, short nibble) {
+    private short replaceMicrocodeNibble(int opNumber, short oldMicrocode, short nibble) {
         return (short) ((oldMicrocode & (0xFFFF0FFF >> ((3 - opNumber) << 2))) | ((nibble & 0xF) << (opNumber << 2)));
     }
 
     private short[] getProgramCode() {
         final short[] programCode = new short[this.programCode.size()];
         int i = 0;
-        for (short value : this.programCode) {
+        for (final short value : this.programCode) {
             programCode[i++] = value;
         }
         return programCode;

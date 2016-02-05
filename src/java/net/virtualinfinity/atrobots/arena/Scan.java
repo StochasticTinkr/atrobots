@@ -30,9 +30,7 @@ public class Scan extends ArenaObject {
     }
 
     protected ArenaObjectSnapshot createSpecificSnapshot() {
-        ScanSnapshot objectSnapshot = new ScanSnapshot(angleBracket, maxDistance, successful, matchPositionVector, accuracyAvailable, accuracy);
-        objectSnapshot.setPositionVector(position.getVector());
-        return objectSnapshot;
+        return new ScanSnapshot(angleBracket, maxDistance, successful, matchPositionVector, accuracyAvailable, accuracy);
     }
 
 

@@ -55,7 +55,7 @@ public class Position {
 
     public static Position random(double lowerX, double lowerY, double higherX, double higherY) {
         final Position position = new Position();
-        Random random = new Random();
+        final Random random = new Random();
         position.vector = Vector.createCartesian(
                 (lowerX + random.nextDouble() * (higherX - lowerX)),
                 (lowerY + random.nextDouble() * (higherY - lowerY)));

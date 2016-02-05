@@ -18,7 +18,7 @@ public class PrintStreamConsoleOutput implements ConsoleOutput {
         output.println(o);
     }
 
-    public void handleExceptione(Exception e) {
+    public void handleException(Exception e) {
         e.printStackTrace(output);
     }
 }

@@ -11,7 +11,7 @@ import java.util.List;
  * @author Daniel Pitts
  */
 public class Errors {
-    List<String> messages = new ArrayList<String>();
+    List<String> messages = new ArrayList<>();
 
     /**
      * Add an error message on the given line number.
@@ -49,12 +49,10 @@ public class Errors {
             return;
         }
         final JDialog dialog = parent instanceof Frame ? new JDialog((Frame) parent, name, true) : new JDialog((Dialog) parent, name, true);
-        final JList jList = new JList();
+        final JList<String> jList = new JList<>();
         dialog.add(new JScrollPane(jList));
-        final DefaultListModel listModel = new DefaultListModel();
-        for (String st : messages) {
-            listModel.addElement(st);
-        }
+        final DefaultListModel<String> listModel = new DefaultListModel<>();
+        messages.forEach(listModel::addElement);
         jList.setModel(listModel);
         dialog.pack();
         dialog.setVisible(true);
@@ -83,9 +81,8 @@ public class Errors {
      */
     public void dumpErrors() {
         if (hasErrors()) {
-            for (String m : messages) {
-                System.out.println(m);
-            }
+            //noinspection UseOfSystemOutOrSystemErr
+            messages.forEach(System.out::println);
         }
     }
 
@@ -95,6 +92,6 @@ public class Errors {
      * @return a copy of the messages.
      */
     public List<String> getMessages() {
-        return new ArrayList<String>(messages);
+        return new ArrayList<>(messages);
     }
 }

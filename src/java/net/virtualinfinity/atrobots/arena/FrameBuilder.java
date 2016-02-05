@@ -13,7 +13,7 @@ public class FrameBuilder extends SimulationFrameBuffer {
     private SimulationFrame frameToBuild;
 
     public void beginFrame(boolean roundOver) {
-        frameToBuild = new SimulationFrame(new ArrayList<ArenaObjectSnapshot>(), new ArrayList<RobotSnapshot>(), roundOver);
+        frameToBuild = new SimulationFrame(new ArrayList<>(), new ArrayList<>(), roundOver);
     }
 
     public void addObject(ArenaObjectSnapshot snapshot) {

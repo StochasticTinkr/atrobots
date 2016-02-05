@@ -8,5 +8,5 @@ package net.virtualinfinity.atrobots.debugger;
 public interface ConsoleOutput {
     void println(Object o);
 
-    void handleExceptione(Exception e);
+    void handleException(Exception e);
 }

@@ -58,10 +58,10 @@ public enum AtRobotInstruction implements AtRobotSymbol {
     NEG(45),
     JTL(46),;
 
-    private static AtRobotInstruction[] byValue = new AtRobotInstruction[values().length];
+    private static final AtRobotInstruction[] byValue = new AtRobotInstruction[values().length];
 
     static {
-        for (AtRobotInstruction instruction : values()) {
+        for (final AtRobotInstruction instruction : values()) {
             if (byValue[instruction.value] != null) {
                 throw new IllegalStateException();
             }
@@ -79,12 +79,12 @@ public enum AtRobotInstruction implements AtRobotSymbol {
      */
     public final Collection<String> names;
 
-    private AtRobotInstruction(int value) {
+    AtRobotInstruction(int value) {
         this.value = value;
         this.names = Collections.singleton(name());
     }
 
-    private AtRobotInstruction(int value, String alternate) {
+    AtRobotInstruction(int value, String alternate) {
         this.value = value;
         this.names = Collections.unmodifiableCollection(Arrays.asList(name(), alternate));
     }

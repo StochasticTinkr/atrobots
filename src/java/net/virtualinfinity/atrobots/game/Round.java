@@ -6,7 +6,7 @@ import net.virtualinfinity.atrobots.arena.RoundTimer;
 import net.virtualinfinity.atrobots.measures.Duration;
 
 import java.util.ArrayList;
-import java.util.List;
+import java.util.Collection;
 
 /**
  * TODO: Document
@@ -15,10 +15,10 @@ import java.util.List;
  */
 public class Round {
     private Duration roundEnd = Duration.fromCycles(10);
-    private Duration maxCycles = Duration.fromCycles(25000);
+    private final Duration maxCycles = Duration.fromCycles(25000);
     private final Arena arena;
     private final RoundTimer roundTimer;
-    private final List<RoundListener> roundListeners = new ArrayList<RoundListener>();
+    private final Collection<RoundListener> roundListeners = new ArrayList<>();
     private boolean roundOver;
 
     public Round(FrameBuilder frameBuffer) {
@@ -39,9 +39,7 @@ public class Round {
             arena.simulate();
             checkEndCondition();
             if (roundOver) {
-                for (RoundListener roundListener : roundListeners) {
-                    roundListener.roundOver();
-                }
+                roundListeners.forEach(RoundListener::roundOver);
             }
         }
         return roundOver;

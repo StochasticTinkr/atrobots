@@ -57,7 +57,7 @@ public class Heading {
     }
 
     public void setAbsolute(boolean absolute) {
-        AbsoluteAngle angle = getAngle();
+        final AbsoluteAngle angle = getAngle();
         this.absolute = absolute;
         setAngle(angle);
     }
