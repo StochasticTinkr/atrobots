@@ -8,6 +8,7 @@ import net.virtualinfinity.atrobots.measures.Duration;
 import net.virtualinfinity.atrobots.radio.RadioDispatcher;
 
 import java.util.*;
+import java.util.stream.Stream;
 
 /**
  * The Arena is the virtual world within which the simulation occurs.
@@ -15,25 +16,22 @@ import java.util.*;
  * @author Daniel Pitts
  */
 public class Arena {
-    private final List<TangibleArenaObject> activeRobots = new LinkedList<TangibleArenaObject>();
-    private final List<TangibleArenaObject> allRobots = new LinkedList<TangibleArenaObject>();
-    private final List<CollidableArenaObject> collidables = new LinkedList<CollidableArenaObject>();
-    private final Collection<ArenaObject> intangibles = new LinkedList<ArenaObject>();
+    private final List<TangibleArenaObject> activeRobots = new LinkedList<>();
+    private final List<TangibleArenaObject> allRobots = new LinkedList<>();
+    private final List<CollidableArenaObject> collidables = new LinkedList<>();
+    private final Collection<ArenaObject> intangibles = new LinkedList<>();
     private final RoundTimer roundTimer = new RoundTimer();
 
-    @SuppressWarnings({"unchecked"})
-    final Collection<Collection<? extends ArenaObject>> allActiveObjects = new ArrayList<Collection<? extends ArenaObject>>(
-            Arrays.asList(collidables, activeRobots, intangibles)
+    final Collection<Collection<? extends ArenaObject>> allActiveObjects = new ArrayList<>(
+        Arrays.asList(collidables, activeRobots, intangibles)
     );
 
-    @SuppressWarnings({"unchecked"})
-    final Collection<Collection<? extends ArenaObject>> allFramedObjects = new ArrayList<Collection<? extends ArenaObject>>(
-            Arrays.asList(collidables, intangibles, allRobots)
+    final Collection<Collection<? extends ArenaObject>> allFramedObjects = new ArrayList<>(
+        Arrays.asList(collidables, intangibles, allRobots)
     );
 
-    @SuppressWarnings({"unchecked"})
-    final Collection<Collection<? extends CollidableArenaObject>> allCollidable = new ArrayList<Collection<? extends CollidableArenaObject>>(
-            Arrays.asList(collidables, activeRobots)
+    final Collection<Collection<? extends CollidableArenaObject>> allCollidable = new ArrayList<>(
+        Arrays.asList(collidables, activeRobots)
     );
 
 
@@ -47,9 +45,6 @@ public class Arena {
 
     public Arena(FrameBuilder frameBuilder) {
         this.frameBuilder = frameBuilder;
-        if (frameBuilder != null) {
-
-        }
     }
 
 
@@ -90,28 +85,35 @@ public class Arena {
     public void buildFrame() {
         if (frameBuilder != null) {
             frameBuilder.beginFrame(roundOver);
-            for (Collection<? extends ArenaObject> objectCollection : allFramedObjects) {
-                for (ArenaObject object : objectCollection) {
-                    frameBuilder.addObject(object.getSnapshot());
-                }
-            }
+            streamOfAllFramedObjects()
+                .map(ArenaObject::getSnapshot)
+                .forEachOrdered(frameBuilder::addObject);
             frameBuilder.endFrame();
         }
     }
 
+    private Stream<ArenaObject> streamOfAllFramedObjects() {
+        return allFramedObjects
+            .stream()
+            .flatMap(Collection::stream);
+    }
+
     private void updateSimulation() {
-        for (Collection<? extends ArenaObject> objectCollection : allActiveObjects) {
-            for (ArenaObject object : objectCollection) {
-                object.update(Duration.ONE_CYCLE);
-            }
-        }
-        checkCollissions();
+        streamOfAllActiveObjects()
+            .forEachOrdered(object -> object.update(Duration.ONE_CYCLE));
+        checkCollisions();
         removeDead();
     }
 
+    private Stream<ArenaObject> streamOfAllActiveObjects() {
+        return allActiveObjects
+            .stream()
+            .flatMap(Collection::stream);
+    }
+
     private void removeDead() {
-        for (Collection<? extends ArenaObject> objectCollection : allActiveObjects) {
-            for (Iterator<? extends ArenaObject> it = objectCollection.iterator(); it.hasNext(); ) {
+        for (final Iterable<? extends ArenaObject> objectCollection : allActiveObjects) {
+            for (final Iterator<? extends ArenaObject> it = objectCollection.iterator(); it.hasNext(); ) {
                 if (it.next().isDead()) {
                     it.remove();
                 }
@@ -119,10 +121,10 @@ public class Arena {
         }
     }
 
-    private void checkCollissions() {
+    private void checkCollisions() {
         for (final TangibleArenaObject collisionTarget : activeRobots) {
-            for (Iterable<? extends CollidableArenaObject> toCheckAgainst : allCollidable) {
-                for (CollidableArenaObject collidable : toCheckAgainst) {
+            for (final Iterable<? extends CollidableArenaObject> toCheckAgainst : allCollidable) {
+                for (final CollidableArenaObject collidable : toCheckAgainst) {
                     if (collidable == collisionTarget) {
                         break;
                     }
@@ -157,27 +159,41 @@ public class Arena {
      */
     public void explosion(DamageInflicter cause, ExplosionFunction explosionFunction) {
         addIntangible(new Explosion(explosionFunction.getCenter(), explosionFunction.getRadius()));
-        for (TangibleArenaObject robot : activeRobots) {
-            explosionFunction.inflictDamage(cause, robot);
-        }
+        activeRobots.forEach(
+            robot -> explosionFunction.inflictDamage(cause, robot)
+        );
     }
 
     public void determineWinners() {
-        if (!activeRobots.isEmpty()) {
-            if (activeRobots.size() == 1) {
-                for (TangibleArenaObject robot : activeRobots) {
-                    robot.winRound();
-                }
-            } else {
-                for (TangibleArenaObject robot : activeRobots) {
-                    robot.tieRound();
-                }
-            }
-        } else {
-            for (TangibleArenaObject robot : allRobots) {
-                robot.tieRound();
-            }
+        if (noneSurvived()) {
+            everyoneTies();
+            return;
         }
+        if (exactlyOneSurvived()) {
+            survivorWins();
+            return;
+        }
+        survivorsTie();
+    }
+
+    private void survivorsTie() {
+        activeRobots.forEach(TangibleArenaObject::tieRound);
+    }
+
+    private void survivorWins() {
+        activeRobots.forEach(TangibleArenaObject::winRound);
+    }
+
+    private boolean exactlyOneSurvived() {
+        return activeRobots.size() == 1;
+    }
+
+    private void everyoneTies() {
+        allRobots.forEach(TangibleArenaObject::tieRound);
+    }
+
+    private boolean noneSurvived() {
+        return activeRobots.isEmpty();
     }
 
     public void endRound() {
@@ -198,9 +214,7 @@ public class Arena {
     }
 
     public void visitActiveRobots(ArenaObjectVisitor arenaObjectVisitor) {
-        for (ArenaObject arenaObject : activeRobots) {
-            arenaObject.accept(arenaObjectVisitor);
-        }
+        activeRobots.forEach(arenaObject -> arenaObject.accept(arenaObjectVisitor));
     }
 
     public RoundTimer getRoundTimer() {

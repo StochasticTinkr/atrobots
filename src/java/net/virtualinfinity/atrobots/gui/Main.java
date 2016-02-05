@@ -12,10 +12,11 @@ import java.awt.event.ActionEvent;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.io.File;
-import java.io.FilenameFilter;
 import java.io.IOException;
+import java.io.PrintStream;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collection;
 import java.util.concurrent.ExecutionException;
 
 /**
@@ -24,29 +25,25 @@ import java.util.concurrent.ExecutionException;
  * @author Daniel Pitts
  */
 public class Main extends ArenaWindowBuilder implements Runnable {
+    @SuppressWarnings("UseOfSystemOutOrSystemErr")
+    private static final PrintStream log = System.out;
     private volatile Game game;
     private boolean paused = true;
 
     private final Object gameLock;
-    private volatile int frameDelay = 25;
+    private static final int frameDelay = 25;
     private volatile boolean useDelay = true;
-    private Thread gameThread = new GameThread();
+    private final Thread gameThread = new GameThread();
 
     private volatile boolean closed;
     private boolean debugMode;
-    private java.util.List<String> initialRobots;
+    private Collection<String> initialRobots;
     private final AbstractAction runAction = new AbstractAction("Run") {
         public void actionPerformed(ActionEvent e) {
             setPaused(!paused);
             this.putValue(Action.NAME, paused ? "Run" : "Pause");
         }
     };
-
-    public boolean isPaused() {
-        synchronized (gameLock) {
-            return paused;
-        }
-    }
 
     public void setPaused(boolean paused) {
         synchronized (gameLock) {
@@ -135,23 +132,18 @@ public class Main extends ArenaWindowBuilder implements Runnable {
     private void addDebugMenuItems() {
         menubar.add(new JButton(new AbstractAction("Add all original") {
             public void actionPerformed(ActionEvent e) {
-                new EntrantLoader(new File("original").listFiles(new FilenameFilter() {
-                    public boolean accept(File dir, String name) {
-                        return name.toLowerCase().endsWith(".at2");
-                    }
+                new EntrantLoader(new File("original").listFiles((dir, name) -> {
+                    return name.toLowerCase().endsWith(".at2");
                 })).execute();
 
             }
         }));
         menubar.add(new JButton(new AbstractAction("Add single") {
             public void actionPerformed(ActionEvent e) {
-                for (final File parent : new File[]{new File("."), new File("original")})
-                    new EntrantLoader(parent.listFiles(new FilenameFilter() {
-                        public boolean accept(File dir, String name) {
-                            return name.toLowerCase().matches("zitgun.at2") ||
-                                    name.toLowerCase().endsWith("sniper2.at2");
-                        }
-                    })).execute();
+                for (final File parent : new File[]{new File("."), new File("original")}) {
+                    new EntrantLoader(parent.listFiles((dir, name) -> name.toLowerCase().matches("zitgun.at2") ||
+                        name.toLowerCase().endsWith("sniper2.at2"))).execute();
+                }
 
             }
         }));
@@ -160,13 +152,13 @@ public class Main extends ArenaWindowBuilder implements Runnable {
 
     public static void main(String[] args) {
         final Main main = new Main();
-        java.util.List<String> initialRobots = new ArrayList<String>(Arrays.asList(args));
+        final Collection<String> initialRobots = new ArrayList<>(Arrays.asList(args));
         main.setDebugMode(initialRobots.remove("--debug"));
         main.setInitialRobots(initialRobots);
         EventQueue.invokeLater(main);
     }
 
-    private void setInitialRobots(java.util.List<String> initialRobots) {
+    private void setInitialRobots(Collection<String> initialRobots) {
         this.initialRobots = initialRobots;
     }
 
@@ -202,18 +194,18 @@ public class Main extends ArenaWindowBuilder implements Runnable {
             this.selectedFiles = selectedFiles;
         }
 
-        public EntrantLoader(java.util.List<String> initialRobots) {
+        public EntrantLoader(Iterable<String> initialRobots) {
             this(RobotFileUtils.getFilesByName(initialRobots));
         }
 
 
         protected Errors doInBackground() throws Exception {
-            Errors errors = new Errors();
-            for (RobotFileUtils.EntrantFile entrantFile : selectedFiles) {
+            final Errors errors = new Errors();
+            for (final RobotFileUtils.EntrantFile entrantFile : selectedFiles) {
                 final File file = entrantFile.file;
-                AtRobotCompiler compiler = new AtRobotCompiler();
+                final AtRobotCompiler compiler = new AtRobotCompiler();
                 try {
-                    System.out.println("Loading " + file);
+                    log.println("Loading " + file);
                     final AtRobotCompilerOutput result = compiler.compile(file);
                     if (result.hasErrors()) {
                         errors.info("Errors in " + file.getName());
@@ -222,10 +214,10 @@ public class Main extends ArenaWindowBuilder implements Runnable {
                     if (game != null) {
                         game.addEntrant(result.createRobotFactory(file.getName()).setDebug(entrantFile.debug));
                     }
-                } catch (IOException e1) {
+                } catch (final IOException e1) {
                     errors.info("Errors in " + file.getName());
                     errors.info(e1.getMessage());
-                } catch (Throwable t) {
+                } catch (final Throwable t) {
                     errors.info("Compiler error in " + file.getName());
                     errors.info(t.getMessage());
                     t.printStackTrace();
@@ -238,9 +230,7 @@ public class Main extends ArenaWindowBuilder implements Runnable {
             try {
                 get().showErrorDialog("Errors", mainFrame);
                 game.nextRound();
-            } catch (InterruptedException e1) {
-                e1.printStackTrace();
-            } catch (ExecutionException e1) {
+            } catch (final InterruptedException | ExecutionException e1) {
                 e1.printStackTrace();
             }
         }
@@ -266,7 +256,7 @@ public class Main extends ArenaWindowBuilder implements Runnable {
                             game.stepRound();
                         }
                     }
-                } catch (Throwable e) {
+                } catch (final Throwable e) {
                     e.printStackTrace();
                 }
             }

@@ -4,21 +4,18 @@ import javax.swing.filechooser.FileNameExtensionFilter;
 import java.io.File;
 import java.io.FilenameFilter;
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.stream.Stream;
 
-/**
- * TODO: JavaDoc
- *
- * @author <a href='mailto:daniel.pitts@cbs.com'>Daniel Pitts</a>
- */
 public class RobotFileUtils {
     public static FileNameExtensionFilter getAtRobotsFileNameFilter() {
         return new FileNameExtensionFilter("AT-Robots files", "at2", "ats");
     }
 
-    static EntrantFile[] getFilesByName(java.util.List<String> initialRobots) {
-        final java.util.List<EntrantFile> files = new ArrayList<EntrantFile>();
+    static EntrantFile[] getFilesByName(Iterable<String> initialRobots) {
+        final Collection<EntrantFile> files = new ArrayList<>();
         boolean debug = false;
-        for (String file : initialRobots) {
+        for (final String file : initialRobots) {
             if (!debug && "-d".equals(file)) {
                 debug = true;
             } else {
@@ -30,11 +27,7 @@ public class RobotFileUtils {
     }
 
     static EntrantFile[] getEntrantFiles(File[] initialRobots) {
-        final java.util.List<EntrantFile> files = new ArrayList<EntrantFile>();
-        for (File file : initialRobots) {
-            files.add(new EntrantFile(false, file));
-        }
-        return files.toArray(new EntrantFile[files.size()]);
+        return Stream.of(initialRobots).map(file -> new EntrantFile(false, file)).toArray(EntrantFile[]::new);
     }
 
     static File robotFile(String robotName) {
@@ -42,10 +35,7 @@ public class RobotFileUtils {
         if (file.exists()) {
             return file;
         }
-        for (File f : file.getParentFile().listFiles(new FilenameAt2Filter(robotName))) {
-            return f;
-        }
-        return file;
+        return Stream.of(file.getParentFile().listFiles(new FilenameAt2Filter(robotName))).findFirst().orElse(file);
     }
 
     static class EntrantFile {
