@@ -18,7 +18,7 @@ public class Explosion extends ArenaObject {
     private final double radius;
 
     /**
-     * Create an explosing at the given
+     * Create an explosion at the given
      *
      * @param center the center of the explosion.
      * @param radius the radius of the explosion.
