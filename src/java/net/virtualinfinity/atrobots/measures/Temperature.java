@@ -72,19 +72,15 @@ public class Temperature implements Comparable<Temperature> {
 
     @Override
     public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
+        return this == o
+            || !(o == null || getClass() != o.getClass())
+            && Double.compare(((Temperature) o).logScale, logScale) == 0;
 
-        Temperature that = (Temperature) o;
-
-        if (Double.compare(that.logScale, logScale) != 0) return false;
-
-        return true;
     }
 
     @Override
     public int hashCode() {
-        long temp = logScale != +0.0d ? Double.doubleToLongBits(logScale) : 0L;
+        final long temp = logScale != +0.0d ? Double.doubleToLongBits(logScale) : 0L;
         return (int) (temp ^ (temp >>> 32));
     }
 }

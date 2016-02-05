@@ -21,9 +21,6 @@ public class ArenaPane extends JComponent implements SimulationObserver {
     private static final double BORDER_WIDTH = 50.0;
     private static final double BORDER_HEIGHT = 50.0;
 
-    public ArenaPane() {
-    }
-
 
     public ArenaRenderer getArenaRenderer() {
         return arenaRenderer;
@@ -34,7 +31,7 @@ public class ArenaPane extends JComponent implements SimulationObserver {
     }
 
     protected void paintComponent(Graphics g) {
-        Graphics2D g2d = (Graphics2D) g;
+        final Graphics2D g2d = (Graphics2D) g;
         if (hasNewFrame()) {
             makeNewFrameCurrentFrame();
         }

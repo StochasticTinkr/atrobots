@@ -79,8 +79,8 @@ public abstract class ArenaWindowBuilder {
         viewMenu.add(toggleFillScanArc.configure(new JCheckBoxMenuItem()));
         viewMenu.add(new JCheckBoxMenuItem(new AbstractAction("Gradiant Explosions") {
             public void actionPerformed(ActionEvent e) {
-                AbstractButton aButton = (AbstractButton) e.getSource();
-                boolean selected = aButton.getModel().isSelected();
+                final AbstractButton aButton = (AbstractButton) e.getSource();
+                final boolean selected = aButton.getModel().isSelected();
                 arenaPane.getArenaRenderer().setExplosionRenderer(selected ? new GradientExplosionRenderer() : new SimpleExplosionRenderer());
             }
         }));
@@ -90,7 +90,7 @@ public abstract class ArenaWindowBuilder {
     private void initializeSystemLookAndFeel() {
         try {
             UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
-        } catch (Exception e) {
+        } catch (final Exception e) {
             throw new RuntimeException(e);
         }
         JFrame.setDefaultLookAndFeelDecorated(true);

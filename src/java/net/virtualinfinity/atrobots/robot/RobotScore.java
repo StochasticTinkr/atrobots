@@ -18,7 +18,7 @@ public interface RobotScore {
 
     double getTotalDamageInflicted();
 
-    static class RobotScoreComparator<T extends RobotScore> implements Comparator<T> {
+    class RobotScoreComparator<T extends RobotScore> implements Comparator<T> {
         public int compare(T o1, T o2) {
             return compareScores(o1, o2);
         }

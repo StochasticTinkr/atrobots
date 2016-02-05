@@ -1,28 +1,25 @@
 package net.virtualinfinity.atrobots.robot;
 
-import net.virtualinfinity.atrobots.ArenaObjectVisitorAdaptor;
 import net.virtualinfinity.atrobots.arena.Position;
 import net.virtualinfinity.atrobots.measures.AbsoluteAngle;
 import net.virtualinfinity.atrobots.measures.AngleBracket;
 import net.virtualinfinity.atrobots.measures.Vector;
 
 /**
- * TODO: Describe this class.
- *
  * @author Daniel Pitts
  */
-public class RobotScanner extends ArenaObjectVisitorAdaptor {
+public class RobotScanner {
     private final Robot source;
     private final double maxDistanceSquared;
     private final Position position;
     private final AngleBracket angleBracket;
     private final boolean calculateAccuracy;
+    private final Vector counterClockwiseBound;
+    private final Vector clockwiseBound;
 
-    private Vector vectorToClosest = null;
+    private Vector vectorToClosest;
     private double closestDistanceSquared;
-    private Robot closest = null;
-    private Vector counterClockwiseBound;
-    private Vector clockwiseBound;
+    private Robot closest;
     private static final int ROBOT_RADIUS_SQUARED = 16;
 
     public RobotScanner(Robot source, Position position, AngleBracket angleBracket, double maxDistance, boolean calculateAccuracy) {
@@ -75,14 +72,21 @@ public class RobotScanner extends ArenaObjectVisitorAdaptor {
     }
 
     private int findAccuracy(AbsoluteAngle angleToClosest) {
-        final int accuracy;
         final double v = 0.5d - angleBracket.fractionTo(angleToClosest);
-        if (angleBracket.getRangeSize().getBygrees() <= 4) {
-            accuracy = roundAwayFromZero(v * 2) * 2;
-        } else {
-            accuracy = roundAwayFromZero(v * 4);
-        }
+        final int accuracy = isSmallAngleBracket() ? accuracyForSmallAngleBracket(v) : accuracyForNormalAngleBracket(v);
         return Math.min(2, Math.max(-2, accuracy));
+    }
+
+    private int accuracyForNormalAngleBracket(double v) {
+        return roundAwayFromZero(v * 4);
+    }
+
+    private int accuracyForSmallAngleBracket(double v) {
+        return roundAwayFromZero(v * 2) * 2;
+    }
+
+    private boolean isSmallAngleBracket() {
+        return angleBracket.getRangeSize().getBygrees() <= 4;
     }
 
     private static int roundAwayFromZero(double value) {

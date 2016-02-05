@@ -1,6 +1,5 @@
 package net.virtualinfinity.atrobots.robot;
 
-import net.virtualinfinity.atrobots.ArenaObjectVisitor;
 import net.virtualinfinity.atrobots.arena.*;
 import net.virtualinfinity.atrobots.arenaobjects.DamageInflicter;
 import net.virtualinfinity.atrobots.computer.*;
@@ -10,8 +9,6 @@ import net.virtualinfinity.atrobots.hardware.armor.Armor;
 import net.virtualinfinity.atrobots.hardware.armor.ArmorDepletionListener;
 import net.virtualinfinity.atrobots.hardware.heatsinks.HeatSinks;
 import net.virtualinfinity.atrobots.hardware.mines.MineLayer;
-import net.virtualinfinity.atrobots.hardware.missiles.Missile;
-import net.virtualinfinity.atrobots.hardware.missiles.MissileFactory;
 import net.virtualinfinity.atrobots.hardware.radio.Transceiver;
 import net.virtualinfinity.atrobots.hardware.scanning.ScanResult;
 import net.virtualinfinity.atrobots.hardware.scanning.ScanSource;
@@ -33,7 +30,7 @@ import java.util.Collection;
 /**
  * @author Daniel Pitts
  */
-public class Robot extends TangibleArenaObject implements Resettable, HasHeading, Destructable, HasOverburner, MissileFactory, ArmorDepletionListener, ScanSource, DamageInflicter {
+public class Robot extends TangibleArenaObject implements Resettable, HasHeading, Destructable, HasOverburner, ArmorDepletionListener, ScanSource, DamageInflicter {
     private final HeatSinks heatSinks = new HeatSinks();
     private final Odometer odometer = new Odometer();
     private final String name;
@@ -266,11 +263,11 @@ public class Robot extends TangibleArenaObject implements Resettable, HasHeading
     private RobotScanResult doScan(AngleBracket angleBracket, double maxDistance, boolean calculateAccuracy) {
         final Position position = getPosition();
         final RobotScanner robotScanner = new RobotScanner(this, position, angleBracket, maxDistance, calculateAccuracy);
-        getArena().visitActiveRobots(robotScanner);
+        getArena().getActiveRobots().forEach(robotScanner::visit);
         final RobotScanResult scanResult = robotScanner.toScanResult();
-        final Scan object = new Scan(angleBracket, maxDistance, scanResult.successful(), scanResult.getMatchPositionVector(), calculateAccuracy && scanResult.successful(), scanResult.getAccuracy());
-        getArena().addIntangible(object);
-        object.getPosition().copyFrom(position);
+        final Scan scan = new Scan(angleBracket, maxDistance, scanResult.successful(), scanResult.getMatchPositionVector(), calculateAccuracy && scanResult.successful(), scanResult.getAccuracy());
+        getArena().addScan(scan);
+        scan.getPosition().copyFrom(position);
         return scanResult;
     }
 
@@ -432,14 +429,6 @@ public class Robot extends TangibleArenaObject implements Resettable, HasHeading
 
     public GetRobotStatisticsInterrupt createGetRobotStatisticsInterrupt(MemoryCell totalKills, MemoryCell roundKills, MemoryCell totalDeaths) {
         return new GetRobotStatisticsInterrupt(totalKills, roundKills, totalDeaths);
-    }
-
-    public Missile createMissile(AbsoluteAngle heading, Position position, double power) {
-        return new Missile(this, position, heading, power, this.isOverburn());
-    }
-
-    public void accept(ArenaObjectVisitor arenaObjectVisitor) {
-        arenaObjectVisitor.visit(this);
     }
 
     /**

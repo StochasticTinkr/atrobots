@@ -1,11 +1,13 @@
 package net.virtualinfinity.atrobots.arena;
 
-import net.virtualinfinity.atrobots.ArenaObjectVisitor;
 import net.virtualinfinity.atrobots.arenaobjects.ArenaObject;
 import net.virtualinfinity.atrobots.arenaobjects.CollidableArenaObject;
 import net.virtualinfinity.atrobots.arenaobjects.DamageInflicter;
+import net.virtualinfinity.atrobots.hardware.mines.Mine;
+import net.virtualinfinity.atrobots.hardware.missiles.Missile;
 import net.virtualinfinity.atrobots.measures.Duration;
 import net.virtualinfinity.atrobots.radio.RadioDispatcher;
+import net.virtualinfinity.atrobots.robot.Robot;
 
 import java.util.*;
 import java.util.stream.Stream;
@@ -16,22 +18,24 @@ import java.util.stream.Stream;
  * @author Daniel Pitts
  */
 public class Arena {
-    private final List<TangibleArenaObject> activeRobots = new LinkedList<>();
-    private final List<TangibleArenaObject> allRobots = new LinkedList<>();
-    private final List<CollidableArenaObject> collidables = new LinkedList<>();
-    private final Collection<ArenaObject> intangibles = new LinkedList<>();
+    private final List<Robot> activeRobots = new LinkedList<>();
+    private final List<Robot> allRobots = new LinkedList<>();
+    private final List<Missile> missiles = new LinkedList<>();
+    private final List<Mine> mines = new LinkedList<>();
+    private final List<Scan> scans = new LinkedList<>();
+    private final List<Explosion> explosions = new LinkedList<>();
     private final RoundTimer roundTimer = new RoundTimer();
 
     final Collection<Collection<? extends ArenaObject>> allActiveObjects = new ArrayList<>(
-        Arrays.asList(collidables, activeRobots, intangibles)
+        Arrays.asList(missiles, mines, activeRobots, scans, explosions)
     );
 
     final Collection<Collection<? extends ArenaObject>> allFramedObjects = new ArrayList<>(
-        Arrays.asList(collidables, intangibles, allRobots)
+        Arrays.asList(missiles, mines, allRobots, scans, explosions)
     );
 
     final Collection<Collection<? extends CollidableArenaObject>> allCollidable = new ArrayList<>(
-        Arrays.asList(collidables, activeRobots)
+        Arrays.asList(missiles, mines, activeRobots)
     );
 
 
@@ -122,7 +126,7 @@ public class Arena {
     }
 
     private void checkCollisions() {
-        for (final TangibleArenaObject collisionTarget : activeRobots) {
+        for (final Robot collisionTarget : activeRobots) {
             for (final Iterable<? extends CollidableArenaObject> toCheckAgainst : allCollidable) {
                 for (final CollidableArenaObject collidable : toCheckAgainst) {
                     if (collidable == collisionTarget) {
@@ -139,16 +143,21 @@ public class Arena {
      *
      * @param robot the robot to add to this arena.
      */
-    public void addRobot(TangibleArenaObject robot) {
+    public void addRobot(Robot robot) {
         robot.getPosition().copyFrom(Position.random(0.0, 0.0, 1000.0, 1000.0));
         connectArena(robot);
         activeRobots.add(robot);
         allRobots.add(robot);
     }
 
-    public void addCollidable(CollidableArenaObject arenaObject) {
+    public void addMine(Mine arenaObject) {
         connectArena(arenaObject);
-        collidables.add(arenaObject);
+        mines.add(arenaObject);
+    }
+
+    public void addMissile(Missile arenaObject) {
+        connectArena(arenaObject);
+        missiles.add(arenaObject);
     }
 
     /**
@@ -158,10 +167,10 @@ public class Arena {
      * @param explosionFunction the damage explosion function.
      */
     public void explosion(DamageInflicter cause, ExplosionFunction explosionFunction) {
-        addIntangible(new Explosion(explosionFunction.getCenter(), explosionFunction.getRadius()));
-        activeRobots.forEach(
-            robot -> explosionFunction.inflictDamage(cause, robot)
-        );
+        if (frameBuilder != null) {
+            explosions.add(new Explosion(explosionFunction.getCenter(), explosionFunction.getRadius()));
+        }
+        activeRobots.forEach(robot -> explosionFunction.inflictDamage(cause, robot));
     }
 
     public void determineWinners() {
@@ -207,14 +216,14 @@ public class Arena {
         return countActiveRobots() == 1;
     }
 
-    public void addIntangible(ArenaObject object) {
+    public void addScan(Scan object) {
         if (frameBuilder != null) {
-            intangibles.add(object);
+            scans.add(object);
         }
     }
 
-    public void visitActiveRobots(ArenaObjectVisitor arenaObjectVisitor) {
-        activeRobots.forEach(arenaObject -> arenaObject.accept(arenaObjectVisitor));
+    public Collection<Robot> getActiveRobots() {
+        return Collections.unmodifiableCollection(activeRobots);
     }
 
     public RoundTimer getRoundTimer() {

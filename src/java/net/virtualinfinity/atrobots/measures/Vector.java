@@ -113,18 +113,14 @@ public abstract class Vector {
      */
     public Vector perpendicularIntersectionFrom(Vector linePoint, AbsoluteAngle lineSlope, double segmentLength) {
         final Vector intersectionVector = lineSlope.projectAngle(minus(linePoint));
-        if (intersectionVector.getMagnitude() < (segmentLength))
-            return intersectionVector.plus(linePoint);
-        else {
-            return null;
-        }
+        return intersectionVector.getMagnitude() < (segmentLength) ? intersectionVector.plus(linePoint) : null;
     }
 
     /**
      * Scale this vector.
      *
      * @param scalar the scale.
-     * @return a vector who's direction is the same as this vector, but whos magnitude is scaled.
+     * @return a vector who's direction is the same as this vector, but whose magnitude is scaled.
      */
     public abstract Vector times(double scalar);
 
@@ -139,7 +135,7 @@ public abstract class Vector {
         if (!(o instanceof Vector)) {
             return false;
         }
-        Vector vector = (Vector) o;
+        final Vector vector = (Vector) o;
         return getX() == (vector.getX()) && getY() == (vector.getY());
     }
 

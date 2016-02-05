@@ -11,11 +11,8 @@ import net.virtualinfinity.atrobots.ports.PortHandler;
  */
 public class Sonar {
     private ScanSource scanSource;
-    private double maxDistance;
+    private static final double MAX_DISTANCE = 250.0;
 
-    public Sonar() {
-        maxDistance = (250.0);
-    }
 
     public PortHandler getScanPort() {
         return new PortHandler() {
@@ -31,7 +28,7 @@ public class Sonar {
     }
 
     private AbsoluteAngle scan() {
-        return scanSource.scan(AngleBracket.all(), maxDistance, false, false).getAngle();
+        return scanSource.scan(AngleBracket.all(), MAX_DISTANCE, false, false).getAngle();
     }
 
     public void setScanSource(ScanSource scanSource) {

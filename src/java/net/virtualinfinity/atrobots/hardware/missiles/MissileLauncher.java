@@ -23,9 +23,6 @@ public class MissileLauncher {
     private Arena arena;
     private DamageInflicter damageInflicter;
 
-    public MissileLauncher() {
-    }
-
     public void setHeading(Heading heading) {
         this.heading = heading;
     }
@@ -48,15 +45,15 @@ public class MissileLauncher {
     }
 
     private void fireMissile(RelativeAngle shift) {
-        getArena().addCollidable(createMissile(shift));
-        getHeatSinks().warm(getFiringTempurature());
+        getArena().addMissile(createMissile(shift));
+        getHeatSinks().warm(getFiringTemperature());
     }
 
     private AbsoluteAngle getMissileHeading(RelativeAngle shift) {
         return heading.getAngle().counterClockwise(shift);
     }
 
-    private Temperature getFiringTempurature() {
+    private Temperature getFiringTemperature() {
         return Temperature.fromLogScale(overburner.isOverburn() ? 20 : 30);
     }
 
@@ -76,16 +73,8 @@ public class MissileLauncher {
         this.heatSinks = heatSinks;
     }
 
-    public DamageInflicter getDamageInflicter() {
-        return this.damageInflicter;
-    }
-
     public void setDamageInflicter(DamageInflicter damageInflicter) {
         this.damageInflicter = damageInflicter;
-    }
-
-    public HasOverburner getOverburner() {
-        return overburner;
     }
 
     public void setOverburner(HasOverburner overburner) {

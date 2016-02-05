@@ -1,6 +1,5 @@
 package net.virtualinfinity.atrobots.arena;
 
-import net.virtualinfinity.atrobots.ArenaObjectVisitor;
 import net.virtualinfinity.atrobots.arenaobjects.ArenaObject;
 import net.virtualinfinity.atrobots.measures.AngleBracket;
 import net.virtualinfinity.atrobots.measures.Duration;
@@ -40,7 +39,4 @@ public class Scan extends ArenaObject {
         }
     }
 
-    public void accept(ArenaObjectVisitor arenaObjectVisitor) {
-        arenaObjectVisitor.visit(this);
-    }
 }

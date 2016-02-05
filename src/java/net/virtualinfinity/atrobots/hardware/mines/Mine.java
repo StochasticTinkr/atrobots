@@ -1,7 +1,6 @@
 package net.virtualinfinity.atrobots.hardware.mines;
 
 
-import net.virtualinfinity.atrobots.ArenaObjectVisitor;
 import net.virtualinfinity.atrobots.arena.LinearDamageFunction;
 import net.virtualinfinity.atrobots.arena.Position;
 import net.virtualinfinity.atrobots.arena.TangibleArenaObject;
@@ -22,6 +21,10 @@ public class Mine extends CollidableArenaObject {
 
     public Mine(DamageInflicter owner) {
         this.owner = owner;
+    }
+
+    public boolean isActive() {
+        return !isDead();
     }
 
     public void setTriggerRadius(double triggerRadius) {
@@ -61,7 +64,4 @@ public class Mine extends CollidableArenaObject {
     }
 
 
-    public void accept(ArenaObjectVisitor arenaObjectVisitor) {
-        arenaObjectVisitor.visit(this);
-    }
 }

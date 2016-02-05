@@ -138,12 +138,13 @@ public class RobotSnapshot extends ArenaObjectSnapshot {
         this.totalTies = totalTies;
     }
 
+    @SuppressWarnings("ControlFlowStatementWithoutBraces")
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
 
-        RobotSnapshot that = (RobotSnapshot) o;
+        final RobotSnapshot that = (RobotSnapshot) o;
 
         if (activeShield != that.activeShield) return false;
         if (Double.compare(that.armor, armor) != 0) return false;

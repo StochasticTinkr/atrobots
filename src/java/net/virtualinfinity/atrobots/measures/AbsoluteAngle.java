@@ -15,7 +15,7 @@ public class AbsoluteAngle {
 
     static {
         for (int bygrees = 0; bygrees < bygreeTable.length; ++bygrees) {
-            bygreeTable[bygrees] = new AbsoluateBygreeAngle(bygrees);
+            bygreeTable[bygrees] = new AbsoluteBygreeAngle(bygrees);
         }
     }
 
@@ -26,12 +26,17 @@ public class AbsoluteAngle {
     private final double radians;
 
     private AbsoluteAngle(double radians) {
+        this.radians = normalizeRadians(radians);
+    }
+
+    private static double normalizeRadians(double radians) {
         if (radians < 0) {
-            radians += FULL_CIRCLE_RADIANS;
-        } else if (radians >= FULL_CIRCLE_RADIANS) {
-            radians -= FULL_CIRCLE_RADIANS;
+            return radians + FULL_CIRCLE_RADIANS;
         }
-        this.radians = radians;
+        if (radians >= FULL_CIRCLE_RADIANS) {
+            return radians - FULL_CIRCLE_RADIANS;
+        }
+        return radians;
     }
 
     public double cosine() {
@@ -127,7 +132,7 @@ public class AbsoluteAngle {
         return fromRadians(Math.PI + getRadians());
     }
 
-    private static class AbsoluateBygreeAngle extends AbsoluteAngle {
+    private static class AbsoluteBygreeAngle extends AbsoluteAngle {
         private final double cosine;
         private final double sine;
         private final int bygrees;
@@ -136,7 +141,7 @@ public class AbsoluteAngle {
         private final double degrees;
         private final RelativeAngle counterClockwiseFromStandardOrigin;
 
-        public AbsoluateBygreeAngle(int bygrees) {
+        public AbsoluteBygreeAngle(int bygrees) {
             super(bygreeToRadians(bygrees));
             final AbsoluteAngle template = AbsoluteAngle.fromRadians(bygreeToRadians(bygrees));
             switch (bygrees) {
@@ -237,19 +242,15 @@ public class AbsoluteAngle {
 
     @Override
     public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
+        return this == o
+            || !(o == null || getClass() != o.getClass())
+            && Double.compare(((AbsoluteAngle) o).radians, radians) == 0;
 
-        AbsoluteAngle angle = (AbsoluteAngle) o;
-
-        if (Double.compare(angle.radians, radians) != 0) return false;
-
-        return true;
     }
 
     @Override
     public int hashCode() {
-        long temp = radians != +0.0d ? Double.doubleToLongBits(radians) : 0L;
+        final long temp = radians != +0.0d ? Double.doubleToLongBits(radians) : 0L;
         return (int) (temp ^ (temp >>> 32));
     }
 }

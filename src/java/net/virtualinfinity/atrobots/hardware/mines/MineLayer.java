@@ -14,7 +14,7 @@ import java.util.Collection;
  */
 public class MineLayer {
     private int mines = 2;
-    private Collection<Mine> layedMines = new ArrayList<Mine>();
+    private final Collection<Mine> laidMines = new ArrayList<>();
     private DamageInflicter owner;
     private Position position;
     private Arena arena;
@@ -40,8 +40,8 @@ public class MineLayer {
             final Mine mine = new Mine(owner);
             mine.setTriggerRadius(triggerRadius);
             mine.setPosition(position);
-            getArena().addCollidable(mine);
-            layedMines.add(mine);
+            getArena().addMine(mine);
+            laidMines.add(mine);
             mines--;
         }
     }
@@ -67,19 +67,11 @@ public class MineLayer {
     }
 
     private void detonateMines() {
-        for (Mine mine : layedMines) {
-            mine.explode();
-        }
+        laidMines.forEach(Mine::explode);
     }
 
     private int countPlacedMines() {
-        int count = 0;
-        for (Mine mine : layedMines) {
-            if (!mine.isDead()) {
-                count++;
-            }
-        }
-        return count;
+        return (int)laidMines.stream().filter(Mine::isActive).count();
     }
 
     private Arena getArena() {
@@ -88,10 +80,6 @@ public class MineLayer {
 
     public void setOwner(DamageInflicter owner) {
         this.owner = owner;
-    }
-
-    public DamageInflicter getOwner() {
-        return owner;
     }
 
     public void setArena(Arena arena) {

@@ -72,7 +72,8 @@ public class Throttle implements ShutdownListener {
     }
 
     public void update(Duration duration) {
-        while (duration.getCycles() > 0) {
+        Duration remainingCycles = duration;
+        while (remainingCycles.getCycles() > 0) {
             if (Math.abs(power - desiredPower) < MAX_ACCELERATION) {
                 power = desiredPower;
             } else {
@@ -83,7 +84,7 @@ public class Throttle implements ShutdownListener {
             if (Math.abs(power) > 25) {
                 heatSinks.cool(Temperature.fromLogScale(.125));
             }
-            duration = duration.minus(Duration.ONE_CYCLE);
+            remainingCycles = remainingCycles.minus(Duration.ONE_CYCLE);
         }
     }
 

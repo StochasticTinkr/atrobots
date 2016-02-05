@@ -8,24 +8,24 @@ import net.virtualinfinity.atrobots.snapshots.SnapshotAdaptor;
 
 import javax.swing.*;
 import javax.swing.border.EtchedBorder;
-import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 import java.awt.*;
 import java.util.*;
 import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * TODO: Describe this class.
  *
  * @author Daniel Pitts
  */
-public class RobotStatusPane extends JList implements SimulationObserver {
-    private final DefaultListModel robotList;
-    private final List<RobotItem> reorderedList = new ArrayList<RobotItem>();
-    private final Map<Integer, RobotItem> items = new HashMap<Integer, RobotItem>();
+public class RobotStatusPane extends JList<RobotStatusPane.RobotItem> implements SimulationObserver {
+    private final DefaultListModel<RobotItem> robotList;
+    private final List<RobotItem> reorderedList = new ArrayList<>();
+    private final Map<Integer, RobotItem> items = new HashMap<>();
 
     private RobotStatusPane() {
-        robotList = new DefaultListModel();
+        robotList = new DefaultListModel<>();
         setModel(robotList);
         this.setCellRenderer(new RobotStatusRenderer());
         final RobotSnapshot robotSnapshot = new RobotSnapshot();
@@ -60,13 +60,10 @@ public class RobotStatusPane extends JList implements SimulationObserver {
     }
 
     public Set<Integer> getSelectedRobotIds() {
-        final Object[] objects = this.getSelectedValues();
-        final Set<Integer> selectedIds = new HashSet<Integer>();
-        for (Object o : objects) {
-            selectedIds.add(((RobotItem) o).getId());
-
-        }
-        return selectedIds;
+        return getSelectedValuesList()
+            .stream()
+            .map(RobotItem::getId)
+            .collect(Collectors.toCollection(HashSet::new));
     }
 
     public void reset() {
@@ -75,11 +72,7 @@ public class RobotStatusPane extends JList implements SimulationObserver {
 
     private static class Bar extends JComponent {
         private BoundedRangeModel model;
-        private final ChangeListener changeListener = new ChangeListener() {
-            public void stateChanged(ChangeEvent e) {
-                repaint();
-            }
-        };
+        private final ChangeListener changeListener = e -> repaint();
         private float[] foregroundGradientFractions;
         private Color[] foregroundGradientColors;
 
@@ -98,16 +91,8 @@ public class RobotStatusPane extends JList implements SimulationObserver {
             g2d.drawRect(insets.left, insets.top, maxWidth - 1, maxHeight - 1);
         }
 
-        public float[] getForegroundGradientFractions() {
-            return foregroundGradientFractions;
-        }
-
         public void setForegroundGradientFractions(float[] foregroundGradientFractions) {
             this.foregroundGradientFractions = foregroundGradientFractions;
-        }
-
-        public Color[] getForegroundGradientColors() {
-            return foregroundGradientColors;
         }
 
         public void setForegroundGradientColors(Color[] foregroundGradientColors) {
@@ -126,21 +111,6 @@ public class RobotStatusPane extends JList implements SimulationObserver {
             this.model = model;
         }
 
-        public int getMinimum() {
-            return getModel().getMinimum();
-        }
-
-        public void setMinimum(int newMinimum) {
-            getModel().setMinimum(newMinimum);
-        }
-
-        public int getMaximum() {
-            return getModel().getMaximum();
-        }
-
-        public void setMaximum(int newMaximum) {
-            getModel().setMaximum(newMaximum);
-        }
 
         public int getValue() {
             return getModel().getValue();
@@ -150,28 +120,12 @@ public class RobotStatusPane extends JList implements SimulationObserver {
             getModel().setValue(newValue);
         }
 
-        public void setValueIsAdjusting(boolean b) {
-            getModel().setValueIsAdjusting(b);
-        }
-
-        public boolean getValueIsAdjusting() {
-            return getModel().getValueIsAdjusting();
-        }
-
-        public int getExtent() {
-            return getModel().getExtent();
-        }
-
-        public void setExtent(int newExtent) {
-            getModel().setExtent(newExtent);
-        }
-
         public BoundedRangeModel getModel() {
             return model;
         }
     }
 
-    private static class RobotStatusRenderer extends JPanel implements ListCellRenderer {
+    private static class RobotStatusRenderer extends JPanel implements ListCellRenderer<RobotItem> {
         private final JLabel name = new JLabel();
         private final JLabel roundKills = new JLabel();
         private final JLabel gameStats = new JLabel();
@@ -179,7 +133,7 @@ public class RobotStatusPane extends JList implements SimulationObserver {
         private final Bar heat = new Bar();
         private final JLabel lastMessage = new JLabel();
 
-        public Component getListCellRendererComponent(JList list, Object value, int index, boolean isSelected, boolean cellHasFocus) {
+        public Component getListCellRendererComponent(JList<? extends RobotItem> list, RobotItem value, int index, boolean isSelected, boolean cellHasFocus) {
             final Color background = isSelected ? Color.blue : Color.black;
             setBackground(background);
             setBorder(BorderFactory.createEtchedBorder(EtchedBorder.RAISED, Color.lightGray, Color.darkGray));
@@ -200,11 +154,10 @@ public class RobotStatusPane extends JList implements SimulationObserver {
             add(heat);
             add(gameStats);
             add(lastMessage);
-            final RobotItem item = (RobotItem) value;
-            final RobotSnapshot robotSnapshot = item.getRobotSnapshot();
+            final RobotSnapshot robotSnapshot = value.getRobotSnapshot();
             roundKills.setText("Kills (round/total): " + robotSnapshot.getRoundKills() + "/" + robotSnapshot.getTotalKills());
             gameStats.setText("Wins/Ties/Deaths: " + robotSnapshot.getTotalWins() + "/" + robotSnapshot.getTotalTies() + "/" + robotSnapshot.getTotalDeaths());
-            if (!item.isDead()) {
+            if (!value.isDead()) {
                 armor.setValue((int) Math.round(Math.min(100, robotSnapshot.getArmor())));
                 heat.setValue((int) Math.round(Math.min(100, robotSnapshot.getTemperature().getLogScale() * .2)));
                 name.setText(robotSnapshot.getName());
@@ -241,7 +194,7 @@ public class RobotStatusPane extends JList implements SimulationObserver {
                 robotList.setSize(reorderedList.size());
             }
             for (int i = 0; i < reorderedList.size(); ++i) {
-                final RobotItem existingItem = (RobotItem) robotList.get(i);
+                final RobotItem existingItem = robotList.get(i);
                 final RobotItem reorderedItem = reorderedList.get(i);
                 if (reorderedItem.isChanged() || existingItem != reorderedItem) {
                     robotList.set(i, reorderedItem);
@@ -250,14 +203,10 @@ public class RobotStatusPane extends JList implements SimulationObserver {
         }
     }
 
-    private static class RobotItem implements Comparable<RobotItem> {
+    public static class RobotItem implements Comparable<RobotItem> {
         private RobotSnapshot robotSnapshot;
         private boolean dead;
-        private boolean updated;
         private boolean changed;
-
-        private RobotItem() {
-        }
 
         public RobotItem(RobotSnapshot robotSnapshot) {
             setRobotSnapshot(robotSnapshot);
@@ -267,18 +216,8 @@ public class RobotStatusPane extends JList implements SimulationObserver {
             return robotSnapshot;
         }
 
-        public boolean isUpdated() {
-            return updated;
-        }
-
-        public void clearUpdated() {
-            updated = false;
-            changed = false;
-        }
-
         public void setRobotSnapshot(RobotSnapshot robotSnapshot) {
             changed = this.robotSnapshot == null || !this.robotSnapshot.equals(robotSnapshot);
-            this.updated = true;
             this.dead = robotSnapshot.getArmor() <= 0;
             this.robotSnapshot = robotSnapshot;
         }

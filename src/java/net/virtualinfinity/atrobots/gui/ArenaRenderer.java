@@ -6,7 +6,7 @@ import net.virtualinfinity.atrobots.snapshots.*;
 import java.awt.*;
 import java.awt.geom.AffineTransform;
 import java.awt.geom.Rectangle2D;
-import java.util.Collection;
+import java.util.Map;
 import java.util.Set;
 
 /**
@@ -16,9 +16,9 @@ import java.util.Set;
  */
 public class ArenaRenderer {
     private RenderingHints hints = new RenderingHints(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
-    private Collection<ArenaObjectSnapshot> toPaint;
+    private Iterable<ArenaObjectSnapshot> toPaint;
     private RobotStatusPane robotStatusPane;
-    private static final Rectangle2D.Double ARENA_SIZE = new Rectangle2D.Double(0, 0, 1000, 1000);
+    private static final Shape ARENA_BORDER = new Rectangle2D.Double(0, 0, 1000, 1000);
     private SnapshotRenderer<? super RobotSnapshot> robotRenderer = new RobotRenderer();
     private SnapshotRenderer<? super MissileSnapshot> missileRenderer = new MissileRenderer();
     private SnapshotRenderer<? super MineSnapshot> mineRenderer = new MineRenderer();
@@ -29,18 +29,18 @@ public class ArenaRenderer {
         if (!hasFullFrame()) {
             return;
         }
-        final RenderingHints originalRenderingHints = g2d.getRenderingHints();
+        final Map originalRenderingHints = g2d.getRenderingHints();
         g2d.addRenderingHints(hints);
         final Paint paint = g2d.getPaint();
         final Stroke stroke = g2d.getStroke();
         final AffineTransform transform = g2d.getTransform();
         final SnapshotVisitor visitor = new SnapshotPainter(g2d, robotStatusPane.getSelectedRobotIds());
-        for (ArenaObjectSnapshot snapshot : toPaint) {
+        toPaint.forEach(snapshot ->  {
             snapshot.visit(visitor);
             g2d.setTransform(transform);
             g2d.setPaint(paint);
             g2d.setStroke(stroke);
-        }
+        });
         g2d.setRenderingHints(originalRenderingHints);
     }
 
@@ -96,7 +96,7 @@ public class ArenaRenderer {
         return toPaint != null;
     }
 
-    public void setToPaint(Collection<ArenaObjectSnapshot> toPaint) {
+    public void setToPaint(Iterable<ArenaObjectSnapshot> toPaint) {
         this.toPaint = toPaint;
     }
 
@@ -105,10 +105,10 @@ public class ArenaRenderer {
     }
 
     public void drawBorder(Graphics2D g2d) {
-        final RenderingHints originalRenderingHints = g2d.getRenderingHints();
+        final Map originalRenderingHints = g2d.getRenderingHints();
         g2d.addRenderingHints(hints);
         g2d.setPaint(Color.green);
-        g2d.draw(ARENA_SIZE);
+        g2d.draw(ARENA_BORDER);
         g2d.setRenderingHints(originalRenderingHints);
     }
 
@@ -122,28 +122,27 @@ public class ArenaRenderer {
         }
 
         public void acceptRobot(RobotSnapshot robotSnapshot) {
-            robotRenderer.render(g2d, robotSnapshot, selectedRobotIds);
+            getRobotRenderer().render(g2d, robotSnapshot, selectedRobotIds);
         }
 
         public void acceptMissile(MissileSnapshot missileSnapshot) {
-            missileRenderer.render(g2d, missileSnapshot, selectedRobotIds);
+            getMissileRenderer().render(g2d, missileSnapshot, selectedRobotIds);
         }
 
         public void acceptMine(MineSnapshot mineSnapshot) {
-            mineRenderer.render(g2d, mineSnapshot, selectedRobotIds);
+            getMineRenderer().render(g2d, mineSnapshot, selectedRobotIds);
         }
 
         public void acceptExplosion(ExplosionSnapshot explosionSnapshot) {
-            explosionRenderer.render(g2d, explosionSnapshot, selectedRobotIds);
+            getExplosionRenderer().render(g2d, explosionSnapshot, selectedRobotIds);
         }
 
 
         public void acceptScan(ScanSnapshot scanSnapshot) {
-            scanRenderer.render(g2d, scanSnapshot, selectedRobotIds);
+            getScanRenderer().render(g2d, scanSnapshot, selectedRobotIds);
         }
 
         public void acceptUnknown(UnknownSnapshot unknownSnapshot) {
-            // TODO: Handle the unknown ;-)
         }
     }
 }
