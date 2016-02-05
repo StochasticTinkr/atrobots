@@ -212,7 +212,11 @@ public class Main extends ArenaWindowBuilder implements Runnable {
                         errors.addAll(result.getErrors());
                     }
                     if (game != null) {
-                        game.addEntrant(result.createRobotFactory(file.getName()).setDebug(entrantFile.debug));
+                        String name = file.getName();
+                        if (name.toLowerCase().endsWith(".at2")) {
+                            name = name.substring(0, name.length()-4);
+                        }
+                        game.addEntrant(result.createRobotFactory(name).setDebug(entrantFile.debug));
                     }
                 } catch (final IOException e1) {
                     errors.info("Errors in " + file.getName());

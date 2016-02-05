@@ -22,8 +22,8 @@ public abstract class RobotSource {
         return null;
     }
 
-    public final RobotFactory createFactory() throws IOException {
-        return compile(getCompiler()).createRobotFactory(getName());
+    public AtRobotCompilerOutput compile() throws IOException {
+        return compile(getCompiler());
     }
 
     protected abstract AtRobotCompilerOutput compile(AtRobotCompiler compiler) throws IOException;

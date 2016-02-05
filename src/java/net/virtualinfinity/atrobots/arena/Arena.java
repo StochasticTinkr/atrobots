@@ -18,12 +18,12 @@ import java.util.stream.Stream;
  * @author Daniel Pitts
  */
 public class Arena {
-    private final List<Robot> activeRobots = new LinkedList<>();
-    private final List<Robot> allRobots = new LinkedList<>();
-    private final List<Missile> missiles = new LinkedList<>();
-    private final List<Mine> mines = new LinkedList<>();
-    private final List<Scan> scans = new LinkedList<>();
-    private final List<Explosion> explosions = new LinkedList<>();
+    private final List<Robot> activeRobots = new ArrayList<>();
+    private final List<Robot> allRobots = new ArrayList<>();
+    private final List<Missile> missiles = new ArrayList<>();
+    private final List<Mine> mines = new ArrayList<>();
+    private final List<Scan> scans = new ArrayList<>();
+    private final List<Explosion> explosions = new ArrayList<>();
     private final RoundTimer roundTimer = new RoundTimer();
 
     final Collection<Collection<? extends ArenaObject>> allActiveObjects = new ArrayList<>(

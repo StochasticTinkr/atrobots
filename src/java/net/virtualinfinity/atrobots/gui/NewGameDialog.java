@@ -1,5 +1,6 @@
 package net.virtualinfinity.atrobots.gui;
 
+import net.virtualinfinity.atrobots.compiler.AtRobotCompilerOutput;
 import net.virtualinfinity.atrobots.compiler.Errors;
 import net.virtualinfinity.atrobots.config.RobotFile;
 import net.virtualinfinity.atrobots.config.RobotSource;
@@ -97,7 +98,13 @@ public class NewGameDialog extends JDialog {
         game.setMaxProcessorSpeed(((Number) maxCpu.getValue()).intValue());
         for (RobotSource factory : entrantsModel.getList()) {
             try {
-                game.addEntrant(factory.createFactory());
+                final AtRobotCompilerOutput compilerOutput = factory.compile();
+                if (compilerOutput.hasErrors()) {
+                    System.out.println("Unable to load " + factory.getName());
+                    compilerOutput.getErrors().dumpErrors();
+                } else {
+                    game.addEntrant(compilerOutput.createRobotFactory(factory.getName()));
+                }
             } catch (IOException e) {
                 throw new RuntimeException(e);
             }
