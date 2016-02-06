@@ -127,7 +127,7 @@ public class AtRobotLineLexer {
     }
 
     private static boolean isSeparator(char c) {
-        return "0123456789ABCDEFGHJIKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz#![]:@*_-$".indexOf(c) < 0;
+        return "0123456789ABCDEFGHJIKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz#![]:@*_-$&".indexOf(c) < 0;
     }
 
     private void visitMachineCode(String line) {
@@ -191,7 +191,7 @@ public class AtRobotLineLexer {
         lineVisitor.numberedLabel(value, getLineNumber());
     }
 
-    private void visitDirective(String line) throws IOException {
+    private void visitDirective(String line) {
         for (int i = 1; i < line.length(); ++i) {
             if (!(Character.isDigit(line.charAt(i)) || Character.isLetter(line.charAt(i)))) {
                 handleDirective(line, i);
@@ -202,83 +202,86 @@ public class AtRobotLineLexer {
 
     }
 
-    private void handleDirective(String line, int i) {
-        final String directive = line.substring(1, i).toLowerCase();
+    private void handleDirective(String line, int endOfDirective) {
+        int curPos = endOfDirective;
+        final String directive = line.substring(1, curPos).toLowerCase();
         if (directive.length() == 0) {
-            lineVisitor.expectedDirectiveName(i, getLineNumber());
+            lineVisitor.expectedDirectiveName(curPos, getLineNumber());
             return;
         }
         if ("lock".equals(directive) || "lock1".equals(directive)) {
-            lock(1, line.substring(i));
+            lock(1, line.substring(curPos));
             return;
         }
         if ("lock2".equals(directive)) {
-            lock(2, line.substring(i));
+            lock(2, line.substring(curPos));
             return;
         }
         if ("lock3".equals(directive)) {
-            lock(3, line.substring(i));
+            lock(3, line.substring(curPos));
             return;
         }
 
-        if (i < line.length() && !isSeparator(line.charAt(i))) {
-            lineVisitor.unexpectedCharacter(i, getLineNumber());
+        if (curPos < line.length() && !isSeparator(line.charAt(curPos))) {
+            lineVisitor.unexpectedCharacter(curPos, getLineNumber());
         }
-        while (i < line.length() && isSeparator(line.charAt(i))) {
-            ++i;
+        while (curPos < line.length() && isSeparator(line.charAt(curPos))) {
+            ++curPos;
         }
-        final int start = i;
+        final int start = curPos;
         if ("def".equals(directive)) {
-
-            while (i < line.length()) {
-                if (!isValidVariableNameChar(line.charAt(i))) {
-                    lineVisitor.invalidVariableNameChar(i, getLineNumber());
+            while (curPos < line.length() && Character.isSpaceChar(line.charAt(curPos))) {
+                ++curPos;
+            }
+            while (curPos < line.length() && !Character.isSpaceChar(line.charAt(curPos))) {
+                if (!isValidVariableNameChar(line.charAt(curPos))) {
+                    lineVisitor.invalidVariableNameChar(curPos, getLineNumber());
                     return;
                 }
-                i++;
+                curPos++;
             }
-            lineVisitor.defineVariable(line.substring(start).toLowerCase(), getLineNumber());
+            lineVisitor.defineVariable(line.substring(start, curPos).toLowerCase(), getLineNumber());
             return;
         }
         if ("time".equals(directive)) {
-            while (i < line.length()) {
-                if (!Character.isDigit(line.charAt(i))) {
-                    lineVisitor.expectedDigit(i, getLineNumber());
+            while (curPos < line.length()) {
+                if (!Character.isDigit(line.charAt(curPos))) {
+                    lineVisitor.expectedDigit(curPos, getLineNumber());
                     return;
                 }
-                ++i;
+                ++curPos;
             }
             lineVisitor.maxProcessorSpeed(Integer.parseInt(line.substring(start)));
             return;
         }
         if ("msg".equals(directive)) {
-            lineVisitor.setMessage(line.substring(i));
+            lineVisitor.setMessage(line.substring(curPos));
             return;
         }
         if ("config".equals(directive)) {
-            while (i < line.length()) {
-                if (line.charAt(i) == '=') {
-                    final String name = line.substring(start, i);
-                    final int valueStart = ++i;
-                    while (i < line.length() && !isSeparator(line.charAt(i))) {
-                        if (!Character.isDigit(line.charAt(i))) {
-                            lineVisitor.expectedDigit(i, getLineNumber());
+            while (curPos < line.length()) {
+                if (line.charAt(curPos) == '=') {
+                    final String name = line.substring(start, curPos);
+                    ++curPos;
+                    while (curPos < line.length() && isSeparator(line.charAt(curPos))) {
+                        ++curPos;
+                    }
+                    final int valueStart = curPos;
+                    while (curPos < line.length() && !isSeparator(line.charAt(curPos))) {
+                        if (!Character.isDigit(line.charAt(curPos))) {
+                            lineVisitor.expectedDigit(curPos, getLineNumber());
                             return;
                         }
-                        ++i;
+                        ++curPos;
                     }
-                    try {
-                        lineVisitor.setConfig(name, Integer.parseInt(line.substring(valueStart, i)));
-                    } catch (NumberFormatException e) {
-                        System.err.println("Unable to parse config line:");
-                    }
+                    lineVisitor.setConfig(name, Integer.parseInt(line.substring(valueStart, curPos)));
                     return;
                 }
-                if (!Character.isLetter(line.charAt(i))) {
-                    lineVisitor.expectedDeviceName(i, getLineNumber());
+                if (!Character.isLetter(line.charAt(curPos))) {
+                    lineVisitor.expectedDeviceName(curPos, getLineNumber());
                     return;
                 }
-                ++i;
+                ++curPos;
             }
             return;
         }

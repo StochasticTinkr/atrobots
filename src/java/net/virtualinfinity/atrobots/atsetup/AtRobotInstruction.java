@@ -20,7 +20,7 @@ public enum AtRobotInstruction implements AtRobotSymbol {
     MPY(7),
     DIV(8),
     MOD(9),
-    RET(10),
+    RET(10, "RETURN"),
     CALL(11, "GSB"),
     JMP(12, "GOTO"),
     JLS(13, "JB"),

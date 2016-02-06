@@ -19,7 +19,12 @@ public class RobotFileUtils {
             if (!debug && "-d".equals(file)) {
                 debug = true;
             } else {
-                files.add(new EntrantFile(debug, robotFile(file)));
+                final File foundFile = robotFile(file);
+                if (foundFile.isDirectory()) {
+                    Stream.of(foundFile.listFiles(new AtRobotFileFilter())).map(EntrantFile::new).forEachOrdered(files::add);
+                } else {
+                    files.add(new EntrantFile(debug, foundFile));
+                }
                 debug = false;
             }
         }
@@ -42,6 +47,10 @@ public class RobotFileUtils {
         final boolean debug;
         final File file;
 
+        public EntrantFile(File file) {
+            this(false, file);
+        }
+
         EntrantFile(boolean debug, File file) {
             this.debug = debug;
             this.file = file;
@@ -57,6 +66,13 @@ public class RobotFileUtils {
 
         public boolean accept(File dir, String name) {
             return name.toLowerCase().equals(robotName + ".at2") || name.toLowerCase().equals(robotName + ".atl");
+        }
+    }
+
+    private static class AtRobotFileFilter implements FilenameFilter {
+        @Override
+        public boolean accept(File dir, String name) {
+            return name.toLowerCase().endsWith(".at2") || name.toLowerCase().endsWith(".atl");
         }
     }
 }
