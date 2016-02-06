@@ -2,6 +2,7 @@ package net.virtualinfinity.atrobots.compiler;
 
 import java.io.IOException;
 import java.io.LineNumberReader;
+import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -14,6 +15,10 @@ public class AtRobotLineLexer {
     private final LineNumberReader reader;
     private final LineVisitor lineVisitor;
     private boolean stopProcessing;
+    private int lockType;
+    private int lockData;
+    private int lockPos = -1;
+    private byte[] lockKey;
 
     public AtRobotLineLexer(LineNumberReader reader, LineVisitor lineVisitor) {
         this.reader = reader;
@@ -25,7 +30,36 @@ public class AtRobotLineLexer {
         String line;
         //noinspection NestedAssignment
         while (!(stopProcessing || (line = reader.readLine()) == null)) {
-            visitLine(line);
+            visitLine(unlock(line));
+        }
+    }
+
+    private String unlock(String line) {
+        if (lockType == 0) {
+            return line;
+        }
+        try {
+            if (lockType < 3) {
+                lockPos = -1;
+            }
+            final byte[] bytes = line.getBytes("ASCII");
+            for (int i = 0; i < bytes.length ; ++i ) {
+                ++lockPos;
+                if (lockPos >= lockKey.length) {
+                    lockPos = 0;
+                }
+                if (lockType == 3) {
+                    --bytes[i];
+                    bytes[i] ^= lockData;
+                } else if (lockType == 2) {
+                    bytes[i] ^=  1;
+                }
+                bytes[i] ^= lockKey[lockPos];
+                lockData = bytes[i] & 15;
+            }
+            return new String(bytes, "ASCII");
+        } catch (final UnsupportedEncodingException e) {
+            throw new RuntimeException(e);
         }
     }
 
@@ -159,7 +193,7 @@ public class AtRobotLineLexer {
 
     private void visitDirective(String line) throws IOException {
         for (int i = 1; i < line.length(); ++i) {
-            if (!Character.isLetter(line.charAt(i))) {
+            if (!(Character.isDigit(line.charAt(i)) || Character.isLetter(line.charAt(i)))) {
                 handleDirective(line, i);
                 return;
             }
@@ -174,6 +208,19 @@ public class AtRobotLineLexer {
             lineVisitor.expectedDirectiveName(i, getLineNumber());
             return;
         }
+        if ("lock".equals(directive) || "lock1".equals(directive)) {
+            lock(1, line.substring(i));
+            return;
+        }
+        if ("lock2".equals(directive)) {
+            lock(2, line.substring(i));
+            return;
+        }
+        if ("lock3".equals(directive)) {
+            lock(3, line.substring(i));
+            return;
+        }
+
         if (i < line.length() && !isSeparator(line.charAt(i))) {
             lineVisitor.unexpectedCharacter(i, getLineNumber());
         }
@@ -220,7 +267,11 @@ public class AtRobotLineLexer {
                         }
                         ++i;
                     }
-                    lineVisitor.setConfig(name, Integer.parseInt(line.substring(valueStart, i)));
+                    try {
+                        lineVisitor.setConfig(name, Integer.parseInt(line.substring(valueStart, i)));
+                    } catch (NumberFormatException e) {
+                        System.err.println("Unable to parse config line:");
+                    }
                     return;
                 }
                 if (!Character.isLetter(line.charAt(i))) {
@@ -236,6 +287,19 @@ public class AtRobotLineLexer {
             return;
         }
         lineVisitor.unknownDirective(directive, getLineNumber());
+    }
+
+    private void lock(int lockType, String remainingLine) {
+        this.lockType = lockType;
+        try {
+            this.lockKey = remainingLine.trim().toUpperCase().getBytes("ASCII");
+            for (int i = 0; i < this.lockKey.length; ++i) {
+                this.lockKey[i] -= 65;
+            }
+        } catch (UnsupportedEncodingException e) {
+            throw new RuntimeException(e);
+        }
+
     }
 
     private void stopProcessing() {

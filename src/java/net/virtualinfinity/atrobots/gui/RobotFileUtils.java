@@ -9,7 +9,7 @@ import java.util.stream.Stream;
 
 public class RobotFileUtils {
     public static FileNameExtensionFilter getAtRobotsFileNameFilter() {
-        return new FileNameExtensionFilter("AT-Robots files", "at2", "ats");
+        return new FileNameExtensionFilter("AT-Robots files", "at2", "atl", "ats");
     }
 
     static EntrantFile[] getFilesByName(Iterable<String> initialRobots) {
@@ -56,7 +56,7 @@ public class RobotFileUtils {
         }
 
         public boolean accept(File dir, String name) {
-            return name.toLowerCase().equals(robotName + ".at2");
+            return name.toLowerCase().equals(robotName + ".at2") || name.toLowerCase().equals(robotName + ".atl");
         }
     }
 }

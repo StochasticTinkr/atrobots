@@ -26,15 +26,17 @@ public class RobotFile extends RobotSource {
             throw new FileNotFoundException(file.getPath());
         }
         this.file = file.getCanonicalFile();
-        defaultName = removeEndIgnoreCase(file.getName(), ".at2");
+        defaultName = removeEndIgnoreCase(file.getName(), ".at2", ".atl");
     }
 
-    public static String removeEndIgnoreCase(String s, String suffix) {
+    public static String removeEndIgnoreCase(String s, String...suffixes) {
         if (s == null) {
             return null;
         }
-        if (s.toLowerCase().endsWith(suffix)) {
-            return s.substring(0, s.length() - suffix.length());
+        for (final String suffix : suffixes) {
+            if (s.toLowerCase().endsWith(suffix)) {
+                return s.substring(0, s.length() - suffix.length());
+            }
         }
         return s;
     }

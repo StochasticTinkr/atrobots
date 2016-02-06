@@ -213,7 +213,7 @@ public class Main extends ArenaWindowBuilder implements Runnable {
                     }
                     if (game != null) {
                         String name = file.getName();
-                        if (name.toLowerCase().endsWith(".at2")) {
+                        if (name.toLowerCase().endsWith(".at2") || name.toLowerCase().endsWith(".atl")) {
                             name = name.substring(0, name.length()-4);
                         }
                         game.addEntrant(result.createRobotFactory(name).setDebug(entrantFile.debug));

@@ -31,17 +31,9 @@ public class NewGameDialog extends JDialog {
         setModal(true);
         getRootPane().setDefaultButton(buttonOK);
 
-        buttonOK.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                onOK();
-            }
-        });
+        buttonOK.addActionListener(e -> onOK());
 
-        buttonCancel.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                onCancel();
-            }
-        });
+        buttonCancel.addActionListener(e -> onCancel());
 
 // call onCancel() when cross is clicked
         setDefaultCloseOperation(DO_NOTHING_ON_CLOSE);
@@ -52,42 +44,32 @@ public class NewGameDialog extends JDialog {
         });
 
 // call onCancel() on ESCAPE
-        contentPane.registerKeyboardAction(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                onCancel();
-            }
-        }, KeyStroke.getKeyStroke(KeyEvent.VK_ESCAPE, 0), JComponent.WHEN_ANCESTOR_OF_FOCUSED_COMPONENT);
-        loadEntrantsButton.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                final Properties properties = System.getProperties();
-                final JFileChooser jFileChooser = new JFileChooser(new File(properties.getProperty("user.dir")));
-                jFileChooser.setMultiSelectionEnabled(true);
-                jFileChooser.setFileFilter(RobotFileUtils.getAtRobotsFileNameFilter());
-                if (jFileChooser.showOpenDialog(NewGameDialog.this) == JFileChooser.APPROVE_OPTION) {
-                    Errors errors = new Errors();
-                    for (File file : jFileChooser.getSelectedFiles()) {
-                        try {
-                            RobotSource factory = new RobotFile(file);
-                            System.out.println("Loading " + file);
-                            entrantsModel.add(factory);
-                        } catch (IOException e1) {
-                            errors.info("Errors in " + file.getName());
-                            errors.info(e1.getMessage());
-                        } catch (Throwable t) {
-                            errors.info("Compiler error in " + file.getName());
-                            errors.info(t.getMessage());
-                            t.printStackTrace();
-                        }
+        contentPane.registerKeyboardAction(e -> onCancel(), KeyStroke.getKeyStroke(KeyEvent.VK_ESCAPE, 0), JComponent.WHEN_ANCESTOR_OF_FOCUSED_COMPONENT);
+        loadEntrantsButton.addActionListener(e -> {
+            final Properties properties = System.getProperties();
+            final JFileChooser jFileChooser = new JFileChooser(new File(properties.getProperty("user.dir")));
+            jFileChooser.setMultiSelectionEnabled(true);
+            jFileChooser.setFileFilter(RobotFileUtils.getAtRobotsFileNameFilter());
+            if (jFileChooser.showOpenDialog(NewGameDialog.this) == JFileChooser.APPROVE_OPTION) {
+                Errors errors = new Errors();
+                for (File file : jFileChooser.getSelectedFiles()) {
+                    try {
+                        RobotSource factory = new RobotFile(file);
+                        System.out.println("Loading " + file);
+                        entrantsModel.add(factory);
+                    } catch (IOException e1) {
+                        errors.info("Errors in " + file.getName());
+                        errors.info(e1.getMessage());
+                    } catch (Throwable t) {
+                        errors.info("Compiler error in " + file.getName());
+                        errors.info(t.getMessage());
+                        t.printStackTrace();
                     }
-                    errors.showErrorDialog("Errors whiel loading entrants.", NewGameDialog.this);
                 }
+                errors.showErrorDialog("Errors while loading entrants.", NewGameDialog.this);
             }
         });
-        removeButton.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                entrantsModel.remove(entrants.getSelectedIndices());
-            }
-        });
+        removeButton.addActionListener(e -> entrantsModel.remove(entrants.getSelectedIndices()));
         maxCpu.setModel(new SpinnerNumberModel(5, 1, 1000, 5));
         numberOfRounds.setModel(new SpinnerNumberModel(1, 1, Integer.MAX_VALUE, 1));
     }
